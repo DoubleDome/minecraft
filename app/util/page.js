@@ -1,6 +1,3 @@
-const { reset } = require('./util/command');
-const command = require('./util/command');
-
 class Page {
     lines = [];
 

@@ -37,17 +37,6 @@ function generatePath(world, type, filename) {
 // backup.init('./Marzipan', './_backup');
 // backup.create();
 
-// console.log(book.create(locations));
-// console.log(inventory.create());
-// console.log(swapper.create('minecraft:netherite_pickaxe'));
-// console.log(swapper.create('minecraft:netherite_hoe'));
-// console.log(swapper.create('minecraft:netherite_axe'));
-// console.log(swapper.create('minecraft:netherite_shovel'));
-
-// creator.write('./commands/swap_pickaxe.mcfunction', swapper.create('minecraft:netherite_pickaxe'));
-// creator.write('./commands/swap_axe.mcfunction', swapper.create('minecraft:netherite_axe'));
-// creator.write('./commands/swap_shovel.mcfunction', swapper.create('minecraft:netherite_shovel'));
-// creator.write('./commands/swap_hoe.mcfunction', swapper.create('minecraft:netherite_hoe'));
 
 const prompts = require('prompts');
 
