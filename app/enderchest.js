@@ -1,4 +1,4 @@
-const command = require('./util/command');
+const command = require('../util/command');
 
 class EnderChest {
     create(type, config, directions) {

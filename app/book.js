@@ -1,7 +1,7 @@
 const fs = require('fs');
 const roman = require('../data/roman.json');
 const commands = require('../data/commands.json');
-const Page = require('./util/page');
+const Page = require('../util/page');
 
 class Book {
     create(type, book) {

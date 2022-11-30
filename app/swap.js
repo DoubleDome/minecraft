@@ -1,6 +1,4 @@
-const command = require('./util/command');
-
-// /data get entity @s Inventory[{tag:{display:{Name:"{\"text\":\"Ass\"}"}}}]
+const command = require('../util/command');
 
 class Swapper {
     create(type, config, item) {
@@ -69,7 +67,6 @@ class Swapper {
         } else {
             command.append(`execute as @s if data entity @s EnderItems[{Slot:${config.slots.enderchest}b}].tag.BlockEntityTag.Items[{id:"${item.id}"}] run function ${config.package}:${item.file}`);
         }
-
         return command.export();
     }
 }

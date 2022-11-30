@@ -3,7 +3,7 @@ const creator = require('./app/creator');
 const locations = require('./data/locations.json');
 const book = require('./app/book');
 const inventory = require('./app/inventory');
-const ender = require('./app/ender');
+const enderchest = require('./app/enderchest');
 
 const tools = require('./data/tools.json');
 const items = require('./data/items.json');
@@ -53,11 +53,11 @@ function generateFunctions(path) {
     creator.write(`${path}/inventory_export.mcfunction`, inventory.create('export', config, items));
     creator.write(`${path}/inventory_export_gate.mcfunction`, inventory.create('export_gate', config));
     
-    creator.write(`${path}/ender_place.mcfunction`, ender.create('place', config, directions));
-    creator.write(`${path}/ender_destroy.mcfunction`, ender.create('destroy', config, directions));
-    creator.write(`${path}/ender_inventory_gate.mcfunction`, ender.create('inventory_gate', config, directions));
-    creator.write(`${path}/ender_existence_gate.mcfunction`, ender.create('existence_gate', config, directions));
-    creator.write(`${path}/ender_toggle.mcfunction`, ender.create('toggle', config, directions));
+    creator.write(`${path}/ender_place.mcfunction`, enderchest.create('place', config, directions));
+    creator.write(`${path}/ender_destroy.mcfunction`, enderchest.create('destroy', config, directions));
+    creator.write(`${path}/ender_inventory_gate.mcfunction`, enderchest.create('inventory_gate', config, directions));
+    creator.write(`${path}/ender_existence_gate.mcfunction`, enderchest.create('existence_gate', config, directions));
+    creator.write(`${path}/ender_toggle.mcfunction`, enderchest.create('toggle', config, directions));
 }
 
 generateFunctions(destination);

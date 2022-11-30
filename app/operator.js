@@ -19,13 +19,6 @@ class Operator {
             console.log(`stdout: ${stdout}`);
         });
     }
-
-    restore(folderName) {}
-
-    /* Utilities
-    ----------------------------------------------------*/
-
-    getMonth(date) {}
 }
 
 module.exports = new Operator();
