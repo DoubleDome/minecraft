@@ -1,0 +1,37 @@
+{
+    "title": "Magic Spells",
+    "author": "DoubleDome",
+    "lore": ["This ancient book of", "magic spells will grant", "the owner special abilities."],
+    "version": "8",
+    "modes": [
+        { "text": "\\n\\u25cf Survival Mode", "color": "dark_green", "clickEvent": { "action": "run_command", "value": "/gamemode survival @s" } },
+        { "text": "\\n\\u25cf Creative Mode", "color": "dark_green", "clickEvent": { "action": "run_command", "value": "/gamemode creative @s" } },
+        { "text": "\\n\\u25cb Spectator Mode", "color": "dark_green", "clickEvent": { "action": "run_command", "value": "/gamemode spectator @s" } }
+    ],
+    "players": [
+        { "text": "\\n\\u226b DoubleDome", "color": "dark_green", "clickEvent": { "action": "run_command", "value": "/tp @s DoubleDome" } },
+        { "text": "\\n\\u226b FilbertPlays", "color": "dark_green", "clickEvent": { "action": "run_command", "value": "/tp @s FilbertPlays" } },
+        { "text": "\\n\\u226b MermaidPanchi3", "color": "dark_green", "clickEvent": { "action": "run_command", "value": "/tp @s MermaidPanchi3" } }
+    ],
+    "utility": [{ "text": "\\n\\u1403 Ejector Seat", "color": "dark_green", "clickEvent": { "action": "run_command", "value": "/tp @s ~ 320 ~" } }],
+    "inventory": [
+        { "text": "\\n\\u2b06 Export Inventory", "color": "dark_green", "clickEvent": { "action": "run_command", "value": "/function madagascar:inventory_export_gate" } },
+        { "text": "\\n\\u2b07 Import Inventory", "color": "dark_green", "clickEvent": { "action": "run_command", "value": "/function madagascar:inventory_import_gate" } }
+    ],
+    "silk_tools": [
+        { "text": "\\n\\u21d4 Silk Pickaxe", "color": "dark_green", "clickEvent": { "action": "run_command", "value": "/function madagascar:swap_silk_pickaxe_gate" } },
+        { "text": "\\n\\u21d4 Silk Shovel", "color": "dark_green", "clickEvent": { "action": "run_command", "value": "/function madagascar:swap_silk_shovel_gate" } },
+        { "text": "\\n\\u21d4 Silk Axe", "color": "dark_green", "clickEvent": { "action": "run_command", "value": "/function madagascar:swap_silk_axe_gate" } },
+        { "text": "\\n\\u21d4 Silk Hoe", "color": "dark_green", "clickEvent": { "action": "run_command", "value": "/function madagascar:swap_silk_hoe_gate" } }
+    ],
+    "fortune_tools": [
+        { "text": "\\n\\u21d4 Fortune Pickaxe", "color": "dark_green", "clickEvent": { "action": "run_command", "value": "/function madagascar:swap_fortune_pickaxe_gate" } },
+        { "text": "\\n\\u21d4 Fortune Shovel", "color": "dark_green", "clickEvent": { "action": "run_command", "value": "/function madagascar:swap_fortune_shovel_gate" } },
+        { "text": "\\n\\u21d4 Fortune Axe", "color": "dark_green", "clickEvent": { "action": "run_command", "value": "/function madagascar:swap_fortune_axe_gate" } },
+        { "text": "\\n\\u21d4 Fortune Hoe", "color": "dark_green", "clickEvent": { "action": "run_command", "value": "/function madagascar:swap_fortune_hoe_gate" } }
+    ],
+    "other_tools": [
+        { "text": "\\n\\u21d4 Shears", "color": "dark_green", "clickEvent": { "action": "run_command", "value": "/function madagascar:swap_shears_gate" } },
+        { "text": "\\n\\u21d4 Flint & Steel", "color": "dark_green", "clickEvent": { "action": "run_command", "value": "/function madagascar:swap_flint_and_steel_gate" } }
+    ]
+}

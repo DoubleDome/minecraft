@@ -1,0 +1,1 @@
+        // command.append(`data modify block ${config.shulkerLocation.gear} Items[{Slot:${config.slots.ender.slot}}].tag.BlockEntityTag.Items[{id:"${item}"}] set from storage ${config.namespace} ${config.storage.swapOut}`);

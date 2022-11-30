@@ -1,0 +1,1 @@
+execute as @s if data entity @s EnderItems[{Slot:0b}].tag.BlockEntityTag.Items[{id:"minecraft:netherite_axe", tag:{Enchantments:[{id:"minecraft:fortune", lvl:3s}]}}] run function madagascar:swap_fortune_axe

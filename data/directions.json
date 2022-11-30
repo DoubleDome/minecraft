@@ -1,0 +1,6 @@
+{
+    "north": { "range": "135..-134", "facing": "south", "offset": { "x": 0, "z": -2 } },
+    "east": { "range": "-135..-44", "facing": "west", "offset": { "x": 2, "z": 0 } },
+    "south": { "range": "-45..44", "facing": "north", "offset": { "x": 0, "z": 2 } },
+    "west": { "range": "45..134", "facing": "east", "offset": { "x": -2, "z": 0 } }
+}

@@ -1,0 +1,12 @@
+[
+    { "id": "minecraft:netherite_pickaxe", "enchantment": "minecraft:silk_touch", "level": 1, "file": "swap_silk_pickaxe" },
+    { "id": "minecraft:netherite_axe", "enchantment": "minecraft:silk_touch", "level": 1, "file": "swap_silk_axe" },
+    { "id": "minecraft:netherite_shovel", "enchantment": "minecraft:silk_touch", "level": 1, "file": "swap_silk_shovel" },
+    { "id": "minecraft:netherite_hoe", "enchantment": "minecraft:silk_touch", "level": 1, "file": "swap_silk_hoe" },
+    { "id": "minecraft:netherite_pickaxe", "enchantment": "minecraft:fortune", "level": 3, "file": "swap_fortune_pickaxe" },
+    { "id": "minecraft:netherite_axe", "enchantment": "minecraft:fortune", "level": 3, "file": "swap_fortune_axe" },
+    { "id": "minecraft:netherite_shovel", "enchantment": "minecraft:fortune", "level": 3, "file": "swap_fortune_shovel" },
+    { "id": "minecraft:netherite_hoe", "enchantment": "minecraft:fortune", "level": 3, "file": "swap_fortune_hoe" },
+    { "id": "minecraft:shears", "file": "swap_shears" },
+    { "id": "minecraft:flint_and_steel", "file": "swap_flint_and_steel" }
+]
