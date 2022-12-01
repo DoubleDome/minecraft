@@ -35,7 +35,10 @@ const config = {
         ender: 'EnderMarker',
     },
     functions: {
-        book:'madagascar:god_book'
+        book: 'madagascar:god_book',
+    },
+    worldedit: {
+        tool: 'minecraft:wooden_axe',
     },
     mineWith: 'air',
 };
@@ -45,14 +48,14 @@ function generateFunctions(path) {
         creator.write(`${path}/${tool.file}.mcfunction`, swap.create('item', config, tool));
         creator.write(`${path}/${tool.file}_gate.mcfunction`, swap.create('item_gate', config, tool));
     });
-    
+
     creator.write(`${path}/god_book.mcfunction`, book.create('god', locations));
     creator.write(`${path}/default_book.mcfunction`, book.create('default', locations));
     creator.write(`${path}/inventory_import.mcfunction`, inventory.create('import', config));
     creator.write(`${path}/inventory_import_gate.mcfunction`, inventory.create('import_gate', config));
     creator.write(`${path}/inventory_export.mcfunction`, inventory.create('export', config, items));
     creator.write(`${path}/inventory_export_gate.mcfunction`, inventory.create('export_gate', config));
-    
+
     creator.write(`${path}/ender_place.mcfunction`, enderchest.create('place', config, directions));
     creator.write(`${path}/ender_destroy.mcfunction`, enderchest.create('destroy', config, directions));
     creator.write(`${path}/ender_inventory_gate.mcfunction`, enderchest.create('inventory_gate', config, directions));

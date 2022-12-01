@@ -41,5 +41,6 @@ execute in minecraft:overworld run data modify block -17 60 -1 Items set value [
 execute in minecraft:overworld run data modify block -17 60 -1 Items set from storage minecraft:madagascar inventory
 data remove storage minecraft:madagascar inventory
 clear
+give @s minecraft:wooden_axe
 function madagascar:god_book
 gamemode creative @s

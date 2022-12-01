@@ -25,6 +25,7 @@ class Inventory {
         command.append(`execute in ${config.dimension} run data modify block ${config.shulkerLocation.holder} Items set from storage ${config.namespace} ${config.storage.inventory}`);
         command.clearStorage(config.namespace, config.storage.inventory);
         command.clearInventory();
+        command.append(`give @s ${config.worldedit.tool}`);
         command.append(`function ${config.functions.book}`);
         command.append(`gamemode creative @s`);
         return command.export();
