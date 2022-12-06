@@ -20,7 +20,6 @@ class Inventory {
         this.createStorageCommands(config, items);
         this.reindexItems(config, items.length);
         command.createShulker(config.shulkerLocation.holder, config.dimension);
-
         command.append(`execute in ${config.dimension} run data modify block ${config.shulkerLocation.holder} Items set value []`);
         command.append(`execute in ${config.dimension} run data modify block ${config.shulkerLocation.holder} Items set from storage ${config.namespace} ${config.storage.inventory}`);
         command.clearStorage(config.namespace, config.storage.inventory);

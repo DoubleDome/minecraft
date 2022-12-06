@@ -1,0 +1,11 @@
+{
+  "type": "madagascar:skyblock",
+  "generator": {
+    "biome_source": {
+      "preset": "minecraft:overworld",
+      "type": "minecraft:multi_noise"
+    },
+    "settings": "madagascar:skyblock",
+    "type": "minecraft:noise"
+  }
+}

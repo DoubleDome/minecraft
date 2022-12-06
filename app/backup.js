@@ -57,6 +57,10 @@ class Backup {
     }
 
     list() {
+        if (!fs.existsSync(this.backupPath)) {
+            console.log('Folder does not exist!');
+            return [];
+        }
         try {
             const files = fs.readdirSync(this.backupPath, { withFileTypes: true })
                 .filter((item) => item.isDirectory())
