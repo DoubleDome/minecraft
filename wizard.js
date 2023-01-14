@@ -1,13 +1,8 @@
-const backup = require('./app/backup');
-const book = require('./app/book');
-const operator = require('./app/operator');
-const creator = require('./app/creator');
-const transformer = require('./app/transformer');
-const inventory = require('./app/inventory');
-const swapper = require('./app/swap');
+const prompts = require('prompts');
 const path = require('path');
 
-const locations = require('./app/data/locations.json');
+const backup = require('./app/backup');
+const generator = require('./app/generator');
 
 const config = {
     jakarta: {
@@ -27,18 +22,19 @@ const config = {
         base: __dirname,
         root: '/commands',
         functions: '',
-    }
+    },
+    functions: {
+        all: 'create',
+        book: 'createBookFunctions',
+        swap: 'createSwapFunctions',
+        inventory: 'createInventoryFunctions',
+        ender: 'createEnderFunctions',
+    },
 };
 
-function generatePath(world, type, filename) {
-    return `${config[world].base}${config[world].root}${config[world][type]}/${filename}`;
+function generatePath(world, type) {
+    return `${config[world].base}${config[world].root}${config[world][type]}`;
 }
-
-// backup.init('./Marzipan', './_backup');
-// backup.create();
-
-
-const prompts = require('prompts');
 
 (async () => {
     const response = await prompts([
@@ -57,22 +53,14 @@ const prompts = require('prompts');
             name: 'command',
             message: 'Choose a command:',
             choices: [
-                { title: 'Inventory Export/Import', value: 'inventory' },
-                { title: 'Tool Swap', value: 'swap' },
+                { title: 'All', value: 'all' },
                 { title: 'Book', value: 'book' },
+                { title: 'Tool Swap', value: 'swap' },
+                { title: 'Inventory Export/Import', value: 'inventory' },
+                { title: 'Quick Access Enderchest', value: 'ender' },
             ],
         },
     ]);
 
-    switch (response.command) {
-        case 'inventory':
-            creator.write(generatePath(response.world, 'functions', 'inventory_export.mcfunction'), inventory.create('export'));
-            creator.write(generatePath(response.world, 'functions', 'inventory_import.mcfunction'), inventory.create('import'));
-            break;
-        case 'swap':
-            break;
-        case 'book':
-            creator.write(generatePath(response.world, 'functions', 'book.mcfunction'), book.create(locations));
-            break;
-    }
+    generator[config.functions[response.command]](generatePath(response.world, 'functions'));
 })();

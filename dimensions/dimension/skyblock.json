@@ -1,5 +1,5 @@
 {
-  "type": "madagascar:skyblock",
+  "type": "minecraft:overworld",
   "generator": {
     "biome_source": {
       "preset": "minecraft:overworld",

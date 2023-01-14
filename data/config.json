@@ -1,0 +1,31 @@
+{
+    "namespace": "minecraft:madagascar",
+    "package": "madagascar",
+    "dimension": "minecraft:overworld",
+    "storage": {
+        "inbound": "inbound",
+        "outbound": "outbound",
+        "inventory": "inventory",
+        "slot": "slot",
+        "ender": "ender"
+    },
+    "shulkerLocation": {
+        "gear": "~ 250 ~",
+        "item": "~ 251 ~",
+        "holder": "-17 60 -1"
+    },
+    "slots": {
+        "player": 2,
+        "enderchest": 0
+    },
+    "markers": {
+        "ender": "EnderMarker"
+    },
+    "functions": {
+        "book": "madagascar:god_book"
+    },
+    "worldedit": {
+        "tool": "minecraft:wooden_axe"
+    },
+    "mineWith": "air"
+}

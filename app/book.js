@@ -1,42 +1,18 @@
-const fs = require('fs');
-const roman = require('../data/roman.json');
-const commands = require('../data/commands.json');
 const Page = require('../util/page');
 
+const roman = require('../data/roman.json');
+const content = require('../data/content.json');
+const locations = require('../data/locations.json');
+
 class Book {
-    create(type, book) {
-        const result = this.generateMetadata(book.title, book.author, book.lore, book.version);
-        result.pages = this.generatePages(type, book.pages);
+    create(type) {
+        const result = this.generateMetadata(content.titles[type], content.author, content.lore, content.version);
+        result.pages = this.generateBook(type, locations);
 
         return this.generateCommand('give @s written_book', result);
     }
 
-    generateGodPage() {
-        const page = new Page();
-        page.add(this.generateHeader('God Powers'));
-        page.add(this.generateSpacer());
-        page.add(commands.modes);
-        page.add(this.generateSpacer());
-        page.add(commands.players);
-        page.add(this.generateSpacer());
-        page.add(commands.utility);
-        page.add(this.generateSpacer());
-        page.add(commands.inventory);
-        return page.export();
-    }
-    generateMagicPage() {
-        const page = new Page();
-        page.add(this.generateHeader('Magic Powers'));
-        page.add(this.generateSpacer());
-        page.add(commands.silk_tools);
-        page.add(this.generateSpacer());
-        page.add(commands.fortune_tools);
-        page.add(this.generateSpacer());
-        page.add(commands.other_tools);
-        return page.export();
-    }
-
-    generatePages(type, pages) {
+    generateBook(type, pages) {
         const result = [];
         switch (type) {
             case 'god':
@@ -44,31 +20,61 @@ class Book {
                 result.push(JSON.stringify(this.generateGodPage()));
             default:
                 for (let page of pages) {
-                    result.push(JSON.stringify(this.generatePage(page)));
+                    result.push(JSON.stringify(this.generateLocationPage(page)));
                 }
         }
         return result;
     }
 
-    generatePage(page) {
-        const result = [];
+    generateGodPage() {
+        const page = new Page();
+        page.add(this.generateHeader(content.headings.god_page));
+        page.add(this.generateSpacer());
+        page.add(content.modes);
+        page.add(this.generateSpacer());
+        page.add(content.players);
+        page.add(this.generateSpacer());
+        page.add(content.utility);
+        // page.add(this.generateSpacer());
+        return page.export();
+    }
+    generateMagicPage() {
+        const page = new Page();
+        page.add(this.generateHeader(content.headings.magic_page));
+        page.add(this.generateSpacer());
+        page.add(content.pickaxe);
+        page.add(content.axe);
+        page.add(content.shovel);
+        page.add(content.hoe);
+        page.add(content.shears);
+        page.add(content.flint);
+        page.add(this.generateSpacer());
+        page.add(content.inventory);
+        return page.export();
+    }
+
+    generateLocationPage(page) {
+        let result = [];
         result.push(this.generateHeader(page.header));
         result.push(this.generateSpacer());
         for (let location of page.locations) {
-            result.push(this.generateLocation(location.label, location.dimension, location.coordinates));
+            result = result.concat(this.generateLocation(location.label, location.dimension, location.coordinates));
         }
         return result;
     }
 
     generateLocation(label, dimension, coordinates) {
-        return {
-            text: `\\n\\u25b6 ${label}`,
-            color: 'dark_green',
-            clickEvent: {
-                action: 'run_command',
-                value: `/execute in ${dimension} run tp @s ${coordinates}`,
+        return [
+            { text: '\\n\\u25b6 ', color: '#006600' },
+            {
+                text: label,
+                color: 'dark_green',
+                clickEvent: {
+                    action: 'run_command',
+                    value: `/execute in ${dimension} run tp @s ${coordinates}`,
+                },
             },
-        };
+        ];
     }
 
     generateMetadata(title, author, lore, version) {
@@ -89,8 +95,13 @@ class Book {
     generateHeader(label) {
         return {
             text: label,
-            bold: true,
             color: 'dark_purple',
+        };
+    }
+    generateSubheader(label) {
+        return {
+            text: `\\n${label}:`,
+            color: 'black',
         };
     }
     generateSpacer() {

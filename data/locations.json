@@ -1,114 +1,107 @@
-{
-  "title": "Teleportation Spells",
-  "author": "DoubleDome",
-  "lore": ["This ancient book of","magic spells will grant","the owner special abilities."],
-  "version": "8",
-  "pages": [
-    {
-      "header": "Bases",
-      "locations": [
-        {
-          "label": "Plains Base",
-          "dimension": "overworld",
-          "coordinates": "211 76 253 -90 0"
-        },
-        {
-          "label": "Volcano Base",
-          "dimension": "overworld",
-          "coordinates": "-294 65 -367 180 0"
-        },
-        {
-          "label": "Flower Base",
-          "dimension": "overworld",
-          "coordinates": "-726 61 -3537 -90 -19"
-        },
-        {
-          "label": "Nether Hub",
-          "dimension": "the_nether",
-          "coordinates": "30 114 32 0 0"
-        },
-        {
-          "label": "Island Base",
-          "dimension": "overworld",
-          "coordinates": "-2562 70 1344 -90 0"
-        },
-        {
-          "label": "Mesa Base",
-          "dimension": "overworld",
-          "coordinates": "-9353 64 1067 180 -25"
-        },
-        {
-          "label": "Jungle Base",
-          "dimension": "overworld",
-          "coordinates": "9866 63 9914 -90 20"
-        },
-        {
-          "label": "Village Base",
-          "dimension": "overworld",
-          "coordinates": "-10185 68 -10705 90 -7"
-        },
-        {
-          "label": "Snow Base",
-          "dimension": "overworld",
-          "coordinates": "-10356 74 -5145 -132 -7"
-        },
-        {
-          "label": "Spooky Mansion",
-          "dimension": "overworld",
-          "coordinates": "-14643 99 -11911.5 90 0"
-        }
-      ]
-    },
-    {
-      "header": "Farms",
-      "locations": [
-        {
-          "label": "Gold Farm",
-          "dimension": "the_nether",
-          "coordinates": "30 244 86 180 0"
-        },
-        {
-          "label": "Enderman Farm",
-          "dimension": "the_end",
-          "coordinates": "525 21 866 0 0"
-        },
-        {
-          "label": "Pillager Farm",
-          "dimension": "overworld",
-          "coordinates": "-471 189 -661 0 90"
-        },
-        {
-          "label": "W. Skeleton Farm",
-          "dimension": "the_nether",
-          "coordinates": "-1832 68 -1533 180 0"
-        },
-        {
-          "label": "Raid Farm",
-          "dimension": "overworld",
-          "coordinates": "-448 74 -457 180 0"
-        },
-        {
-          "label": "Guardian Farm",
-          "dimension": "overworld",
-          "coordinates": "800 70 408 180 -7"
-        },
-        {
-          "label": "Vegetable Farm",
-          "dimension": "overworld",
-          "coordinates": "135 66 305 90 0"
-        },
-        {
-          "label": "Drowned Farm",
-          "dimension": "overworld",
-          "coordinates": "-2219 167 1302 90 90"
-        },
-        {
-          "label": "Void Farm",
-          "dimension": "the_end",
-          "coordinates": "0 3 914 0 0"
-        }
-      ]
-    }
-  ]
-  
-}
+[
+  {
+    "header": "Bases",
+    "locations": [
+      {
+        "label": "Plains Base",
+        "dimension": "overworld",
+        "coordinates": "211 76 253 -90 0"
+      },
+      {
+        "label": "Volcano Base",
+        "dimension": "overworld",
+        "coordinates": "-294 65 -367 180 0"
+      },
+      {
+        "label": "Flower Base",
+        "dimension": "overworld",
+        "coordinates": "-726 61 -3537 -90 -19"
+      },
+      {
+        "label": "Nether Hub",
+        "dimension": "the_nether",
+        "coordinates": "30 114 32 0 0"
+      },
+      {
+        "label": "Island Base",
+        "dimension": "overworld",
+        "coordinates": "-2562 70 1344 -90 0"
+      },
+      {
+        "label": "Mesa Base",
+        "dimension": "overworld",
+        "coordinates": "-9353 64 1067 180 -25"
+      },
+      {
+        "label": "Jungle Base",
+        "dimension": "overworld",
+        "coordinates": "9866 63 9914 -90 20"
+      },
+      {
+        "label": "Village Base",
+        "dimension": "overworld",
+        "coordinates": "-10185 68 -10705 90 -7"
+      },
+      {
+        "label": "Snow Base",
+        "dimension": "overworld",
+        "coordinates": "-10356 74 -5145 -132 -7"
+      },
+      {
+        "label": "Spooky Mansion",
+        "dimension": "overworld",
+        "coordinates": "-14643 99 -11911.5 90 0"
+      }
+    ]
+  },
+  {
+    "header": "Farms",
+    "locations": [
+      {
+        "label": "Gold Farm",
+        "dimension": "the_nether",
+        "coordinates": "30 244 86 180 0"
+      },
+      {
+        "label": "Enderman Farm",
+        "dimension": "the_end",
+        "coordinates": "525 21 866 0 0"
+      },
+      {
+        "label": "Pillager Farm",
+        "dimension": "overworld",
+        "coordinates": "-471 189 -661 0 90"
+      },
+      {
+        "label": "W. Skeleton Farm",
+        "dimension": "the_nether",
+        "coordinates": "-1832 68 -1533 180 0"
+      },
+      {
+        "label": "Raid Farm",
+        "dimension": "overworld",
+        "coordinates": "-448 74 -457 180 0"
+      },
+      {
+        "label": "Guardian Farm",
+        "dimension": "overworld",
+        "coordinates": "800 70 408 180 -7"
+      },
+      {
+        "label": "Vegetable Farm",
+        "dimension": "overworld",
+        "coordinates": "135 66 305 90 0"
+      },
+      {
+        "label": "Drowned Farm",
+        "dimension": "overworld",
+        "coordinates": "-2219 167 1302 90 90"
+      },
+      {
+        "label": "Void Farm",
+        "dimension": "the_end",
+        "coordinates": "0 3 914 0 0"
+      }
+    ]
+  }
+]
