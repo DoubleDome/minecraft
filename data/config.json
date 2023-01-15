@@ -22,7 +22,7 @@
         "ender": "EnderMarker"
     },
     "functions": {
-        "book": "madagascar:god_book"
+        "book": "madagascar:book_god"
     },
     "worldedit": {
         "tool": "minecraft:wooden_axe"
