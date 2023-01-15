@@ -31,7 +31,7 @@ const endpoints = [
 endpoints.forEach((endpoint) => {
     app.get(endpoint.path, function (req, res) {
         try {
-            generator[endpoint.function](`${process.env.BASE}${process.env.FUNCTIONS}`);
+            generator[endpoint.function](`${process.env.BASE_PATH}${process.env.FUNCTIONS_PATH}`);
             res.send('Command generation successful!');
         } catch (error) {
             res.send('Command generation failed!');
