@@ -51,6 +51,11 @@
         "label": "Spooky Mansion",
         "dimension": "overworld",
         "coordinates": "-14643 99 -11911.5 90 0"
+      },
+      {
+        "label": "Skyblock Base",
+        "dimension": "madagascar:skyblock",
+        "coordinates": "0 70 0 90 0"
       }
     ]
   },
