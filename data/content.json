@@ -51,7 +51,9 @@
         { "text": "Pickaxe:  ", "color": "black" },
         { "text": "#", "color": "gold", "clickEvent": { "action": "run_command", "value": "/function madagascar:swap_silk_pickaxe_gate" } },
         { "text": " - ", "color": "#cccccc" },
-        { "text": "$", "color": "gold", "clickEvent": { "action": "run_command", "value": "/function madagascar:swap_fortune_pickaxe_gate" } }
+        { "text": "$", "color": "gold", "clickEvent": { "action": "run_command", "value": "/function madagascar:swap_fortune_pickaxe_gate" } },
+        { "text": " - ", "color": "#cccccc" },
+        { "text": "W", "color": "gold", "clickEvent": { "action": "run_command", "value": "/give @s minecraft:wooden_pickaxe" } }
     ],
     "axe": [
         { "text": "\\n", "color": "reset" },
@@ -59,7 +61,9 @@
         { "text": "Axe:       ", "color": "black" },
         { "text": "#", "color": "gold", "clickEvent": { "action": "run_command", "value": "/function madagascar:swap_silk_axe_gate" } },
         { "text": " - ", "color": "#cccccc" },
-        { "text": "$", "color": "gold", "clickEvent": { "action": "run_command", "value": "/function madagascar:swap_fortune_axe_gate" } }
+        { "text": "$", "color": "gold", "clickEvent": { "action": "run_command", "value": "/function madagascar:swap_fortune_axe_gate" } },
+        { "text": " - ", "color": "#cccccc" },
+        { "text": "W", "color": "gold", "clickEvent": { "action": "run_command", "value": "/give @s minecraft:wooden_axe" } }
     ],
     "shovel": [
         { "text": "\\n", "color": "reset" },
@@ -67,7 +71,9 @@
         { "text": "Shovel:   ", "color": "black" },
         { "text": "#", "color": "gold", "clickEvent": { "action": "run_command", "value": "/function madagascar:swap_silk_shovel_gate" } },
         { "text": " - ", "color": "#cccccc" },
-        { "text": "$", "color": "gold", "clickEvent": { "action": "run_command", "value": "/function madagascar:swap_fortune_shovel_gate" } }
+        { "text": "$", "color": "gold", "clickEvent": { "action": "run_command", "value": "/function madagascar:swap_fortune_shovel_gate" } },
+        { "text": " - ", "color": "#cccccc" },
+        { "text": "W", "color": "gold", "clickEvent": { "action": "run_command", "value": "/give @s minecraft:wooden_shovel" } }
     ],
     "hoe": [
         { "text": "\\n", "color": "reset" },
@@ -75,7 +81,9 @@
         { "text": "Hoe:       ", "color": "black" },
         { "text": "#", "color": "gold", "clickEvent": { "action": "run_command", "value": "/function madagascar:swap_silk_hoe_gate" } },
         { "text": " - ", "color": "#cccccc" },
-        { "text": "$", "color": "gold", "clickEvent": { "action": "run_command", "value": "/function madagascar:swap_fortune_hoe_gate" } }
+        { "text": "$", "color": "gold", "clickEvent": { "action": "run_command", "value": "/function madagascar:swap_fortune_hoe_gate" } },
+        { "text": " - ", "color": "#cccccc" },
+        { "text": "W", "color": "gold", "clickEvent": { "action": "run_command", "value": "/give @s minecraft:wooden_hoe" } }
     ],
     "shears": [
         { "text": "\\n", "color": "reset" },
