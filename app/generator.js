@@ -1,8 +1,8 @@
 const path = require('path');
 
 const creator = require('./creator');
-const toolSwapper = require('./tool_swapper');
-const armorSwapper = require('./armor_swapper');
+const toolSwapper = require('./swapper_tools');
+const armorSwapper = require('./swapper_armor');
 const book = require('./book');
 const inventory = require('./inventory');
 const enderchest = require('./enderchest');
