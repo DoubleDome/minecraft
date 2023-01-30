@@ -56,6 +56,11 @@
         "label": "Skyblock Base",
         "dimension": "madagascar:skyblock",
         "coordinates": "-10 63 -1 135 4"
+      },
+      {
+        "label": "Ocean Woodland",
+        "dimension": "overworld",
+        "coordinates": "16879 69 -4884 0 -13"
       }
     ]
   },
