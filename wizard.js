@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const prompts = require('prompts');
 const path = require('path');
 
@@ -26,7 +28,8 @@ const config = {
     functions: {
         all: 'create',
         book: 'createBookFunctions',
-        swap: 'createSwapFunctions',
+        tools: 'createToolFunctions',
+        armor: 'createArmorFunctions',
         inventory: 'createInventoryFunctions',
         ender: 'createEnderFunctions',
     },
@@ -55,12 +58,13 @@ function generatePath(world, type) {
             choices: [
                 { title: 'All', value: 'all' },
                 { title: 'Book', value: 'book' },
-                { title: 'Tool Swap', value: 'swap' },
+                { title: 'Tool Swap', value: 'tools' },
+                { title: 'Armor Swap', value: 'armor' },
                 { title: 'Inventory Export/Import', value: 'inventory' },
                 { title: 'Quick Access Enderchest', value: 'ender' },
             ],
         },
     ]);
-
+    
     generator[config.functions[response.command]](generatePath(response.world, 'functions'));
 })();

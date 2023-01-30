@@ -55,7 +55,7 @@
       {
         "label": "Skyblock Base",
         "dimension": "madagascar:skyblock",
-        "coordinates": "0 70 0 90 0"
+        "coordinates": "-10 63 -1 135 4"
       }
     ]
   },
@@ -106,6 +106,16 @@
         "label": "Void Farm",
         "dimension": "the_end",
         "coordinates": "0 3 914 0 0"
+      },
+      {
+        "label": "Hoglin Farm",
+        "dimension": "the_nether",
+        "coordinates": "25 128 534 0 -30"
+      },
+      {
+        "label": "Frog Light Farm",
+        "dimension": "the_nether",
+        "coordinates": "84 128 55 180 -18"
       }
     ]
   }

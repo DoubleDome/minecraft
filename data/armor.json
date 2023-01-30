@@ -1,0 +1,14 @@
+[
+    { "id": "minecraft:minecraft:netherite_helmet", "enchantment": "minecraft:protection", "level": 4, "file": "swap_protection_helmet" },
+    { "id": "minecraft:minecraft:netherite_helmet", "enchantment": "minecraft:fire_protection", "level": 4, "file": "swap_fire_helmet" },
+    { "id": "minecraft:minecraft:netherite_helmet", "enchantment": "minecraft:thorns", "level": 3, "file": "swap_thorns_helmet" },
+    { "id": "minecraft:minecraft:netherite_chestplate", "enchantment": "minecraft:protection", "level": 4, "file": "swap_protection_chestplate" },
+    { "id": "minecraft:minecraft:netherite_chestplate", "enchantment": "minecraft:fire_protection", "level": 4, "file": "swap_fire_chestplate" },
+    { "id": "minecraft:minecraft:netherite_chestplate", "enchantment": "minecraft:thorns", "level": 3, "file": "swap_thorns_chestplate" },
+    { "id": "minecraft:minecraft:netherite_leggings", "enchantment": "minecraft:protection", "level": 4, "file": "swap_protection_leggings" },
+    { "id": "minecraft:minecraft:netherite_leggings", "enchantment": "minecraft:fire_protection", "level": 4, "file": "swap_fire_leggings" },
+    { "id": "minecraft:minecraft:netherite_leggings", "enchantment": "minecraft:thorns", "level": 3, "file": "swap_thorns_leggings" },
+    { "id": "minecraft:minecraft:netherite_boots", "enchantment": "minecraft:protection", "level": 4, "file": "swap_protection_boots" },
+    { "id": "minecraft:minecraft:netherite_boots", "enchantment": "minecraft:fire_protection", "level": 4, "file": "swap_fire_boots" },
+    { "id": "minecraft:minecraft:netherite_boots", "enchantment": "minecraft:thorns", "level": 3, "file": "swap_thorns_boots" }
+]

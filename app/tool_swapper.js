@@ -1,6 +1,6 @@
 const command = require('../util/command');
 
-class Swapper {
+class ToolSwapper {
     create(type, config, item) {
         switch (type) {
             case 'item':
@@ -71,4 +71,4 @@ class Swapper {
     }
 }
 
-module.exports = new Swapper();
+module.exports = new ToolSwapper();

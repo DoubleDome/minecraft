@@ -15,8 +15,12 @@ const endpoints = [
         function: 'createBookFunctions',
     },
     {
-        path: '/export/swap',
-        function: 'createSwapFunctions',
+        path: '/export/tools',
+        function: 'createToolFunctions',
+    },
+    {
+        path: '/export/armor',
+        function: 'createArmorFunctions',
     },
     {
         path: '/export/inventory',
