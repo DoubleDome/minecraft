@@ -2,6 +2,7 @@ const path = require('path');
 
 const creator = require('./creator');
 const toolSwapper = require('./tool_swapper');
+const armorSwapper = require('./armor_swapper');
 const book = require('./book');
 const inventory = require('./inventory');
 const enderchest = require('./enderchest');
@@ -28,8 +29,8 @@ class Generator {
     }
     createArmorFunctions(destination) {
         armor.forEach((item) => {
-            creator.write(path.resolve(destination, `${item.file}.mcfunction`), swap.create('item', config, item));
-            creator.write(path.resolve(destination, `${item.file}_gate.mcfunction`), swap.create('item_gate', config, item));
+            creator.write(path.resolve(destination, `${item.file}.mcfunction`), armorSwapper.create('item', config, item));
+            creator.write(path.resolve(destination, `${item.file}_gate.mcfunction`), armorSwapper.create('item_gate', config, item));
         });
     }
     createBookFunctions(destination) {
