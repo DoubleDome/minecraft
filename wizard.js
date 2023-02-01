@@ -19,11 +19,11 @@ const config = {
         root: 'Datapack/datapacks/madagascar_pack',
         functions: '/data/madagascar/functions',
     },
-    temp: {
-        label: 'Temp',
-        base: __dirname,
-        root: '/commands',
-        functions: '',
+    local: {
+        label: 'Local',
+        base: `${__dirname}`,
+        root: '',
+        functions: '/functions',
     },
     functions: {
         all: 'create',
@@ -35,20 +35,20 @@ const config = {
     },
 };
 
-function generatePath(world, type) {
-    return `${config[world].base}${config[world].root}${config[world][type]}`;
+function generatePath(location, type) {
+    return path.join(config[location].base, config[location].root, config[location][type]);
 }
 
 (async () => {
     const response = await prompts([
         {
             type: 'select',
-            name: 'world',
-            message: 'Choose a world:',
+            name: 'location',
+            message: 'Choose a location:',
             choices: [
+                { title: 'Local', value: 'local' },
                 { title: 'Datapack', value: 'datapack' },
                 { title: 'Jakarta', value: 'jakarta' },
-                { title: 'Temp', value: 'temp' },
             ],
         },
         {
@@ -65,6 +65,5 @@ function generatePath(world, type) {
             ],
         },
     ]);
-    
-    generator[config.functions[response.command]](generatePath(response.world, 'functions'));
+    generator[config.functions[response.command]](generatePath(response.location, 'functions'));
 })();

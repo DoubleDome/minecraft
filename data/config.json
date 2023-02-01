@@ -2,6 +2,13 @@
     "namespace": "minecraft:madagascar",
     "package": "madagascar",
     "dimension": "minecraft:overworld",
+    "filename": {
+        "swap": "swap_",
+        "inventory": "inventory_",
+        "gate": "_gate",
+        "location": "location_",
+        "ender": "ender_"
+    },
     "storage": {
         "inbound": "inbound",
         "outbound": "outbound",
@@ -27,5 +34,17 @@
     "worldedit": {
         "tool": "minecraft:wooden_axe"
     },
-    "mineWith": "air"
+    "mineWith": "air",
+    "labels": {
+        "dimensions": {
+            "overworld": "Overworld",
+            "the_nether": "The Nether",
+            "the_end": "The End",
+            "madagascar:skyblock": "Skyblock"
+        }
+    },
+    "title": {
+        "time": "10 50 10",
+        "color": "white"
+    }
 }

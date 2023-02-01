@@ -1,4 +1,5 @@
 const command = require('../util/command');
+const config = require('../data/config.json');
 
 class ToolSwapper {
     create(type, config, item) {
@@ -12,7 +13,7 @@ class ToolSwapper {
                 break;
         }
     }
-    createItem(config, item) {
+    createItem(item) {
         command.reset();
         // Wipe storage
         command.clearStorage(config.namespace, config.storage.inbound);
@@ -59,13 +60,14 @@ class ToolSwapper {
 
         return command.export();
     }
-    createItemGate(config, item) {
+    createItemGate(item) {
         command.reset();
         // Look for the tool in the gear box in the enderchest, if its there, run the function
+        const functionPath = `${config.package}:${config.filename.swap}${item.filename}`;
         if (item.enchantment) {
-            command.append(`execute as @s if data entity @s EnderItems[{Slot:${config.slots.enderchest}b}].tag.BlockEntityTag.Items[{id:"${item.id}", tag:{Enchantments:[{id:"${item.enchantment}", lvl:${item.level}s}]}}] run function ${config.package}:${item.file}`);
+            command.append(`execute as @s if data entity @s EnderItems[{Slot:${config.slots.enderchest}b}].tag.BlockEntityTag.Items[{id:"${item.id}", tag:{Enchantments:[{id:"${item.enchantment}", lvl:${item.level}s}]}}] run function ${functionPath}`);
         } else {
-            command.append(`execute as @s if data entity @s EnderItems[{Slot:${config.slots.enderchest}b}].tag.BlockEntityTag.Items[{id:"${item.id}"}] run function ${config.package}:${item.file}`);
+            command.append(`execute as @s if data entity @s EnderItems[{Slot:${config.slots.enderchest}b}].tag.BlockEntityTag.Items[{id:"${item.id}"}] run function ${functionPath}`);
         }
         return command.export();
     }

@@ -2,10 +2,10 @@ const Page = require('../util/page');
 
 const roman = require('../data/roman.json');
 const content = require('../data/content.json');
-const locations = require('../data/locations.json');
+const config = require('../data/config.json');
 
 class Book {
-    create(type) {
+    create(type, locations) {
         const result = this.generateMetadata(content.titles[type], content.author, content.lore, content.version);
         result.pages = this.generateBook(type, locations);
 
@@ -56,14 +56,13 @@ class Book {
     generateLocationPage(page) {
         let result = [];
         result.push(this.generateHeader(page.header));
-        result.push(this.generateSpacer());
         for (let location of page.locations) {
-            result = result.concat(this.generateLocation(location.label, location.dimension, location.coordinates));
+            result = result.concat(this.generateLocation(location.label, location.dimension, location.coordinates, location.filename));
         }
         return result;
     }
 
-    generateLocation(label, dimension, coordinates) {
+    generateLocation(label, dimension, coordinates, filename) {
         return [
             { text: '\\n\\u25b6 ', color: '#006600' },
             {
@@ -72,6 +71,7 @@ class Book {
                 clickEvent: {
                     action: 'run_command',
                     value: `/execute in ${dimension} run tp @s ${coordinates}`,
+                    value: `/function ${config.package}:${config.filename.location}${filename}`,
                 },
             },
         ];
