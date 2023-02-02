@@ -1,4 +1,6 @@
-const command = require('../util/command');
+const CommandObject = require('../util/command');
+
+const command = new CommandObject();
 const config =  require('../data/config');
 
 class Location {

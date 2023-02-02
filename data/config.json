@@ -5,9 +5,10 @@
     "filename": {
         "swap": "swap_",
         "inventory": "inventory_",
-        "gate": "_gate",
+        "gate": "gate",
         "location": "location_",
-        "ender": "ender_"
+        "ender": "ender_",
+        "shulker": "shulker_"
     },
     "storage": {
         "inbound": "inbound",
@@ -25,14 +26,15 @@
         "player": 2,
         "enderchest": 0
     },
-    "markers": {
+    "marker": {
         "ender": "EnderMarker"
     },
     "functions": {
         "book": "madagascar:book_god"
     },
-    "worldedit": {
-        "tool": "minecraft:wooden_axe"
+    "items": {
+        "shulker": "shulker_box",
+        "wand": "minecraft:wooden_axe"
     },
     "mineWith": "air",
     "labels": {

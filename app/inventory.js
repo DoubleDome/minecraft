@@ -1,4 +1,6 @@
-const command = require('../util/command');
+const CommandObject = require('../util/command');
+
+const command = new CommandObject();
 const config = require('../data/config.json');
 
 class Inventory {
@@ -6,13 +8,13 @@ class Inventory {
         command.reset();
         switch (type) {
             case 'import':
-                return this.createImport(config);
+                return this.createImport();
             case 'import_gate':
-                return this.createImportGate(config);
+                return this.createImportGate();
             case 'export':
                 return this.createExport(items);
             case 'export_gate':
-                return this.createExportGate(config);
+                return this.createExportGate();
             default:
                 throw new Error('[Inventory] Unknown Type');
         }
@@ -25,7 +27,7 @@ class Inventory {
         command.append(`execute in ${config.dimension} run data modify block ${config.shulkerLocation.holder} Items set from storage ${config.namespace} ${config.storage.inventory}`);
         command.clearStorage(config.namespace, config.storage.inventory);
         command.clearInventory();
-        command.append(`give @s ${config.worldedit.tool}`);
+        command.append(`give @s ${config.items.wand}`);
         command.append(`function ${config.functions.book}`);
         command.append(`gamemode creative @s`);
         return command.export();

@@ -1,4 +1,6 @@
-const command = require('../util/command');
+const CommandObject = require('../util/command');
+
+const command = new CommandObject();
 const config = require('../data/config.json');
 
 class ToolSwapper {
@@ -9,7 +11,7 @@ class ToolSwapper {
             case 'item_gate':
                 return this.createItemGate(config, item);
             default:
-                console.log('[Swap] Invalid Type');
+                console.log('[ToolSwapper] Invalid Type');
                 break;
         }
     }

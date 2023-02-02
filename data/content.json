@@ -40,18 +40,22 @@
     "inventory": [
         { "text": "\\n", "color": "black" },
         { "text": "\\u2b06 ", "color": "black" },
-        { "text": "Export Inventory", "color": "dark_green", "clickEvent": { "action": "run_command", "value": "/function madagascar:inventory_export_gate" } },
+        { "text": "Export Shulkers", "color": "dark_green", "clickEvent": { "action": "run_command", "value": "/function madagascar:gate/shulker_export" } },
+        { "text": "\\n", "color": "black" },
+        { "text": "\\n", "color": "black" },
+        { "text": "\\u2b06 ", "color": "black" },
+        { "text": "Export Inventory", "color": "dark_green", "clickEvent": { "action": "run_command", "value": "/function madagascar:gate/inventory_export" } },
         { "text": "\\n", "color": "black" },
         { "text": "\\u2b07 ", "color": "black" },
-        { "text": "Import Inventory", "color": "dark_green", "clickEvent": { "action": "run_command", "value": "/function madagascar:inventory_import_gate" } }
+        { "text": "Import Inventory", "color": "dark_green", "clickEvent": { "action": "run_command", "value": "/function madagascar:gate/inventory_import" } }
     ],
     "pickaxe": [
         { "text": "\\n", "color": "reset" },
         { "text": "\\u21d4 ", "color": "black" },
         { "text": "Pickaxe:  ", "color": "black" },
-        { "text": "#", "color": "gold", "clickEvent": { "action": "run_command", "value": "/function madagascar:swap_silk_pickaxe_gate" } },
+        { "text": "#", "color": "gold", "clickEvent": { "action": "run_command", "value": "/function madagascar:gate/swap_silk_pickaxe" } },
         { "text": " - ", "color": "#cccccc" },
-        { "text": "$", "color": "gold", "clickEvent": { "action": "run_command", "value": "/function madagascar:swap_fortune_pickaxe_gate" } },
+        { "text": "$", "color": "gold", "clickEvent": { "action": "run_command", "value": "/function madagascar:gate/swap_fortune_pickaxe" } },
         { "text": " - ", "color": "#cccccc" },
         { "text": "W", "color": "gold", "clickEvent": { "action": "run_command", "value": "/give @s minecraft:wooden_pickaxe" } }
     ],
@@ -59,9 +63,9 @@
         { "text": "\\n", "color": "reset" },
         { "text": "\\u21d4 ", "color": "black" },
         { "text": "Axe:       ", "color": "black" },
-        { "text": "#", "color": "gold", "clickEvent": { "action": "run_command", "value": "/function madagascar:swap_silk_axe_gate" } },
+        { "text": "#", "color": "gold", "clickEvent": { "action": "run_command", "value": "/function madagascar:gate/swap_silk_axe" } },
         { "text": " - ", "color": "#cccccc" },
-        { "text": "$", "color": "gold", "clickEvent": { "action": "run_command", "value": "/function madagascar:swap_fortune_axe_gate" } },
+        { "text": "$", "color": "gold", "clickEvent": { "action": "run_command", "value": "/function madagascar:gate/swap_fortune_axe" } },
         { "text": " - ", "color": "#cccccc" },
         { "text": "W", "color": "gold", "clickEvent": { "action": "run_command", "value": "/give @s minecraft:wooden_axe" } }
     ],
@@ -69,9 +73,9 @@
         { "text": "\\n", "color": "reset" },
         { "text": "\\u21d4 ", "color": "black" },
         { "text": "Shovel:   ", "color": "black" },
-        { "text": "#", "color": "gold", "clickEvent": { "action": "run_command", "value": "/function madagascar:swap_silk_shovel_gate" } },
+        { "text": "#", "color": "gold", "clickEvent": { "action": "run_command", "value": "/function madagascar:gate/swap_silk_shovel" } },
         { "text": " - ", "color": "#cccccc" },
-        { "text": "$", "color": "gold", "clickEvent": { "action": "run_command", "value": "/function madagascar:swap_fortune_shovel_gate" } },
+        { "text": "$", "color": "gold", "clickEvent": { "action": "run_command", "value": "/function madagascar:gate/swap_fortune_shovel" } },
         { "text": " - ", "color": "#cccccc" },
         { "text": "W", "color": "gold", "clickEvent": { "action": "run_command", "value": "/give @s minecraft:wooden_shovel" } }
     ],
@@ -79,20 +83,20 @@
         { "text": "\\n", "color": "reset" },
         { "text": "\\u21d4 ", "color": "black" },
         { "text": "Hoe:       ", "color": "black" },
-        { "text": "#", "color": "gold", "clickEvent": { "action": "run_command", "value": "/function madagascar:swap_silk_hoe_gate" } },
+        { "text": "#", "color": "gold", "clickEvent": { "action": "run_command", "value": "/function madagascar:gate/swap_silk_hoe" } },
         { "text": " - ", "color": "#cccccc" },
-        { "text": "$", "color": "gold", "clickEvent": { "action": "run_command", "value": "/function madagascar:swap_fortune_hoe_gate" } },
+        { "text": "$", "color": "gold", "clickEvent": { "action": "run_command", "value": "/function madagascar:gate/swap_fortune_hoe" } },
         { "text": " - ", "color": "#cccccc" },
         { "text": "W", "color": "gold", "clickEvent": { "action": "run_command", "value": "/give @s minecraft:wooden_hoe" } }
     ],
     "shears": [
         { "text": "\\n", "color": "reset" },
         { "text": "\\u21d4 ", "color": "black" },
-        { "text": "Shears", "color": "gold", "clickEvent": { "action": "run_command", "value": "/function madagascar:swap_shears_gate" } }
+        { "text": "Shears", "color": "gold", "clickEvent": { "action": "run_command", "value": "/function madagascar:gate/swap_shears" } }
     ],
     "flint": [
         { "text": "\\n", "color": "reset" },
         { "text": "\\u21d4 ", "color": "black" },
-        { "text": "Flint + Steel", "color": "gold", "clickEvent": { "action": "run_command", "value": "/function madagascar:swap_flint_and_steel_gate" } }
+        { "text": "Flint + Steel", "color": "gold", "clickEvent": { "action": "run_command", "value": "/function madagascar:gate/swap_flint_and_steel" } }
     ]
 }

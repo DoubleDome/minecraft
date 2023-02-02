@@ -12,7 +12,10 @@ class Command {
         this.command = '';
     }
     append(line) {
-        this.command += line + '\n';
+        this.command = this.command.concat(`${line}\n`);
+    }
+    comment(comment) {
+        this.command = this.command.concat(`# ${comment}\n`);
     }
     createShulker(location, dimension) {
         if (!dimension) {
@@ -39,4 +42,4 @@ class Command {
     }
 }
 
-module.exports = new Command();
+module.exports = Command;

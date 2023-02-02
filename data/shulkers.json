@@ -1,0 +1,152 @@
+[
+    {
+        "name": "gear",
+        "label": "Gear Box",
+        "color": "blue",
+        "slot": 0
+    },
+    {
+        "name": "emergency",
+        "label": "Emergency Stockpile",
+        "color": "red",
+        "slot": 1
+    },
+    {
+        "name": "construction",
+        "label": "Construction",
+        "color": "orange",
+        "slot": 2
+    },
+    {
+        "name": "basics",
+        "label": "Basics",
+        "color": "yellow",
+        "slot": 3
+    },
+    {
+        "name": "decoration",
+        "label": "Decoration",
+        "color": "light_blue",
+        "slot": 4
+    },
+    {
+        "name": "terraforming1",
+        "label": "Terraforming 1",
+        "color": "green",
+        "slot": 5
+    },
+    {
+        "name": "terraforming2",
+        "label": "Terraforming 2",
+        "color": "green",
+        "slot": 6
+    },
+    {
+        "name": "potions",
+        "label": "Potion Kit",
+        "color": "magenta",
+        "slot": 7
+    },
+    {
+        "name": "adventure",
+        "label": "Adventure Pack",
+        "color": "purple",
+        "slot": 8
+    },
+    {
+        "name": "storage1",
+        "label": "Storage 1",
+        "color": "light_gray",
+        "slot": 9
+    },
+    {
+        "name": "storage2",
+        "label": "Storage 2",
+        "color": "light_gray",
+        "slot": 10
+    },
+    {
+        "name": "storage3",
+        "label": "Storage 3",
+        "color": "light_gray",
+        "slot": 11
+    },
+    {
+        "name": "storage4",
+        "label": "Storage 4",
+        "color": "light_gray",
+        "slot": 12
+    },
+    {
+        "name": "storage5",
+        "label": "Storage 5",
+        "color": "light_gray",
+        "slot": 13
+    },
+    {
+        "name": "storage6",
+        "label": "Storage 6",
+        "color": "light_gray",
+        "slot": 14
+    },
+    {
+        "name": "storage7",
+        "label": "Storage 7",
+        "color": "light_gray",
+        "slot": 15
+    },
+    {
+        "name": "storage8",
+        "label": "Storage 8",
+        "color": "light_gray",
+        "slot": 16
+    },
+    {
+        "name": "storage9",
+        "label": "Storage 9",
+        "color": "light_gray",
+        "slot": 17
+    },
+    {
+        "name": "oddities",
+        "label": "Oddities",
+        "color": "black",
+        "slot": 18
+    },
+    {
+        "name": "mapping",
+        "label": "Mapping Kit",
+        "color": "blue",
+        "slot": 19
+    },
+    {
+        "name": "villager",
+        "label": "Villager Kit",
+        "color": "brown",
+        "slot": 20
+    },
+    {
+        "name": "totems",
+        "label": "Totems",
+        "color": "yellow",
+        "slot": 21
+    },
+    {
+        "name": "stockpile",
+        "label": "Stockpile",
+        "color": "lime",
+        "slot": 22
+    },
+    {
+        "name": "project1",
+        "label": "Project 1",
+        "color": "gray",
+        "slot": 23
+    },
+    {
+        "name": "project2",
+        "label": "Project 2",
+        "color": "gray",
+        "slot": 24
+    }
+]
