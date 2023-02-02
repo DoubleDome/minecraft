@@ -18,7 +18,7 @@ const data = {
     items: require('../data/items.json'),
     shulkers: require('../data/shulkers.json'),
     directions: require('../data/directions.json'),
-    locations: require('../data/locations.json'),
+    locations: require('../data/locations.json')
 };
 
 class Generator {
