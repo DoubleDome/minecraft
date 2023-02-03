@@ -13,7 +13,7 @@
             { "label": "Snow Base", "dimension": "overworld", "coordinates": "-10356 74 -5145 -132 -7", "filename": "snow_base" },
             { "label": "Spooky Mansion", "dimension": "overworld", "coordinates": "-14643 99 -11911.5 90 0", "filename": "spooky_mansion" },
             { "label": "Skyblock Base", "dimension": "madagascar:skyblock", "coordinates": "-10 63 -1 135 4", "filename": "skyblock_base" },
-            { "label": "Ocean Woodland", "dimension": "overworld", "coordinates": "16879 69 -4884 0 -13", "filename": "ocean_woodland" }
+            { "label": "Ocean Woodland", "dimension": "overworld", "coordinates": "16879 70 -4884 0 -13", "filename": "ocean_woodland" }
         ]
     },
     {
