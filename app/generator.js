@@ -35,7 +35,7 @@ class Generator {
         this.validateDestinations(destination);
         data.locations.forEach((group) => {
             group.locations.forEach((item) => {
-                creator.write(path.resolve(destination, `${config.filename.location}${item.filename}.mcfunction`), location.create(item.label, item.dimension, item.coordinates, item.filename));
+                creator.write(path.resolve(destination, `${config.filename.location}${item.filename}.mcfunction`), location.create(item.label, item.dimension, item.coordinates, item.color));
             });
         });
     }

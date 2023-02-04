@@ -39,9 +39,9 @@
     "mineWith": "air",
     "labels": {
         "dimensions": {
-            "overworld": "Overworld",
-            "the_nether": "The Nether",
-            "the_end": "The End",
+            "minecraft:overworld": "Overworld",
+            "minecraft:the_nether": "The Nether",
+            "minecraft:the_end": "The End",
             "madagascar:skyblock": "Skyblock"
         }
     },
