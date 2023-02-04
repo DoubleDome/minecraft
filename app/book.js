@@ -16,9 +16,9 @@ class Book {
         const result = [];
         switch (type) {
             case 'god':
-                result.push(JSON.stringify(this.generateMagicPage()));
                 result.push(JSON.stringify(this.generateGodPage()));
             default:
+                result.push(JSON.stringify(this.generateMagicPage()));
                 for (let page of pages) {
                     result.push(JSON.stringify(this.generateLocationPage(page)));
                 }
@@ -30,18 +30,6 @@ class Book {
         const page = new Page();
         page.add(this.generateHeader(content.headings.god_page));
         page.add(this.generateSpacer());
-        page.add(content.modes);
-        page.add(this.generateSpacer());
-        page.add(content.players);
-        page.add(this.generateSpacer());
-        page.add(content.utility);
-        // page.add(this.generateSpacer());
-        return page.export();
-    }
-    generateMagicPage() {
-        const page = new Page();
-        page.add(this.generateHeader(content.headings.magic_page));
-        page.add(this.generateSpacer());
         page.add(content.pickaxe);
         page.add(content.axe);
         page.add(content.shovel);
@@ -52,6 +40,20 @@ class Book {
         page.add(content.inventory);
         return page.export();
     }
+
+    generateMagicPage() {
+        const page = new Page();
+        page.add(this.generateHeader(content.headings.magic_page));
+        page.add(this.generateSpacer());
+        page.add(content.modes);
+        page.add(this.generateSpacer());
+        page.add(content.players);
+        page.add(this.generateSpacer());
+        page.add(content.utility);
+        // page.add(this.generateSpacer());
+        return page.export();
+    }
+    
 
     generateLocationPage(page) {
         let result = [];
