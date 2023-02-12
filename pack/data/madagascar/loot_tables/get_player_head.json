@@ -312,7 +312,7 @@
                                     {
                                         "score": {
                                             "name": "@s",
-                                            "objective": "madagascar.stats.damage_dealt"
+                                            "objective": "madagascar.stats.damage.dealt"
                                         },
                                         "color": "gold"
                                     }
@@ -326,7 +326,7 @@
                                     {
                                         "score": {
                                             "name": "@s",
-                                            "objective": "madagascar.stats.damage_taken"
+                                            "objective": "madagascar.stats.damage.taken"
                                         },
                                         "color": "gold"
                                     }
