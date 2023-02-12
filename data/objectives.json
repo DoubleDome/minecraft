@@ -183,12 +183,12 @@
         },
         "damage_dealt": {
             "name": "madagascar.stats.damage.dealt",
-            "type": "minecraft.custom:minecraft.damage.dealt",
+            "type": "minecraft.custom:minecraft.damage_dealt",
             "value": 0
         },
         "damage_taken": {
             "name": "madagascar.stats.damage.taken",
-            "type": "minecraft.custom:minecraft.damage.taken",
+            "type": "minecraft.custom:minecraft.damage_taken",
             "value": 0
         },
         "mob_kills": {
