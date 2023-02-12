@@ -48,7 +48,7 @@
         { "text": "Export Shulkers", "color": "dark_green", "clickEvent": { "action": "run_command", "value": "/function madagascar:gate/shulker_export" } },
         { "text": "\\n", "color": "black" },
         { "text": "\\u25a3 ", "color": "black" },
-        { "text": "Toggle Enderchest", "color": "dark_green", "clickEvent": { "action": "run_command", "value": "/function madagascar:ender_toggle" } },
+        { "text": "Toggle Enderchest", "color": "dark_green", "clickEvent": { "action": "run_command", "value": "/function madagascar:ender/toggle" } },
         { "text": "\\n", "color": "black" },
         { "text": "\\n", "color": "black" },
         { "text": "\\u2b06 ", "color": "black" },
