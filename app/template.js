@@ -1,10 +1,11 @@
 const CommandObject = require('../util/command');
 
-const command = new CommandObject();
+const config = require('../data/config.json');
 
 class Template {
-    create(config) {
-        
+    create() {
+        const command = new CommandObject();
+        return command.export();
     }
 }
 

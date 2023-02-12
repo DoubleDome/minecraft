@@ -1,0 +1,23 @@
+[
+    {
+        "function": "minecraft:set_lore",
+        "entity": "this",
+        "lore": [
+            [
+                [
+                    {
+                        "text": "Hardcore Death #",
+                        "italic": false
+                    },
+                    {
+                        "score": {
+                            "name": "@s",
+                            "objective": "madagascar.hardcore_deaths"
+                        }
+                    }
+                ]
+            ]
+        ],
+        "replace": true
+    }
+]

@@ -37,10 +37,18 @@
         { "text": "\\u25b3 ", "color": "black" },
         { "text": "Ejector Seat", "color": "dark_green", "clickEvent": { "action": "run_command", "value": "/tp @s ~ 320 ~" } }
     ],
+    "hardcore":[
+        { "text": "\\n", "color": "black" },
+        { "text": "\\u2620 ", "color": "black" },
+        { "text": "Start Hardcore", "color": "dark_green", "clickEvent": { "action": "run_command", "value": "/function madagascar:gate/hardcore_start" } }
+    ],
     "inventory": [
         { "text": "\\n", "color": "black" },
         { "text": "\\u2b06 ", "color": "black" },
         { "text": "Export Shulkers", "color": "dark_green", "clickEvent": { "action": "run_command", "value": "/function madagascar:gate/shulker_export" } },
+        { "text": "\\n", "color": "black" },
+        { "text": "\\u25a3 ", "color": "black" },
+        { "text": "Toggle Enderchest", "color": "dark_green", "clickEvent": { "action": "run_command", "value": "/function madagascar:ender_toggle" } },
         { "text": "\\n", "color": "black" },
         { "text": "\\n", "color": "black" },
         { "text": "\\u2b06 ", "color": "black" },

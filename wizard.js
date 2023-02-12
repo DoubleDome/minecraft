@@ -10,20 +10,17 @@ const config = {
     jakarta: {
         label: 'Jakarta',
         base: '/Users/aletoled/Library/Application Support/minecraft/saves/',
-        root: 'Jakarta/datapacks/madagascar_pack',
-        functions: '/data/madagascar/functions',
+        pack: 'Jakarta/datapacks/madagascar_pack',
     },
     datapack: {
         label: 'Datapack',
         base: '/Users/aletoled/Library/Application Support/minecraft/saves/',
-        root: 'Datapack/datapacks/madagascar_pack',
-        functions: '/data/madagascar/functions',
+        pack: 'Datapack/datapacks/madagascar_pack',
     },
     local: {
         label: 'Local',
         base: `${__dirname}`,
-        root: '',
-        functions: '/functions',
+        pack: '/functions',
     },
     functions: {
         all: 'create',
@@ -35,8 +32,8 @@ const config = {
     },
 };
 
-function generatePath(location, type) {
-    return path.join(config[location].base, config[location].root, config[location][type]);
+function generatePath(location) {
+    return path.join(config[location].base, config[location].root);
 }
 
 (async () => {
@@ -65,5 +62,7 @@ function generatePath(location, type) {
             ],
         },
     ]);
-    generator[config.functions[response.command]](generatePath(response.location, 'functions'));
+    if (response.location == 'local') generator.config.path.functions = '';
+    generator.init(generatePath(response.location));
+    generator[config.functions[response.command]]();
 })();

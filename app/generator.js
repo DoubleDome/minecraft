@@ -1,4 +1,3 @@
-const fs = require('fs');
 const path = require('path');
 
 const creator = require('./creator');
@@ -8,8 +7,11 @@ const shulkerSwapper = require('./swapper_shulker');
 
 const book = require('./book');
 const inventory = require('./inventory');
-const enderchest = require('./enderchest');
+const ender = require('./ender');
 const location = require('./location');
+const hardcore = require('./hardcore');
+const Load = require('./load');
+const Tick = require('./tick');
 
 const config = require('../data/config.json');
 const data = {
@@ -18,82 +20,137 @@ const data = {
     items: require('../data/items.json'),
     shulkers: require('../data/shulkers.json'),
     directions: require('../data/directions.json'),
-    locations: require('../data/locations.json')
+    locations: require('../data/locations.json'),
+    objectives: require('../data/objectives.json'),
 };
 
 class Generator {
-    create(destination) {
-        this.createBookFunctions(destination);
-        this.createToolFunctions(destination);
-        this.createShulkerFunctions(destination);
-        this.createLocationFunctions(destination);
-        this.createInventoryFunctions(destination);
-        this.createEnderFunctions(destination);
+    constructor() {
+        this.paths = {};
     }
 
-    createLocationFunctions(destination) {
-        this.validateDestinations(destination);
+    init(base) {
+        creator.destroy(base);
+
+        this.paths.base = creator.validate(path.resolve(base));
+        this.paths.data = creator.validate(path.resolve(this.paths.base, config.path.data));
+        this.paths.minecraft = creator.validate(path.resolve(this.paths.data, config.path.minecraft));
+        this.paths.madagascar = creator.validate(path.resolve(this.paths.data, config.path.madagascar));
+        this.paths.functions = creator.validate(path.resolve(this.paths.madagascar, config.path.functions));
+        Object.keys(config.folder).forEach((key) => {
+            this.paths[key] = creator.validate(path.resolve(this.paths.functions, config.folder[key]));
+        });
+    }
+
+    
+
+    create() {
+        creator.clone(config.path.pack, this.paths.base);
+
+        this.createBookFunctions();
+        this.createToolFunctions();
+        this.createShulkerFunctions();
+        this.createLocationFunctions();
+        this.createInventoryFunctions();
+        this.createEnderFunctions();
+        this.createHardcoreFunctions();
+        this.createLoader();
+        this.createTicker();
+    }
+
+    createLoader() {
+        this.validatePaths();
+        creator.write(path.resolve(this.paths.functions, 'load.mcfunction'), Load.getInstance().export());
+    }
+    createTicker() {
+        this.validatePaths();
+        creator.write(path.resolve(this.paths.functions, 'tick.mcfunction'), Tick.getInstance().export());
+    }
+    createHardcoreFunctions() {
+        this.validatePaths();
+        const output = hardcore.create(data.objectives);
+        creator.write(path.resolve(this.paths.hardcore, `start.mcfunction`), output.start);
+        creator.write(path.resolve(this.paths.hardcore, `reset.mcfunction`), output.reset);
+        creator.write(path.resolve(this.paths.hardcore, `gamemode_lock.mcfunction`), output.gamemode_lock);
+        creator.write(path.resolve(this.paths.hardcore, `player_head.mcfunction`), output.player_head);
+        creator.write(path.resolve(this.paths.hardcore, `prepare_marker.mcfunction`), output.prepare_marker);
+        creator.write(path.resolve(this.paths.hardcore, `place_marker.mcfunction`), output.place_marker);
+        creator.write(path.resolve(this.paths.gate, `${config.folder.hardcore}_dimension.mcfunction`), output.dimension_gate);
+        creator.write(path.resolve(this.paths.gate, `${config.folder.hardcore}_start.mcfunction`), output.start_gate);
+        creator.write(path.resolve(this.paths.gate, `${config.folder.hardcore}_gamemode_check.mcfunction`), output.gamemode_check);
+        creator.write(path.resolve(this.paths.gate, `${config.folder.hardcore}_death_check.mcfunction`), output.death_check);
+    }
+
+    createLocationFunctions() {
+        this.validatePaths();
         data.locations.forEach((group) => {
             group.locations.forEach((item) => {
-                creator.write(path.resolve(destination, `${config.filename.location}${item.filename}.mcfunction`), location.create(item.label, item.dimension, item.coordinates, item.color));
+                creator.write(path.resolve(this.paths.location, `${item.filename}.mcfunction`), location.create(item.label, item.dimension, item.coordinates, item.color));
             });
         });
     }
 
-    createToolFunctions(destination) {
-        this.validateDestinations(destination, path.resolve(destination, config.filename.gate));
-        data.tools.forEach((item) => {
-            creator.write(path.resolve(destination, `${config.filename.swap}${item.filename}.mcfunction`), toolSwapper.create('item', item));
-            creator.write(path.resolve(destination, config.filename.gate, `${config.filename.swap}${item.filename}.mcfunction`), toolSwapper.create('item_gate', item));
+    createToolFunctions() {
+        this.validatePaths();
+        const output = toolSwapper.create(data.tools);
+        Object.entries(output.tools).forEach(([key, value]) => {
+            creator.write(path.resolve(this.paths.tool_swap, `${key}.mcfunction`), value);
+        });
+        Object.entries(output.gates).forEach(([key, value]) => {
+            creator.write(path.resolve(this.paths.gate, `${config.folder.tool_swap}_${key}.mcfunction`), value);
         });
     }
-    createArmorFunctions(destination) {
-        this.validateDestinations(destination, path.resolve(destination, config.filename.gate));
-        data.armor.forEach((item) => {
-            creator.write(path.resolve(destination, `${config.filename.swap}${item.filename}.mcfunction`), armorSwapper.create('item', item));
-            creator.write(path.resolve(destination, config.filename.gate, `${config.filename.swap}${item.filename}.mcfunction`), armorSwapper.create('item_gate', item));
+    createArmorFunctions() {
+        // this.validatePaths();
+        // data.armor.forEach((item) => {
+        //     creator.write(path.resolve(this.paths.functions, `${config.filename.swap}${item.filename}.mcfunction`), armorSwapper.create('item', item));
+        //     creator.write(path.resolve(this.paths.gate, `${config.filename.swap}${item.filename}.mcfunction`), armorSwapper.create('item_gate', item));
+        // });
+    }
+    createShulkerFunctions() {
+        this.validatePaths();
+        const output = shulkerSwapper.create(data.shulkers);
+        Object.entries(output.shulkers).forEach(([key, value]) => {
+            creator.write(path.resolve(this.paths.shulker, `${key}.mcfunction`), value);
         });
+        creator.write(path.resolve(this.paths.gate, `${config.folder.shulker}_export.mcfunction`), output.gate);
     }
-    createShulkerFunctions(destination) {
-        shulkerSwapper.init();
-        this.validateDestinations(destination, path.resolve(destination, config.filename.gate));
-        data.shulkers.forEach((item) => {
-            creator.write(path.resolve(destination, `${config.filename.shulker}export_${item.name}.mcfunction`), shulkerSwapper.create('swapper', item.name, item.label, item.color, item.slot));
-            shulkerSwapper.create('append_gate', item.name, item.label, item.color);
-        });
-        creator.write(path.resolve(destination, config.filename.gate, `${config.filename.shulker}export.mcfunction`), shulkerSwapper.create('gate'));
+    createBookFunctions() {
+        this.validatePaths();
+        creator.write(path.resolve(this.paths.book, 'god.mcfunction'), book.create('god', data.locations));
+        creator.write(path.resolve(this.paths.book, 'default.mcfunction'), book.create('default', data.locations));
     }
-    createBookFunctions(destination) {
-        this.validateDestinations(destination);
-        creator.write(path.resolve(destination, 'book_god.mcfunction'), book.create('god', data.locations));
-        creator.write(path.resolve(destination, 'book_default.mcfunction'), book.create('default', data.locations));
+    createInventoryFunctions() {
+        this.validatePaths();
+        const output = inventory.create(data.items);
+        creator.write(path.resolve(this.paths.inventory, `import.mcfunction`), output.import);
+        creator.write(path.resolve(this.paths.inventory, `export.mcfunction`), output.export);
+        creator.write(path.resolve(this.paths.gate, `${config.folder.inventory}_import.mcfunction`), output.import_gate);
+        creator.write(path.resolve(this.paths.gate, `${config.folder.inventory}_export.mcfunction`), output.export_gate);
     }
-    createInventoryFunctions(destination) {
-        this.validateDestinations(destination, path.resolve(destination, config.filename.gate));
-        creator.write(path.resolve(destination, `${config.filename.inventory}import.mcfunction`), inventory.create('import'));
-        creator.write(path.resolve(destination, config.filename.gate, `${config.filename.inventory}import.mcfunction`), inventory.create('import_gate'));
-        creator.write(path.resolve(destination, `${config.filename.inventory}export.mcfunction`), inventory.create('export', data.items));
-        creator.write(path.resolve(destination, config.filename.gate, `${config.filename.inventory}export.mcfunction`), inventory.create('export_gate'));
-    }
-    createEnderFunctions(destination) {
-        this.validateDestinations(destination, path.resolve(destination, config.filename.gate));
-        creator.write(path.resolve(destination, `${config.filename.ender}place.mcfunction`), enderchest.create('place', data.directions));
-        creator.write(path.resolve(destination, `${config.filename.ender}destroy.mcfunction`), enderchest.create('destroy'));
-        creator.write(path.resolve(destination, config.filename.gate, `${config.filename.ender}inventory.mcfunction`), enderchest.create('inventory_gate'));
-        creator.write(path.resolve(destination, config.filename.gate, `${config.filename.ender}existence.mcfunction`), enderchest.create('existence_gate'));
-        // creator.write(path.resolve(destination, `${config.filename.ender}toggle.mcfunction`), enderchest.create('toggle'));
+    createEnderFunctions() {
+        this.validatePaths();
+        const output = ender.create(data.directions, data.objectives.ender);
+        creator.write(path.resolve(this.paths.ender, `place.mcfunction`), output.place);
+        creator.write(path.resolve(this.paths.ender, `destroy.mcfunction`), output.destroy);
+        creator.write(path.resolve(this.paths.ender, `toggle.mcfunction`), output.toggle);
+        creator.write(path.resolve(this.paths.gate, `${config.folder.ender}_inventory.mcfunction`), output.inventory_gate);
+        creator.write(path.resolve(this.paths.gate, `${config.folder.ender}_existence.mcfunction`), output.existence_gate);
     }
     /* Validate file destinations and create the folders if not there 
     ----------------------------------------------------------------- */
     validateDestination(destination) {
-        if (!fs.existsSync(destination)) {
-            fs.mkdirSync(destination);
+        
+    }
+
+    validatePaths() {
+        if (!this.paths.functions || !this.paths.gate || !this.paths.location) {
+            throw new Error('Generator not initialized!');
         }
     }
-    validateDestinations(...destinations) {
-        destinations.forEach(destination => {
-            this.validateDestination(destination);
-        });
+
+    get config() {
+        return config;
     }
 }
 

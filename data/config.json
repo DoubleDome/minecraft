@@ -1,49 +1,102 @@
 {
     "namespace": "minecraft:madagascar",
     "package": "madagascar",
-    "dimension": "minecraft:overworld",
-    "filename": {
-        "swap": "swap_",
-        "inventory": "inventory_",
+    "path": {
+        "pack": "pack",
+        "root": "datapacks/madagascar_pack/",
+        "data": "data",
+        "minecraft": "minecraft",
+        "madagascar": "madagascar",
+        "functions": "functions"
+    },
+    "folder": {
         "gate": "gate",
-        "location": "location_",
-        "ender": "ender_",
-        "shulker": "shulker_"
+        "book": "book",
+        "hardcore": "hardcore",
+        "location": "location",
+        "shulker": "shulker",
+        "tool_swap": "tool_swap",
+        "inventory": "inventory",
+        "ender": "ender"
+    },
+    "label": {
+        "message": {
+            "locked": "You're stuck in HARDCORE!",
+            "death": "You DIED!"
+        },
+        "dimension": {
+            "minecraft:overworld": "Overworld",
+            "minecraft:the_nether": "The Nether",
+            "minecraft:the_end": "The End",
+            "madagascar:canvas": "Canvas",
+            "madagascar:skyblock": "Skyblock"
+        }
+    },
+    "function": {
+        "book": "madagascar:book/god",
+        "get_random_number": "madagascar:get_random_number",
+        "get_player_head": "madagascar:get_player_head"
+    },
+    "dimension": {
+        "default": "minecraft:overworld",
+        "overworld": "minecraft:overworld",
+        "the_nether": "minecraft:the_nether",
+        "the_end": "minecraft:the_end",
+        "canvas": "madagascar:canvas",
+        "skyblock": "madagascar:skyblock"
+    },
+    "item": {
+        "air": "minecraft:air",
+        "wand": "minecraft:wooden_axe",
+        "shulker": "minecraft:shulker_box",
+        "marker": "minecraft:marker",
+        "ender_chest": "minecraft:ender_chest",
+        "light": "minecraft:light",
+        "iron_bars": "minecraft:iron_bars",
+        "player_head": "minecraft:player_head"
+    },
+    "score": {
+        "ender_status": "madagascar.ender_status",
+        "deaths": "madagascar.deaths",
+        "hardcore_deaths": "madagascar.hardcore_deaths",
+        "death_dimension": "madagascar.death_dimension",
+        "dimension_change": "madagascar.dimension_change",
+        "health": "madagascar.health",
+        "rotation": "madagascar.rotation"
+    },
+    "player":{
+        "temp": "madagascar:temp"
     },
     "storage": {
         "inbound": "inbound",
         "outbound": "outbound",
         "inventory": "inventory",
         "slot": "slot",
-        "ender": "ender"
+        "ender": "ender",
+        "player_name": "player_name",
+        "location": "location",
+        "dimension":"dimension",
+        "rotation": "rotation"
     },
-    "shulkerLocation": {
-        "gear": "~ 250 ~",
-        "item": "~ 251 ~",
-        "holder": "-17 60 -1"
+    "tag": {
+        "hardcore": "hardcore",
+        "ender": "ender_marker",
+        "death": "death_marker"
     },
-    "slots": {
-        "player": 2,
-        "enderchest": 0
-    },
-    "marker": {
-        "ender": "EnderMarker"
-    },
-    "functions": {
-        "book": "madagascar:book_god"
-    },
-    "items": {
-        "shulker": "shulker_box",
-        "wand": "minecraft:wooden_axe"
-    },
-    "mineWith": "air",
-    "labels": {
-        "dimensions": {
-            "minecraft:overworld": "Overworld",
-            "minecraft:the_nether": "The Nether",
-            "minecraft:the_end": "The End",
-            "madagascar:skyblock": "Skyblock"
+    "coordinate": {
+        "shulker": {
+            "gear": "~ 250 ~",
+            "item": "~ 251 ~",
+            "holder": "-17 60 -1"
         }
+    },
+    "offset": {
+        "player_head": "",
+        "light": 1
+    },
+    "slot": {
+        "player": 2,
+        "ender_chest": 0
     },
     "title": {
         "time": "10 50 10",

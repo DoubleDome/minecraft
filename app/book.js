@@ -50,7 +50,8 @@ class Book {
         page.add(content.players);
         page.add(this.generateSpacer());
         page.add(content.utility);
-        // page.add(this.generateSpacer());
+        page.add(this.generateSpacer());
+        page.add(content.hardcore);
         return page.export();
     }
     
@@ -73,7 +74,7 @@ class Book {
                 clickEvent: {
                     action: 'run_command',
                     value: `/execute in ${dimension} run tp @s ${coordinates}`,
-                    value: `/function ${config.package}:${config.filename.location}${filename}`,
+                    value: `/function ${config.package}:${config.folder.location}/${filename}`,
                 },
             },
         ];

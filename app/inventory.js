@@ -1,63 +1,59 @@
 const CommandObject = require('../util/command');
 
-const command = new CommandObject();
 const config = require('../data/config.json');
 
 class Inventory {
-    create(type, items) {
-        command.reset();
-        switch (type) {
-            case 'import':
-                return this.createImport();
-            case 'import_gate':
-                return this.createImportGate();
-            case 'export':
-                return this.createExport(items);
-            case 'export_gate':
-                return this.createExportGate();
-            default:
-                throw new Error('[Inventory] Unknown Type');
-        }
+    create(items) {
+        const result = {};
+        result.import = this.createImport();
+        result.import_gate = this.createImportGate();
+        result.export = this.createExport(items);
+        result.export_gate = this.createExportGate();
+        return result;
     }
     createExport(items) {
-        this.createStorageCommands(items);
-        this.reindexItems(items.length);
-        command.createShulker(config.shulkerLocation.holder, config.dimension);
-        command.append(`execute in ${config.dimension} run data modify block ${config.shulkerLocation.holder} Items set value []`);
-        command.append(`execute in ${config.dimension} run data modify block ${config.shulkerLocation.holder} Items set from storage ${config.namespace} ${config.storage.inventory}`);
+        const command = new CommandObject();
+        this.createStorageCommands(command, items);
+        this.reindexItems(command, items.length);
+        command.createShulker(config.coordinate.shulker.holder, config.dimension.default);
+        command.append(`execute in ${config.dimension.default} run data modify block ${config.coordinate.shulker.holder} Items set value []`);
+        command.append(`execute in ${config.dimension.default} run data modify block ${config.coordinate.shulker.holder} Items set from storage ${config.namespace} ${config.storage.inventory}`);
         command.clearStorage(config.namespace, config.storage.inventory);
         command.clearInventory();
-        command.append(`give @s ${config.items.wand}`);
-        command.append(`function ${config.functions.book}`);
+        command.append(`give @s ${config.item.wand}`);
+        command.append(`function ${config.function.book}`);
         command.append(`gamemode creative @s`);
         return command.export();
     }
-    createStorageCommands(items) {
+    createStorageCommands(command, items) {
         items.forEach((id, index) => {
             command.append(`data modify storage ${config.namespace} ${config.storage.inventory} insert 0 from entity @s Inventory[{id:"${id}"}]`);
         });
     }
-    reindexItems(count) {
+    reindexItems(command, count) {
         for (let index = 0; index < count; index++) {
             command.append(`data modify storage ${config.namespace} ${config.storage.inventory}[${index}] merge value {Slot:${index}b}`);
         }
     }
 
     createExportGate() {
-        command.append(`execute in ${config.dimension} as @s unless block ${config.shulkerLocation.holder} minecraft:shulker_box run function ${config.package}:inventory_export`);
+        const command = new CommandObject();
+        command.append(`execute in ${config.dimension.default} as @s unless block ${config.coordinate.shulker.holder} ${config.item.shulker} run function ${config.package}:inventory/export`);
         return command.export();
     }
 
     createImport() {
+        const command = new CommandObject();
         command.clearInventory();
-        command.append(`execute in ${config.dimension} run loot give @s mine ${config.shulkerLocation.holder} air`);
-        command.clearBlock(config.shulkerLocation.holder, config.dimension);
-        command.append(`function ${config.functions.book}`);
+        command.append(`execute in ${config.dimension.default} run loot give @s mine ${config.coordinate.shulker.holder} ${config.item.air}`);
+        command.clearBlock(config.coordinate.shulker.holder, config.dimension.default);
+        command.append(`function ${config.function.book}`);
         command.append(`gamemode survival @s`);
         return command.export();
     }
     createImportGate() {
-        command.append(`execute in ${config.dimension} as @s if data block ${config.shulkerLocation.holder} Items run function ${config.package}:inventory_import`);
+        const command = new CommandObject();
+        command.append(`execute in ${config.dimension.default} as @s if data block ${config.coordinate.shulker.holder} Items run function ${config.package}:inventory/import`);
         return command.export();
     }
 }

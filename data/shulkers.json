@@ -56,55 +56,55 @@
     {
         "name": "storage1",
         "label": "Storage 1",
-        "color": "light_gray",
+        "color": "white",
         "slot": 9
     },
     {
         "name": "storage2",
         "label": "Storage 2",
-        "color": "light_gray",
+        "color": "white",
         "slot": 10
     },
     {
         "name": "storage3",
         "label": "Storage 3",
-        "color": "light_gray",
+        "color": "white",
         "slot": 11
     },
     {
         "name": "storage4",
         "label": "Storage 4",
-        "color": "light_gray",
+        "color": "white",
         "slot": 12
     },
     {
         "name": "storage5",
         "label": "Storage 5",
-        "color": "light_gray",
+        "color": "white",
         "slot": 13
     },
     {
         "name": "storage6",
         "label": "Storage 6",
-        "color": "light_gray",
+        "color": "white",
         "slot": 14
     },
     {
         "name": "storage7",
         "label": "Storage 7",
-        "color": "light_gray",
+        "color": "white",
         "slot": 15
     },
     {
         "name": "storage8",
         "label": "Storage 8",
-        "color": "light_gray",
+        "color": "white",
         "slot": 16
     },
     {
         "name": "storage9",
         "label": "Storage 9",
-        "color": "light_gray",
+        "color": "white",
         "slot": 17
     },
     {

@@ -1,0 +1,269 @@
+{
+    "constants": {
+        "overworld": {
+            "name": "madagascar.constants.overworld",
+            "type": "dummy",
+            "value": 0
+        },
+        "the_nether": {
+            "name": "madagascar.constants.the_nether",
+            "type": "dummy",
+            "value": 1
+        },
+        "the_end": {
+            "name": "madagascar.constants.the_end",
+            "type": "dummy",
+            "value": 2
+        },
+        "canvas": {
+            "name": "madagascar.constants.canvas",
+            "type": "dummy",
+            "value": 3
+        },
+        "skyblock": {
+            "name": "madagascar.constants.skyblock",
+            "type": "dummy",
+            "value": 4
+        },
+        "cm_to_m": {
+            "name": "madagascar.constants.cm_to_m",
+            "type": "dummy",
+            "value": 100
+        },
+        "m_to_km": {
+            "name": "madagascar.constants.m_to_km",
+            "type": "dummy",
+            "value": 1000
+        },
+        "cm_to_km": {
+            "name": "madagascar.constants.cm_to_km",
+            "type": "dummy",
+            "value": 100000
+        },
+        "ticks_per_second": {
+            "name": "madagascar.constants.ticks_per_second",
+            "type": "dummy",
+            "value": 20
+        },
+        "seconds_per_minute": {
+            "name": "madagascar.constants.seconds_per_minute",
+            "type": "dummy",
+            "value": 60
+        },
+        "minutes_per_hour": {
+            "name": "madagascar.constants.minutes_per_hour",
+            "type": "dummy",
+            "value": 60
+        }
+    },
+    "hardcore": {
+        "health": {
+            "name": "madagascar.health",
+            "type": "health"
+        },
+        "hardcore_deaths": {
+            "name": "madagascar.hardcore_deaths",
+            "type": "dummy",
+            "label": "Hardcore Deaths"
+        },
+        "rotation": {
+            "name": "madagascar.rotation",
+            "type": "dummy"
+        }
+    },
+    "time": {
+        "seconds": {
+            "name": "madagascar.time.seconds",
+            "type": "dummy",
+            "value": 0
+        },
+        "minutes": {
+            "name": "madagascar.time.minutes",
+            "type": "dummy",
+            "value": 0
+        },
+        "hours": {
+            "name": "madagascar.time.hours",
+            "type": "dummy",
+            "value": 0
+        }
+    },
+
+    "position": {
+        "start": {
+            "x": {
+                "name": "madagascar.start.x",
+                "type": "dummy",
+                "value": "Pos[0]"
+            },
+            "y": {
+                "name": "madagascar.start.y",
+                "type": "dummy",
+                "value": "Pos[1]"
+            },
+            "z": {
+                "name": "madagascar.start.z",
+                "type": "dummy",
+                "value": "Pos[2]"
+            }
+        },
+        "death": {
+            "x": {
+                "name": "madagascar.death.x",
+                "type": "dummy",
+                "value": "LastDeathLocation.pos[0]"
+            },
+            "y": {
+                "name": "madagascar.death.y",
+                "type": "dummy",
+                "value": "LastDeathLocation.pos[1]"
+            },
+            "z": {
+                "name": "madagascar.death.z",
+                "type": "dummy",
+                "value": "LastDeathLocation.pos[2]"
+            }
+        }
+    },
+    "distance": {
+        "land": {
+            "m": {
+                "name": "madagascar.distance.land.m",
+                "type": "dummy",
+                "collection": ["walk_distance", "sprint_distance", "crouch_distance", "climb_distance", "horse_distance"],
+                "value": 0
+            },
+            "km": {
+                "name": "madagascar.distance.land.km",
+                "type": "dummy",
+                "collection": ["walk_distance", "sprint_distance", "crouch_distance", "climb_distance", "horse_distance"],
+                "value": 0
+            }
+        },
+        "sea": {
+            "m": {
+                "name": "madagascar.distance.sea.m",
+                "type": "dummy",
+                "collection": ["swum_distance", "boat_distance", "surface_distance", "underwater_distance"],
+                "value": 0
+            },
+            "km": {
+                "name": "madagascar.distance.sea.km",
+                "type": "dummy",
+                "collection": ["swum_distance", "boat_distance", "surface_distance", "underwater_distance"],
+                "value": 0
+            }
+        },
+        "air": {
+            "m": {
+                "name": "madagascar.distance.air.m",
+                "type": "dummy",
+                "collection": ["flight_distance", "fall_distance"],
+                "value": 0
+            },
+            "km": {
+                "name": "madagascar.distance.air.km",
+                "type": "dummy",
+                "collection": ["flight_distance", "fall_distance"],
+                "value": 0
+            }
+        }
+    },
+    "stats": {
+        "deaths": {
+            "name": "madagascar.stats.deaths",
+            "type": "deathCount",
+            "label": "Deaths",
+            "value": 0
+        },
+        "points": {
+            "name": "madagascar.stats.points",
+            "type": "xp",
+            "value": 0
+        },
+        "damage_dealt": {
+            "name": "madagascar.stats.damage.dealt",
+            "type": "minecraft.custom:minecraft.damage.dealt",
+            "value": 0
+        },
+        "damage_taken": {
+            "name": "madagascar.stats.damage.taken",
+            "type": "minecraft.custom:minecraft.damage.taken",
+            "value": 0
+        },
+        "mob_kills": {
+            "name": "madagascar.stats.mob_kills",
+            "type": "minecraft.custom:minecraft.mob_kills",
+            "value": 0
+        },
+        "play_time": {
+            "name": "madagascar.stats.play_time",
+            "type": "minecraft.custom:minecraft.play_time",
+            "value": 0
+        },
+        "nights_slept": {
+            "name": "madagascar.stats.nights_slept",
+            "type": "minecraft.custom:minecraft.sleep_in_bed",
+            "value": 0
+        },
+        "walk_distance": {
+            "name": "madagascar.stats.walk_distance",
+            "type": "minecraft.custom:minecraft.walk_one_cm",
+            "value": 0
+        },
+        "sprint_distance": {
+            "name": "madagascar.stats.sprint_distance",
+            "type": "minecraft.custom:minecraft.sprint_one_cm",
+            "value": 0
+        },
+        "crouch_distance": {
+            "name": "madagascar.stats.crouch_distance",
+            "type": "minecraft.custom:minecraft.crouch_one_cm",
+            "value": 0
+        },
+        "horse_distance": {
+            "name": "madagascar.stats.horse_distance",
+            "type": "minecraft.custom:minecraft.horse_one_cm",
+            "value": 0
+        },
+        "surface_distance": {
+            "name": "madagascar.stats.surface_distance",
+            "type": "minecraft.custom:minecraft.walk_on_water_one_cm",
+            "value": 0
+        },
+        "underwater_distance": {
+            "name": "madagascar.stats.underwater_distance",
+            "type": "minecraft.custom:minecraft.walk_under_water_one_cm",
+            "value": 0
+        },
+        "climb_distance": {
+            "name": "madagascar.stats.climb_distance",
+            "type": "minecraft.custom:minecraft.climb_one_cm",
+            "value": 0
+        },
+        "swum_distance": {
+            "name": "madagascar.stats.swum_distance",
+            "type": "minecraft.custom:minecraft.swim_one_cm",
+            "value": 0
+        },
+        "boat_distance": {
+            "name": "madagascar.stats.boat_distance",
+            "type": "minecraft.custom:minecraft.boat_one_cm",
+            "value": 0
+        },
+        "fall_distance": {
+            "name": "madagascar.stats.fall_distance",
+            "type": "minecraft.custom:minecraft.fall_one_cm",
+            "value": 0
+        },
+        "flight_distance": {
+            "name": "madagascar.stats.flight_distance",
+            "type": "minecraft.custom:minecraft.aviate_one_cm",
+            "value": 0
+        }
+    },
+    "ender": {
+        "name": "madagascar.ender.status",
+        "type": "dummy"
+    }
+}

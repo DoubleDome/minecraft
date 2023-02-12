@@ -1,0 +1,435 @@
+{
+    "type": "minecraft:entity",
+    "pools": [
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "minecraft:player_head",
+                    "functions": [
+                        {
+                            "function": "minecraft:fill_player_head",
+                            "entity": "this"
+                        },
+                        {
+                            "function": "minecraft:set_enchantments",
+                            "enchantments": {
+                                "minecraft:vanishing_curse": 1
+                            },
+                            "add": true
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    {
+                                        "text": "",
+                                        "color": "gray",
+                                        "italic": false
+                                    }
+                                ],
+                                [
+                                    { "text": "Hardcore Death #", "italic": false },
+                                    {
+                                        "score": {
+                                            "name": "@s",
+                                            "objective": "madagascar.hardcore_deaths"
+                                        }
+                                    }
+                                ],
+                                [
+                                    {
+                                        "text": "Start Location: ",
+                                        "color": "gray",
+                                        "italic": false
+                                    },
+                                    {
+                                        "score": {
+                                            "name": "@s",
+                                            "objective": "madagascar.start.x"
+                                        },
+                                        "color": "gold"
+                                    },
+                                    {
+                                        "text": " ",
+                                        "color": "gray",
+                                        "italic": false
+                                    },
+                                    {
+                                        "score": {
+                                            "name": "@s",
+                                            "objective": "madagascar.start.y"
+                                        },
+                                        "color": "gold"
+                                    },
+                                    {
+                                        "text": " ",
+                                        "color": "gray",
+                                        "italic": false
+                                    },
+                                    {
+                                        "score": {
+                                            "name": "@s",
+                                            "objective": "madagascar.start.z"
+                                        },
+                                        "color": "gold"
+                                    }
+                                ],
+                                [
+                                    {
+                                        "text": "Death Location: ",
+                                        "color": "gray",
+                                        "italic": false
+                                    },
+                                    {
+                                        "score": {
+                                            "name": "@s",
+                                            "objective": "madagascar.death.x"
+                                        },
+                                        "color": "gold"
+                                    },
+                                    {
+                                        "text": " ",
+                                        "color": "gray",
+                                        "italic": false
+                                    },
+                                    {
+                                        "score": {
+                                            "name": "@s",
+                                            "objective": "madagascar.death.y"
+                                        },
+                                        "color": "gold"
+                                    },
+                                    {
+                                        "text": " ",
+                                        "color": "gray",
+                                        "italic": false
+                                    },
+                                    {
+                                        "score": {
+                                            "name": "@s",
+                                            "objective": "madagascar.death.z"
+                                        },
+                                        "color": "gold"
+                                    }
+                                ]
+                            ]
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Death Dimension: ", "color": "gray", "italic": false },
+                                    { "text": "Overworld", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [
+                                {
+                                    "condition": "minecraft:entity_scores",
+                                    "entity": "this",
+                                    "scores": {
+                                        "death_dimension": 0
+                                    }
+                                }
+                            ],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Death Dimension: ", "color": "gray", "italic": false },
+                                    { "text": "The Nether", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [
+                                {
+                                    "condition": "minecraft:entity_scores",
+                                    "entity": "this",
+                                    "scores": {
+                                        "death_dimension": 1
+                                    }
+                                }
+                            ],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Death Dimension: ", "color": "gray", "italic": false },
+                                    { "text": "The End", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [
+                                {
+                                    "condition": "minecraft:entity_scores",
+                                    "entity": "this",
+                                    "scores": {
+                                        "death_dimension": 2
+                                    }
+                                }
+                            ],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Death Dimension: ", "color": "gray", "italic": false },
+                                    { "text": "Canvas", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [
+                                {
+                                    "condition": "minecraft:entity_scores",
+                                    "entity": "this",
+                                    "scores": {
+                                        "death_dimension": 3
+                                    }
+                                }
+                            ],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Death Dimension: ", "color": "gray", "italic": false },
+                                    { "text": "Skyblock", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [
+                                {
+                                    "condition": "minecraft:entity_scores",
+                                    "entity": "this",
+                                    "scores": {
+                                        "death_dimension": 4
+                                    }
+                                }
+                            ],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    {
+                                        "text": "Nights Slept: ",
+                                        "color": "gray",
+                                        "italic": false
+                                    },
+                                    {
+                                        "score": {
+                                            "name": "@s",
+                                            "objective": "madagascar.stats.nights_slept"
+                                        },
+                                        "color": "gold"
+                                    }
+                                ],
+                                [
+                                    {
+                                        "text": "Total Playtime: ",
+                                        "color": "gray",
+                                        "italic": false
+                                    },
+                                    {
+                                        "score": {
+                                            "name": "@s",
+                                            "objective": "madagascar.time.hours"
+                                        },
+                                        "color": "gold"
+                                    },
+                                    {
+                                        "text": "h ",
+                                        "color": "gold"
+                                    },
+                                    {
+                                        "score": {
+                                            "name": "@s",
+                                            "objective": "madagascar.time.minutes"
+                                        },
+                                        "color": "gold"
+                                    },
+                                    {
+                                        "text": "m ",
+                                        "color": "gold"
+                                    },
+                                    {
+                                        "score": {
+                                            "name": "@s",
+                                            "objective": "madagascar.time.seconds"
+                                        },
+                                        "color": "gold"
+                                    },
+                                    {
+                                        "text": "s",
+                                        "color": "gold"
+                                    }
+                                ],
+                                [
+                                    {
+                                        "text": "Total Points: ",
+                                        "color": "gray",
+                                        "italic": false
+                                    },
+                                    {
+                                        "score": {
+                                            "name": "@s",
+                                            "objective": "madagascar.stats.points"
+                                        },
+                                        "color": "gold"
+                                    }
+                                ],
+                                [
+                                    {
+                                        "text": "Mobs Killed: ",
+                                        "color": "gray",
+                                        "italic": false
+                                    },
+                                    {
+                                        "score": {
+                                            "name": "@s",
+                                            "objective": "madagascar.stats.mob_kills"
+                                        },
+                                        "color": "gold"
+                                    }
+                                ],
+                                [
+                                    {
+                                        "text": "Damage Dealt: ",
+                                        "color": "gray",
+                                        "italic": false
+                                    },
+                                    {
+                                        "score": {
+                                            "name": "@s",
+                                            "objective": "madagascar.stats.damage_dealt"
+                                        },
+                                        "color": "gold"
+                                    }
+                                ],
+                                [
+                                    {
+                                        "text": "Damage Taken: ",
+                                        "color": "gray",
+                                        "italic": false
+                                    },
+                                    {
+                                        "score": {
+                                            "name": "@s",
+                                            "objective": "madagascar.stats.damage_taken"
+                                        },
+                                        "color": "gold"
+                                    }
+                                ],
+                                [
+                                    {
+                                        "text": "Distance on Land: ",
+                                        "color": "gray",
+                                        "italic": false
+                                    },
+                                    {
+                                        "score": {
+                                            "name": "@s",
+                                            "objective": "madagascar.distance.land.km"
+                                        },
+                                        "color": "gold"
+                                    },
+                                    {
+                                        "text": "km ",
+                                        "color": "gold",
+                                        "italic": false
+                                    },
+                                    {
+                                        "score": {
+                                            "name": "@s",
+                                            "objective": "madagascar.distance.land.m"
+                                        },
+                                        "color": "gold"
+                                    },
+                                    {
+                                        "text": "m",
+                                        "color": "gold",
+                                        "italic": false
+                                    }
+                                ],
+                                [
+                                    {
+                                        "text": "Distance at Sea: ",
+                                        "color": "gray",
+                                        "italic": false
+                                    },
+                                    {
+                                        "score": {
+                                            "name": "@s",
+                                            "objective": "madagascar.distance.sea.km"
+                                        },
+                                        "color": "gold"
+                                    },
+                                    {
+                                        "text": "km ",
+                                        "color": "gold",
+                                        "italic": false
+                                    },
+                                    {
+                                        "score": {
+                                            "name": "@s",
+                                            "objective": "madagascar.distance.sea.m"
+                                        },
+                                        "color": "gold"
+                                    },
+                                    {
+                                        "text": "m",
+                                        "color": "gold",
+                                        "italic": false
+                                    }
+                                ],
+                                [
+                                    {
+                                        "text": "Distance in Air: ",
+                                        "color": "gray",
+                                        "italic": false
+                                    },
+                                    {
+                                        "score": {
+                                            "name": "@s",
+                                            "objective": "madagascar.distance.air.km"
+                                        },
+                                        "color": "gold"
+                                    },
+                                    {
+                                        "text": "km ",
+                                        "color": "gold",
+                                        "italic": false
+                                    },
+                                    {
+                                        "score": {
+                                            "name": "@s",
+                                            "objective": "madagascar.distance.air.m"
+                                        },
+                                        "color": "gold"
+                                    },
+                                    {
+                                        "text": "m",
+                                        "color": "gold",
+                                        "italic": false
+                                    }
+                                ]
+                            ],
+                            "replace": false
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

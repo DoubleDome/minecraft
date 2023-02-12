@@ -1,16 +1,32 @@
 // Dependencies
-const fs = require('fs');
+const fse = require('fs-extra');
+const clc = require('cli-color');
 
 class Creator {
-    constructor() {}
 
     write(path, content) {
         try {
-            fs.writeFileSync(path, content);
-            console.log(`File created at: ${path}`);
+            fse.writeFileSync(path, content);
+            console.log(clc.green('Created:'), path);
         } catch (err) {
             console.error(err);
         }
+    }
+
+    destroy(target) {
+        fse.rmSync(target, { recursive: true, force: true });
+    }
+
+    clone(source, destination) {
+        fse.copySync(source, destination);
+    }
+
+    validate(destination) {
+        if (!fse.existsSync(destination)) {
+            fse.mkdirSync(destination);
+            console.log(clc.green('Created:'), destination);
+        }
+        return destination;
     }
 }
 
