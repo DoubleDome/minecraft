@@ -42,9 +42,8 @@ class Generator {
         });
     }
 
-    
-
     create() {
+        this.validatePaths();
         creator.clone(config.path.pack, this.paths.base);
 
         this.createBookFunctions();

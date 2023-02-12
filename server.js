@@ -44,10 +44,12 @@ const endpoints = [
 endpoints.forEach((endpoint) => {
     app.get(endpoint.path, function (req, res) {
         try {
-            generator[endpoint.function](path.resolve(process.env.BASE_PATH, process.env.FUNCTIONS_PATH));
+            generator.init(path.resolve(process.env.BASE_PATH, process.env.PACK_PATH));
+            generator[endpoint.function]();
             res.send('Command generation successful!');
         } catch (error) {
             res.send('Command generation failed!');
+            // console.log(error);
         }
     });
 });

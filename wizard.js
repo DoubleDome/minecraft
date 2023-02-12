@@ -7,11 +7,6 @@ const backup = require('./app/backup');
 const generator = require('./app/generator');
 
 const config = {
-    jakarta: {
-        label: 'Jakarta',
-        base: '/Users/aletoled/Library/Application Support/minecraft/saves/',
-        pack: 'Jakarta/datapacks/madagascar_pack',
-    },
     datapack: {
         label: 'Datapack',
         base: '/Users/aletoled/Library/Application Support/minecraft/saves/',
@@ -33,7 +28,7 @@ const config = {
 };
 
 function generatePath(location) {
-    return path.join(config[location].base, config[location].root);
+    return path.join(config[location].base, config[location].pack);
 }
 
 (async () => {
