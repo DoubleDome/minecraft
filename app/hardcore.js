@@ -148,7 +148,6 @@ class Hardcore {
 
         command.append(`scoreboard objectives add ${config.score.dimension_change} dummy`);
         command.append(`scoreboard objectives add ${config.score.death_dimension} dummy`);
-        command.append(`scoreboard objectives setdisplay sidebar ${config.score.dimension_change}`);
         command.comment('temp player is needed later on when calling the place marker function, by then the scope of @s has changed');
         dimensions.forEach((value, index) => {
             command.append(`data modify storage ${config.namespace} ${config.score.death_dimension} set from entity @s LastDeathLocation.dimension`);
