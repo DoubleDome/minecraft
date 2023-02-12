@@ -1,5 +1,4 @@
-const CommandObject = require('../util/command');
-
+const Command = require('../util/command');
 const config =  require('../data/config');
 
 class Location {
@@ -11,7 +10,7 @@ class Location {
         return result;
     }
     createLocation(label, dimension, coordinates, color, gamemode = null) {
-        const command = new CommandObject();
+        const command = new Command();
         command.append(`execute as @s in ${dimension} run tp @s ${coordinates}`);
         command.append(`execute as @s run title @s times ${config.title.time}`);
         command.append(`execute as @s run title @s subtitle {"text":"${config.label.dimension[dimension]}", "color":"${color || config.title.color}"}`);

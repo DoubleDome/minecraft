@@ -1,15 +1,11 @@
-const CommandObject = require('../util/command');
-
-const config = require('../data/config.json');
-
-const command = new CommandObject();
+const Command = require('../util/command');
 
 class Load {
     constructor() {
     }
     static getInstance() {
         if (!Load.command) {
-            Load.command = new CommandObject();
+            Load.command = new Command();
         }
         return Load.command;
     }

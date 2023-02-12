@@ -1,6 +1,4 @@
-const CommandObject = require('../util/command');
-
-const command = new CommandObject();
+const Command = require('../util/command');
 const config = require('../data/config.json');
 
 class ToolSwapper {
@@ -13,7 +11,7 @@ class ToolSwapper {
         return result;
     }
     createItem(id, filename, enchantment = null, level = null) {
-        command.reset();
+        const command = new Command();
         // Wipe storage
         command.clearStorage(config.namespace, config.storage.inbound);
         command.clearStorage(config.namespace, config.storage.outbound);
@@ -60,7 +58,7 @@ class ToolSwapper {
         return command.export();
     }
     createItemGate(id, filename, enchantment = null, level = null) {
-        command.reset();
+        const command = new Command();
         // Look for the tool in the gear box in the enderchest, if its there, run the function
         const functionPath = `${config.package}:${config.folder.tool_swap}/${filename}`;
         if (enchantment) {

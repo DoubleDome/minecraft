@@ -1,9 +1,9 @@
-const CommandObject = require('../util/command');
+const Command = require('../util/command');
+const config = require('../data/config.json');
 
 const commands = {};
-commands.swap = new CommandObject();
-commands.gate = new CommandObject();
-const config = require('../data/config.json');
+commands.swap = new Command();
+commands.gate = new Command();
 
 class ShulkerSwapper {
     create(shulkers) {

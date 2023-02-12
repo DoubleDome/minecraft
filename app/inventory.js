@@ -1,5 +1,4 @@
-const CommandObject = require('../util/command');
-
+const Command = require('../util/command');
 const config = require('../data/config.json');
 
 class Inventory {
@@ -12,7 +11,7 @@ class Inventory {
         return result;
     }
     createExport(items) {
-        const command = new CommandObject();
+        const command = new Command();
         this.createStorageCommands(command, items);
         this.reindexItems(command, items.length);
         command.createShulker(config.coordinate.shulker.holder, config.dimension.default);
@@ -37,13 +36,13 @@ class Inventory {
     }
 
     createExportGate() {
-        const command = new CommandObject();
+        const command = new Command();
         command.append(`execute in ${config.dimension.default} as @s unless block ${config.coordinate.shulker.holder} ${config.item.shulker} run function ${config.package}:inventory/export`);
         return command.export();
     }
 
     createImport() {
-        const command = new CommandObject();
+        const command = new Command();
         command.clearInventory();
         command.append(`execute in ${config.dimension.default} run loot give @s mine ${config.coordinate.shulker.holder} ${config.item.air}`);
         command.clearBlock(config.coordinate.shulker.holder, config.dimension.default);
@@ -52,7 +51,7 @@ class Inventory {
         return command.export();
     }
     createImportGate() {
-        const command = new CommandObject();
+        const command = new Command();
         command.append(`execute in ${config.dimension.default} as @s if data block ${config.coordinate.shulker.holder} Items run function ${config.package}:inventory/import`);
         return command.export();
     }

@@ -1,9 +1,7 @@
-const CommandObject = require('../util/command');
-
+const Command = require('../util/command');
 const config = require('../data/config.json');
 const Load = require('./load');
 const Tick = require('./tick');
-const Command = require('../util/command');
 let objectives = {};
 
 class Hardcore {
@@ -48,7 +46,7 @@ class Hardcore {
     }
 
     createStart() {
-        const command = new CommandObject();
+        const command = new Command();
         command.clearInventory();
         command.clearExperience();
         command.setObjectives('@s', objectives.stats);
@@ -58,28 +56,28 @@ class Hardcore {
         return command.export();
     }
     createStartGate() {
-        const command = new CommandObject();
+        const command = new Command();
         command.append(`execute unless entity @s[tag=${config.tag.hardcore}] run function ${config.package}:hardcore/start`);
         return command.export();
     }
     createGamemodeCheck() {
-        const command = new CommandObject();
+        const command = new Command();
         command.append(`execute as @p[tag=${config.tag.hardcore},gamemode=!survival] run function ${config.package}:hardcore/gamemode_lock`);
         return command.export();
     }
     createDeathCheck() {
-        const command = new CommandObject();
+        const command = new Command();
         command.append(`execute as @p[tag=${config.tag.hardcore},scores={${objectives.stats.deaths.name}=1..,${objectives.hardcore.health.name}=1..}] run function ${config.package}:hardcore/reset`);
         return command.export();
     }
     createGamemodeLock() {
-        const command = new CommandObject();
+        const command = new Command();
         command.append(`tellraw @s {"text":"${config.label.message.locked}","italic":true,"color":"gold"}`);
         command.append(`gamemode survival @s`);
         return command.export();
     }
     createReset() {
-        const command = new CommandObject();
+        const command = new Command();
         command.clearInventory();
         command.append(`tellraw @s {"text":"${config.label.message.death}","italic":true,"color":"red"}`);
         command.append(`scoreboard players add @s ${objectives.hardcore.hardcore_deaths.name} 1`);
@@ -97,14 +95,14 @@ class Hardcore {
         return command.export();
     }
     createPrepareMarker() {
-        const command = new CommandObject();
+        const command = new Command();
         command.append(`summon ${config.item.marker} ~ ~ ~ {Tags:["${config.tag.death}"]}`);
         command.append(`execute as @e[type=${config.item.marker},tag=${config.tag.death}] run function ${config.package}:hardcore/place_marker`);
         return command.export();
     }
 
     createPlaceMarker() {
-        const command = new CommandObject();
+        const command = new Command();
         command.comment('scope of @s is now the marker');
         command.append(`data modify entity @s Pos set from storage ${config.namespace} ${config.storage.location}`);
         command.append(`execute store result score ${config.player.temp} ${objectives.hardcore.rotation.name} run loot spawn ~ ~ ~ loot ${config.function.get_random_number}`);
@@ -120,7 +118,7 @@ class Hardcore {
     }
 
     createDimensionGate() {
-        const command = new CommandObject();
+        const command = new Command();
         const dimensions = Object.values(config.dimension);
         dimensions.shift();
 
@@ -179,7 +177,7 @@ class Hardcore {
     }
 
     createPlayerhead() {
-        const command = new CommandObject();
+        const command = new Command();
         command.createShulker(config.coordinate.shulker.item);
         command.append(`loot replace block ${config.coordinate.shulker.item} container.0 loot ${config.function.get_player_head}`);
         command.append(`data modify storage ${config.namespace} ${config.storage.player_name} set from block ${config.coordinate.shulker.item} Items[{Slot:0b}].tag.SkullOwner.Name`);

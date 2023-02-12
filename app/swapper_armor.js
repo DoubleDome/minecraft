@@ -1,6 +1,5 @@
-const CommandObject = require('../util/command');
-
-const command = new CommandObject();
+const Command = require('../util/command');
+const config =  require('../data/config');
 
 class ArmorSwapper {
     create(config) {

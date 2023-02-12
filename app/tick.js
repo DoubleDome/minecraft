@@ -1,12 +1,11 @@
-const CommandObject = require('../util/command');
-const command = new CommandObject();
+const Command = require('../util/command');
 
 class Tick {
     constructor() {
     }
     static getInstance() {
         if (!Tick.command) {
-            Tick.command = new CommandObject();
+            Tick.command = new Command();
         }
         return Tick.command;
     }

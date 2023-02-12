@@ -1,7 +1,5 @@
-const CommandObject = require('../util/command');
-
+const Command = require('../util/command');
 const config = require('../data/config.json');
-
 const Load = require('./load');
 
 class Ender {
@@ -19,7 +17,7 @@ class Ender {
         Load.getInstance().addObjective(objective.name, 'dummy');
     }
     createPlace(directions) {
-        const command = new CommandObject();
+        const command = new Command();
         this.createDirection(command, directions.north);
         this.createDirection(command, directions.east);
         this.createDirection(command, directions.south);
@@ -32,23 +30,23 @@ class Ender {
     }
 
     createDestroy() {
-        const command = new CommandObject();
+        const command = new Command();
         command.append(`execute at @e[tag=${config.tag.ender},limit=1] run setblock ~ ~ ~ ${config.item.air}`);
         command.append(`kill @e[tag=${config.tag.ender},limit=1]`);
         return command.export();
     }
     createInventoryGate() {
-        const command = new CommandObject();
+        const command = new Command();
         command.append(`execute as @s if data entity @s Inventory[{id:"${config.item.ender_chest}"}] run function ${config.package}:gate/ender_existence`);
         return command.export();
     }
     createExistenceGate() {
-        const command = new CommandObject();
+        const command = new Command();
         command.append(`execute unless entity @e[tag=${config.tag.ender},limit=1] run function ${config.package}:ender/place`);
         return command.export();
     }
     createToggle() {
-        const command = new CommandObject();
+        const command = new Command();
         command.append(`execute store success score @s ${config.score.ender_status} run data get entity @e[tag=${config.tag.ender},limit=1]`);
         command.append(`execute if score @s ${config.score.ender_status} matches 0 run function ${config.package}:gate/ender_inventory`);
         command.append(`execute if score @s ${config.score.ender_status} matches 1 run function ${config.package}:ender/destroy`);
