@@ -12,6 +12,7 @@
             { "label": "Village Base", "dimension": "minecraft:overworld", "coordinates": "-10185 68 -10705 90 -7", "filename": "village_base" },
             { "label": "Snow Base", "dimension": "minecraft:overworld", "coordinates": "-10356 74 -5145 -132 -7", "filename": "snow_base" },
             { "label": "Spooky Mansion", "dimension": "minecraft:overworld", "coordinates": "-14643 99 -11911.5 90 0", "filename": "spooky_mansion" },
+            { "label": "Canvas", "dimension": "madagascar:canvas", "coordinates": "0 70 0", "filename": "canvas", "gamemode":"creative" },
             { "label": "Skyblock Base", "dimension": "madagascar:skyblock", "coordinates": "-10 63 -1 135 4", "filename": "skyblock_base" },
             { "label": "Ocean Woodland", "dimension": "minecraft:overworld", "coordinates": "16879 70 -4884 0 -13", "filename": "ocean_woodland" }
         ]

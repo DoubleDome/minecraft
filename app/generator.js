@@ -83,10 +83,9 @@ class Generator {
 
     createLocationFunctions() {
         this.validatePaths();
-        data.locations.forEach((group) => {
-            group.locations.forEach((item) => {
-                creator.write(path.resolve(this.paths.location, `${item.filename}.mcfunction`), location.create(item.label, item.dimension, item.coordinates, item.color));
-            });
+        const output = location.create(data.locations);
+        Object.entries(output).forEach(([key, value]) => {
+            creator.write(path.resolve(this.paths.location, `${key}.mcfunction`), value);
         });
     }
 
