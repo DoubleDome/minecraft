@@ -5,7 +5,7 @@
     },
     "author": "DoubleDome",
     "lore": ["This ancient book of", "magic spells will grant", "the owner special abilities."],
-    "version": "10",
+    "version": "11",
     "headings": {
         "god_page": "God Powers",
         "magic_page": "Magic Powers"

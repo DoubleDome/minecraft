@@ -1,7 +1,7 @@
 const Page = require('../util/page');
 
 const roman = require('../data/roman.json');
-const content = require('../data/content.json');
+const content = require('../data/book.json');
 const config = require('../data/config.json');
 
 class Book {
