@@ -263,7 +263,7 @@
         }
     },
     "ender": {
-        "name": "madagascar.ender.status",
+        "name": "madagascar.ender_status",
         "type": "dummy"
     }
 }
