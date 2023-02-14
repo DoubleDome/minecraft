@@ -14,9 +14,13 @@ class Hardcore {
         const result = {};
         result.start = this.createStart();
         result.start_gate = this.createStartGate();
+        result.stop_gate = this.createStopGate();
         result.gamemode_check = this.createGamemodeCheck();
         result.death_check = this.createDeathCheck();
-        result.reset = this.createReset();
+        result.stop = this.createStop();
+        result.pause = this.createPause();
+        result.resume = this.createResume();
+        result.toggle = this.createToggle();
         result.gamemode_lock = this.createGamemodeLock();
         result.player_head = this.createPlayerhead();
         result.prepare_marker = this.createPrepareMarker();
@@ -27,7 +31,9 @@ class Hardcore {
 
     createLoad() {
         Load.getInstance().addObjectives(objectives.constants);
+        Load.getInstance().addObjectives(objectives.temp);
         Load.getInstance().addObjectives(objectives.hardcore);
+        Load.getInstance().addObjectives(objectives.killers);
         Load.getInstance().addObjectives(objectives.stats);
         Load.getInstance().addObjectives(objectives.position.start);
         Load.getInstance().addObjectives(objectives.position.death);
@@ -35,9 +41,9 @@ class Hardcore {
         Load.getInstance().addObjectives(objectives.distance.land);
         Load.getInstance().addObjectives(objectives.distance.air);
         Load.getInstance().addObjectives(objectives.distance.sea);
-        Load.getInstance().setObjectives('#constants', objectives.constants);
-        Load.getInstance().setObjectives('#constants', objectives.time);
-        Load.getInstance().append(`scoreboard objectives setdisplay list ${objectives.hardcore.hardcore_deaths.name}`);
+        Load.getInstance().setObjectives(config.player.constants, objectives.constants);
+        Load.getInstance().setObjectives(config.player.constants, objectives.time);
+        Load.getInstance().append(`scoreboard objectives setdisplay list ${objectives.hardcore.deaths.name}`);
     }
 
     createTick() {
@@ -50,14 +56,40 @@ class Hardcore {
         command.clearInventory();
         command.clearExperience();
         command.setObjectives('@s', objectives.stats);
+        command.setObjectives('@s', objectives.killers);
+
         this.captureLocation(command, objectives.position.start);
-        command.append(`tag @s add hardcore`);
+        command.append(`tag @s add ${config.tag.hardcore}`);
         command.append(`gamemode survival @s`);
+        return command.export();
+    }
+    createPause(){
+        const command = new Command();
+        command.append(`tag @s remove ${config.tag.hardcore}`);
+        command.append(`tellraw @s {"text":"${config.label.message.pause}","italic":true,"color":"gold"}`);
+        return command.export();
+    }
+    createResume() {
+        const command = new Command();
+        command.append(`tag @s add ${config.tag.hardcore}`);
+        command.append(`tellraw @s {"text":"${config.label.message.resume}","italic":true,"color":"green"}`);
+        return command.export();
+    }
+    createToggle() {
+        const command = new Command();
+        command.append(`execute store success score ${config.player.temp} ${objectives.temp.status.name} run data get entity @s[tag=${config.tag.hardcore}]`);
+        command.append(`execute as @s if score ${config.player.temp} ${objectives.temp.status.name} matches 0 run function ${config.package}:hardcore/resume`);
+        command.append(`execute as @s if score ${config.player.temp} ${objectives.temp.status.name} matches 1 run function ${config.package}:hardcore/pause`);
         return command.export();
     }
     createStartGate() {
         const command = new Command();
         command.append(`execute unless entity @s[tag=${config.tag.hardcore}] run function ${config.package}:hardcore/start`);
+        return command.export();
+    }
+    createStopGate() {
+        const command = new Command();
+        command.append(`execute if entity @s[tag=${config.tag.hardcore}] run function ${config.package}:hardcore/stop`);
         return command.export();
     }
     createGamemodeCheck() {
@@ -67,20 +99,20 @@ class Hardcore {
     }
     createDeathCheck() {
         const command = new Command();
-        command.append(`execute as @p[tag=${config.tag.hardcore},scores={${objectives.stats.deaths.name}=1..,${objectives.hardcore.health.name}=1..}] run function ${config.package}:hardcore/reset`);
+        command.append(`execute as @p[tag=${config.tag.hardcore},scores={${objectives.stats.deaths.name}=1..,${objectives.hardcore.health.name}=1..}] run function ${config.package}:hardcore/stop`);
         return command.export();
     }
     createGamemodeLock() {
         const command = new Command();
-        command.append(`tellraw @s {"text":"${config.label.message.locked}","italic":true,"color":"gold"}`);
+        command.append(`tellraw @s {"text":"${config.label.message.locked}","italic":true,"color":"yellow"}`);
         command.append(`gamemode survival @s`);
         return command.export();
     }
-    createReset() {
+    createStop() {
         const command = new Command();
         command.clearInventory();
         command.append(`tellraw @s {"text":"${config.label.message.death}","italic":true,"color":"red"}`);
-        command.append(`scoreboard players add @s ${objectives.hardcore.hardcore_deaths.name} 1`);
+        command.append(`scoreboard players add @s ${objectives.hardcore.deaths.name} 1`);
         this.calculateTime(command);
         this.calculateDistance(command, 'land');
         this.calculateDistance(command, 'sea');
@@ -91,7 +123,7 @@ class Hardcore {
         command.append(`execute as @s run function ${config.package}:hardcore/player_head`);
         command.append(`execute as @s run function ${config.package}:gate/hardcore_dimension`);
         command.clearExperience();
-        command.append(`tag @s remove hardcore`);
+        command.append(`tag @s remove ${config.tag.hardcore}`);
         return command.export();
     }
     createPrepareMarker() {
@@ -105,11 +137,11 @@ class Hardcore {
         const command = new Command();
         command.comment('scope of @s is now the marker');
         command.append(`data modify entity @s Pos set from storage ${config.namespace} ${config.storage.location}`);
-        command.append(`execute store result score ${config.player.temp} ${objectives.hardcore.rotation.name} run loot spawn ~ ~ ~ loot ${config.function.get_random_number}`);
+        command.append(`execute store result score ${config.player.temp} ${objectives.temp.rotation.name} run loot spawn ~ ~ ~ loot ${config.function.get_random_number}`);
         // command.append(`execute at @s run setblock ~ ~ ~ minecraft:iron_bars replace`);
         // command.append(`execute at @s run setblock ~ ~1 ~ minecraft:iron_bars replace`);
         for (let index = 0; index <= 9; index++) {
-            command.append(`execute at @s if score ${config.player.temp} ${objectives.hardcore.rotation.name} matches ${index} run setblock ~ ~${config.offset.player_head} ~ ${config.item.player_head}[rotation=${index}] replace`);
+            command.append(`execute at @s if score ${config.player.temp} ${objectives.temp.rotation.name} matches ${index} run setblock ~ ~${config.offset.player_head} ~ ${config.item.player_head}[rotation=${index}] replace`);
         }
         command.append(`execute at @s run setblock ~ ~${config.offset.light} ~ ${config.item.light}[level=5] replace`);
         command.append(`execute at @s run data modify block ~ ~${config.offset.player_head} ~ ExtraType set from storage ${config.namespace} ${config.storage.player_name}`);
@@ -123,7 +155,7 @@ class Hardcore {
         dimensions.shift();
 
         dimensions.forEach((value, index) => {
-            command.append(`execute if score ${config.player.temp} ${config.score.death_dimension} matches ${index} run execute as @s run execute in ${value} run function madagascar:hardcore/prepare_marker`);
+            command.append(`execute if score ${config.player.temp} ${objectives.hardcore.death_dimension.name} matches ${index} run execute as @s run execute in ${value} run function madagascar:hardcore/prepare_marker`);
         });
         return command.export();
     }
@@ -144,14 +176,12 @@ class Hardcore {
         const dimensions = Object.values(config.dimension);
         dimensions.shift();
 
-        command.append(`scoreboard objectives add ${config.score.dimension_change} dummy`);
-        command.append(`scoreboard objectives add ${config.score.death_dimension} dummy`);
         command.comment('temp player is needed later on when calling the place marker function, by then the scope of @s has changed');
         dimensions.forEach((value, index) => {
-            command.append(`data modify storage ${config.namespace} ${config.score.death_dimension} set from entity @s LastDeathLocation.dimension`);
-            command.append(`execute store success score ${value} ${config.score.dimension_change} run data modify storage ${config.namespace} ${config.score.death_dimension} set value "${value}"`);
-            command.append(`execute unless score ${value} ${config.score.dimension_change} matches 1 run scoreboard players set ${config.player.temp} ${config.score.death_dimension} ${index}`);
-            command.append(`execute unless score ${value} ${config.score.dimension_change} matches 1 run scoreboard players set @s ${config.score.death_dimension} ${index}`);
+            command.append(`data modify storage ${config.namespace} ${objectives.hardcore.death_dimension.name} set from entity @s LastDeathLocation.dimension`);
+            command.append(`execute store success score ${value} ${objectives.temp.status.name} run data modify storage ${config.namespace} ${objectives.hardcore.death_dimension.name} set value "${value}"`);
+            command.append(`execute unless score ${value} ${objectives.temp.status.name} matches 1 run scoreboard players set ${config.player.temp} ${objectives.hardcore.death_dimension.name} ${index}`);
+            command.append(`execute unless score ${value} ${objectives.temp.status.name} matches 1 run scoreboard players set @s ${objectives.hardcore.death_dimension.name} ${index}`);
         });
     }
 

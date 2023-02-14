@@ -45,11 +45,11 @@ class Ender {
         command.append(`execute unless entity @e[tag=${config.tag.ender},limit=1] run function ${config.package}:ender/place`);
         return command.export();
     }
-    createToggle() {
+    createToggle(objective) {
         const command = new Command();
-        command.append(`execute store success score @s ${config.score.ender_status} run data get entity @e[tag=${config.tag.ender},limit=1]`);
-        command.append(`execute if score @s ${config.score.ender_status} matches 0 run function ${config.package}:gate/ender_inventory`);
-        command.append(`execute if score @s ${config.score.ender_status} matches 1 run function ${config.package}:ender/destroy`);
+        command.append(`execute store success score @s ${objective.name} run data get entity @e[tag=${config.tag.ender},limit=1]`);
+        command.append(`execute if score @s ${objective.name} matches 0 run function ${config.package}:gate/ender_inventory`);
+        command.append(`execute if score @s ${objective.name} matches 1 run function ${config.package}:ender/destroy`);
         return command.export();
     }
     

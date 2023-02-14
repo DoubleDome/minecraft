@@ -22,7 +22,9 @@
     "label": {
         "message": {
             "locked": "You're stuck in HARDCORE!",
-            "death": "You DIED!"
+            "death": "You DIED!",
+            "resume": "Hardcore mode RESUMED!",
+            "pause": "Hardcore mode PAUSED!"
         },
         "dimension": {
             "minecraft:overworld": "Overworld",
@@ -55,17 +57,10 @@
         "iron_bars": "minecraft:iron_bars",
         "player_head": "minecraft:player_head"
     },
-    "score": {
-        "ender_status": "madagascar.ender_status",
-        "deaths": "madagascar.deaths",
-        "hardcore_deaths": "madagascar.hardcore_deaths",
-        "death_dimension": "madagascar.death_dimension",
-        "dimension_change": "madagascar.dimension_change",
-        "health": "madagascar.health",
-        "rotation": "madagascar.rotation"
-    },
+    
     "player":{
-        "temp": "madagascar:temp"
+        "constants": "#constants",
+        "temp": "#temp"
     },
     "storage": {
         "inbound": "inbound",
