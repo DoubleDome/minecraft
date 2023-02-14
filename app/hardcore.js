@@ -212,6 +212,7 @@ class Hardcore {
         command.append(`loot replace block ${config.coordinate.shulker.item} container.0 loot ${config.function.get_player_head}`);
         command.append(`data modify storage ${config.namespace} ${config.storage.player_name} set from block ${config.coordinate.shulker.item} Items[{Slot:0b}].tag.SkullOwner.Name`);
         command.append(`loot give @s mine ${config.coordinate.shulker.item} ${config.item.air}`);
+        command.append(`execute as @s run function ${config.package}:book/god`);
         command.clearBlock(config.coordinate.shulker.item);
         return command.export();
     }
