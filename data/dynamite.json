@@ -1,10 +1,11 @@
 {
     "dimension": "madagascar:dynamite",
     "folder": "dynamite",
-    "time": 12500,
+    "time": 12850,
     "timer": "madagascar:timer",
     "max_board_size": 20,
     "objectives": {
+        "zero": { "name": "madagascar.constants.zero", "type": "dummy", "value": 0 },
         "countdown": { "name": "madagascar.temp.countdown", "type": "dummy", "value": 3 },
         "round": { "name": "madagascar.temp.round", "type": "dummy", "value": 1 },
         "total_rounds": { "name": "madagascar.temp.total_rounds", "type": "dummy", "value": 4 },
@@ -49,7 +50,8 @@
     "player": {
         "red": "#red",
         "blue": "#blue",
-        "temp": "#temp"
+        "temp": "#temp",
+        "constants": "#constants"
     },
     "tag": {
         "center": "center",

@@ -63,7 +63,7 @@ class Game {
         });
     }
     static updateTimer(command) {
-        command.append(`execute store result bossbar ${Game.settings.timer} value run scoreboard players remove ${Game.settings.player.temp} ${Game.settings.objectives.timer.name} 1`);
+        command.append(`execute if score ${Game.settings.player.temp} ${Game.settings.objectives.timer.name} >= ${Game.settings.player.constants} ${Game.settings.objectives.zero.name} run execute store result bossbar ${Game.settings.timer} value run scoreboard players remove ${Game.settings.player.temp} ${Game.settings.objectives.timer.name} 1`);
     }
     static hideTimer(command) {
         command.append(`bossbar set ${Game.settings.timer} visible false`);

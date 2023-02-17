@@ -49,13 +49,13 @@ class Generator {
 
         this.createFoundation();
 
-        // this.createBookFunctions();
-        // this.createToolFunctions();
-        // this.createShulkerFunctions();
+        this.createBookFunctions();
+        this.createToolFunctions();
+        this.createShulkerFunctions();
         this.createLocationFunctions();
-        // this.createInventoryFunctions();
-        // this.createEnderFunctions();
-        // this.createHardcoreFunctions();
+        this.createInventoryFunctions();
+        this.createEnderFunctions();
+        this.createHardcoreFunctions();
         this.createDynamiteGame();
         this.createLoader();
         this.createTicker();
