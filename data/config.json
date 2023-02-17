@@ -13,6 +13,7 @@
         "gate": "gate",
         "book": "book",
         "hardcore": "hardcore",
+        "dynamite": "dynamite",
         "location": "location",
         "shulker": "shulker",
         "tool_swap": "tool_swap",
@@ -45,7 +46,8 @@
         "the_nether": "minecraft:the_nether",
         "the_end": "minecraft:the_end",
         "canvas": "madagascar:canvas",
-        "skyblock": "madagascar:skyblock"
+        "skyblock": "madagascar:skyblock",
+        "dynamite": "madagascar:dynamite"
     },
     "item": {
         "air": "minecraft:air",
@@ -54,11 +56,12 @@
         "marker": "minecraft:marker",
         "ender_chest": "minecraft:ender_chest",
         "light": "minecraft:light",
+        "item": "minecraft:item",
         "iron_bars": "minecraft:iron_bars",
-        "player_head": "minecraft:player_head"
+        "player_head": "minecraft:player_head",
+        "tnt": "minecraft:tnt"
     },
-    
-    "player":{
+    "player": {
         "constants": "#constants",
         "temp": "#temp"
     },
@@ -70,7 +73,7 @@
         "ender": "ender",
         "player_name": "player_name",
         "location": "location",
-        "dimension":"dimension",
+        "dimension": "dimension",
         "rotation": "rotation"
     },
     "tag": {
@@ -96,5 +99,16 @@
     "title": {
         "time": "10 50 10",
         "color": "white"
+    },
+    "rule": {
+        "doImmediateRespawn": false,
+        "doInsomnia": true,
+        "doDaylightCycle": true,
+        "sendCommandFeedback": true,
+        "commandBlockOutput": true,
+        "keepInventory": true,
+        "doEntityDrops": true,
+        "disableRaids": false,
+        "doMobSpawning": true
     }
 }

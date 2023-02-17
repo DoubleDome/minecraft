@@ -2,35 +2,35 @@
     {
         "header": "Bases",
         "locations": [
-            { "label": "Plains Base", "dimension": "minecraft:overworld", "coordinates": "211 76 253 -90 0", "filename": "plains_base" },
-            { "label": "Volcano Base", "dimension": "minecraft:overworld", "coordinates": "-294 65 -367 180 0", "filename": "volcano_base" },
-            { "label": "Flower Base", "dimension": "minecraft:overworld", "coordinates": "-726 61 -3537 -90 -19", "filename": "flower_base" },
-            { "label": "Nether Hub", "dimension": "minecraft:the_nether", "coordinates": "30 114 32 0 0", "filename": "nether_hub" },
-            { "label": "Island Base", "dimension": "minecraft:overworld", "coordinates": "-2562 70 1344 -90 0", "filename": "island_base" },
-            { "label": "Mesa Base", "dimension": "minecraft:overworld", "coordinates": "-9353 64 1067 180 -25", "filename": "mesa_base" },
-            { "label": "Jungle Base", "dimension": "minecraft:overworld", "coordinates": "9866 63 9914 -90 20", "filename": "jungle_base" },
-            { "label": "Village Base", "dimension": "minecraft:overworld", "coordinates": "-10185 68 -10705 90 -7", "filename": "village_base" },
-            { "label": "Snow Base", "dimension": "minecraft:overworld", "coordinates": "-10356 74 -5145 -132 -7", "filename": "snow_base" },
-            { "label": "Spooky Mansion", "dimension": "minecraft:overworld", "coordinates": "-14643 99 -11911.5 90 0", "filename": "spooky_mansion" },
-            { "label": "Canvas", "dimension": "madagascar:canvas", "coordinates": "0 70 0", "filename": "canvas", "gamemode":"creative" },
-            { "label": "Skyblock Base", "dimension": "madagascar:skyblock", "coordinates": "-10 63 -1 135 4", "filename": "skyblock_base" },
-            { "label": "Ocean Woodland", "dimension": "minecraft:overworld", "coordinates": "16879 70 -4884 0 -13", "filename": "ocean_woodland" }
+            { "label": "Plains Base", "dimension": "minecraft:overworld", "coordinates": "211 76 253", "rotation": "-90 0", "filename": "plains_base" },
+            { "label": "Volcano Base", "dimension": "minecraft:overworld", "coordinates": "-294 65 -367", "rotation": "180 0", "filename": "volcano_base" },
+            { "label": "Flower Base", "dimension": "minecraft:overworld", "coordinates": "-726 61 -3537", "rotation": "-90 -19", "filename": "flower_base" },
+            { "label": "Nether Hub", "dimension": "minecraft:the_nether", "coordinates": "30 114 32", "rotation": "0 0", "filename": "nether_hub" },
+            { "label": "Island Base", "dimension": "minecraft:overworld", "coordinates": "-2562 70 1344", "rotation": "-90 0", "filename": "island_base" },
+            { "label": "Mesa Base", "dimension": "minecraft:overworld", "coordinates": "-9353 64 1067", "rotation": "180 -25","filename": "mesa_base" },
+            { "label": "Jungle Base", "dimension": "minecraft:overworld", "coordinates": "9866 63 9914", "rotation": "-90 20","filename": "jungle_base" },
+            { "label": "Village Base", "dimension": "minecraft:overworld", "coordinates": "-10185 68 -10705", "rotation": "90 -7","filename": "village_base" },
+            { "label": "Snow Base", "dimension": "minecraft:overworld", "coordinates": "-10356 74 -5145", "rotation": "-132 -7","filename": "snow_base" },
+            { "label": "Spooky Mansion", "dimension": "minecraft:overworld", "coordinates": "-14643 99 -11911.5", "rotation": "90 0", "filename": "spooky_mansion" },
+            { "label": "Canvas", "dimension": "madagascar:canvas", "coordinates": "0 70 0", "filename": "canvas", "gamemode": "creative" },
+            { "label": "Skyblock Base", "dimension": "madagascar:skyblock", "coordinates": "-10 63 -1", "rotation": "135 4", "filename": "skyblock_base" },
+            { "label": "Ocean Woodland", "dimension": "minecraft:overworld", "coordinates": "16879 70 -4884", "rotation": "0 -13", "filename": "ocean_woodland" }
         ]
     },
     {
         "header": "Farms",
         "locations": [
-            { "label": "Gold Farm", "dimension": "minecraft:the_nether", "coordinates": "30 244 86 180 0", "filename": "gold_farm" },
-            { "label": "Enderman Farm", "dimension": "minecraft:the_end", "coordinates": "525 21 866 0 0", "filename": "enderman_farm" },
-            { "label": "Pillager Farm", "dimension": "minecraft:overworld", "coordinates": "-471 189 -661 0 90", "filename": "pillager_farm" },
-            { "label": "W. Skeleton Farm", "dimension": "minecraft:the_nether", "coordinates": "-1832 68 -1533 180 0", "filename": "wither_skeleton_farm" },
-            { "label": "Raid Farm", "dimension": "minecraft:overworld", "coordinates": "-448 74 -457 180 0", "filename": "raid_farm" },
-            { "label": "Guardian Farm", "dimension": "minecraft:overworld", "coordinates": "800 70 408 180 -7", "filename": "guardian_farm" },
-            { "label": "Vegetable Farm", "dimension": "minecraft:overworld", "coordinates": "135 66 305 90 0", "filename": "vegetable_farm" },
-            { "label": "Drowned Farm", "dimension": "minecraft:overworld", "coordinates": "-2219 167 1302 90 90", "filename": "drowned_farm" },
-            { "label": "Void Farm", "dimension": "minecraft:the_end", "coordinates": "0 3 914 0 0", "filename": "void_farm" },
-            { "label": "Hoglin Farm", "dimension": "minecraft:the_nether", "coordinates": "25 128 534 0 -30", "filename": "hoglin_farm" },
-            { "label": "Frog Light Farm", "dimension": "minecraft:the_nether", "coordinates": "84 128 55 180 -18", "filename": "frog_light_farm" }
+            { "label": "Gold Farm", "dimension": "minecraft:the_nether", "coordinates": "30 244 86", "rotation": "180 0", "filename": "gold_farm" },
+            { "label": "Enderman Farm", "dimension": "minecraft:the_end", "coordinates": "525 21 866", "rotation": "0 0", "filename": "enderman_farm" },
+            { "label": "Pillager Farm", "dimension": "minecraft:overworld", "coordinates": "-471 189 -661", "rotation": "0 90", "filename": "pillager_farm" },
+            { "label": "W. Skeleton Farm", "dimension": "minecraft:the_nether", "coordinates": "-1832 68 -1533", "rotation": "180 0", "filename": "wither_skeleton_farm" },
+            { "label": "Raid Farm", "dimension": "minecraft:overworld", "coordinates": "-448 74 -457", "rotation": "180 0", "filename": "raid_farm" },
+            { "label": "Guardian Farm", "dimension": "minecraft:overworld", "coordinates": "800 70 408", "rotation": "180 -7", "filename": "guardian_farm" },
+            { "label": "Vegetable Farm", "dimension": "minecraft:overworld", "coordinates": "135 66 305", "rotation": "90 0", "filename": "vegetable_farm" },
+            { "label": "Drowned Farm", "dimension": "minecraft:overworld", "coordinates": "-2219 167 1302", "rotation": "90 90", "filename": "drowned_farm" },
+            { "label": "Void Farm", "dimension": "minecraft:the_end", "coordinates": "0 3 914", "rotation": "0 0", "filename": "void_farm" },
+            { "label": "Hoglin Farm", "dimension": "minecraft:the_nether", "coordinates": "25 128 534", "rotation": "0 -30", "filename": "hoglin_farm" },
+            { "label": "Frog Light Farm", "dimension": "minecraft:the_nether", "coordinates": "84 128 55", "rotation": "180 -18", "filename": "frog_light_farm" }
         ]
     }
 ]

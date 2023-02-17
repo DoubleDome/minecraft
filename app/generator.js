@@ -10,6 +10,7 @@ const inventory = require('./inventory');
 const ender = require('./ender');
 const location = require('./location');
 const hardcore = require('./hardcore');
+const dynamite = require('./dynamite');
 const Load = require('./load');
 const Tick = require('./tick');
 
@@ -46,15 +47,36 @@ class Generator {
         this.validatePaths();
         creator.clone(config.path.pack, this.paths.base);
 
-        this.createBookFunctions();
-        this.createToolFunctions();
-        this.createShulkerFunctions();
+        this.createFoundation();
+
+        // this.createBookFunctions();
+        // this.createToolFunctions();
+        // this.createShulkerFunctions();
         this.createLocationFunctions();
-        this.createInventoryFunctions();
-        this.createEnderFunctions();
-        this.createHardcoreFunctions();
+        // this.createInventoryFunctions();
+        // this.createEnderFunctions();
+        // this.createHardcoreFunctions();
+        this.createDynamiteGame();
         this.createLoader();
         this.createTicker();
+    }
+
+    createDynamiteGame() {
+        this.validatePaths();
+        this.writeFiles(this.paths.dynamite, dynamite.create());
+    }
+
+    writeFiles(destination, output) {
+        Object.entries(output).forEach(([key, value]) => {
+            creator.write(path.resolve(destination, `${key}.mcfunction`), value);
+        });
+    }
+
+    createFoundation() {
+        Load.getInstance().addObjectives(data.objectives.constants);
+        Load.getInstance().addObjectives(data.objectives.temp);
+        Load.getInstance().setObjectives(config.player.constants, data.objectives.constants);
+        Load.getInstance().setObjectives(config.player.constants, data.objectives.time);
     }
 
     createLoader() {
@@ -86,10 +108,7 @@ class Generator {
 
     createLocationFunctions() {
         this.validatePaths();
-        const output = location.create(data.locations);
-        Object.entries(output).forEach(([key, value]) => {
-            creator.write(path.resolve(this.paths.location, `${key}.mcfunction`), value);
-        });
+        this.writeFiles(this.paths.location, location.create(data.locations))
     }
 
     createToolFunctions() {

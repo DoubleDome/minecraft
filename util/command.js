@@ -18,7 +18,10 @@ class Command {
         this.append(`# ${comment}`);
     }
     say(message) {
-        this.append(`say ${message}`);
+        this.append(`say "${message}"`);
+    }
+    tell(message) {
+        this.append(`tellraw @a "${message}"`);
     }
 
     clearExperience() {

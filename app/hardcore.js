@@ -30,8 +30,6 @@ class Hardcore {
     }
 
     createLoad() {
-        Load.getInstance().addObjectives(objectives.constants);
-        Load.getInstance().addObjectives(objectives.temp);
         Load.getInstance().addObjectives(objectives.hardcore);
         Load.getInstance().addObjectives(objectives.killers);
         Load.getInstance().addObjectives(objectives.stats);
@@ -41,8 +39,6 @@ class Hardcore {
         Load.getInstance().addObjectives(objectives.distance.land);
         Load.getInstance().addObjectives(objectives.distance.air);
         Load.getInstance().addObjectives(objectives.distance.sea);
-        Load.getInstance().setObjectives(config.player.constants, objectives.constants);
-        Load.getInstance().setObjectives(config.player.constants, objectives.time);
         Load.getInstance().append(`scoreboard objectives setdisplay list ${objectives.hardcore.deaths.name}`);
     }
 

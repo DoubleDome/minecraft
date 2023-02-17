@@ -1,5 +1,6 @@
 {
     "constants": {
+        "zero": { "name": "madagascar.constants.zero", "type": "dummy", "value": 0 },
         "overworld": { "name": "madagascar.constants.overworld", "type": "dummy", "value": 0 },
         "the_nether": { "name": "madagascar.constants.the_nether", "type": "dummy", "value": 1 },
         "the_end": { "name": "madagascar.constants.the_end", "type": "dummy", "value": 2 },
@@ -12,7 +13,11 @@
         "seconds_per_minute": { "name": "madagascar.constants.seconds_per_minute", "type": "dummy", "value": 60 },
         "minutes_per_hour": { "name": "madagascar.constants.minutes_per_hour", "type": "dummy", "value": 60 }
     },
-    "temp": { "rotation": { "name": "madagascar.temp.rotation", "type": "dummy" }, "status": { "name": "madagascar.temp.status", "type": "dummy" } },
+    "temp": { 
+        "rotation": { "name": "madagascar.temp.rotation", "type": "dummy" }, 
+        "status": { "name": "madagascar.temp.status", "type": "dummy" },
+        "countdown": { "name": "madagascar.temp.countdown", "type": "dummy" } 
+    },
     "time": { "seconds": { "name": "madagascar.time.seconds", "type": "dummy", "value": 0 }, "minutes": { "name": "madagascar.time.minutes", "type": "dummy", "value": 0 }, "hours": { "name": "madagascar.time.hours", "type": "dummy", "value": 0 } },
     "position": {
         "start": { "x": { "name": "madagascar.start.x", "type": "dummy", "value": "Pos[0]" }, "y": { "name": "madagascar.start.y", "type": "dummy", "value": "Pos[1]" }, "z": { "name": "madagascar.start.z", "type": "dummy", "value": "Pos[2]" } },
