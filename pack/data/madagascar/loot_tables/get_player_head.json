@@ -8,112 +8,29 @@
                     "type": "minecraft:item",
                     "name": "minecraft:player_head",
                     "functions": [
-                        {
-                            "function": "minecraft:fill_player_head",
-                            "entity": "this"
-                        },
-                        {
-                            "function": "minecraft:set_enchantments",
-                            "enchantments": {
-                                "minecraft:vanishing_curse": 1
-                            },
-                            "add": true
-                        },
+                        { "function": "minecraft:fill_player_head", "entity": "this" },
+                        { "function": "minecraft:set_enchantments", "enchantments": { "minecraft:vanishing_curse": 1 }, "add": true },
                         {
                             "function": "minecraft:set_lore",
                             "entity": "this",
                             "lore": [
+                                [{ "text": "", "color": "gray", "italic": false }],
+                                [{ "text": "Hardcore Death #", "italic": false }, { "score": { "name": "@s", "objective": "madagascar.hardcore.deaths" } }],
                                 [
-                                    {
-                                        "text": "",
-                                        "color": "gray",
-                                        "italic": false
-                                    }
+                                    { "text": "Start Location: ", "color": "gray", "italic": false },
+                                    { "score": { "name": "@s", "objective": "madagascar.start.x" }, "color": "gold" },
+                                    { "text": " ", "color": "gray", "italic": false },
+                                    { "score": { "name": "@s", "objective": "madagascar.start.y" }, "color": "gold" },
+                                    { "text": " ", "color": "gray", "italic": false },
+                                    { "score": { "name": "@s", "objective": "madagascar.start.z" }, "color": "gold" }
                                 ],
                                 [
-                                    { "text": "Hardcore Death #", "italic": false },
-                                    {
-                                        "score": {
-                                            "name": "@s",
-                                            "objective": "madagascar.hardcore_deaths"
-                                        }
-                                    }
-                                ],
-                                [
-                                    {
-                                        "text": "Start Location: ",
-                                        "color": "gray",
-                                        "italic": false
-                                    },
-                                    {
-                                        "score": {
-                                            "name": "@s",
-                                            "objective": "madagascar.start.x"
-                                        },
-                                        "color": "gold"
-                                    },
-                                    {
-                                        "text": " ",
-                                        "color": "gray",
-                                        "italic": false
-                                    },
-                                    {
-                                        "score": {
-                                            "name": "@s",
-                                            "objective": "madagascar.start.y"
-                                        },
-                                        "color": "gold"
-                                    },
-                                    {
-                                        "text": " ",
-                                        "color": "gray",
-                                        "italic": false
-                                    },
-                                    {
-                                        "score": {
-                                            "name": "@s",
-                                            "objective": "madagascar.start.z"
-                                        },
-                                        "color": "gold"
-                                    }
-                                ],
-                                [
-                                    {
-                                        "text": "Death Location: ",
-                                        "color": "gray",
-                                        "italic": false
-                                    },
-                                    {
-                                        "score": {
-                                            "name": "@s",
-                                            "objective": "madagascar.death.x"
-                                        },
-                                        "color": "gold"
-                                    },
-                                    {
-                                        "text": " ",
-                                        "color": "gray",
-                                        "italic": false
-                                    },
-                                    {
-                                        "score": {
-                                            "name": "@s",
-                                            "objective": "madagascar.death.y"
-                                        },
-                                        "color": "gold"
-                                    },
-                                    {
-                                        "text": " ",
-                                        "color": "gray",
-                                        "italic": false
-                                    },
-                                    {
-                                        "score": {
-                                            "name": "@s",
-                                            "objective": "madagascar.death.z"
-                                        },
-                                        "color": "gold"
-                                    }
+                                    { "text": "Death Location: ", "color": "gray", "italic": false },
+                                    { "score": { "name": "@s", "objective": "madagascar.death.x" }, "color": "gold" },
+                                    { "text": " ", "color": "gray", "italic": false },
+                                    { "score": { "name": "@s", "objective": "madagascar.death.y" }, "color": "gold" },
+                                    { "text": " ", "color": "gray", "italic": false },
+                                    { "score": { "name": "@s", "objective": "madagascar.death.z" }, "color": "gold" }
                                 ]
                             ]
                         },
@@ -126,15 +43,7 @@
                                     { "text": "Overworld", "color": "gold", "italic": false }
                                 ]
                             ],
-                            "conditions": [
-                                {
-                                    "condition": "minecraft:entity_scores",
-                                    "entity": "this",
-                                    "scores": {
-                                        "death_dimension": 0
-                                    }
-                                }
-                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.hardcore.death_dimension": 0 } }],
                             "replace": false
                         },
                         {
@@ -146,15 +55,7 @@
                                     { "text": "The Nether", "color": "gold", "italic": false }
                                 ]
                             ],
-                            "conditions": [
-                                {
-                                    "condition": "minecraft:entity_scores",
-                                    "entity": "this",
-                                    "scores": {
-                                        "death_dimension": 1
-                                    }
-                                }
-                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.hardcore.death_dimension": 1 } }],
                             "replace": false
                         },
                         {
@@ -166,15 +67,7 @@
                                     { "text": "The End", "color": "gold", "italic": false }
                                 ]
                             ],
-                            "conditions": [
-                                {
-                                    "condition": "minecraft:entity_scores",
-                                    "entity": "this",
-                                    "scores": {
-                                        "death_dimension": 2
-                                    }
-                                }
-                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.hardcore.death_dimension": 2 } }],
                             "replace": false
                         },
                         {
@@ -186,15 +79,7 @@
                                     { "text": "Canvas", "color": "gold", "italic": false }
                                 ]
                             ],
-                            "conditions": [
-                                {
-                                    "condition": "minecraft:entity_scores",
-                                    "entity": "this",
-                                    "scores": {
-                                        "death_dimension": 3
-                                    }
-                                }
-                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.hardcore.death_dimension": 3 } }],
                             "replace": false
                         },
                         {
@@ -206,15 +91,7 @@
                                     { "text": "Skyblock", "color": "gold", "italic": false }
                                 ]
                             ],
-                            "conditions": [
-                                {
-                                    "condition": "minecraft:entity_scores",
-                                    "entity": "this",
-                                    "scores": {
-                                        "death_dimension": 4
-                                    }
-                                }
-                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.hardcore.death_dimension": 4 } }],
                             "replace": false
                         },
                         {
@@ -222,207 +99,690 @@
                             "entity": "this",
                             "lore": [
                                 [
-                                    {
-                                        "text": "Nights Slept: ",
-                                        "color": "gray",
-                                        "italic": false
-                                    },
-                                    {
-                                        "score": {
-                                            "name": "@s",
-                                            "objective": "madagascar.stats.nights_slept"
-                                        },
-                                        "color": "gold"
-                                    }
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Ravager", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.ravager": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Pillager", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.pillager": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Panda", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.panda": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Fox", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.fox": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Trader Llama", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.trader_llama": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Wandering Trader", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.wandering_trader": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Zombie Villager", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.zombie_villager": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Zombie Horse", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.zombie_horse": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Zombie", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.zombie": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Wolf", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.wolf": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Witch", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.witch": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Vindicator", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.vindicator": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Villager", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.villager": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Vex", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.vex": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Turtle", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.turtle": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Stray", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.stray": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Spider", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.spider": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Snow Golem", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.snow_golem": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Slime", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.slime": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Skeleton Horse", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.skeleton_horse": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Skeleton", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.skeleton": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Silverfish", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.silverfish": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Shulker", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.shulker": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Rabbit", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.rabbit": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Pufferfish", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.pufferfish": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Polar Bear", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.polar_bear": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Phantom", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.phantom": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Magma Cube", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.magma_cube": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Llama", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.llama": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Iron Golem", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.iron_golem": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Illusioner", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.illusioner": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Husk", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.husk": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Guardian", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.guardian": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Evoker", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.evoker": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Endermite", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.endermite": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Enderman", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.enderman": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Ender Dragon", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.ender_dragon": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Elder Guardian", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.elder_guardian": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Drowned", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.drowned": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Dolphin", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.dolphin": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Creeper", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.creeper": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Cave Spider", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.cave_spider": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Wither", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.wither": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Ghast", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.ghast": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Zombified Piglin", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.zombified_piglin": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Wither Skeleton", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.wither_skeleton": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Blaze", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.blaze": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Bee", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.bee": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Zoglin", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.zoglin": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Strider", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.strider": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Piglin Brute", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.piglin_brute": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Piglin", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.piglin": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Hoglin", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.hoglin": 1 } }],
+                            "replace": false
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Nights Slept: ", "color": "gray", "italic": false },
+                                    { "score": { "name": "@s", "objective": "madagascar.stats.nights_slept" }, "color": "gold" }
                                 ],
                                 [
-                                    {
-                                        "text": "Total Playtime: ",
-                                        "color": "gray",
-                                        "italic": false
-                                    },
-                                    {
-                                        "score": {
-                                            "name": "@s",
-                                            "objective": "madagascar.time.hours"
-                                        },
-                                        "color": "gold"
-                                    },
-                                    {
-                                        "text": "h ",
-                                        "color": "gold"
-                                    },
-                                    {
-                                        "score": {
-                                            "name": "@s",
-                                            "objective": "madagascar.time.minutes"
-                                        },
-                                        "color": "gold"
-                                    },
-                                    {
-                                        "text": "m ",
-                                        "color": "gold"
-                                    },
-                                    {
-                                        "score": {
-                                            "name": "@s",
-                                            "objective": "madagascar.time.seconds"
-                                        },
-                                        "color": "gold"
-                                    },
-                                    {
-                                        "text": "s",
-                                        "color": "gold"
-                                    }
+                                    { "text": "Total Playtime: ", "color": "gray", "italic": false },
+                                    { "score": { "name": "@s", "objective": "madagascar.time.hours" }, "color": "gold" },
+                                    { "text": "h ", "color": "gold" },
+                                    { "score": { "name": "@s", "objective": "madagascar.time.minutes" }, "color": "gold" },
+                                    { "text": "m ", "color": "gold" },
+                                    { "score": { "name": "@s", "objective": "madagascar.time.seconds" }, "color": "gold" },
+                                    { "text": "s", "color": "gold" }
                                 ],
                                 [
-                                    {
-                                        "text": "Total Points: ",
-                                        "color": "gray",
-                                        "italic": false
-                                    },
-                                    {
-                                        "score": {
-                                            "name": "@s",
-                                            "objective": "madagascar.stats.points"
-                                        },
-                                        "color": "gold"
-                                    }
+                                    { "text": "Total Points: ", "color": "gray", "italic": false },
+                                    { "score": { "name": "@s", "objective": "madagascar.stats.points" }, "color": "gold" }
                                 ],
                                 [
-                                    {
-                                        "text": "Mobs Killed: ",
-                                        "color": "gray",
-                                        "italic": false
-                                    },
-                                    {
-                                        "score": {
-                                            "name": "@s",
-                                            "objective": "madagascar.stats.mob_kills"
-                                        },
-                                        "color": "gold"
-                                    }
+                                    { "text": "Mobs Killed: ", "color": "gray", "italic": false },
+                                    { "score": { "name": "@s", "objective": "madagascar.stats.mob_kills" }, "color": "gold" }
                                 ],
                                 [
-                                    {
-                                        "text": "Damage Dealt: ",
-                                        "color": "gray",
-                                        "italic": false
-                                    },
-                                    {
-                                        "score": {
-                                            "name": "@s",
-                                            "objective": "madagascar.stats.damage.dealt"
-                                        },
-                                        "color": "gold"
-                                    }
+                                    { "text": "Damage Dealt: ", "color": "gray", "italic": false },
+                                    { "score": { "name": "@s", "objective": "madagascar.stats.damage.dealt" }, "color": "gold" }
                                 ],
                                 [
-                                    {
-                                        "text": "Damage Taken: ",
-                                        "color": "gray",
-                                        "italic": false
-                                    },
-                                    {
-                                        "score": {
-                                            "name": "@s",
-                                            "objective": "madagascar.stats.damage.taken"
-                                        },
-                                        "color": "gold"
-                                    }
+                                    { "text": "Damage Taken: ", "color": "gray", "italic": false },
+                                    { "score": { "name": "@s", "objective": "madagascar.stats.damage.taken" }, "color": "gold" }
                                 ],
                                 [
-                                    {
-                                        "text": "Distance on Land: ",
-                                        "color": "gray",
-                                        "italic": false
-                                    },
-                                    {
-                                        "score": {
-                                            "name": "@s",
-                                            "objective": "madagascar.distance.land.km"
-                                        },
-                                        "color": "gold"
-                                    },
-                                    {
-                                        "text": "km ",
-                                        "color": "gold",
-                                        "italic": false
-                                    },
-                                    {
-                                        "score": {
-                                            "name": "@s",
-                                            "objective": "madagascar.distance.land.m"
-                                        },
-                                        "color": "gold"
-                                    },
-                                    {
-                                        "text": "m",
-                                        "color": "gold",
-                                        "italic": false
-                                    }
+                                    { "text": "Distance on Land: ", "color": "gray", "italic": false },
+                                    { "score": { "name": "@s", "objective": "madagascar.distance.land.km" }, "color": "gold" },
+                                    { "text": "km ", "color": "gold", "italic": false },
+                                    { "score": { "name": "@s", "objective": "madagascar.distance.land.m" }, "color": "gold" },
+                                    { "text": "m", "color": "gold", "italic": false }
                                 ],
                                 [
-                                    {
-                                        "text": "Distance at Sea: ",
-                                        "color": "gray",
-                                        "italic": false
-                                    },
-                                    {
-                                        "score": {
-                                            "name": "@s",
-                                            "objective": "madagascar.distance.sea.km"
-                                        },
-                                        "color": "gold"
-                                    },
-                                    {
-                                        "text": "km ",
-                                        "color": "gold",
-                                        "italic": false
-                                    },
-                                    {
-                                        "score": {
-                                            "name": "@s",
-                                            "objective": "madagascar.distance.sea.m"
-                                        },
-                                        "color": "gold"
-                                    },
-                                    {
-                                        "text": "m",
-                                        "color": "gold",
-                                        "italic": false
-                                    }
+                                    { "text": "Distance at Sea: ", "color": "gray", "italic": false },
+                                    { "score": { "name": "@s", "objective": "madagascar.distance.sea.km" }, "color": "gold" },
+                                    { "text": "km ", "color": "gold", "italic": false },
+                                    { "score": { "name": "@s", "objective": "madagascar.distance.sea.m" }, "color": "gold" },
+                                    { "text": "m", "color": "gold", "italic": false }
                                 ],
                                 [
-                                    {
-                                        "text": "Distance in Air: ",
-                                        "color": "gray",
-                                        "italic": false
-                                    },
-                                    {
-                                        "score": {
-                                            "name": "@s",
-                                            "objective": "madagascar.distance.air.km"
-                                        },
-                                        "color": "gold"
-                                    },
-                                    {
-                                        "text": "km ",
-                                        "color": "gold",
-                                        "italic": false
-                                    },
-                                    {
-                                        "score": {
-                                            "name": "@s",
-                                            "objective": "madagascar.distance.air.m"
-                                        },
-                                        "color": "gold"
-                                    },
-                                    {
-                                        "text": "m",
-                                        "color": "gold",
-                                        "italic": false
-                                    }
+                                    { "text": "Distance in Air: ", "color": "gray", "italic": false },
+                                    { "score": { "name": "@s", "objective": "madagascar.distance.air.km" }, "color": "gold" },
+                                    { "text": "km ", "color": "gold", "italic": false },
+                                    { "score": { "name": "@s", "objective": "madagascar.distance.air.m" }, "color": "gold" },
+                                    { "text": "m", "color": "gold", "italic": false }
                                 ]
                             ],
                             "replace": false

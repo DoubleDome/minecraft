@@ -10,6 +10,7 @@ const inventory = require('./inventory');
 const ender = require('./ender');
 const location = require('./location');
 const hardcore = require('./hardcore');
+const dynamite = require('./dynamite');
 const Load = require('./load');
 const Tick = require('./tick');
 
@@ -47,6 +48,8 @@ class Generator {
         this.validatePaths();
         creator.clone(this.paths.pack, this.paths.base);
 
+        this.createFoundation();
+
         this.createBookFunctions();
         this.createToolFunctions();
         this.createShulkerFunctions();
@@ -54,8 +57,27 @@ class Generator {
         this.createInventoryFunctions();
         this.createEnderFunctions();
         this.createHardcoreFunctions();
+        this.createDynamiteGame();
         this.createLoader();
         this.createTicker();
+    }
+
+    createDynamiteGame() {
+        this.validatePaths();
+        this.writeFiles(this.paths.dynamite, dynamite.create());
+    }
+
+    writeFiles(destination, output) {
+        Object.entries(output).forEach(([key, value]) => {
+            creator.write(path.resolve(destination, `${key}.mcfunction`), value);
+        });
+    }
+
+    createFoundation() {
+        Load.getInstance().addObjectives(data.objectives.constants);
+        Load.getInstance().addObjectives(data.objectives.temp);
+        Load.getInstance().setObjectives(config.player.constants, data.objectives.constants);
+        Load.getInstance().setObjectives(config.player.constants, data.objectives.time);
     }
 
     createLoader() {
@@ -70,23 +92,24 @@ class Generator {
         this.validatePaths();
         const output = hardcore.create(data.objectives);
         creator.write(path.resolve(this.paths.hardcore, `start.mcfunction`), output.start);
-        creator.write(path.resolve(this.paths.hardcore, `reset.mcfunction`), output.reset);
+        creator.write(path.resolve(this.paths.hardcore, `stop.mcfunction`), output.stop);
+        creator.write(path.resolve(this.paths.hardcore, `pause.mcfunction`), output.pause);
+        creator.write(path.resolve(this.paths.hardcore, `resume.mcfunction`), output.resume);
+        creator.write(path.resolve(this.paths.hardcore, `toggle.mcfunction`), output.toggle);
         creator.write(path.resolve(this.paths.hardcore, `gamemode_lock.mcfunction`), output.gamemode_lock);
         creator.write(path.resolve(this.paths.hardcore, `player_head.mcfunction`), output.player_head);
         creator.write(path.resolve(this.paths.hardcore, `prepare_marker.mcfunction`), output.prepare_marker);
         creator.write(path.resolve(this.paths.hardcore, `place_marker.mcfunction`), output.place_marker);
         creator.write(path.resolve(this.paths.gate, `${config.folder.hardcore}_dimension.mcfunction`), output.dimension_gate);
         creator.write(path.resolve(this.paths.gate, `${config.folder.hardcore}_start.mcfunction`), output.start_gate);
+        creator.write(path.resolve(this.paths.gate, `${config.folder.hardcore}_stop.mcfunction`), output.stop_gate);
         creator.write(path.resolve(this.paths.gate, `${config.folder.hardcore}_gamemode_check.mcfunction`), output.gamemode_check);
         creator.write(path.resolve(this.paths.gate, `${config.folder.hardcore}_death_check.mcfunction`), output.death_check);
     }
 
     createLocationFunctions() {
         this.validatePaths();
-        const output = location.create(data.locations);
-        Object.entries(output).forEach(([key, value]) => {
-            creator.write(path.resolve(this.paths.location, `${key}.mcfunction`), value);
-        });
+        this.writeFiles(this.paths.location, location.create(data.locations))
     }
 
     createToolFunctions() {
@@ -129,7 +152,7 @@ class Generator {
     }
     createEnderFunctions() {
         this.validatePaths();
-        const output = ender.create(data.directions, data.objectives.ender);
+        const output = ender.create(data.directions, data.objectives.temp.status);
         creator.write(path.resolve(this.paths.ender, `place.mcfunction`), output.place);
         creator.write(path.resolve(this.paths.ender, `destroy.mcfunction`), output.destroy);
         creator.write(path.resolve(this.paths.ender, `toggle.mcfunction`), output.toggle);
@@ -138,10 +161,6 @@ class Generator {
     }
     /* Validate file destinations and create the folders if not there 
     ----------------------------------------------------------------- */
-    validateDestination(destination) {
-        
-    }
-
     validatePaths() {
         if (!this.paths.functions || !this.paths.gate || !this.paths.location) {
             throw new Error('Generator not initialized!');

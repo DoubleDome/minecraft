@@ -34,6 +34,28 @@
             "entries": [
                 {
                     "type": "minecraft:item",
+                    "name": "minecraft:flint_and_steel"
+                }
+            ],
+            "functions": [
+                {
+                    "function": "minecraft:set_count",
+                    "count": 1
+                },
+                {
+                    "function": "minecraft:set_enchantments",
+                    "enchantments": {
+                        "minecraft:unbreaking": 3
+                    },
+                    "add": true
+                }
+            ]
+        },
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "minecraft:item",
                     "name": "minecraft:arrow"
                 }
             ],

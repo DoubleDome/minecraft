@@ -1,0 +1,63 @@
+{
+    "dimension": "madagascar:dynamite",
+    "folder": "dynamite",
+    "time": 12850,
+    "timer": "madagascar:timer",
+    "max_board_size": 20,
+    "objectives": {
+        "zero": { "name": "madagascar.constants.zero", "type": "dummy", "value": 0 },
+        "countdown": { "name": "madagascar.temp.countdown", "type": "dummy", "value": 3 },
+        "round": { "name": "madagascar.temp.round", "type": "dummy", "value": 1 },
+        "total_rounds": { "name": "madagascar.temp.total_rounds", "type": "dummy", "value": 4 },
+        "timer": { "name": "madagascar.temp.timer", "type": "dummy", "value": 0 },
+        "deaths": { "name": "madagascar.stats.deaths", "type": "deathCount", "label": "Deaths", "value": 0 }
+    },
+    "round": {
+        "duration": 30,
+        "size": 16,
+        "sound": "item.goat_horn.sound.2"
+    },
+    "team": {
+        "red": {
+            "name": "red",
+            "label": "Red"
+        },
+        "blue": {
+            "name": "blue",
+            "label": "Blue"
+        }
+    },
+    "position": {
+        "starting_point": "0 60 0"
+    },
+    "rule": {
+        "doImmediateRespawn": true,
+        "doInsomnia": false,
+        "doDaylightCycle": false,
+        "sendCommandFeedback": true,
+        "commandBlockOutput": true,
+        "keepInventory": true,
+        "doEntityDrops": false,
+        "disableRaids": true,
+        "doMobSpawning": false
+    },
+    "message": {
+        "red_win": "Red team wins!!!",
+        "blue_win": "Blue team wins!!!",
+        "tie": "It's a tie!!!",
+        "game_over": "GAME OVER!!!"
+    },
+    "player": {
+        "red": "#red",
+        "blue": "#blue",
+        "temp": "#temp",
+        "constants": "#constants"
+    },
+    "tag": {
+        "center": "center",
+        "corner": "corner",
+        "max_corner": "max_corner",
+        "starting_point": "starting_point"
+    },
+    "effect": [{ "type": "minecraft:resistance", "duration": 9999, "level": 10, "invisible": true }]
+}

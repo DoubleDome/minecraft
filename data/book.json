@@ -35,12 +35,14 @@
     "utility": [
         { "text": "\\n", "color": "black" },
         { "text": "\\u25b3 ", "color": "black" },
-        { "text": "Ejector Seat", "color": "dark_green", "clickEvent": { "action": "run_command", "value": "/tp @s ~ 320 ~" } }
+        { "text": "Ejector Seat", "color": "dark_green", "clickEvent": { "action": "run_command", "value": "/tp @s ~ 320 ~" } }        
     ],
     "hardcore":[
         { "text": "\\n", "color": "black" },
-        { "text": "\\u2620 ", "color": "black" },
-        { "text": "Start Hardcore", "color": "dark_green", "clickEvent": { "action": "run_command", "value": "/function madagascar:gate/hardcore_start" } }
+        { "text": "\\u2620 Hardcore ", "color": "black" },
+        { "text": "\\u2b24 ", "color": "dark_green", "clickEvent": { "action": "run_command", "value": "/function madagascar:gate/hardcore_start" } },
+        { "text": "\\u2b24 ", "color": "gold", "clickEvent": { "action": "run_command", "value": "/function madagascar:hardcore/toggle" } },
+        { "text": "\\u2b24 ", "color": "dark_red", "clickEvent": { "action": "run_command", "value": "/function madagascar:hardcore/stop" } }
     ],
     "inventory": [
         { "text": "\\n", "color": "black" },
