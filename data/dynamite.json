@@ -28,7 +28,8 @@
         }
     },
     "position": {
-        "starting_point": "0 60 0"
+        "starting_point": "0 60 0",
+        "ceiling": "0 320 0"
     },
     "rule": {
         "doImmediateRespawn": true,
@@ -61,7 +62,6 @@
         "starting_point": "starting_point"
     },
     "effect": [
-        { "type": "minecraft:resistance", "duration": 9999, "level": 10, "invisible": true },
-        { "type": "minecraft:mining_fatigue", "duration": 9999, "level": 255, "invisible": true }
+        { "type": "minecraft:resistance", "duration": 9999, "level": 10, "invisible": true }
     ]
 }

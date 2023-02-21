@@ -59,7 +59,8 @@
         "item": "minecraft:item",
         "iron_bars": "minecraft:iron_bars",
         "player_head": "minecraft:player_head",
-        "tnt": "minecraft:tnt"
+        "tnt": "minecraft:tnt",
+        "glass": "minecraft:glass"
     },
     "player": {
         "constants": "#constants",
