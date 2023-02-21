@@ -82,7 +82,7 @@
         "death": "death_marker"
     },
     "team": {
-        "god": "god"
+        "god": { "name": "god", "label": "God" }
     },
     "coordinate": {
         "shulker": {
