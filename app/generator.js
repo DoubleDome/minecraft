@@ -138,8 +138,11 @@ class Generator {
     }
     createBookFunctions() {
         this.validatePaths();
-        creator.write(path.resolve(this.paths.book, 'god.mcfunction'), book.create('god', data.locations));
-        creator.write(path.resolve(this.paths.book, 'default.mcfunction'), book.create('default', data.locations));
+        const output = book.create(data.locations);
+
+        creator.write(path.resolve(this.paths.book, 'god.mcfunction'), output.god);
+        creator.write(path.resolve(this.paths.book, 'default.mcfunction'), output.default);
+        creator.write(path.resolve(this.paths.gate, 'book.mcfunction'), output.gate);
     }
     createInventoryFunctions() {
         this.validatePaths();

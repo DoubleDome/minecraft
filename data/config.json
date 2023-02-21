@@ -36,7 +36,7 @@
         }
     },
     "function": {
-        "book": "madagascar:book/god",
+        "book": "madagascar:gate/book",
         "get_random_number": "madagascar:get_random_number",
         "get_player_head": "madagascar:get_player_head"
     },
@@ -80,6 +80,9 @@
         "hardcore": "hardcore",
         "ender": "ender_marker",
         "death": "death_marker"
+    },
+    "team": {
+        "god": "god"
     },
     "coordinate": {
         "shulker": {

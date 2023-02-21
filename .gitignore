@@ -111,3 +111,4 @@ Marzipan
 _backup
 _old
 ./functions
+*.code-workspace

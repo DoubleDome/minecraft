@@ -39,7 +39,8 @@
         "keepInventory": true,
         "doEntityDrops": false,
         "disableRaids": true,
-        "doMobSpawning": false
+        "doMobSpawning": false,
+        "spawnRadius": 3
     },
     "message": {
         "red_win": "Red team wins!!!",
@@ -59,5 +60,8 @@
         "max_corner": "max_corner",
         "starting_point": "starting_point"
     },
-    "effect": [{ "type": "minecraft:resistance", "duration": 9999, "level": 10, "invisible": true }]
+    "effect": [
+        { "type": "minecraft:resistance", "duration": 9999, "level": 10, "invisible": true },
+        { "type": "minecraft:mining_fatigue", "duration": 9999, "level": 255, "invisible": true }
+    ]
 }

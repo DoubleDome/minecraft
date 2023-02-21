@@ -1,15 +1,30 @@
 const Page = require('../util/page');
+const Command = require('../util/command');
 
 const roman = require('../data/roman.json');
 const content = require('../data/book.json');
 const config = require('../data/config.json');
 
 class Book {
-    create(type, locations) {
+    create(locations) {
+        const result = {};
+        result.god = this.createBook('god', locations);
+        result.default = this.createBook('default', locations);
+        result.gate = this.createBookGate();
+        return result;
+    }
+    createBook(type, locations) {
         const result = this.generateMetadata(content.titles[type], content.author, content.lore, content.version);
         result.pages = this.generateBook(type, locations);
 
         return this.generateCommand('give @s written_book', result);
+    }
+
+    createBookGate(){
+        const command = new Command();
+        command.append(`execute if entity @s[team=${config.team.god}] run function madagascar:book/god`);
+        command.append(`execute unless entity @s[team=${config.team.god}] run function madagascar:book/default`);
+        return command.export();
     }
 
     generateBook(type, pages) {
