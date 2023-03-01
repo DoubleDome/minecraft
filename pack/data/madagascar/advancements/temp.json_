@@ -1,0 +1,17 @@
+{
+    "criteria": {
+        "killed_by_zombie": {
+            "trigger": "minecraft:entity_killed_player",
+            "conditions": {
+                "entity": {
+                    "type": ""
+                },
+                "killing_blow": {
+                    "source_entity": {
+                        "type": "#minecraft:"
+                    }
+                }
+            }
+        }
+    }
+}
