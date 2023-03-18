@@ -51,6 +51,8 @@ class Hardcore {
         const command = new Command();
         command.clearInventory();
         command.clearExperience();
+        command.resetRecipes();
+        command.resetAdvancements();
         command.setObjectives('@s', objectives.stats);
         command.setObjectives('@s', objectives.killers);
 
