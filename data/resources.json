@@ -1,0 +1,22 @@
+{
+    "paths": {
+        "item": "assets/minecraft/textures/item/",
+        "entity": "assets/minecraft/textures/entity/",
+        "optifine": "assets/minecraft/optifine",
+        "custom_item_texture": "assets/minecraft/optifine/cit",
+        "custom_entity_texture": "assets/minecraft/optifine/cet",
+        "melee": "assets/minecraft/optifine/cit/melee"
+    },
+    "entries": [
+        {
+            "type": "melee",
+            "base": "netherite_sword",
+            "variants": [{ "pattern": "Atlas Avenger", "file": "atlas_avenger.png" }]
+        },
+        {
+            "type": "mob",
+            "base": "slime",
+            "variants": [{ "pattern": "Pet Rock", "file": "pet_rock.png" }]
+        }
+    ]
+}

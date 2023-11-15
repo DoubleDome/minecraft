@@ -13,10 +13,10 @@
         "seconds_per_minute": { "name": "madagascar.constants.seconds_per_minute", "type": "dummy", "value": 60 },
         "minutes_per_hour": { "name": "madagascar.constants.minutes_per_hour", "type": "dummy", "value": 60 }
     },
-    "temp": { 
-        "rotation": { "name": "madagascar.temp.rotation", "type": "dummy" }, 
+    "temp": {
+        "rotation": { "name": "madagascar.temp.rotation", "type": "dummy" },
         "status": { "name": "madagascar.temp.status", "type": "dummy" },
-        "countdown": { "name": "madagascar.temp.countdown", "type": "dummy" } 
+        "countdown": { "name": "madagascar.temp.countdown", "type": "dummy" }
     },
     "time": { "seconds": { "name": "madagascar.time.seconds", "type": "dummy", "value": 0 }, "minutes": { "name": "madagascar.time.minutes", "type": "dummy", "value": 0 }, "hours": { "name": "madagascar.time.hours", "type": "dummy", "value": 0 } },
     "position": {
@@ -32,9 +32,9 @@
             "m": { "name": "madagascar.distance.sea.m", "type": "dummy", "collection": ["swum_distance", "boat_distance", "surface_distance", "underwater_distance"], "value": 0 },
             "km": { "name": "madagascar.distance.sea.km", "type": "dummy", "collection": ["swum_distance", "boat_distance", "surface_distance", "underwater_distance"], "value": 0 }
         },
-        "air": { 
-            "m": { "name": "madagascar.distance.air.m", "type": "dummy", "collection": ["flight_distance", "fall_distance"], "value": 0 }, 
-            "km": { "name": "madagascar.distance.air.km", "type": "dummy", "collection": ["flight_distance", "fall_distance"], "value": 0 } 
+        "air": {
+            "m": { "name": "madagascar.distance.air.m", "type": "dummy", "collection": ["flight_distance", "fall_distance"], "value": 0 },
+            "km": { "name": "madagascar.distance.air.km", "type": "dummy", "collection": ["flight_distance", "fall_distance"], "value": 0 }
         }
     },
     "stats": {
@@ -55,12 +55,13 @@
         "swum_distance": { "name": "madagascar.stats.swum_distance", "type": "minecraft.custom:minecraft.swim_one_cm", "value": 0 },
         "boat_distance": { "name": "madagascar.stats.boat_distance", "type": "minecraft.custom:minecraft.boat_one_cm", "value": 0 },
         "fall_distance": { "name": "madagascar.stats.fall_distance", "type": "minecraft.custom:minecraft.fall_one_cm", "value": 0 },
-        "flight_distance": { "name": "madagascar.stats.flight_distance", "type": "minecraft.custom:minecraft.aviate_one_cm", "value": 0 }
+        "flight_distance": { "name": "madagascar.stats.flight_distance", "type": "minecraft.custom:minecraft.aviate_one_cm", "value": 0 },
+        "totems": { "name": "madagascar.stats.totems_used", "type": "minecraft.used:minecraft.totem_of_undying", "value": 0 }
     },
-    "hardcore": { 
-        "health": { "name": "madagascar.hardcore.health", "type": "health" }, 
-        "deaths": { "name": "madagascar.hardcore.deaths", "type": "dummy", "label": "Hardcore Deaths" }, 
-        "death_dimension": { "name": "madagascar.hardcore.death_dimension", "type": "dummy" } 
+    "hardcore": {
+        "health": { "name": "madagascar.hardcore.health", "type": "health" },
+        "deaths": { "name": "madagascar.hardcore.deaths", "type": "dummy", "label": "Hardcore Deaths" },
+        "death_dimension": { "name": "madagascar.hardcore.death_dimension", "type": "dummy" }
     },
     "killers": {
         "hoglin": { "name": "madagascar.killer.hoglin", "type": "minecraft.killed_by:minecraft.hoglin", "value": 0 },

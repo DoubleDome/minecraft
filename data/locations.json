@@ -14,6 +14,7 @@
             { "label": "Spooky Mansion", "dimension": "minecraft:overworld", "coordinates": "-14643 99 -11911.5", "rotation": "90 0", "filename": "spooky_mansion" },
             { "label": "Canvas", "dimension": "madagascar:canvas", "coordinates": "0 70 0", "filename": "canvas", "gamemode": "creative" },
             { "label": "Skyblock Base", "dimension": "madagascar:skyblock", "coordinates": "-10 63 -1", "rotation": "135 4", "filename": "skyblock_base" },
+            { "label": "Cliffside Base", "dimension": "minecraft:overworld", "coordinates": "-6448 67 -11113", "rotation": "180 0", "filename": "cliffside_base" },
             { "label": "Ocean Woodland", "dimension": "minecraft:overworld", "coordinates": "16879 70 -4884", "rotation": "0 -13", "filename": "ocean_woodland" }
         ]
     },
@@ -25,6 +26,7 @@
             { "label": "Pillager Farm", "dimension": "minecraft:overworld", "coordinates": "-471 189 -661", "rotation": "0 90", "filename": "pillager_farm" },
             { "label": "W. Skeleton Farm", "dimension": "minecraft:the_nether", "coordinates": "-1832 68 -1533", "rotation": "180 0", "filename": "wither_skeleton_farm" },
             { "label": "Raid Farm", "dimension": "minecraft:overworld", "coordinates": "-448 74 -457", "rotation": "180 0", "filename": "raid_farm" },
+            { "label": "Stacking Raid Farm", "dimension": "minecraft:overworld", "coordinates": "690 64 233", "rotation": "-90 0", "filename": "stacking_raid_farm" },
             { "label": "Guardian Farm", "dimension": "minecraft:overworld", "coordinates": "800 70 408", "rotation": "180 -7", "filename": "guardian_farm" },
             { "label": "Vegetable Farm", "dimension": "minecraft:overworld", "coordinates": "135 66 305", "rotation": "90 0", "filename": "vegetable_farm" },
             { "label": "Drowned Farm", "dimension": "minecraft:overworld", "coordinates": "-2219 167 1302", "rotation": "90 90", "filename": "drowned_farm" },

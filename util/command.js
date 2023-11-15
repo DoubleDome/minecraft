@@ -51,6 +51,12 @@ class Command {
     export() {
         return this.output;
     }
+    resetRecipes() {
+        this.append('recipe take @s *');
+    }
+    resetAdvancements() {
+        this.append('advancement revoke @s everything');
+    }
     /* Objectives
     -------------------------------------------*/
     addObjective(name, type = 'dummy', label) {

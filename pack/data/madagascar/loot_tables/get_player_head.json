@@ -735,6 +735,10 @@
                             "entity": "this",
                             "lore": [
                                 [
+                                    { "text": "Totems Used: ", "color": "gray", "italic": false },
+                                    { "score": { "name": "@s", "objective": "madagascar.stats.totems_used" }, "color": "gold" }
+                                ],
+                                [
                                     { "text": "Nights Slept: ", "color": "gray", "italic": false },
                                     { "score": { "name": "@s", "objective": "madagascar.stats.nights_slept" }, "color": "gold" }
                                 ],

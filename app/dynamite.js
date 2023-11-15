@@ -78,6 +78,7 @@ class Dynamite {
     }
     createStartGame() {
         const command = new Command();
+        command.append(`gamemode adventure @a`);
         command.append(`function ${config.package}:${settings.folder}/prepare_round`);
         return command.export();
     }
