@@ -18,7 +18,7 @@ class Creator {
     }
 
     clone(source, destination) {
-        fse.copySync(source, destination);
+        fse.copySync(source, destination, { overwrite: true });
     }
 
     validate(destination) {
