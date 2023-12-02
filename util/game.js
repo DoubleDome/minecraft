@@ -63,7 +63,9 @@ class Game {
         });
     }
     static updateTimer(command) {
-        command.append(`execute if score ${Game.settings.player.temp} ${Game.settings.objectives.timer.name} >= ${Game.settings.player.constants} ${Game.settings.objectives.zero.name} run execute store result bossbar ${Game.settings.timer} value run scoreboard players remove ${Game.settings.player.temp} ${Game.settings.objectives.timer.name} 1`);
+        command.append(
+            `execute if score ${Game.settings.player.temp} ${Game.settings.objectives.timer.name} >= ${Game.settings.player.constants} ${Game.settings.objectives.zero.name} run execute store result bossbar ${Game.settings.timer} value run scoreboard players remove ${Game.settings.player.temp} ${Game.settings.objectives.timer.name} 1`
+        );
     }
     static hideTimer(command) {
         command.append(`bossbar set ${Game.settings.timer} visible false`);
@@ -94,7 +96,7 @@ class Game {
     }
     static addTeams(command, teams) {
         Object.entries(teams).forEach(([key, value]) => {
-            command.append(`team add ${value.name} "${value.label}"`);
+            command.append(`team add ${value.name} \\"${value.label}\\"`);
         });
     }
     static removeTeams(command, teams) {
@@ -108,12 +110,12 @@ class Game {
         });
     }
     static applyEffects(command, effects) {
-        effects.forEach((effect) => {
+        effects.forEach(effect => {
             command.append(`effect give @a ${effect.type} ${effect.duration} ${effect.level} ${effect.invisible || false}`);
         });
     }
     static clearEffects(command, effects) {
-        effects.forEach((effect) => {
+        effects.forEach(effect => {
             command.append(`effect clear @a ${effect.type}`);
         });
     }
