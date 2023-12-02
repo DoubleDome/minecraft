@@ -7,15 +7,21 @@
             { "label": "Flower Base", "dimension": "minecraft:overworld", "coordinates": "-726 61 -3537", "rotation": "-90 -19", "filename": "flower_base" },
             { "label": "Nether Hub", "dimension": "minecraft:the_nether", "coordinates": "30 114 32", "rotation": "0 0", "filename": "nether_hub" },
             { "label": "Island Base", "dimension": "minecraft:overworld", "coordinates": "-2562 70 1344", "rotation": "-90 0", "filename": "island_base" },
-            { "label": "Mesa Base", "dimension": "minecraft:overworld", "coordinates": "-9353 64 1067", "rotation": "180 -25","filename": "mesa_base" },
-            { "label": "Jungle Base", "dimension": "minecraft:overworld", "coordinates": "9866 63 9914", "rotation": "-90 20","filename": "jungle_base" },
-            { "label": "Village Base", "dimension": "minecraft:overworld", "coordinates": "-10185 68 -10705", "rotation": "90 -7","filename": "village_base" },
-            { "label": "Snow Base", "dimension": "minecraft:overworld", "coordinates": "-10356 74 -5145", "rotation": "-132 -7","filename": "snow_base" },
+            { "label": "Mesa Base", "dimension": "minecraft:overworld", "coordinates": "-9353 64 1067", "rotation": "180 -25", "filename": "mesa_base" },
+            { "label": "Jungle Base", "dimension": "minecraft:overworld", "coordinates": "9866 63 9914", "rotation": "-90 20", "filename": "jungle_base" },
+            { "label": "Village Base", "dimension": "minecraft:overworld", "coordinates": "-10185 68 -10705", "rotation": "90 -7", "filename": "village_base" },
+            { "label": "Snow Base", "dimension": "minecraft:overworld", "coordinates": "-10356 74 -5145", "rotation": "-132 -7", "filename": "snow_base" },
             { "label": "Spooky Mansion", "dimension": "minecraft:overworld", "coordinates": "-14643 99 -11911.5", "rotation": "90 0", "filename": "spooky_mansion" },
-            { "label": "Canvas", "dimension": "madagascar:canvas", "coordinates": "0 70 0", "filename": "canvas", "gamemode": "creative" },
-            { "label": "Skyblock Base", "dimension": "madagascar:skyblock", "coordinates": "-10 63 -1", "rotation": "135 4", "filename": "skyblock_base" },
             { "label": "Cliffside Base", "dimension": "minecraft:overworld", "coordinates": "-6448 67 -11113", "rotation": "180 0", "filename": "cliffside_base" },
+            { "label": "Woodland Base", "dimension": "minecraft:overworld", "coordinates": "4045 69 -5651", "rotation": "90 -10", "filename": "woodland_base" },
             { "label": "Ocean Woodland", "dimension": "minecraft:overworld", "coordinates": "16879 70 -4884", "rotation": "0 -13", "filename": "ocean_woodland" }
+        ]
+    },
+    {
+        "header": "Dimensions",
+        "locations": [
+            { "label": "Canvas", "dimension": "madagascar:canvas", "coordinates": "0 70 0", "filename": "canvas", "gamemode": "creative" },
+            { "label": "Skyblock Base", "dimension": "madagascar:skyblock", "coordinates": "-10 63 -1", "rotation": "135 4", "filename": "skyblock_base" }
         ]
     },
     {

@@ -1,6 +1,6 @@
 {
-  "pack": {
-    "pack_format": 9,
-    "description": "Madagascar"
-  }
+    "pack": {
+        "pack_format": 18,
+        "description": "Madagascar"
+    }
 }
