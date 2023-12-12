@@ -112,3 +112,4 @@ _backup
 _old
 ./functions
 *.code-workspace
+*.docx
