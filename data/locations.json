@@ -11,9 +11,16 @@
             { "label": "Jungle Base", "dimension": "minecraft:overworld", "coordinates": "9866 63 9914", "rotation": "-90 20", "filename": "jungle_base" },
             { "label": "Village Base", "dimension": "minecraft:overworld", "coordinates": "-10185 68 -10705", "rotation": "90 -7", "filename": "village_base" },
             { "label": "Snow Base", "dimension": "minecraft:overworld", "coordinates": "-10356 74 -5145", "rotation": "-132 -7", "filename": "snow_base" },
-            { "label": "Spooky Mansion", "dimension": "minecraft:overworld", "coordinates": "-14643 99 -11911", "rotation": "90 0", "filename": "spooky_mansion" },
             { "label": "Cliffside Base", "dimension": "minecraft:overworld", "coordinates": "-6448 67 -11113", "rotation": "180 0", "filename": "cliffside_base" },
             { "label": "Woodland Base", "dimension": "minecraft:overworld", "coordinates": "4045 69 -5651", "rotation": "90 -10", "filename": "woodland_base" },
+            { "label": "Bamboo Base", "dimension": "minecraft:overworld", "coordinates": "5402 99 -7468", "rotation": "0 0", "filename": "bamboo_base" }
+        ]
+    },
+    {
+        "header": "Landmarks",
+        "locations": [
+            { "label": "Spawn", "dimension": "minecraft:overworld", "coordinates": "-14643 99 -11911", "rotation": "90 0", "filename": "spawn" },
+            { "label": "Spooky Mansion", "dimension": "minecraft:overworld", "coordinates": "-14643 99 -11911", "rotation": "90 0", "filename": "spooky_mansion" },
             { "label": "Ocean Woodland", "dimension": "minecraft:overworld", "coordinates": "16879 70 -4884", "rotation": "0 -13", "filename": "ocean_woodland" }
         ]
     },
@@ -21,7 +28,7 @@
         "header": "Dimensions",
         "locations": [
             { "label": "Canvas", "dimension": "madagascar:canvas", "coordinates": "0 70 0", "filename": "canvas", "gamemode": "creative" },
-            { "label": "Skyblock Base", "dimension": "madagascar:skyblock", "coordinates": "-10 63 -1", "rotation": "135 4", "filename": "skyblock_base" }
+            { "label": "Skyblock", "dimension": "madagascar:skyblock", "coordinates": "-10 63 -1", "rotation": "135 4", "filename": "skyblock" }
         ]
     },
     {

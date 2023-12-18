@@ -20,7 +20,7 @@ class Book {
         return this.generateCommand('give @s written_book', result);
     }
 
-    createBookGate(){
+    createBookGate() {
         const command = new Command();
         command.append(`execute if entity @s[team=${config.team.god.name}] run function madagascar:book/god`);
         command.append(`execute unless entity @s[team=${config.team.god.name}] run function madagascar:book/default`);
@@ -65,11 +65,10 @@ class Book {
         page.add(content.players);
         page.add(this.generateSpacer());
         page.add(content.utility);
-        page.add(this.generateSpacer());
+        // page.add(this.generateSpacer());
         page.add(content.hardcore);
         return page.export();
     }
-    
 
     generateLocationPage(page) {
         let result = [];
@@ -104,7 +103,7 @@ class Book {
     }
     generateLore(lore) {
         let result = '';
-        lore.forEach((line) => {
+        lore.forEach(line => {
             result += `'${JSON.stringify({ text: line })}',`;
         });
         return result.substring(0, result.length - 1).toString();

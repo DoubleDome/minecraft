@@ -39,7 +39,7 @@ class Generator {
         this.paths.madagascar = creator.validate(path.resolve(this.paths.data, config.path.madagascar));
         this.paths.functions = creator.validate(path.resolve(this.paths.madagascar, config.path.functions));
         this.paths.pack = path.resolve(__dirname, '../', config.path.pack);
-        Object.keys(config.folder).forEach((key) => {
+        Object.keys(config.folder).forEach(key => {
             this.paths[key] = creator.validate(path.resolve(this.paths.functions, config.folder[key]));
         });
     }
@@ -111,7 +111,7 @@ class Generator {
 
     createLocationFunctions() {
         this.validatePaths();
-        this.writeFiles(this.paths.location, location.create(data.locations))
+        this.writeFiles(this.paths.location, location.create(data.locations));
     }
 
     createToolFunctions() {
