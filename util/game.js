@@ -96,7 +96,7 @@ class Game {
     }
     static addTeams(command, teams) {
         Object.entries(teams).forEach(([key, value]) => {
-            command.append(`team add ${value.name} \\"${value.label}\\"`);
+            command.append(`team add ${value.name} "${value.label}"`);
         });
     }
     static removeTeams(command, teams) {

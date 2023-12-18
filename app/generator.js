@@ -74,7 +74,7 @@ class Generator {
     }
 
     createFoundation() {
-        Load.getInstance().append(`team add ${config.team.god.name} ${config.team.god.label}`);
+        Load.getInstance().append(`team add ${config.team.god.name} "${config.team.god.label}"`);
         Load.getInstance().append(`team join ${config.team.god.name} DoubleDome`);
         Load.getInstance().addObjectives(data.objectives.constants);
         Load.getInstance().addObjectives(data.objectives.temp);
