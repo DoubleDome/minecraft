@@ -28,7 +28,7 @@
             { "label": "Mob Jail", "dimension": "minecraft:overworld", "coordinates": "-9833 76 6010", "rotation": "0 0", "filename": "mob_jail" },
             { "label": "Pacman Map", "dimension": "minecraft:overworld", "coordinates": "-254 63 1599", "rotation": "180 0", "filename": "pacman_map" },
             { "label": "Murder Village", "dimension": "minecraft:overworld", "coordinates": "-10162 79 6901", "rotation": "56 0", "filename": "murder_village" },
-            { "label": "Roller Coaster Spider Farm", "dimension": "minecraft:overworld", "coordinates": "4922 1 -7352", "rotation": "0 0", "filename": "rollercoaster_spider_farm" }
+            { "label": "Coaster Spider Farm", "dimension": "minecraft:overworld", "coordinates": "4922 1 -7352", "rotation": "0 0", "filename": "coaster_spider_farm" }
         ]
     },
     {
