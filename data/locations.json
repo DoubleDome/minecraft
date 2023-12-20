@@ -19,9 +19,16 @@
     {
         "header": "Landmarks",
         "locations": [
-            { "label": "Spawn", "dimension": "minecraft:overworld", "coordinates": "-14643 99 -11911", "rotation": "90 0", "filename": "spawn" },
+            { "label": "Spawn", "dimension": "minecraft:overworld", "coordinates": "8 63 2", "rotation": "165 0", "filename": "spawn" },
+            { "label": "Doo Doo Monkey", "dimension": "minecraft:overworld", "coordinates": "325 63 -206", "rotation": "-130 0", "filename": "doo_doo_monkey" },
+            { "label": "Filbert Statue", "dimension": "minecraft:overworld", "coordinates": "-219 64 330", "rotation": "98 -37", "filename": "filbert_statue" },
+            { "label": "Burnt Mansion", "dimension": "minecraft:overworld", "coordinates": "-250 64 97", "rotation": "90 0", "filename": "burt_mansion" },
             { "label": "Spooky Mansion", "dimension": "minecraft:overworld", "coordinates": "-14643 99 -11911", "rotation": "90 0", "filename": "spooky_mansion" },
-            { "label": "Ocean Woodland", "dimension": "minecraft:overworld", "coordinates": "16879 70 -4884", "rotation": "0 -13", "filename": "ocean_woodland" }
+            { "label": "Ocean Woodland", "dimension": "minecraft:overworld", "coordinates": "16879 70 -4884", "rotation": "0 -13", "filename": "ocean_woodland" },
+            { "label": "Mob Jail", "dimension": "minecraft:overworld", "coordinates": "-9833 76 6010", "rotation": "0 0", "filename": "mob_jail" },
+            { "label": "Pacman Map", "dimension": "minecraft:overworld", "coordinates": "-254 63 1599", "rotation": "180 0", "filename": "pacman_map" },
+            { "label": "Murder Village", "dimension": "minecraft:overworld", "coordinates": "-10162 79 6901", "rotation": "56 0", "filename": "murder_village" },
+            { "label": "Roller Coaster Spider Farm", "dimension": "minecraft:overworld", "coordinates": "4922 1 -7352", "rotation": "0 0", "filename": "rollercoaster_spider_farm" }
         ]
     },
     {
