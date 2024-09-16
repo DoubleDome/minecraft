@@ -57,7 +57,7 @@ class Generator {
         this.createInventoryFunctions();
         this.createEnderFunctions();
         this.createHardcoreFunctions();
-        this.createDynamiteGame();
+        // this.createDynamiteGame();
         this.createLoader();
         this.createTicker();
     }
@@ -144,7 +144,7 @@ class Generator {
         const output = book.create(data.locations);
 
         creator.write(path.resolve(this.paths.book, 'god.mcfunction'), output.god);
-        creator.write(path.resolve(this.paths.book, 'default.mcfunction'), output.default);
+        creator.write(path.resolve(this.paths.book, 'magic.mcfunction'), output.magic);
         creator.write(path.resolve(this.paths.gate, 'book.mcfunction'), output.gate);
     }
     createInventoryFunctions() {

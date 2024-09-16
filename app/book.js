@@ -9,12 +9,12 @@ class Book {
     create(locations) {
         const result = {};
         result.god = this.createBook('god', locations);
-        result.default = this.createBook('default', locations);
+        result.magic = this.createBook('magic', locations);
         result.gate = this.createBookGate();
         return result;
     }
     createBook(type, locations) {
-        const result = this.generateMetadata(content.titles[type], content.author, content.lore, content.version);
+        const result = this.generateMetadata(content.titles[type], content.author, content.lore, content.version, content.generation);
         result.pages = this.generateBook(type, locations);
 
         return this.generateCommand('give @s written_book', result);
@@ -30,13 +30,16 @@ class Book {
     generateBook(type, pages) {
         const result = [];
         switch (type) {
-            case 'god':
-                result.push(JSON.stringify(this.generateGodPage()));
-            default:
+            case 'magic':
                 result.push(JSON.stringify(this.generateMagicPage()));
-                for (let page of pages) {
-                    result.push(JSON.stringify(this.generateLocationPage(page)));
-                }
+                break;
+            case 'god':
+                result.push(JSON.stringify(this.generateMagicPage()));
+                result.push(JSON.stringify(this.generateGodPage()));
+                break;
+        }
+        for (let page of pages) {
+            result.push(JSON.stringify(this.generateLocationPage(page)));
         }
         return result;
     }
@@ -65,7 +68,7 @@ class Book {
         page.add(content.players);
         page.add(this.generateSpacer());
         page.add(content.utility);
-        // page.add(this.generateSpacer());
+        page.add(this.generateSpacer());
         page.add(content.hardcore);
         return page.export();
     }
@@ -94,11 +97,12 @@ class Book {
         ];
     }
 
-    generateMetadata(title, author, lore, version) {
+    generateMetadata(title, author, lore, version, generation) {
         return {
             title: `${title} ${roman[version]}`,
             author: author,
             display: { Lore: [this.generateLore(lore)] },
+            generation: 3,
         };
     }
     generateLore(lore) {
@@ -122,7 +126,7 @@ class Book {
         };
     }
     generateSpacer() {
-        return { text: '\\n', color: 'reset' };
+        return { text: '\\n', color: 'black' };
     }
 
     generateCommand(command, data) {
@@ -137,10 +141,9 @@ class Book {
         result = this.santizeProperty(result, 'Lore');
 
         result = this.sanitizeQuotes(result);
-
         result = this.sanitizeSlashes(result);
-        result = this.wrapWithQuote(result);
 
+        result = this.wrapWithQuote(result);
         return result;
     }
 

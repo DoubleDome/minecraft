@@ -47,5 +47,3 @@ class KeyboardShortcuts {
 }
 
 const keyboard = new KeyboardShortcuts();
-console.log('');
-console.log(Math.floor(164 / 64), ' Stacks ', 164 % 64, ' Items');

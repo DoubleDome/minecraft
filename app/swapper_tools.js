@@ -4,9 +4,9 @@ const config = require('../data/config.json');
 class ToolSwapper {
     create(tools) {
         const result = { tools: {}, gates: {} };
-        tools.forEach((tool) => {
+        tools.forEach(tool => {
             result.tools[tool.filename] = this.createItem(tool.id, tool.filename, tool.enchantment, tool.level);
-            result.gates[tool.filename] = this.createItem(tool.id, tool.filename, tool.enchantment, tool.level);
+            result.gates[tool.filename] = this.createItemGate(tool.id, tool.filename, tool.enchantment, tool.level);
         });
         return result;
     }
