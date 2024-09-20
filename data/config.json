@@ -7,7 +7,7 @@
         "data": "data",
         "minecraft": "minecraft",
         "madagascar": "madagascar",
-        "functions": "functions"
+        "functions": "function"
     },
     "folder": {
         "gate": "gate",
@@ -83,7 +83,10 @@
         "death": "death_marker"
     },
     "team": {
-        "god": { "name": "god", "label": "God" }
+        "god": {
+            "name": "god",
+            "label": "God"
+        }
     },
     "coordinate": {
         "shulker": {

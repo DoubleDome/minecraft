@@ -15,9 +15,11 @@ class Book {
     }
     createBook(type, locations) {
         const result = this.generateMetadata(content.titles[type], content.author, content.lore, content.version, content.generation);
-        result.pages = this.generateBook(type, locations);
-
-        return this.generateCommand('give @s written_book', result);
+        console.log(result);
+        // result.pages = this.generateBook(type, locations);
+        let temp = this.generateCommand('/give @a written_book[written_book_content=${content}]', result);
+        console.log(temp);
+        return temp;
     }
 
     createBookGate() {
@@ -73,6 +75,21 @@ class Book {
         return page.export();
     }
 
+    generateMetadata(title, author, lore, version, generation) {
+        return `{title:"${title} ${roman[version]}",author:"${author}",generation: 3},lore=[${this.generateLore(lore)}]`;
+    }
+    generateLore(lore) {
+        let result = '';
+        for (let l = 0; l < lore.length; l++) {
+            result += `'[${JSON.stringify({ text: lore[l] })}]'`;
+            if (l < lore.length - 1) {
+                result += ',';
+            }
+        }
+        // result += "]'";
+        return result;
+    }
+
     generateLocationPage(page) {
         let result = [];
         result.push(this.generateHeader(page.header));
@@ -90,27 +107,10 @@ class Book {
                 color: 'dark_green',
                 clickEvent: {
                     action: 'run_command',
-                    value: `/execute in ${dimension} run tp @s ${coordinates}`,
                     value: `/function ${config.package}:${config.folder.location}/${filename}`,
                 },
             },
         ];
-    }
-
-    generateMetadata(title, author, lore, version, generation) {
-        return {
-            title: `${title} ${roman[version]}`,
-            author: author,
-            display: { Lore: [this.generateLore(lore)] },
-            generation: 3,
-        };
-    }
-    generateLore(lore) {
-        let result = '';
-        lore.forEach(line => {
-            result += `'${JSON.stringify({ text: line })}',`;
-        });
-        return result.substring(0, result.length - 1).toString();
     }
 
     generateHeader(label) {
@@ -132,18 +132,18 @@ class Book {
     generateCommand(command, data) {
         let result = '';
         result = result.concat(command);
-        result = result.concat(JSON.stringify(data));
+        result = result.replace('${content}', data);
 
-        result = this.santizeProperty(result, 'title');
-        result = this.santizeProperty(result, 'author');
-        result = this.santizeProperty(result, 'pages');
-        result = this.santizeProperty(result, 'display');
-        result = this.santizeProperty(result, 'Lore');
+        // result = this.santizeProperty(result, 'title');
+        // result = this.santizeProperty(result, 'author');
+        // result = this.santizeProperty(result, 'lore');
+        // result = this.santizeProperty(result, 'pages');
+        // result = this.santizeProperty(result, 'display');
 
-        result = this.sanitizeQuotes(result);
-        result = this.sanitizeSlashes(result);
+        // result = this.sanitizeQuotes(result);
+        // result = this.sanitizeSlashes(result);
 
-        result = this.wrapWithQuote(result);
+        // result = this.wrapWithQuote(result);
         return result;
     }
 

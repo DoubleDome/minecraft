@@ -1,7 +1,7 @@
 {
     "titles": {
         "god": "Book of the Damned",
-        "default": "Book of Magic"
+        "magic": "Book of Magic"
     },
     "author": "DoubleDome",
     "lore": [
