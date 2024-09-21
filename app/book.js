@@ -14,11 +14,12 @@ class Book {
         return result;
     }
     createBook(type, locations) {
-        const result = this.generateMetadata(content.titles[type], content.author, content.lore, content.version, content.generation);
-        console.log(result);
-        // result.pages = this.generateBook(type, locations);
-        let temp = this.generateCommand('/give @a written_book[written_book_content=${content}]', result);
-        console.log(temp);
+        let result = this.generateMetadata(content.titles[type], content.author, content.lore, content.version, content.generation);
+        // let temp2 = result.replace('%pages%', this.generatePages(type, locations));
+        // console.log(temp2);
+        result = result.replace('%pages%', this.generatePages(type, locations));
+        let temp = this.generateCommand('give @a written_book[written_book_content=%content%]', result);
+        console.log('\n', temp, '\n');
         return temp;
     }
 
@@ -29,20 +30,24 @@ class Book {
         return command.export();
     }
 
-    generateBook(type, pages) {
-        const result = [];
-        switch (type) {
-            case 'magic':
-                result.push(JSON.stringify(this.generateMagicPage()));
-                break;
-            case 'god':
-                result.push(JSON.stringify(this.generateMagicPage()));
-                result.push(JSON.stringify(this.generateGodPage()));
-                break;
+    generatePages(type, locations) {
+        let result = '[';
+        // switch (type) {
+        //     case 'magic':
+        //         result.push(JSON.stringify(this.generateMagicPage()));
+        //         break;
+        //     case 'god':
+        //         result.push(JSON.stringify(this.generateMagicPage()));
+        //         result.push(JSON.stringify(this.generateGodPage()));
+        //         break;
+        // }
+        for (let l = 0; l < locations.length; l++) {
+            let temp = this.generateLocationPage(locations[l]);
+            // console.log(temp);
+            result += temp;
+            if (l < locations.length - 1) result += ',';
         }
-        for (let page of pages) {
-            result.push(JSON.stringify(this.generateLocationPage(page)));
-        }
+        result += ']';
         return result;
     }
 
@@ -76,63 +81,47 @@ class Book {
     }
 
     generateMetadata(title, author, lore, version, generation) {
-        return `{title:"${title} ${roman[version]}",author:"${author}",generation: 3},lore=[${this.generateLore(lore)}]`;
+        return `{title:"${title} ${roman[version]}",author:"${author}",generation:3,pages:%pages%},lore=[${this.generateLore(lore)}]`;
     }
     generateLore(lore) {
         let result = '';
         for (let l = 0; l < lore.length; l++) {
             result += `'[${JSON.stringify({ text: lore[l] })}]'`;
-            if (l < lore.length - 1) {
-                result += ',';
-            }
-        }
-        // result += "]'";
-        return result;
-    }
-
-    generateLocationPage(page) {
-        let result = [];
-        result.push(this.generateHeader(page.header));
-        for (let location of page.locations) {
-            result = result.concat(this.generateLocation(location.label, location.dimension, location.coordinates, location.filename));
+            if (l < lore.length - 1) result += ',';
         }
         return result;
     }
 
-    generateLocation(label, dimension, coordinates, filename) {
-        return [
-            { text: '\\n\\u25b6 ', color: '#006600' },
-            {
-                text: label,
-                color: 'dark_green',
-                clickEvent: {
-                    action: 'run_command',
-                    value: `/function ${config.package}:${config.folder.location}/${filename}`,
-                },
-            },
-        ];
+    generateLocationPage(data) {
+        let result = `'[`;
+        result += this.generateHeader(data.header);
+        for (let l = 0; l < data.locations.length; l++) {
+            result += this.generateLocation(data.locations[l].label, data.locations[l].filename);
+            if (l < data.locations.length - 1) result += ',';
+        }
+        result += `]'`;
+        return result;
+    }
+
+    generateLocation(label, filename) {
+        let result = '[';
+        result += '{"text":"\\\\n\\\\u25b6 ","color":"#006600"},';
+        result += `{"text":"${label}","color":"dark_green","clickEvent":{"action":"run_command","value":"/function ${config.package}:${config.folder.location}/${filename}"}}`;
+        result += ']';
+        return result;
     }
 
     generateHeader(label) {
-        return {
-            text: label,
-            color: 'dark_purple',
-        };
-    }
-    generateSubheader(label) {
-        return {
-            text: `\\n${label}:`,
-            color: 'black',
-        };
+        return `[{"text":"${label}",color: "dark_purple"}],`;
     }
     generateSpacer() {
-        return { text: '\\n', color: 'black' };
+        return '[{"text":"\\\\n","color": "black"}],';
     }
 
     generateCommand(command, data) {
         let result = '';
         result = result.concat(command);
-        result = result.replace('${content}', data);
+        result = result.replace('%content%', data);
 
         // result = this.santizeProperty(result, 'title');
         // result = this.santizeProperty(result, 'author');
