@@ -24,13 +24,6 @@
                 "filename": "flower_base"
             },
             {
-                "label": "Nether Hub",
-                "dimension": "minecraft:the_nether",
-                "coordinates": "30 114 32",
-                "rotation": "0 0",
-                "filename": "nether_hub"
-            },
-            {
                 "label": "Island Base",
                 "dimension": "minecraft:overworld",
                 "coordinates": "-2562 70 1344",
@@ -106,6 +99,13 @@
                 "filename": "spawn"
             },
             {
+                "label": "Nether Hub",
+                "dimension": "minecraft:the_nether",
+                "coordinates": "30 114 32",
+                "rotation": "0 0",
+                "filename": "nether_hub"
+            },
+            {
                 "label": "Doo Doo Monkey",
                 "dimension": "minecraft:overworld",
                 "coordinates": "325 63 -206",
@@ -143,7 +143,7 @@
             {
                 "label": "Mob Jail",
                 "dimension": "minecraft:overworld",
-                "coordinates": "-9833 76 6010",
+                "coordinates": "-9833 76 -6010",
                 "rotation": "0 0",
                 "filename": "mob_jail"
             },
@@ -157,7 +157,7 @@
             {
                 "label": "Murder Village",
                 "dimension": "minecraft:overworld",
-                "coordinates": "-10162 79 6901",
+                "coordinates": "-10162 79 -6901",
                 "rotation": "56 0",
                 "filename": "murder_village"
             },
@@ -167,6 +167,20 @@
                 "coordinates": "4922 1 -7352",
                 "rotation": "0 0",
                 "filename": "minecart_spider_farm"
+            },
+            {
+                "label": "Panda Santuary",
+                "dimension": "minecraft:overworld",
+                "coordinates": "-14441 99 -12121",
+                "rotation": "-180 -15",
+                "filename": "panda_sanctuary"
+            },
+            {
+                "label": "Crimson Base",
+                "dimension": "minecraft:the_nether",
+                "coordinates": "17895 74 13700",
+                "rotation": "-90 0",
+                "filename": "crimson_base"
             }
         ]
     },
