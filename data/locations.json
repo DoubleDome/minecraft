@@ -85,6 +85,13 @@
                 "coordinates": "17895 74 13700",
                 "rotation": "-90 0",
                 "filename": "swamp_base"
+            },
+            {
+                "label": "Cherry Base",
+                "dimension": "minecraft:overworld",
+                "coordinates": "10310 136 12167",
+                "rotation": "90 0",
+                "filename": "cherry_base"
             }
         ]
     },
