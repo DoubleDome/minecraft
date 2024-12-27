@@ -185,8 +185,8 @@
             {
                 "label": "Crimson Base",
                 "dimension": "minecraft:the_nether",
-                "coordinates": "17895 74 13700",
-                "rotation": "-90 0",
+                "coordinates": "1258 45 -1291",
+                "rotation": "180 -3",
                 "filename": "crimson_base"
             }
         ]
