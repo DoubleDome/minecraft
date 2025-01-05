@@ -1,0 +1,11 @@
+{
+  "type": "my_dimensions:sky_islands_type",
+  "generator": {
+    "type": "minecraft:noise",
+    "settings": "minecraft:floating_islands",
+    "biome_source": {
+      "type": "minecraft:multi_noise",
+      "preset": "minecraft:overworld"
+    }
+  }
+}
