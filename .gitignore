@@ -113,3 +113,5 @@ _old
 ./functions
 *.code-workspace
 *.docx
+.temp/
+.DS_Store
