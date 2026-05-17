@@ -106,16 +106,17 @@ class Book {
     generateLocation(label, filename) {
         let result = '[';
         result += '{"text":"\\\\n\\\\u25b6 ","color":"#006600"},';
-        result += `{"text":"${label}","color":"dark_green","clickEvent":{"action":"run_command","value":"/function ${config.package}:${config.folder.location}/${filename}"}}`;
+        // 1.21.5+ renamed clickEvent -> click_event and the value field for run_command -> command
+        result += `{"text":"${label}","color":"dark_green","click_event":{"action":"run_command","command":"/function ${config.package}:${config.folder.location}/${filename}"}}`;
         result += ']';
         return result;
     }
 
     generateHeader(label) {
-        return `[{"text":"${label}",color: "dark_purple"}],`;
+        return `[{"text":"${label}","color":"dark_purple"}],`;
     }
     generateSpacer() {
-        return '[{"text":"\\\\n","color": "black"}],';
+        return '[{"text":"\\\\n","color":"black"}],';
     }
 
     generateCommand(command, data) {
