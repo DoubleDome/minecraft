@@ -66,77 +66,114 @@ loot replace entity @s hotbar.2 1 mine ~ 251 ~ minecraft:air
 
 No scratch blocks. No loot-table override. No `loot mine` trick. Just `data modify` moves between live entity paths.
 
-### 3.1 Gate predicate
+The gear shulker is identified by an invisible `minecraft:custom_data` marker — it can live in **any** ender chest slot, the slot is resolved at runtime via function macros. The player marks their gear shulker once with a one-time setup command (see §3.5).
 
-`data/madagascar/function/gate/tool_swap_silk_pickaxe.mcfunction`:
+### 3.1 Files emitted per tool
+
+Each enchanted tool needs two files; the macro swap body is generated **once** and shared across all tools.
+
+- `data/madagascar/function/gate/tool_swap_silk_pickaxe.mcfunction` — predicate-gated entry point. One line.
+- `data/madagascar/function/tool_swap/silk_pickaxe.mcfunction` — resolves the runtime args (which ender slot, which container slot) and calls the shared macro.
+
+Shared, emitted once:
+
+- `data/madagascar/function/tool_swap/_swap.mcfunction` — the macro body that does the actual move.
+
+### 3.2 Gate predicate
+
+`gate/tool_swap_silk_pickaxe.mcfunction`:
 
 ```mcfunction
-execute as @s if data entity @s EnderItems[{Slot:0b}].components."minecraft:container"[{item:{id:"minecraft:netherite_pickaxe",components:{"minecraft:enchantments":{levels:{"minecraft:silk_touch":1}}}}}] run function madagascar:tool_swap/silk_pickaxe
+execute as @s if data entity @s EnderItems[{components:{"minecraft:custom_data":{gear:1b},"minecraft:container":[{item:{id:"minecraft:netherite_pickaxe",components:{"minecraft:enchantments":{levels:{"minecraft:silk_touch":1}}}}}]}}] run function madagascar:tool_swap/silk_pickaxe
 ```
 
-(One line in the actual `.mcfunction` file.)
+(One line in the actual `.mcfunction` file. Predicate requires both the `custom_data:{gear:1b}` marker AND a silk-touch netherite pickaxe to be present in the same container — so the button no-ops cleanly if the gear shulker isn't marked, isn't in the ender chest, or doesn't contain the target.)
 
-Predicate detail: container-component entries are `{slot:<int>, item:{id, count, components}}`. The predicate matches the nested `item:` against id + enchantment component. Partial-match on components is supported — `levels:{"minecraft:silk_touch":1}` requires that key with that value, but other enchantments on the same item don't fail the match.
+### 3.3 Per-tool resolver
 
-### 3.2 Function body
-
-`data/madagascar/function/tool_swap/silk_pickaxe.mcfunction`:
+`tool_swap/silk_pickaxe.mcfunction`:
 
 ```mcfunction
-# 0. Clean storage
-data remove storage minecraft:madagascar inbound
-data remove storage minecraft:madagascar outbound
-data remove storage minecraft:madagascar slot
-data remove storage minecraft:madagascar hand_entry
-data remove storage minecraft:madagascar gear_entry
+data remove storage minecraft:madagascar args
 
-# 1. Snapshot the existing silk pickaxe entry from the gear shulker (about to be removed — no duplication)
-data modify storage minecraft:madagascar inbound set from entity @s EnderItems[{Slot:0b}].components."minecraft:container"[{item:{id:"minecraft:netherite_pickaxe",components:{"minecraft:enchantments":{levels:{"minecraft:silk_touch":1}}}}}]
-# inbound = {slot:<int>, item:{id, count, components}}  ← damage/lore/repair_cost preserved
-data modify storage minecraft:madagascar slot set from storage minecraft:madagascar inbound.slot
+# Extract the gear shulker's Slot from EnderItems (byte). Required for the macro substitution.
+data modify storage minecraft:madagascar args.shulker_slot set from entity @s EnderItems[{components:{"minecraft:custom_data":{gear:1b},"minecraft:container":[{item:{id:"minecraft:netherite_pickaxe",components:{"minecraft:enchantments":{levels:{"minecraft:silk_touch":1}}}}}]}}].Slot
 
-# 2. Snapshot the player's current hand item (about to be removed — no duplication)
+# Extract the silk pickaxe's slot inside the gear shulker's container (int).
+data modify storage minecraft:madagascar args.tool_slot set from entity @s EnderItems[{components:{"minecraft:custom_data":{gear:1b}}}].components."minecraft:container"[{item:{id:"minecraft:netherite_pickaxe",components:{"minecraft:enchantments":{levels:{"minecraft:silk_touch":1}}}}}].slot
+
+# Invoke the shared macro swap body with these two values.
+function madagascar:tool_swap/_swap with storage minecraft:madagascar args
+```
+
+Three lines of plumbing per tool. The whole resolver exists just to get the two slot values into storage, then hand off to the macro.
+
+### 3.4 Shared macro body
+
+`tool_swap/_swap.mcfunction` (lines starting with `$` are macro substitutions):
+
+```mcfunction
+# Snapshot the target item from the gear shulker's container (about to be removed).
+$data modify storage minecraft:madagascar inbound set from entity @s EnderItems[{Slot:$(shulker_slot)}].components."minecraft:container"[{slot:$(tool_slot)}]
+# inbound = {slot:<int>, item:{id, count, components}}
+
+# Snapshot the player's hand item.
 data modify storage minecraft:madagascar outbound set from entity @s Inventory[{Slot:2b}]
 # outbound = {Slot:2b, id, count, components}
 
-# 3. Remove both items from their live positions — now only storage holds them
-data remove entity @s EnderItems[{Slot:0b}].components."minecraft:container"[{item:{id:"minecraft:netherite_pickaxe",components:{"minecraft:enchantments":{levels:{"minecraft:silk_touch":1}}}}}]
+# Remove both items from live positions (now only storage holds them — no duplication).
+$data remove entity @s EnderItems[{Slot:$(shulker_slot)}].components."minecraft:container"[{slot:$(tool_slot)}]
 data remove entity @s Inventory[{Slot:2b}]
 
-# 4. Reshape inbound.item → Inventory entry (add Slot:2b), append to player
+# Reshape inbound.item → Inventory entry (add Slot:2b), append to player.
 data modify storage minecraft:madagascar hand_entry set from storage minecraft:madagascar inbound.item
 data modify storage minecraft:madagascar hand_entry.Slot set value 2b
 data modify entity @s Inventory append from storage minecraft:madagascar hand_entry
 
-# 5. Reshape outbound → container entry (drop Slot, nest under item:, attach saved slot), append to gear shulker
+# Reshape outbound → container entry, append to gear shulker.
 data remove storage minecraft:madagascar outbound.Slot
 data modify storage minecraft:madagascar gear_entry.item set from storage minecraft:madagascar outbound
-data modify storage minecraft:madagascar gear_entry.slot set from storage minecraft:madagascar slot
-data modify entity @s EnderItems[{Slot:0b}].components."minecraft:container" append from storage minecraft:madagascar gear_entry
+$data modify storage minecraft:madagascar gear_entry.slot set value $(tool_slot)
+$data modify entity @s EnderItems[{Slot:$(shulker_slot)}].components."minecraft:container" append from storage minecraft:madagascar gear_entry
 
-# 6. Cleanup
+# Cleanup
 data remove storage minecraft:madagascar inbound
 data remove storage minecraft:madagascar outbound
-data remove storage minecraft:madagascar slot
 data remove storage minecraft:madagascar hand_entry
 data remove storage minecraft:madagascar gear_entry
+data remove storage minecraft:madagascar args
 ```
 
-### 3.3 Why this satisfies the constraints
+Macro substitution detail: `$(shulker_slot)` substitutes a stringified SNBT value. Because we extracted `args.shulker_slot` from `EnderItems[…].Slot`, the stored value carries the byte type — its SNBT representation is `0b`, `1b`, etc., so the substitution naturally produces `Slot:0b` without us appending a `b` after `$(…)`. Similarly `args.tool_slot` was extracted from the lowercase int `slot` field of the container component, so it substitutes to a bare integer.
+
+### 3.5 One-time setup the player runs once
+
+Mark the gear shulker with the invisible identifier:
+
+```mcfunction
+/data modify entity @s EnderItems[{Slot:<your_slot>b}].components."minecraft:custom_data" set value {gear:1b}
+```
+
+After this, the shulker can be moved anywhere in the ender chest and the buttons still find it. No re-marking needed.
+
+### 3.6 Why this satisfies the constraints
 
 | Constraint | How it's met |
 | --- | --- |
-| No item spawning | Step 4's `Inventory append` copies the snapshot we took in step 1 (the exact item compound the shulker held). No `give` or `item replace … with` anywhere. |
-| No duplication | Steps 3 happens *between* the snapshot reads and the appends. At the instant of removal, both items live only in storage; the appends then re-place them in their new homes. |
-| Component fidelity | `data modify … set from …` copies the full source compound. `components` (with damage, lore, repair_cost, custom_name, anti-cheat tags, …) rides along untouched. |
+| No item spawning | Steps `inbound`/`outbound` snapshot existing items; the appends write those snapshots back. No `give` or `item replace … with` anywhere. |
+| No duplication | The remove step happens between snapshot reads and appends. At the moment of removal, both items live only in storage; appends then re-place them in their new homes. |
+| Component fidelity | `data modify … set from …` copies the full compound. `components` (damage, lore, repair_cost, custom_name, anti-cheat tags, …) rides along untouched. |
+| Gear shulker not stuck in slot 0 | Macro substitutes the matched `Slot` at runtime — gear shulker can be anywhere in the ender chest. |
+| Won't mismatch a random shulker | Predicate requires `custom_data:{gear:1b}` marker, which the player set once on their gear shulker only. Plain shulkers are ignored. |
 
-### 3.4 Edge cases
+### 3.7 Edge cases
 
 | Case | Spike behaviour | Mitigation |
 | --- | --- | --- |
-| Player hand is empty (`Inventory[{Slot:2b}]` missing) | Step 2 stores nothing → `outbound` undefined → step 5 appends a malformed gear entry. | Gate the swap body on `execute if data entity @s Inventory[{Slot:2b}]` before running the move, or branch into "just take the silk pickaxe, leave gear slot empty" path. |
-| Multiple silk-touch netherite pickaxes in the gear shulker | Predicate matches the first; only that one is moved. | Acceptable — pick first. |
-| Enderchest[0] is not a shulker, or no silk pickaxe inside | Gate predicate doesn't resolve; `execute if data` never fires. | Already correct — silent no-op. |
+| Gear shulker missing (player hasn't set the marker yet) | Gate predicate fails to match; `execute if data` never fires. Button silently does nothing. | Already correct — fail-closed. |
+| Multiple marked shulkers in the ender chest | First matching is used (data path predicates always pick the first match). | Acceptable — keep one gear shulker. |
+| Gear shulker has the marker but no silk pickaxe | Predicate fails because both conditions are AND'd. | Already correct. |
+| Player hand is empty | `outbound` ends up undefined; the gear entry's `item:` would be empty, producing a malformed entry. | Gate the resolver on `execute if data entity @s Inventory[{Slot:2b}]` (or branch into "just take the tool" path). |
 | Hand item has its own enchantments / durability / custom name | Full `components` compound is copied, so everything survives. | None. |
 
 ### 3.5 Verification status
@@ -173,13 +210,18 @@ Four phases. Each is small, testable, and committable on its own.
 
 ### Phase A — `swapper_tools.js` rewrite
 
-1. Rewrite `createItem` / `createItemGate` in `app/swapper_tools.js` to emit Option D shapes. Helpers worth introducing:
-   - `containerPredicate(id, enchantment, level)` → SNBT predicate matching `{item:{id, components:{"minecraft:enchantments":{levels:{<id>:<lvl>}}}}}` (or `{item:{id}}` for unenchanted entries like `shears`, `flint_and_steel`).
-   - `enderContainerPath()` → `entity @s EnderItems[{Slot:0b}].components."minecraft:container"`.
-   - `playerHandPath(slot)` → `entity @s Inventory[{Slot:<slot>b}]`.
-2. Drop the now-dead scratch-block plumbing: `Command.createShulker`, `Command.clearBlock` (if nothing else uses them), and the `coordinate.shulker.gear` / `coordinate.shulker.item` entries from `data/config.json` (if nothing else uses them — check first).
-3. Re-export to `.temp/`, diff one swap against §3.2 to confirm parity.
-4. Smoke-test one entry (`silk_pickaxe`) against a real 26.1 world — passing means the other nine pass too (identical predicate shape; only enchantment id varies).
+1. Rewrite `createItem` / `createItemGate` in `app/swapper_tools.js` to emit the three-file pattern from §3:
+   - **Gate** (`gate/tool_swap_<filename>.mcfunction`) — one `execute if data … run function …` line with the marker + tool predicate.
+   - **Resolver** (`tool_swap/<filename>.mcfunction`) — three lines that pull `shulker_slot` and `tool_slot` into storage and call `_swap`.
+   - **Shared macro body** (`tool_swap/_swap.mcfunction`) — emitted once by the generator, not per-tool.
+2. Helpers worth introducing in `app/swapper_tools.js`:
+   - `containerItemPredicate(id, enchantment, level)` → SNBT fragment matching `{item:{id, components:{"minecraft:enchantments":{levels:{<id>:<lvl>}}}}}` (or just `{item:{id}}` for unenchanted entries — `shears`, `flint_and_steel`).
+   - `gearShulkerPredicate(itemPredicate)` → combines the `custom_data:{gear:1b}` marker with the tool predicate for the gate.
+3. Drop the now-dead scratch-block plumbing:
+   - `Command.createShulker` and `Command.clearBlock` from `util/command.js` (if nothing else uses them — check first).
+   - `coordinate.shulker.gear` and `coordinate.shulker.item` from `data/config.json` (same check).
+4. Re-export to `.temp/`, diff one swap against §3.2–3.4 to confirm parity.
+5. Smoke-test one entry (`silk_pickaxe`) against a real 26.1 world — passing means the other nine pass too (identical shape, only the item predicate varies). Before the test, mark the gear shulker once with the §3.5 setup command.
 
 ### Phase B — Verify swapper_shulker.js and inventory.js
 
