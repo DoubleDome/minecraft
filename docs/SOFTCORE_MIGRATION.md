@@ -1,6 +1,16 @@
 # Softcore Rename — One-Time World Migration
 
-The hardcore → softcore rename changed three scoreboard objective names and one player tag. The datapack's `load.mcfunction` re-creates the new objectives idempotently on reload, but it won't carry over existing values or migrate any player who's currently in the mode. Run this recipe **once** against the live world before swapping in the new pack.
+The hardcore → softcore rename changed three scoreboard objective names and one player tag. The datapack's `load.mcfunction` re-creates the new objectives idempotently on reload, but it won't carry over existing values or migrate any player who's currently in the mode. Run this **once** against the live world before swapping in the new pack.
+
+## TL;DR — use the bundled function
+
+The whole recipe below is packaged in the datapack as `pack/data/madagascar/function/migrate_softcore.mcfunction`. After loading the new pack (or while the old one is still loaded — the function only touches scoreboard state and player tags), run:
+
+```mcfunction
+function madagascar:migrate_softcore
+```
+
+It performs steps 1–4 of the manual recipe and tellraw's `[Madagascar] Softcore migration complete.` when done. The rest of this doc is the manual breakdown — useful as reference, for diff-checking what the function does, or for rollback (see §"Rollback").
 
 ## What's changing
 

@@ -10,27 +10,28 @@ Research notes for upgrading this datapack to **Minecraft Java Edition 26.1** (t
 
 Mojang dropped the `1.21.x` prefix. New releases are labelled `YY.M[.patch]` (year + monthly cadence):
 
-| Version | `pack_format` (data) | Resource pack format |
+| Version | data pack format | Resource pack format |
 | --- | --- | --- |
 | 1.21.5 | `71` | — |
 | 1.21.6 | `80` | — |
 | 1.21.7 / 1.21.8 | `81` | — |
 | 1.21.9 / 1.21.10 | `88.0` | — |
 | 1.21.11 | `94.1` | — |
-| **26.1 — 26.1.2** | **`101.1`** | **`84.0`** |
+| **26.1 — 26.1.2** | **`101.0` – `101.1`** | **`84.0`** |
 
-`pack_format` switched to a **major.minor** form at `1.21.9`. Minor bumps mean **non-breaking** additions; major bumps mean breaking changes. Older clients refuse packs whose major exceeds theirs; minor mismatches still load.
-
-**Action for this repo:** `pack/pack.mcmeta` is currently `"pack_format": 34` (≈ 1.20.2). It must move to `101.1` for 26.1.
+At 1.21.9 Mojang split the format value into a **major.minor** pair (minor bumps = non-breaking additions; major bumps = breaking changes). At 26.1 they also dropped the single `pack_format` JSON field — **a JSON float like `101.1` is not a valid value** and the pack fails to load on server start. Modern `pack.mcmeta` uses two integer-pair fields, `min_format` and `max_format`, to express the compatible range:
 
 ```json
 {
     "pack": {
-        "pack_format": 101.1,
-        "description": "Madagascar"
+        "description": "Madagascar",
+        "min_format": [101, 0],
+        "max_format": [101, 1]
     }
 }
 ```
+
+`min_format` / `max_format` are arrays of two integers (`[major, minor]`). The server picks a format somewhere in the inclusive range. Older clients still respect the major version — refusing packs whose `min_format` major exceeds theirs.
 
 ---
 
@@ -104,9 +105,24 @@ This affects the **world save**, not the datapack output. The Madagascar generat
 
 ---
 
-## 4. Other 26.1 Changes (informational — not used in this repo)
+## 4. Other 26.1 Schema / Behaviour Changes
 
-Not relevant to the book exporter but useful when planning upgrades to other modules:
+### 4.1 Loot tables — `set_lore` requires explicit `mode`
+
+The `replace: true / false` boolean on `minecraft:set_lore` is **gone**. Modern entries must specify a `mode` field:
+
+| Old | New |
+| --- | --- |
+| `"replace": true` (or omitted, which defaulted to true) | `"mode": "replace_all"` |
+| `"replace": false` | `"mode": "append"` |
+
+Without this the loot table fails to load with `No key mode in MapLike`. Discovered in production via `pack/data/madagascar/loot_table/get_player_head.json` — 60 entries needed conversion. Other modes documented for `set_lore`: `insert`, but `replace_all` / `append` cover the common cases.
+
+### 4.2 Custom dimension_types must have a dimension referencing them
+
+If you define a `data/<ns>/dimension_type/<name>.json` but never reference it from a `data/<ns>/dimension/<name>.json` (`"type": "<ns>:<name>"`), the dimension_type is **orphan** — the dimension never gets created. In the Madagascar repo this surfaced as the `madagascar:dynamite` dimension_type with no matching dimension; the existing `dimension/dynamite.json` was pointing at `minecraft:overworld` and had to be redirected to `madagascar:dynamite`.
+
+### 4.3 Informational — additions that don't affect this repo
 
 - **Data-driven villager trades** under `data/<ns>/villager_trade/`
 - **`minecraft:dye` data component** (16 colour values)
@@ -133,9 +149,9 @@ Files involved: `app/book.js`, `data/book.json`, `util/page.js`, `pack/pack.mcme
 ### What still needs fixing for 26.1
 
 1. **`pack/pack.mcmeta`** — `"pack_format": 34` is ancient (≈ 1.20.2). Must be **`101.1`** for 26.1. Without this the server will refuse to load the pack or warn loudly.
-2. **`data/book.json`** — every embedded text component (the `modes`, `players`, `utility`, `softcore`, `inventory`, `pickaxe`, `axe`, `shovel`, `hoe`, `shears`, `flint` blocks) still uses the **old** `clickEvent`/`value` keys. These pages are currently dead code (the `switch` in `generatePages` is commented out, `book.js:34-43`), but if/when they're re-enabled they will silently fail in 26.1 because the server ignores unknown keys on text components. Rename to `click_event` / `command`.
+2. **`data/book.json`** — every embedded text component (the `modes`, `players`, `utility`, `softcore`, `inventory`, `pickaxe`, `axe`, `shovel`, `hoe`, `shears`, `flint` blocks) still uses the **old** `clickEvent`/`value` keys. These pages are currently dead code (the `switch` in `generatePages` is commented out, `book.js:34-43`), but if/when they're re-enabled they will silently fail in 26.1 because the server ignores unknown keys on text components. Rename to `click_event` / `command`. *(Done — `fd5a25d`.)*
 3. **`app/book.js:84`** — `generateMetadata` hardcodes `generation:3` while accepting a `generation` parameter that's discarded. Either honor the param or drop it. Cosmetic, not a 26.1 blocker.
-4. **`generatePages` magic/god pages disabled** (`app/book.js:35-43`) — if reactivating them, also re-test with 26.1 since they consume `book.json` content. Re-enabling without fixing point 2 will produce visually correct text but dead clicks.
+4. **`generatePages` magic/god pages disabled** (`app/book.js:35-43`) — if reactivating them, also re-test with 26.1 since they consume `book.json` content. Re-enabling without fixing point 2 will produce visually correct text but dead clicks. *(Done — magic page in `2610219`, god page in `0d71643`.)*
 
 ### Out of scope / leave alone
 

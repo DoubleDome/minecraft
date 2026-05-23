@@ -1,8 +1,10 @@
 # Shulker & Inventory Swap Rewrite Plan (Minecraft 26.1)
 
-`app/swapper_shulker.js` and `app/inventory.js` are still on the pre-1.20.5 NBT model and silently fail on 26.1. They were left untouched during the tool-swap rewrite — see [`TOOL_SWAP_REWRITE.md`](./TOOL_SWAP_REWRITE.md) for the worked example and the format-diff reference.
+`app/swapper_shulker.js` and `app/inventory.js` are still on the pre-1.20.5 NBT model. They were left untouched during the tool-swap rewrite — see [`TOOL_SWAP_REWRITE.md`](./TOOL_SWAP_REWRITE.md) for the worked example and the format-diff reference.
 
-This doc is a paper plan only. Nothing here has been implemented yet.
+**Status update (post-`848d16c`):** `swapper_shulker.js` got a *partial* hand-applied fix for **parse errors only**. The legacy `tag:{display:{Name:…}}` predicate was triggering `Expected whitespace to end one argument` and blocking the pack from loading; the predicates have been migrated to `components:{"minecraft:custom_name":…}` and `clear @s …[custom_name='…']` so the pack now loads. **Runtime behaviour is still broken** — the function still uses `loot replace entity @s enderchest.<slot> 1 mine <scratch> minecraft:air`, which after the shulker_box loot override was deleted drops the *scratch* shulker_box (now with `components.container` populated) into the ender slot, not the labelled shulker the player was holding. So clicking "Export Shulkers" no longer crashes the pack — it just produces the wrong outcome. The redesign in this doc is still needed.
+
+`inventory.js` has not had any fix applied; its broken `loot give @s mine` line is still there.
 
 ---
 
@@ -12,11 +14,11 @@ This doc is a paper plan only. Nothing here has been implemented yet.
 
 Purpose: when the player holds a labelled coloured shulker box (e.g. blue `Gear Box`), one click in the magic book moves it to a designated ender-chest slot. `data/shulkers.json` defines 24 labelled kits (gear, emergency, construction, basics, …) each tied to a colour + ender slot.
 
-Broken on 26.1:
+What's broken on 26.1:
 
-- **Inventory predicate** uses legacy `tag:{display:{Name:'<json text>'}}` (4 places). Modern equivalent is `components:{"minecraft:custom_name":<text component>}`, with one wrinkle — anvil-renamed items normalise to a compound text component (typically `{text:"<label>",italic:false}`), so the predicate has to match the normalised shape verbatim.
-- **Scratch-block + `loot mine … minecraft:air`** path relies on the deleted `pack/data/minecraft/loot_table/blocks/shulker_box.json` override. Vanilla shulker-box loot now drops the box (with `components.container` populated) instead of contents, so a click dumps a shulker into the ender chest slot instead of the labelled shulker the player was holding.
-- **`clear @s minecraft:<color>_shulker_box{display:{Name:…}} 1`** uses the legacy curly-brace component syntax. Modern syntax is square-bracket components: `clear @s minecraft:<color>_shulker_box[minecraft:custom_name=…] 1`. Currently silently matches nothing.
+- ~~**Inventory predicate** uses legacy `tag:{display:{Name:'<json text>'}}`~~ — **fixed in `848d16c`**. Now uses `components:{"minecraft:custom_name":"<json>"}`. Caveat: still has the same "match the anvil-normalised text component shape verbatim" fragility.
+- ~~**`clear @s minecraft:<color>_shulker_box{display:{Name:…}} 1`** legacy curly-brace component syntax~~ — **fixed in `848d16c`**. Now `clear @s minecraft:<color>_shulker_box[custom_name='<json>'] 1`.
+- **Scratch-block + `loot mine … minecraft:air`** path (still broken). Relies on the deleted `pack/data/minecraft/loot_table/blocks/shulker_box.json` override. Vanilla shulker-box loot now drops the box (with `components.container` populated) instead of contents, so a click puts the scratch shulker into the ender slot instead of the labelled one the player was holding.
 
 ### 1.2 `app/inventory.js`
 
@@ -132,5 +134,7 @@ When work resumes:
 
 ## 4. Out of scope
 
-- **`app/softcore.js`** also has a chunk of pre-1.20.5 NBT (the `player_head` function uses `tag.SkullOwner.Name`, which in modern format is `components."minecraft:profile".name`). Same `loot give @s mine …` dependency on the deleted shulker override. Tracked here for awareness only — separate plan when the softcore game mode comes back into use.
-- **The book's god page** has never been re-enabled. Once the swappers are working it would be worth following the same string-concat pattern as the magic page rewrite (see `app/book.js`). The button bindings in `book.json` already match the modern `tool_swap_<name>` gate output produced by the Phase A rewrite, so no per-button rework is needed.
+Nothing currently. Both deferred items from the earlier draft have since landed in main:
+
+- ~~`app/softcore.js` pre-1.20.5 NBT rot~~ — done in `2ccd11f` (see [`SOFTCORE_REWRITE.md`](./SOFTCORE_REWRITE.md)).
+- ~~Re-enable the god page in `app/book.js`~~ — done in `0d71643`. The god page now renders the inventory section faithfully, but the four buttons it surfaces (Export Shulkers, Toggle Enderchest, Export Inventory, Import Inventory) depend on the modules covered by this doc. Toggle Enderchest works today (ender.js was audited and is already 26.1-clean); the other three no-op silently until §3's rewrite lands.
