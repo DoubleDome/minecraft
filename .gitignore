@@ -120,3 +120,4 @@ _old
 .test-output/
 *.bak.*
 
+.env

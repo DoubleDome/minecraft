@@ -4,16 +4,25 @@ const config = require('../data/config.json');
 const commands = {};
 commands.swap = new Command();
 commands.gate = new Command();
+commands.list = new Command();
 
 class ShulkerSwapper {
     create(shulkers) {
         const result = {shulkers:{}};
+        commands.list.reset();
+        commands.list.append(`tellraw @s {"text":"[Madagascar] Shulkers in your enderchest:","color":"green"}`);
         shulkers.forEach(shulker => {
             result.shulkers[shulker.name] = this.createSwapper(shulker.label, shulker.color, shulker.slot);
             this.appendSwapperGate(shulker.name, shulker.label, shulker.color);
+            this.appendListCheck(shulker.label, shulker.color);
         })
         result.gate = commands.gate.export();
+        result.list = commands.list.export();
         return result;
+    }
+
+    appendListCheck(label, color) {
+        commands.list.append(`execute as @s if data entity @s EnderItems[{id:"minecraft:${color}_shulker_box",components:{"minecraft:custom_name":"{\\"text\\":\\"${label}\\"}"}}] run tellraw @s {"text":"  \\u2022 ${label}","color":"yellow"}`);
     }
 
     createSwapper(label, color, slot) {

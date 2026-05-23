@@ -138,6 +138,7 @@ class Generator {
             creator.write(path.resolve(this.paths.shulker, `${key}.mcfunction`), value);
         });
         creator.write(path.resolve(this.paths.gate, `${config.folder.shulker}_export.mcfunction`), output.gate);
+        creator.write(path.resolve(this.paths.shulker, `list.mcfunction`), output.list);
     }
     createBookFunctions() {
         this.validatePaths();
