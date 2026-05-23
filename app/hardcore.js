@@ -142,7 +142,11 @@ class Hardcore {
             command.append(`execute at @s if score ${config.player.temp} ${objectives.temp.rotation.name} matches ${index} run setblock ~ ~${config.offset.player_head} ~ ${config.item.player_head}[rotation=${index}] replace`);
         }
         command.append(`execute at @s run setblock ~ ~${config.offset.light} ~ ${config.item.light}[level=5] replace`);
-        command.append(`execute at @s run data modify block ~ ~${config.offset.player_head} ~ ExtraType set from storage ${config.namespace} ${config.storage.player_name}`);
+        // The setblock above places a fresh player_head with no profile compound.
+        // Initialise it, then write the saved owner name; Minecraft resolves the
+        // UUID and skin textures from the name lookup.
+        command.append(`execute at @s run data modify block ~ ~${config.offset.player_head} ~ profile set value {name:""}`);
+        command.append(`execute at @s run data modify block ~ ~${config.offset.player_head} ~ profile.name set from storage ${config.namespace} ${config.storage.player_name}`);
         command.append(`kill @s`);
         return command.export();
     }
@@ -206,12 +210,16 @@ class Hardcore {
 
     createPlayerhead() {
         const command = new Command();
-        command.createShulker(config.coordinate.shulker.item);
-        command.append(`loot replace block ${config.coordinate.shulker.item} container.0 loot ${config.function.get_player_head}`);
-        command.append(`data modify storage ${config.namespace} ${config.storage.player_name} set from block ${config.coordinate.shulker.item} Items[{Slot:0b}].tag.SkullOwner.Name`);
-        command.append(`loot give @s mine ${config.coordinate.shulker.item} ${config.item.air}`);
+        // Generate the lored player head straight into the player's hotbar.
+        // fill_player_head + the set_lore stack in get_player_head fire with @s
+        // as "this", so the head looks like the dead player and its lore pulls
+        // from their scores.
+        command.append(`loot replace entity @s hotbar.0 loot ${config.function.get_player_head}`);
+        // Capture the head's owner name from the modern profile component.
+        // place_marker uses this later to populate the placed head-block's
+        // profile.name so it renders with the right skin.
+        command.append(`data modify storage ${config.namespace} ${config.storage.player_name} set from entity @s Inventory[{Slot:0b}].components."minecraft:profile".name`);
         command.append(`execute as @s run function ${config.package}:gate/book`);
-        command.clearBlock(config.coordinate.shulker.item);
         return command.export();
     }
 
