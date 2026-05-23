@@ -77,7 +77,7 @@ Each enchanted tool needs two files; the macro swap body is generated **once** a
 
 Shared, emitted once:
 
-- `data/madagascar/function/tool_swap/_swap.mcfunction` — the macro body that does the actual move.
+- `data/madagascar/function/tool_swap/swap.mcfunction` — the macro body that does the actual move.
 
 ### 3.2 Gate predicate
 
@@ -103,14 +103,14 @@ data modify storage minecraft:madagascar args.shulker_slot set from entity @s En
 data modify storage minecraft:madagascar args.tool_slot set from entity @s EnderItems[{components:{"minecraft:custom_data":{gear:1b}}}].components."minecraft:container"[{item:{id:"minecraft:netherite_pickaxe",components:{"minecraft:enchantments":{levels:{"minecraft:silk_touch":1}}}}}].slot
 
 # Invoke the shared macro swap body with these two values.
-function madagascar:tool_swap/_swap with storage minecraft:madagascar args
+function madagascar:tool_swap/swap with storage minecraft:madagascar args
 ```
 
 Three lines of plumbing per tool. The whole resolver exists just to get the two slot values into storage, then hand off to the macro.
 
 ### 3.4 Shared macro body
 
-`tool_swap/_swap.mcfunction` (lines starting with `$` are macro substitutions):
+`tool_swap/swap.mcfunction` (lines starting with `$` are macro substitutions):
 
 ```mcfunction
 # Snapshot the target item from the gear shulker's container (about to be removed).
@@ -212,8 +212,8 @@ Four phases. Each is small, testable, and committable on its own.
 
 1. Rewrite `createItem` / `createItemGate` in `app/swapper_tools.js` to emit the three-file pattern from §3:
    - **Gate** (`gate/tool_swap_<filename>.mcfunction`) — one `execute if data … run function …` line with the marker + tool predicate.
-   - **Resolver** (`tool_swap/<filename>.mcfunction`) — three lines that pull `shulker_slot` and `tool_slot` into storage and call `_swap`.
-   - **Shared macro body** (`tool_swap/_swap.mcfunction`) — emitted once by the generator, not per-tool.
+   - **Resolver** (`tool_swap/<filename>.mcfunction`) — three lines that pull `shulker_slot` and `tool_slot` into storage and call `swap`.
+   - **Shared macro body** (`tool_swap/swap.mcfunction`) — emitted once by the generator, not per-tool.
 2. Helpers worth introducing in `app/swapper_tools.js`:
    - `containerItemPredicate(id, enchantment, level)` → SNBT fragment matching `{item:{id, components:{"minecraft:enchantments":{levels:{<id>:<lvl>}}}}}` (or just `{item:{id}}` for unenchanted entries — `shears`, `flint_and_steel`).
    - `gearShulkerPredicate(itemPredicate)` → combines the `custom_data:{gear:1b}` marker with the tool predicate for the gate.
