@@ -27,9 +27,9 @@
         {
             "text": "Survival Mode",
             "color": "dark_green",
-            "clickEvent": {
+            "click_event": {
                 "action": "run_command",
-                "value": "/gamemode survival @s"
+                "command": "/gamemode survival @s"
             }
         },
         {
@@ -43,9 +43,9 @@
         {
             "text": "Creative Mode",
             "color": "dark_green",
-            "clickEvent": {
+            "click_event": {
                 "action": "run_command",
-                "value": "/gamemode creative @s"
+                "command": "/gamemode creative @s"
             }
         },
         {
@@ -59,9 +59,9 @@
         {
             "text": "Spectator Mode",
             "color": "dark_green",
-            "clickEvent": {
+            "click_event": {
                 "action": "run_command",
-                "value": "/gamemode spectator @s"
+                "command": "/gamemode spectator @s"
             }
         }
     ],
@@ -77,9 +77,9 @@
         {
             "text": "DoubleDome",
             "color": "dark_green",
-            "clickEvent": {
+            "click_event": {
                 "action": "run_command",
-                "value": "/tp @s DoubleDome"
+                "command": "/tp @s DoubleDome"
             }
         },
         {
@@ -93,9 +93,9 @@
         {
             "text": "FilbertPlays",
             "color": "dark_green",
-            "clickEvent": {
+            "click_event": {
                 "action": "run_command",
-                "value": "/tp @s FilbertPlays"
+                "command": "/tp @s FilbertPlays"
             }
         },
         {
@@ -109,9 +109,9 @@
         {
             "text": "MermaidPanchi3",
             "color": "dark_green",
-            "clickEvent": {
+            "click_event": {
                 "action": "run_command",
-                "value": "/tp @s MermaidPanchi3"
+                "command": "/tp @s MermaidPanchi3"
             }
         }
     ],
@@ -127,9 +127,9 @@
         {
             "text": "Ejector Seat",
             "color": "dark_green",
-            "clickEvent": {
+            "click_event": {
                 "action": "run_command",
-                "value": "/tp @s ~ 320 ~"
+                "command": "/tp @s ~ 320 ~"
             }
         },
         {
@@ -143,9 +143,9 @@
         {
             "text": "Top-Off Experience",
             "color": "dark_green",
-            "clickEvent": {
+            "click_event": {
                 "action": "run_command",
-                "value": "/xp set @s 30 levels"
+                "command": "/xp set @s 30 levels"
             }
         }
     ],
@@ -161,25 +161,25 @@
         {
             "text": "\\u2b24 ",
             "color": "dark_green",
-            "clickEvent": {
+            "click_event": {
                 "action": "run_command",
-                "value": "/function madagascar:gate/hardcore_start"
+                "command": "/function madagascar:gate/hardcore_start"
             }
         },
         {
             "text": "\\u2b24 ",
             "color": "gold",
-            "clickEvent": {
+            "click_event": {
                 "action": "run_command",
-                "value": "/function madagascar:hardcore/toggle"
+                "command": "/function madagascar:hardcore/toggle"
             }
         },
         {
             "text": "\\u2b24 ",
             "color": "dark_red",
-            "clickEvent": {
+            "click_event": {
                 "action": "run_command",
-                "value": "/function madagascar:hardcore/stop"
+                "command": "/function madagascar:hardcore/stop"
             }
         }
     ],
@@ -195,9 +195,9 @@
         {
             "text": "Export Shulkers",
             "color": "dark_green",
-            "clickEvent": {
+            "click_event": {
                 "action": "run_command",
-                "value": "/function madagascar:gate/shulker_export"
+                "command": "/function madagascar:gate/shulker_export"
             }
         },
         {
@@ -211,9 +211,9 @@
         {
             "text": "Toggle Enderchest",
             "color": "dark_green",
-            "clickEvent": {
+            "click_event": {
                 "action": "run_command",
-                "value": "/function madagascar:ender/toggle"
+                "command": "/function madagascar:ender/toggle"
             }
         },
         {
@@ -231,9 +231,9 @@
         {
             "text": "Export Inventory",
             "color": "dark_green",
-            "clickEvent": {
+            "click_event": {
                 "action": "run_command",
-                "value": "/function madagascar:gate/inventory_export"
+                "command": "/function madagascar:gate/inventory_export"
             }
         },
         {
@@ -247,9 +247,9 @@
         {
             "text": "Import Inventory",
             "color": "dark_green",
-            "clickEvent": {
+            "click_event": {
                 "action": "run_command",
-                "value": "/function madagascar:gate/inventory_import"
+                "command": "/function madagascar:gate/inventory_import"
             }
         }
     ],
@@ -265,9 +265,9 @@
         {
             "text": "#",
             "color": "gold",
-            "clickEvent": {
+            "click_event": {
                 "action": "run_command",
-                "value": "/function madagascar:gate/tool_swap_silk_pickaxe"
+                "command": "/function madagascar:gate/tool_swap_silk_pickaxe"
             }
         },
         {
@@ -277,9 +277,9 @@
         {
             "text": "$",
             "color": "gold",
-            "clickEvent": {
+            "click_event": {
                 "action": "run_command",
-                "value": "/function madagascar:gate/tool_swap_fortune_pickaxe"
+                "command": "/function madagascar:gate/tool_swap_fortune_pickaxe"
             }
         },
         {
@@ -289,9 +289,9 @@
         {
             "text": "W",
             "color": "gold",
-            "clickEvent": {
+            "click_event": {
                 "action": "run_command",
-                "value": "/give @s minecraft:wooden_pickaxe"
+                "command": "/give @s minecraft:wooden_pickaxe"
             }
         }
     ],
@@ -307,9 +307,9 @@
         {
             "text": "#",
             "color": "gold",
-            "clickEvent": {
+            "click_event": {
                 "action": "run_command",
-                "value": "/function madagascar:gate/tool_swap_silk_axe"
+                "command": "/function madagascar:gate/tool_swap_silk_axe"
             }
         },
         {
@@ -319,9 +319,9 @@
         {
             "text": "$",
             "color": "gold",
-            "clickEvent": {
+            "click_event": {
                 "action": "run_command",
-                "value": "/function madagascar:gate/tool_swap_fortune_axe"
+                "command": "/function madagascar:gate/tool_swap_fortune_axe"
             }
         },
         {
@@ -331,9 +331,9 @@
         {
             "text": "W",
             "color": "gold",
-            "clickEvent": {
+            "click_event": {
                 "action": "run_command",
-                "value": "/give @s minecraft:wooden_axe"
+                "command": "/give @s minecraft:wooden_axe"
             }
         }
     ],
@@ -349,9 +349,9 @@
         {
             "text": "#",
             "color": "gold",
-            "clickEvent": {
+            "click_event": {
                 "action": "run_command",
-                "value": "/function madagascar:gate/tool_swap_silk_shovel"
+                "command": "/function madagascar:gate/tool_swap_silk_shovel"
             }
         },
         {
@@ -361,9 +361,9 @@
         {
             "text": "$",
             "color": "gold",
-            "clickEvent": {
+            "click_event": {
                 "action": "run_command",
-                "value": "/function madagascar:gate/tool_swap_fortune_shovel"
+                "command": "/function madagascar:gate/tool_swap_fortune_shovel"
             }
         },
         {
@@ -373,9 +373,9 @@
         {
             "text": "W",
             "color": "gold",
-            "clickEvent": {
+            "click_event": {
                 "action": "run_command",
-                "value": "/give @s minecraft:wooden_shovel"
+                "command": "/give @s minecraft:wooden_shovel"
             }
         }
     ],
@@ -391,9 +391,9 @@
         {
             "text": "#",
             "color": "gold",
-            "clickEvent": {
+            "click_event": {
                 "action": "run_command",
-                "value": "/function madagascar:gate/tool_swap_silk_hoe"
+                "command": "/function madagascar:gate/tool_swap_silk_hoe"
             }
         },
         {
@@ -403,9 +403,9 @@
         {
             "text": "$",
             "color": "gold",
-            "clickEvent": {
+            "click_event": {
                 "action": "run_command",
-                "value": "/function madagascar:gate/tool_swap_fortune_hoe"
+                "command": "/function madagascar:gate/tool_swap_fortune_hoe"
             }
         },
         {
@@ -415,9 +415,9 @@
         {
             "text": "W",
             "color": "gold",
-            "clickEvent": {
+            "click_event": {
                 "action": "run_command",
-                "value": "/give @s minecraft:wooden_hoe"
+                "command": "/give @s minecraft:wooden_hoe"
             }
         }
     ],
@@ -429,9 +429,9 @@
         {
             "text": "Shears",
             "color": "gold",
-            "clickEvent": {
+            "click_event": {
                 "action": "run_command",
-                "value": "/function madagascar:gate/tool_swap_shears"
+                "command": "/function madagascar:gate/tool_swap_shears"
             }
         }
     ],
@@ -443,9 +443,9 @@
         {
             "text": "Flint + Steel",
             "color": "gold",
-            "clickEvent": {
+            "click_event": {
                 "action": "run_command",
-                "value": "/function madagascar:gate/tool_swap_flint_and_steel"
+                "command": "/function madagascar:gate/tool_swap_flint_and_steel"
             }
         }
     ]
