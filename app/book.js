@@ -1,4 +1,3 @@
-const Page = require('../util/page');
 const Command = require('../util/command');
 
 const roman = require('../data/roman.json');
@@ -33,28 +32,38 @@ class Book {
     generatePages(type, locations) {
         let result = '[';
         result += this.generateMagicPage();
-        result += ',';
+        if (type === 'god') {
+            result += ',';
+            result += this.generateGodPage();
+        }
         for (let l = 0; l < locations.length; l++) {
+            result += ',';
             result += this.generateLocationPage(locations[l]);
-            if (l < locations.length - 1) result += ',';
         }
         result += ']';
         return result;
     }
 
     generateGodPage() {
-        const page = new Page();
-        page.add(this.generateHeader(content.headings.god_page));
-        page.add(this.generateSpacer());
-        page.add(content.pickaxe);
-        page.add(content.axe);
-        page.add(content.shovel);
-        page.add(content.hoe);
-        page.add(content.shears);
-        page.add(content.flint);
-        page.add(this.generateSpacer());
-        page.add(content.inventory);
-        return page.export();
+        let result = `'[`;
+        result += this.generateHeader(content.headings.god_page);
+        result += this.generateSpacer();
+        result += this.generateBlock(content.pickaxe);
+        result += ',';
+        result += this.generateBlock(content.axe);
+        result += ',';
+        result += this.generateBlock(content.shovel);
+        result += ',';
+        result += this.generateBlock(content.hoe);
+        result += ',';
+        result += this.generateBlock(content.shears);
+        result += ',';
+        result += this.generateBlock(content.flint);
+        result += ',';
+        result += this.generateSpacer();
+        result += this.generateBlock(content.inventory);
+        result += `]'`;
+        return result;
     }
 
     generateMagicPage() {
