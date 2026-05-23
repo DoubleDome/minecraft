@@ -32,19 +32,10 @@ class Book {
 
     generatePages(type, locations) {
         let result = '[';
-        // switch (type) {
-        //     case 'magic':
-        //         result.push(JSON.stringify(this.generateMagicPage()));
-        //         break;
-        //     case 'god':
-        //         result.push(JSON.stringify(this.generateMagicPage()));
-        //         result.push(JSON.stringify(this.generateGodPage()));
-        //         break;
-        // }
+        result += this.generateMagicPage();
+        result += ',';
         for (let l = 0; l < locations.length; l++) {
-            let temp = this.generateLocationPage(locations[l]);
-            // console.log(temp);
-            result += temp;
+            result += this.generateLocationPage(locations[l]);
             if (l < locations.length - 1) result += ',';
         }
         result += ']';
@@ -67,17 +58,25 @@ class Book {
     }
 
     generateMagicPage() {
-        const page = new Page();
-        page.add(this.generateHeader(content.headings.magic_page));
-        page.add(this.generateSpacer());
-        page.add(content.modes);
-        page.add(this.generateSpacer());
-        page.add(content.players);
-        page.add(this.generateSpacer());
-        page.add(content.utility);
-        page.add(this.generateSpacer());
-        page.add(content.hardcore);
-        return page.export();
+        let result = `'[`;
+        result += this.generateHeader(content.headings.magic_page);
+        result += this.generateSpacer();
+        result += this.generateBlock(content.modes);
+        result += ',';
+        result += this.generateSpacer();
+        result += this.generateBlock(content.players);
+        result += ',';
+        result += this.generateSpacer();
+        result += this.generateBlock(content.utility);
+        result += ',';
+        result += this.generateSpacer();
+        result += this.generateBlock(content.hardcore);
+        result += `]'`;
+        return result;
+    }
+
+    generateBlock(components) {
+        return '[' + components.map(c => JSON.stringify(c)).join(',') + ']';
     }
 
     generateMetadata(title, author, lore, version, generation) {
