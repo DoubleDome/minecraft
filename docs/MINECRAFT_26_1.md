@@ -133,7 +133,7 @@ Files involved: `app/book.js`, `data/book.json`, `util/page.js`, `pack/pack.mcme
 ### What still needs fixing for 26.1
 
 1. **`pack/pack.mcmeta`** — `"pack_format": 34` is ancient (≈ 1.20.2). Must be **`101.1`** for 26.1. Without this the server will refuse to load the pack or warn loudly.
-2. **`data/book.json`** — every embedded text component (the `modes`, `players`, `utility`, `hardcore`, `inventory`, `pickaxe`, `axe`, `shovel`, `hoe`, `shears`, `flint` blocks) still uses the **old** `clickEvent`/`value` keys. These pages are currently dead code (the `switch` in `generatePages` is commented out, `book.js:34-43`), but if/when they're re-enabled they will silently fail in 26.1 because the server ignores unknown keys on text components. Rename to `click_event` / `command`.
+2. **`data/book.json`** — every embedded text component (the `modes`, `players`, `utility`, `softcore`, `inventory`, `pickaxe`, `axe`, `shovel`, `hoe`, `shears`, `flint` blocks) still uses the **old** `clickEvent`/`value` keys. These pages are currently dead code (the `switch` in `generatePages` is commented out, `book.js:34-43`), but if/when they're re-enabled they will silently fail in 26.1 because the server ignores unknown keys on text components. Rename to `click_event` / `command`.
 3. **`app/book.js:84`** — `generateMetadata` hardcodes `generation:3` while accepting a `generation` parameter that's discarded. Either honor the param or drop it. Cosmetic, not a 26.1 blocker.
 4. **`generatePages` magic/god pages disabled** (`app/book.js:35-43`) — if reactivating them, also re-test with 26.1 since they consume `book.json` content. Re-enabling without fixing point 2 will produce visually correct text but dead clicks.
 
@@ -141,4 +141,4 @@ Files involved: `app/book.js`, `data/book.json`, `util/page.js`, `pack/pack.mcme
 
 - Folder structure under `data/minecraft/madison/function/` — still correct for 26.1.
 - World data namespacing — does not touch this repo.
-- All other modules (locations, hardcore, swapper, ender, etc.) — not part of book export. Audit separately if upgrading the whole pack.
+- All other modules (locations, softcore, swapper, ender, etc.) — not part of book export. Audit separately if upgrading the whole pack.

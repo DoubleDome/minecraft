@@ -4,7 +4,7 @@ const Load = require('./load');
 const Tick = require('./tick');
 let objectives = {};
 
-class Hardcore {
+class Softcore {
     create(data) {
         objectives = data;
 
@@ -30,7 +30,7 @@ class Hardcore {
     }
 
     createLoad() {
-        Load.getInstance().addObjectives(objectives.hardcore);
+        Load.getInstance().addObjectives(objectives.softcore);
         Load.getInstance().addObjectives(objectives.killers);
         Load.getInstance().addObjectives(objectives.stats);
         Load.getInstance().addObjectives(objectives.position.start);
@@ -39,12 +39,12 @@ class Hardcore {
         Load.getInstance().addObjectives(objectives.distance.land);
         Load.getInstance().addObjectives(objectives.distance.air);
         Load.getInstance().addObjectives(objectives.distance.sea);
-        Load.getInstance().append(`scoreboard objectives setdisplay list ${objectives.hardcore.deaths.name}`);
+        Load.getInstance().append(`scoreboard objectives setdisplay list ${objectives.softcore.deaths.name}`);
     }
 
     createTick() {
-        Tick.getInstance().append(`execute as @p[tag=${config.tag.hardcore}] run function ${config.package}:gate/hardcore_death_check`);
-        Tick.getInstance().append(`execute as @p[tag=${config.tag.hardcore}] run function ${config.package}:gate/hardcore_gamemode_check`);
+        Tick.getInstance().append(`execute as @p[tag=${config.tag.softcore}] run function ${config.package}:gate/softcore_death_check`);
+        Tick.getInstance().append(`execute as @p[tag=${config.tag.softcore}] run function ${config.package}:gate/softcore_gamemode_check`);
     }
 
     createStart() {
@@ -57,47 +57,47 @@ class Hardcore {
         command.setObjectives('@s', objectives.killers);
 
         this.captureLocation(command, objectives.position.start);
-        command.append(`tag @s add ${config.tag.hardcore}`);
+        command.append(`tag @s add ${config.tag.softcore}`);
         command.append(`gamemode survival @s`);
         return command.export();
     }
     createPause(){
         const command = new Command();
-        command.append(`tag @s remove ${config.tag.hardcore}`);
+        command.append(`tag @s remove ${config.tag.softcore}`);
         command.append(`tellraw @s {"text":"${config.label.message.pause}","italic":true,"color":"gold"}`);
         return command.export();
     }
     createResume() {
         const command = new Command();
-        command.append(`tag @s add ${config.tag.hardcore}`);
+        command.append(`tag @s add ${config.tag.softcore}`);
         command.append(`tellraw @s {"text":"${config.label.message.resume}","italic":true,"color":"green"}`);
         return command.export();
     }
     createToggle() {
         const command = new Command();
-        command.append(`execute store success score ${config.player.temp} ${objectives.temp.status.name} run data get entity @s[tag=${config.tag.hardcore}]`);
-        command.append(`execute as @s if score ${config.player.temp} ${objectives.temp.status.name} matches 0 run function ${config.package}:hardcore/resume`);
-        command.append(`execute as @s if score ${config.player.temp} ${objectives.temp.status.name} matches 1 run function ${config.package}:hardcore/pause`);
+        command.append(`execute store success score ${config.player.temp} ${objectives.temp.status.name} run data get entity @s[tag=${config.tag.softcore}]`);
+        command.append(`execute as @s if score ${config.player.temp} ${objectives.temp.status.name} matches 0 run function ${config.package}:softcore/resume`);
+        command.append(`execute as @s if score ${config.player.temp} ${objectives.temp.status.name} matches 1 run function ${config.package}:softcore/pause`);
         return command.export();
     }
     createStartGate() {
         const command = new Command();
-        command.append(`execute unless entity @s[tag=${config.tag.hardcore}] run function ${config.package}:hardcore/start`);
+        command.append(`execute unless entity @s[tag=${config.tag.softcore}] run function ${config.package}:softcore/start`);
         return command.export();
     }
     createStopGate() {
         const command = new Command();
-        command.append(`execute if entity @s[tag=${config.tag.hardcore}] run function ${config.package}:hardcore/stop`);
+        command.append(`execute if entity @s[tag=${config.tag.softcore}] run function ${config.package}:softcore/stop`);
         return command.export();
     }
     createGamemodeCheck() {
         const command = new Command();
-        command.append(`execute as @p[tag=${config.tag.hardcore},gamemode=!survival] run function ${config.package}:hardcore/gamemode_lock`);
+        command.append(`execute as @p[tag=${config.tag.softcore},gamemode=!survival] run function ${config.package}:softcore/gamemode_lock`);
         return command.export();
     }
     createDeathCheck() {
         const command = new Command();
-        command.append(`execute as @p[tag=${config.tag.hardcore},scores={${objectives.stats.deaths.name}=1..,${objectives.hardcore.health.name}=1..}] run function ${config.package}:hardcore/stop`);
+        command.append(`execute as @p[tag=${config.tag.softcore},scores={${objectives.stats.deaths.name}=1..,${objectives.softcore.health.name}=1..}] run function ${config.package}:softcore/stop`);
         return command.export();
     }
     createGamemodeLock() {
@@ -110,7 +110,7 @@ class Hardcore {
         const command = new Command();
         command.clearInventory();
         command.append(`tellraw @s {"text":"${config.label.message.death}","italic":true,"color":"red"}`);
-        command.append(`scoreboard players add @s ${objectives.hardcore.deaths.name} 1`);
+        command.append(`scoreboard players add @s ${objectives.softcore.deaths.name} 1`);
         this.calculateTime(command);
         this.calculateDistance(command, 'land');
         this.calculateDistance(command, 'sea');
@@ -118,16 +118,16 @@ class Hardcore {
         this.captureDeathLocation(command);
         this.captureLocation(command, objectives.position.death);
         this.captureDimension(command);
-        command.append(`execute as @s run function ${config.package}:hardcore/player_head`);
-        command.append(`execute as @s run function ${config.package}:gate/hardcore_dimension`);
+        command.append(`execute as @s run function ${config.package}:softcore/player_head`);
+        command.append(`execute as @s run function ${config.package}:gate/softcore_dimension`);
         command.clearExperience();
-        command.append(`tag @s remove ${config.tag.hardcore}`);
+        command.append(`tag @s remove ${config.tag.softcore}`);
         return command.export();
     }
     createPrepareMarker() {
         const command = new Command();
         command.append(`summon ${config.item.marker} ~ ~ ~ {Tags:["${config.tag.death}"]}`);
-        command.append(`execute as @e[type=${config.item.marker},tag=${config.tag.death}] run function ${config.package}:hardcore/place_marker`);
+        command.append(`execute as @e[type=${config.item.marker},tag=${config.tag.death}] run function ${config.package}:softcore/place_marker`);
         return command.export();
     }
 
@@ -157,7 +157,7 @@ class Hardcore {
         dimensions.shift();
 
         dimensions.forEach((value, index) => {
-            command.append(`execute if score ${config.player.temp} ${objectives.hardcore.death_dimension.name} matches ${index} run execute as @s run execute in ${value} run function madagascar:hardcore/prepare_marker`);
+            command.append(`execute if score ${config.player.temp} ${objectives.softcore.death_dimension.name} matches ${index} run execute as @s run execute in ${value} run function madagascar:softcore/prepare_marker`);
         });
         return command.export();
     }
@@ -180,10 +180,10 @@ class Hardcore {
 
         command.comment('temp player is needed later on when calling the place marker function, by then the scope of @s has changed');
         dimensions.forEach((value, index) => {
-            command.append(`data modify storage ${config.namespace} ${objectives.hardcore.death_dimension.name} set from entity @s LastDeathLocation.dimension`);
-            command.append(`execute store success score ${value} ${objectives.temp.status.name} run data modify storage ${config.namespace} ${objectives.hardcore.death_dimension.name} set value "${value}"`);
-            command.append(`execute unless score ${value} ${objectives.temp.status.name} matches 1 run scoreboard players set ${config.player.temp} ${objectives.hardcore.death_dimension.name} ${index}`);
-            command.append(`execute unless score ${value} ${objectives.temp.status.name} matches 1 run scoreboard players set @s ${objectives.hardcore.death_dimension.name} ${index}`);
+            command.append(`data modify storage ${config.namespace} ${objectives.softcore.death_dimension.name} set from entity @s LastDeathLocation.dimension`);
+            command.append(`execute store success score ${value} ${objectives.temp.status.name} run data modify storage ${config.namespace} ${objectives.softcore.death_dimension.name} set value "${value}"`);
+            command.append(`execute unless score ${value} ${objectives.temp.status.name} matches 1 run scoreboard players set ${config.player.temp} ${objectives.softcore.death_dimension.name} ${index}`);
+            command.append(`execute unless score ${value} ${objectives.temp.status.name} matches 1 run scoreboard players set @s ${objectives.softcore.death_dimension.name} ${index}`);
         });
     }
 
@@ -232,4 +232,4 @@ class Hardcore {
     }
 }
 
-module.exports = new Hardcore();
+module.exports = new Softcore();

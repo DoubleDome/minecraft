@@ -70,7 +70,7 @@ class Book {
         result += this.generateBlock(content.utility);
         result += ',';
         result += this.generateSpacer();
-        result += this.generateBlock(content.hardcore);
+        result += this.generateBlock(content.softcore);
         result += `]'`;
         return result;
     }

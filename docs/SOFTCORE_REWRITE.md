@@ -1,6 +1,6 @@
-# Hardcore Mode Re-enable Plan (Minecraft 26.1)
+# Softcore Mode Re-enable Plan (Minecraft 26.1)
 
-The Madagascar hardcore mode (`app/hardcore.js` + `pack/data/madagascar/loot_table/get_player_head.json` + scoreboard objectives in `data/objectives.json`) is mostly intact on 26.1 — the loot tables and most of the wrapper are valid. Three specific spots in `app/hardcore.js` still reference pre-1.20.5 item NBT and the deleted shulker-box loot override; once those are patched the whole mode lights up again.
+The Madagascar softcore mode (`app/softcore.js` + `pack/data/madagascar/loot_table/get_player_head.json` + scoreboard objectives in `data/objectives.json`) is mostly intact on 26.1 — the loot tables and most of the wrapper are valid. Three specific spots in `app/softcore.js` still reference pre-1.20.5 item NBT and the deleted shulker-box loot override; once those are patched the whole mode lights up again.
 
 This is a paper plan. Nothing implemented yet.
 
@@ -8,34 +8,34 @@ This is a paper plan. Nothing implemented yet.
 
 ## 1. What the mode does (today, when working)
 
-The book gate has three hardcore buttons (`hardcore/start`, `hardcore/toggle`, `hardcore/stop`). Lifecycle:
+The book gate has three softcore buttons (`softcore/start`, `softcore/toggle`, `softcore/stop`). Lifecycle:
 
-**Start** (`hardcore/start`)
+**Start** (`softcore/start`)
 - Clear inventory, clear XP, reset recipes and advancements.
 - Zero out every scoreboard objective tied to stats and killers.
 - Capture the player's current `Pos` into three start-position scores (`madagascar.start.x/y/z`).
-- Add the `hardcore` tag and force survival.
+- Add the `softcore` tag and force survival.
 
-**Per tick** (`tick.mcfunction`, gated on `@p[tag=hardcore]`)
-- `gate/hardcore_gamemode_check` → if the player switched out of survival, force them back and tellraw "You're stuck in HARDCORE!".
-- `gate/hardcore_death_check` → if the player's deathCount went up AND their health objective is > 0 (i.e. a death already happened and they've respawned), trigger `hardcore/stop`.
+**Per tick** (`tick.mcfunction`, gated on `@p[tag=softcore]`)
+- `gate/softcore_gamemode_check` → if the player switched out of survival, force them back and tellraw "You're stuck in SOFTCORE!".
+- `gate/softcore_death_check` → if the player's deathCount went up AND their health objective is > 0 (i.e. a death already happened and they've respawned), trigger `softcore/stop`.
 
-**Stop** (`hardcore/stop`) — runs on death
+**Stop** (`softcore/stop`) — runs on death
 - Clear inventory, tellraw "You DIED!".
-- Increment the hardcore death counter.
+- Increment the softcore death counter.
 - Calculate playtime from ticks → hours/minutes/seconds.
 - Aggregate per-mode distance stats (walk + sprint + crouch + climb + horse → land; swim + boat + surface + underwater → sea; flight + fall → air), converted from cm to m and km.
 - Read `LastDeathLocation.pos[0..2]` into a storage list (for the marker entity to position itself later).
 - Capture the death dimension by string-matching `LastDeathLocation.dimension` against each configured dimension; store both as a string (for the marker dimension hop) and as an integer score (for the loot-table conditions to pick the right "Death Dimension:" lore line).
-- Run `hardcore/player_head` → mints a customised player head and drops it in the player's inventory.
-- Run `gate/hardcore_dimension` → summons a death-marker entity in the dimension the player died in.
-- Clear XP, remove the `hardcore` tag.
+- Run `softcore/player_head` → mints a customised player head and drops it in the player's inventory.
+- Run `gate/softcore_dimension` → summons a death-marker entity in the dimension the player died in.
+- Clear XP, remove the `softcore` tag.
 
-**Player head minting** (`hardcore/player_head`)
+**Player head minting** (`softcore/player_head`)
 - Today: place a scratch shulker, `loot replace block container.0 loot madagascar:get_player_head`, read `Items[{Slot:0b}].tag.SkullOwner.Name` into storage, `loot give @s mine <pos> minecraft:air` to drop the head into the player, clear the block.
 - The custom loot table `get_player_head` is the meat of the system: it returns a `player_head` filled to look like the player (`fill_player_head` with `entity: "this"`), enchanted with vanishing curse so it can't be kept across deaths, with **~80 `set_lore` operations** building a lore stack — start/death coordinates, death dimension, killed-by line (one per of ~50 mob types, conditioned on the matching killer score), totems used, nights slept, playtime, points, mob kills, damage dealt/taken, and distance travelled in each medium.
 
-**Death marker placement** (`hardcore/prepare_marker` → `hardcore/place_marker`)
+**Death marker placement** (`softcore/prepare_marker` → `softcore/place_marker`)
 - Summon a `minecraft:marker` entity tagged `death_marker`, then run `place_marker` as that marker.
 - Move the marker to the stored `LastDeathLocation.pos` triple.
 - Roll a random rotation 0-9 via `loot spawn ~ ~ ~ loot madagascar:get_random_number` (the loot table emits between 0 and 9 stone items; the resulting count is the rotation).
@@ -50,7 +50,7 @@ End result: the player has a souvenir head with all their lifetime stats in lore
 
 ## 2. What broke on 26.1
 
-Three tightly-scoped issues — all in `app/hardcore.js`, none in the loot tables themselves.
+Three tightly-scoped issues — all in `app/softcore.js`, none in the loot tables themselves.
 
 ### 2.1 `tag.SkullOwner.Name` (line 211)
 
@@ -100,13 +100,13 @@ data modify block ~ ~ ~ profile.name set from storage <ns> player_name
 
 ### Pre-existing bug (out of scope but worth flagging)
 
-`pack/data/madagascar/item_modifier/get_hardcore_stats.json` references the objective name `madagascar.hardcore_deaths` (underscore), but `objectives.json` defines it as `madagascar.hardcore.deaths` (dot). This item modifier file isn't referenced by any of the JS generators, so it's dead in the pack today. The name mismatch would prevent it from working if it were ever wired up.
+`pack/data/madagascar/item_modifier/get_softcore_stats.json` references the objective name `madagascar.softcore_deaths` (underscore), but `objectives.json` defines it as `madagascar.softcore.deaths` (dot). This item modifier file isn't referenced by any of the JS generators, so it's dead in the pack today. The name mismatch would prevent it from working if it were ever wired up.
 
 ---
 
 ## 3. The rewrite
 
-Two file-level changes in `app/hardcore.js`. Plus an obvious simplification: the player-head minting no longer needs a scratch shulker block — modern `loot replace entity` puts the loot directly into the player's inventory.
+Two file-level changes in `app/softcore.js`. Plus an obvious simplification: the player-head minting no longer needs a scratch shulker block — modern `loot replace entity` puts the loot directly into the player's inventory.
 
 ### 3.1 `createPlayerhead` — drop the scratch block
 
@@ -123,7 +123,7 @@ createPlayerhead() {
     // Capture the head's owner name for later — the death-marker block
     // placement (place_marker) needs it to populate the block's profile.
     command.append(`data modify storage ${config.namespace} ${config.storage.player_name} set from entity @s Inventory[{Slot:0b}].components."minecraft:profile".name`);
-    // Open the book gate so the player has a way to restart hardcore.
+    // Open the book gate so the player has a way to restart softcore.
     command.append(`execute as @s run function ${config.package}:gate/book`);
     return command.export();
 }
@@ -158,9 +158,9 @@ The setblock that places the head (lines 142) sets a fresh player_head with no p
 
 ### 3.3 Nothing else changes
 
-Everything else in `app/hardcore.js` is already modern: the tick gates, the start/stop/pause/resume/toggle, the dimension capture, the marker summoning, the loot-spawn rotation roll, the time / distance arithmetic. The death-check using `scores={…deaths=1..,…health=1..}` and the gamemode-check on `gamemode=!survival` are all 26.1-valid.
+Everything else in `app/softcore.js` is already modern: the tick gates, the start/stop/pause/resume/toggle, the dimension capture, the marker summoning, the loot-spawn rotation roll, the time / distance arithmetic. The death-check using `scores={…deaths=1..,…health=1..}` and the gamemode-check on `gamemode=!survival` are all 26.1-valid.
 
-The book buttons in `data/book.json` already point at `madagascar:gate/hardcore_start` / `madagascar:gate/hardcore_stop` / `madagascar:hardcore/toggle` — those route to functions that still exist with the same names.
+The book buttons in `data/book.json` already point at `madagascar:gate/softcore_start` / `madagascar:gate/softcore_stop` / `madagascar:softcore/toggle` — those route to functions that still exist with the same names.
 
 ---
 
@@ -171,16 +171,16 @@ These need to be checked in a live 26.1 server before declaring the rewrite done
 1. **`loot replace entity @s hotbar.0 loot <table>` context for `this`.** I'm assuming the loot table's `fill_player_head` with `entity: "this"` resolves to `@s` (the player who just died) when invoked via `loot replace entity`. If `this` instead resolves to the entity being given the loot (also @s), great — same result. If neither, we'd need to use `loot give @s loot <table>` or fall back to the scratch-block approach.
 2. **`data modify block … profile.name` without prior `profile` set.** The plan does a `set value {name:""}` first to be safe. Worth testing whether `profile.name set from …` alone works — if it does, drop the initialiser line.
 3. **`Inventory[{Slot:0b}].components."minecraft:profile".name` read timing.** The `loot replace entity` and the subsequent `data modify storage … set from entity @s Inventory[…]` execute in the same function. Player NBT writes from `loot replace` should be visible within the same function tick, but worth confirming the storage read actually gets the new head's profile and not a stale value.
-4. **Death sequence interaction with respawn screen.** `hardcore/stop` runs when `deaths=1.. AND health=1..` — which means the player has died, hit the respawn screen, and clicked respawn. At that moment their location is the spawn point, not the death point. The death location is preserved via `LastDeathLocation` on the player's NBT, so the marker placement still works. Worth verifying nothing in `loot replace entity` cares about the player being "alive at death location" specifically.
+4. **Death sequence interaction with respawn screen.** `softcore/stop` runs when `deaths=1.. AND health=1..` — which means the player has died, hit the respawn screen, and clicked respawn. At that moment their location is the spawn point, not the death point. The death location is preserved via `LastDeathLocation` on the player's NBT, so the marker placement still works. Worth verifying nothing in `loot replace entity` cares about the player being "alive at death location" specifically.
 5. **`coordinate.shulker.item` retirement.** Once this rewrite lands, no module references `coordinate.shulker.item`. The field can be deleted from `data/config.json`. Same for `util/command.js:createShulker` / `clearBlock` if `swapper_shulker.js` and `inventory.js` are also rewritten (see `SHULKER_SWAP_REWRITE.md`); until then, leave them.
 
 ---
 
 ## 5. Effort
 
-Small. Two functions in one file (`app/hardcore.js`), totalling ~6 lines changed. No new files, no new data, no folder moves. The whole reason it broke is concentrated in three specific lines.
+Small. Two functions in one file (`app/softcore.js`), totalling ~6 lines changed. No new files, no new data, no folder moves. The whole reason it broke is concentrated in three specific lines.
 
 Out of scope (separate work, if you want them):
 
-- The `get_hardcore_stats.json` typo (§2). One-character fix but I have no evidence anyone is calling it.
-- Re-enabling the god page (which has "Hardcore" controls — the green/gold/red dots that call `gate/hardcore_start` / `hardcore/toggle` / `hardcore/stop`). The dots are already in `book.json` and the gates work fine; the god page just isn't being emitted to the book yet. Tracked in `SHULKER_SWAP_REWRITE.md` §4 as "Out of scope".
+- The `get_softcore_stats.json` typo (§2). One-character fix but I have no evidence anyone is calling it.
+- Re-enabling the god page (which has "Softcore" controls — the green/gold/red dots that call `gate/softcore_start` / `softcore/toggle` / `softcore/stop`). The dots are already in `book.json` and the gates work fine; the god page just isn't being emitted to the book yet. Tracked in `SHULKER_SWAP_REWRITE.md` §4 as "Out of scope".

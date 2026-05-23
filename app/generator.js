@@ -9,7 +9,7 @@ const book = require('./book');
 const inventory = require('./inventory');
 const ender = require('./ender');
 const location = require('./location');
-const hardcore = require('./hardcore');
+const softcore = require('./softcore');
 const dynamite = require('./dynamite');
 const Load = require('./load');
 const Tick = require('./tick');
@@ -56,7 +56,7 @@ class Generator {
         this.createLocationFunctions();
         this.createInventoryFunctions();
         this.createEnderFunctions();
-        this.createHardcoreFunctions();
+        this.createSoftcoreFunctions();
         // this.createDynamiteGame();
         this.createLoader();
         this.createTicker();
@@ -90,23 +90,23 @@ class Generator {
         this.validatePaths();
         creator.write(path.resolve(this.paths.functions, 'tick.mcfunction'), Tick.getInstance().export());
     }
-    createHardcoreFunctions() {
+    createSoftcoreFunctions() {
         this.validatePaths();
-        const output = hardcore.create(data.objectives);
-        creator.write(path.resolve(this.paths.hardcore, `start.mcfunction`), output.start);
-        creator.write(path.resolve(this.paths.hardcore, `stop.mcfunction`), output.stop);
-        creator.write(path.resolve(this.paths.hardcore, `pause.mcfunction`), output.pause);
-        creator.write(path.resolve(this.paths.hardcore, `resume.mcfunction`), output.resume);
-        creator.write(path.resolve(this.paths.hardcore, `toggle.mcfunction`), output.toggle);
-        creator.write(path.resolve(this.paths.hardcore, `gamemode_lock.mcfunction`), output.gamemode_lock);
-        creator.write(path.resolve(this.paths.hardcore, `player_head.mcfunction`), output.player_head);
-        creator.write(path.resolve(this.paths.hardcore, `prepare_marker.mcfunction`), output.prepare_marker);
-        creator.write(path.resolve(this.paths.hardcore, `place_marker.mcfunction`), output.place_marker);
-        creator.write(path.resolve(this.paths.gate, `${config.folder.hardcore}_dimension.mcfunction`), output.dimension_gate);
-        creator.write(path.resolve(this.paths.gate, `${config.folder.hardcore}_start.mcfunction`), output.start_gate);
-        creator.write(path.resolve(this.paths.gate, `${config.folder.hardcore}_stop.mcfunction`), output.stop_gate);
-        creator.write(path.resolve(this.paths.gate, `${config.folder.hardcore}_gamemode_check.mcfunction`), output.gamemode_check);
-        creator.write(path.resolve(this.paths.gate, `${config.folder.hardcore}_death_check.mcfunction`), output.death_check);
+        const output = softcore.create(data.objectives);
+        creator.write(path.resolve(this.paths.softcore, `start.mcfunction`), output.start);
+        creator.write(path.resolve(this.paths.softcore, `stop.mcfunction`), output.stop);
+        creator.write(path.resolve(this.paths.softcore, `pause.mcfunction`), output.pause);
+        creator.write(path.resolve(this.paths.softcore, `resume.mcfunction`), output.resume);
+        creator.write(path.resolve(this.paths.softcore, `toggle.mcfunction`), output.toggle);
+        creator.write(path.resolve(this.paths.softcore, `gamemode_lock.mcfunction`), output.gamemode_lock);
+        creator.write(path.resolve(this.paths.softcore, `player_head.mcfunction`), output.player_head);
+        creator.write(path.resolve(this.paths.softcore, `prepare_marker.mcfunction`), output.prepare_marker);
+        creator.write(path.resolve(this.paths.softcore, `place_marker.mcfunction`), output.place_marker);
+        creator.write(path.resolve(this.paths.gate, `${config.folder.softcore}_dimension.mcfunction`), output.dimension_gate);
+        creator.write(path.resolve(this.paths.gate, `${config.folder.softcore}_start.mcfunction`), output.start_gate);
+        creator.write(path.resolve(this.paths.gate, `${config.folder.softcore}_stop.mcfunction`), output.stop_gate);
+        creator.write(path.resolve(this.paths.gate, `${config.folder.softcore}_gamemode_check.mcfunction`), output.gamemode_check);
+        creator.write(path.resolve(this.paths.gate, `${config.folder.softcore}_death_check.mcfunction`), output.death_check);
     }
 
     createLocationFunctions() {

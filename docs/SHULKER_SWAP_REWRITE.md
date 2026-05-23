@@ -132,5 +132,5 @@ When work resumes:
 
 ## 4. Out of scope
 
-- **`app/hardcore.js`** also has a chunk of pre-1.20.5 NBT (the `player_head` function uses `tag.SkullOwner.Name`, which in modern format is `components."minecraft:profile".name`). Same `loot give @s mine …` dependency on the deleted shulker override. Tracked here for awareness only — separate plan when the hardcore game mode comes back into use.
+- **`app/softcore.js`** also has a chunk of pre-1.20.5 NBT (the `player_head` function uses `tag.SkullOwner.Name`, which in modern format is `components."minecraft:profile".name`). Same `loot give @s mine …` dependency on the deleted shulker override. Tracked here for awareness only — separate plan when the softcore game mode comes back into use.
 - **The book's god page** has never been re-enabled. Once the swappers are working it would be worth following the same string-concat pattern as the magic page rewrite (see `app/book.js`). The button bindings in `book.json` already match the modern `tool_swap_<name>` gate output produced by the Phase A rewrite, so no per-button rework is needed.

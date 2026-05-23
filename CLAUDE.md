@@ -58,7 +58,7 @@ app/creator.js,  writes .mcfunction files to the configured output path
 Each file in `app/` corresponds to a Minecraft game feature:
 
 1. `generator.js`, orchestrates all other modules
-2. `hardcore.js`, hardcore mode game functions
+2. `softcore.js`, softcore mode game functions
 3. `dynamite.js`, dynamite game mode
 4. `book.js`, written book give commands
 5. `location.js`, waypoint/location functions
@@ -98,7 +98,7 @@ Generated `.mcfunction` files follow this path pattern:
 |- load.mcfunction
 |- tick.mcfunction
 |- book/
-|- hardcore/
+|- softcore/
 |- location/
 |- tool_swap/
 |- shulker/

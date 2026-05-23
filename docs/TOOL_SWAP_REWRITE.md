@@ -43,7 +43,7 @@ Java Edition 1.21 renamed several plural datapack folders to singular. The Madag
 | `pack/data/minecraft/loot_tables/blocks/shulker_box.json` | **deleted** (no longer needed) |
 | `pack/data/madagascar/loot_tables/get_*.json` | `pack/data/madagascar/loot_table/get_*.json` |
 | `pack/data/madagascar/advancements/temp.json_` | `pack/data/madagascar/advancement/temp.json_` |
-| `pack/data/madagascar/item_modifiers/get_hardcore_stats.json` | `pack/data/madagascar/item_modifier/get_hardcore_stats.json` |
+| `pack/data/madagascar/item_modifiers/get_softcore_stats.json` | `pack/data/madagascar/item_modifier/get_softcore_stats.json` |
 
 (`tags/function/` was already singular. `dimension/` and `dimension_type/` were always singular.)
 

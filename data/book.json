@@ -149,13 +149,13 @@
             }
         }
     ],
-    "hardcore": [
+    "softcore": [
         {
             "text": "\\n",
             "color": "black"
         },
         {
-            "text": "\\u2620 Hardcore ",
+            "text": "\\u2620 Softcore ",
             "color": "black"
         },
         {
@@ -163,7 +163,7 @@
             "color": "dark_green",
             "click_event": {
                 "action": "run_command",
-                "command": "/function madagascar:gate/hardcore_start"
+                "command": "/function madagascar:gate/softcore_start"
             }
         },
         {
@@ -171,7 +171,7 @@
             "color": "gold",
             "click_event": {
                 "action": "run_command",
-                "command": "/function madagascar:hardcore/toggle"
+                "command": "/function madagascar:softcore/toggle"
             }
         },
         {
@@ -179,7 +179,7 @@
             "color": "dark_red",
             "click_event": {
                 "action": "run_command",
-                "command": "/function madagascar:hardcore/stop"
+                "command": "/function madagascar:softcore/stop"
             }
         }
     ],

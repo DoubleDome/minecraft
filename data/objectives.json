@@ -58,10 +58,10 @@
         "flight_distance": { "name": "madagascar.stats.flight_distance", "type": "minecraft.custom:minecraft.aviate_one_cm", "value": 0 },
         "totems": { "name": "madagascar.stats.totems_used", "type": "minecraft.used:minecraft.totem_of_undying", "value": 0 }
     },
-    "hardcore": {
-        "health": { "name": "madagascar.hardcore.health", "type": "health" },
-        "deaths": { "name": "madagascar.hardcore.deaths", "type": "dummy", "label": "Hardcore Deaths" },
-        "death_dimension": { "name": "madagascar.hardcore.death_dimension", "type": "dummy" }
+    "softcore": {
+        "health": { "name": "madagascar.softcore.health", "type": "health" },
+        "deaths": { "name": "madagascar.softcore.deaths", "type": "dummy", "label": "Softcore Deaths" },
+        "death_dimension": { "name": "madagascar.softcore.death_dimension", "type": "dummy" }
     },
     "killers": {
         "hoglin": { "name": "madagascar.killer.hoglin", "type": "minecraft.killed_by:minecraft.hoglin", "value": 0 },

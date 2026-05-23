@@ -15,7 +15,7 @@
                             "entity": "this",
                             "lore": [
                                 [{ "text": "", "color": "gray", "italic": false }],
-                                [{ "text": "Hardcore Death #", "italic": false }, { "score": { "name": "@s", "objective": "madagascar.hardcore.deaths" } }],
+                                [{ "text": "Softcore Death #", "italic": false }, { "score": { "name": "@s", "objective": "madagascar.softcore.deaths" } }],
                                 [
                                     { "text": "Start Location: ", "color": "gray", "italic": false },
                                     { "score": { "name": "@s", "objective": "madagascar.start.x" }, "color": "gold" },
@@ -43,7 +43,7 @@
                                     { "text": "Overworld", "color": "gold", "italic": false }
                                 ]
                             ],
-                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.hardcore.death_dimension": 0 } }],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.softcore.death_dimension": 0 } }],
                             "replace": false
                         },
                         {
@@ -55,7 +55,7 @@
                                     { "text": "The Nether", "color": "gold", "italic": false }
                                 ]
                             ],
-                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.hardcore.death_dimension": 1 } }],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.softcore.death_dimension": 1 } }],
                             "replace": false
                         },
                         {
@@ -67,7 +67,7 @@
                                     { "text": "The End", "color": "gold", "italic": false }
                                 ]
                             ],
-                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.hardcore.death_dimension": 2 } }],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.softcore.death_dimension": 2 } }],
                             "replace": false
                         },
                         {
@@ -79,7 +79,7 @@
                                     { "text": "Canvas", "color": "gold", "italic": false }
                                 ]
                             ],
-                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.hardcore.death_dimension": 3 } }],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.softcore.death_dimension": 3 } }],
                             "replace": false
                         },
                         {
@@ -91,7 +91,7 @@
                                     { "text": "Skyblock", "color": "gold", "italic": false }
                                 ]
                             ],
-                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.hardcore.death_dimension": 4 } }],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.softcore.death_dimension": 4 } }],
                             "replace": false
                         },
                         {

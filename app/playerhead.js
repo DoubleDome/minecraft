@@ -15,7 +15,7 @@ const killerTemplate = {
             condition: 'minecraft:entity_scores',
             entity: 'this',
             scores: {
-                'madagascar.hardcore.deaths': 0,
+                'madagascar.softcore.deaths': 0,
             },
         },
     ],
@@ -49,7 +49,7 @@ class Playerhead {
     addKiller(killer) {
         const clone = JSON.parse(JSON.stringify(killerTemplate));
         clone.conditions[0].scores = {};
-        clone.conditions[0].scores[`madagascar.hardcore.killer.${killer.type}`] = 1;
+        clone.conditions[0].scores[`madagascar.softcore.killer.${killer.type}`] = 1;
         clone.lore[0][1].text = killer.label;
         source.pools[0].entries[0].functions.splice(8, 0, clone);
     }

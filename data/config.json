@@ -12,7 +12,7 @@
     "folder": {
         "gate": "gate",
         "book": "book",
-        "hardcore": "hardcore",
+        "softcore": "softcore",
         "dynamite": "dynamite",
         "location": "location",
         "shulker": "shulker",
@@ -22,10 +22,10 @@
     },
     "label": {
         "message": {
-            "locked": "You're stuck in HARDCORE!",
+            "locked": "You're stuck in SOFTCORE!",
             "death": "You DIED!",
-            "resume": "Hardcore mode RESUMED!",
-            "pause": "Hardcore mode PAUSED!"
+            "resume": "Softcore mode RESUMED!",
+            "pause": "Softcore mode PAUSED!"
         },
         "dimension": {
             "minecraft:overworld": "Overworld",
@@ -78,7 +78,7 @@
         "rotation": "rotation"
     },
     "tag": {
-        "hardcore": "hardcore",
+        "softcore": "softcore",
         "ender": "ender_marker",
         "death": "death_marker"
     },
