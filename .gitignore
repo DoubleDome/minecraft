@@ -115,3 +115,8 @@ _old
 *.docx
 .temp/
 .DS_Store
+
+# Generator output and local backups
+.test-output/
+*.bak.*
+

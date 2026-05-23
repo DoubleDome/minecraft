@@ -1,0 +1,16 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "###",
+        "#L#",
+        "###"
+    ],
+    "key": {
+        "#": "minecraft:breeze_rod",
+        "L": "minecraft:lava_bucket"
+    },
+    "result": {
+        "id": "minecraft:blaze_rod",
+        "count": 8
+    }
+}

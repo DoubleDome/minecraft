@@ -1,0 +1,16 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "###",
+        "#D#",
+        "###"
+    ],
+    "key": {
+        "#": "minecraft:glow_lichen",
+        "D": "minecraft:dirt"
+    },
+    "result": {
+        "id": "minecraft:moss_block",
+        "count": 1
+    }
+}
