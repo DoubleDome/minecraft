@@ -32,7 +32,8 @@
                                     { "text": " ", "color": "gray", "italic": false },
                                     { "score": { "name": "@s", "objective": "madagascar.death.z" }, "color": "gold" }
                                 ]
-                            ]
+                            ],
+                            "mode": "replace_all"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -44,7 +45,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.softcore.death_dimension": 0 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -56,7 +57,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.softcore.death_dimension": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -68,7 +69,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.softcore.death_dimension": 2 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -80,7 +81,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.softcore.death_dimension": 3 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -92,7 +93,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.softcore.death_dimension": 4 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -104,7 +105,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.ravager": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -116,7 +117,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.pillager": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -128,7 +129,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.panda": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -140,7 +141,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.fox": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -152,7 +153,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.trader_llama": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -164,7 +165,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.wandering_trader": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -176,7 +177,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.zombie_villager": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -188,7 +189,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.zombie_horse": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -200,7 +201,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.zombie": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -212,7 +213,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.wolf": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -224,7 +225,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.witch": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -236,7 +237,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.vindicator": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -248,7 +249,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.villager": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -260,7 +261,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.vex": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -272,7 +273,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.turtle": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -284,7 +285,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.stray": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -296,7 +297,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.spider": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -308,7 +309,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.snow_golem": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -320,7 +321,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.slime": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -332,7 +333,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.skeleton_horse": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -344,7 +345,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.skeleton": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -356,7 +357,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.silverfish": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -368,7 +369,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.shulker": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -380,7 +381,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.rabbit": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -392,7 +393,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.pufferfish": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -404,7 +405,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.polar_bear": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -416,7 +417,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.phantom": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -428,7 +429,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.magma_cube": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -440,7 +441,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.llama": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -452,7 +453,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.iron_golem": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -464,7 +465,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.illusioner": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -476,7 +477,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.husk": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -488,7 +489,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.guardian": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -500,7 +501,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.evoker": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -512,7 +513,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.endermite": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -524,7 +525,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.enderman": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -536,7 +537,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.ender_dragon": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -548,7 +549,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.elder_guardian": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -560,7 +561,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.drowned": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -572,7 +573,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.dolphin": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -584,7 +585,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.creeper": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -596,7 +597,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.cave_spider": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -608,7 +609,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.wither": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -620,7 +621,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.ghast": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -632,7 +633,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.zombified_piglin": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -644,7 +645,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.wither_skeleton": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -656,7 +657,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.blaze": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -668,7 +669,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.bee": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -680,7 +681,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.zoglin": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -692,7 +693,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.strider": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -704,7 +705,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.piglin_brute": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -716,7 +717,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.piglin": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -728,7 +729,7 @@
                                 ]
                             ],
                             "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "madagascar.killer.hoglin": 1 } }],
-                            "replace": false
+                            "mode": "append"
                         },
                         {
                             "function": "minecraft:set_lore",
@@ -789,7 +790,7 @@
                                     { "text": "m", "color": "gold", "italic": false }
                                 ]
                             ],
-                            "replace": false
+                            "mode": "append"
                         }
                     ]
                 }

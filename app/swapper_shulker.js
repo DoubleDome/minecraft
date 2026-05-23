@@ -20,16 +20,16 @@ class ShulkerSwapper {
         commands.swap.reset();
         commands.swap.clearStorage(config.namespace, config.storage.outbound);
         commands.swap.createShulker(config.coordinate.shulker.item);
-        commands.swap.append(`data modify storage ${config.namespace} ${config.storage.outbound} set from entity @s Inventory[{id:"minecraft:${color}_shulker_box",tag:{display:{Name:"{\\"text\\":\\"${label}\\"}"}}}]`);
+        commands.swap.append(`data modify storage ${config.namespace} ${config.storage.outbound} set from entity @s Inventory[{id:"minecraft:${color}_shulker_box",components:{"minecraft:custom_name":"{\\"text\\":\\"${label}\\"}"}}]`);
         commands.swap.append(`data remove storage ${config.namespace} ${config.storage.outbound}.Slot`);
         commands.swap.append(`data modify block ${config.coordinate.shulker.item} Items prepend from storage ${config.namespace} ${config.storage.outbound}`);
         commands.swap.append(`loot replace entity @s enderchest.${slot} 1 mine ${config.coordinate.shulker.item} ${config.item.air}`);
-        commands.swap.append(`clear @s minecraft:${color}_shulker_box{display:{Name:"{\\"text\\":\\"${label}\\"}"}} 1`);
+        commands.swap.append(`clear @s minecraft:${color}_shulker_box[custom_name='{"text":"${label}"}'] 1`);
         commands.swap.clearBlock(config.coordinate.shulker.item);
         return commands.swap.export();
     }
     appendSwapperGate(name, label, color) {
-        commands.gate.append(`execute as @s if data entity @s Inventory[{id:"minecraft:${color}_shulker_box",tag:{display:{Name:"{\\"text\\":\\"${label}\\"}"}}}] run function ${config.package}:${config.folder.shulker}/${name}`);
+        commands.gate.append(`execute as @s if data entity @s Inventory[{id:"minecraft:${color}_shulker_box",components:{"minecraft:custom_name":"{\\"text\\":\\"${label}\\"}"}}] run function ${config.package}:${config.folder.shulker}/${name}`);
     }
 }
 
