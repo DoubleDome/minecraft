@@ -17,11 +17,11 @@
     },
     "modes": [
         {
-            "text": "\\n",
+            "text": "\n",
             "color": "black"
         },
         {
-            "text": "\\u25cb ",
+            "text": "○ ",
             "color": "black"
         },
         {
@@ -33,11 +33,11 @@
             }
         },
         {
-            "text": "\\n",
+            "text": "\n",
             "color": "black"
         },
         {
-            "text": "\\u25cb ",
+            "text": "○ ",
             "color": "black"
         },
         {
@@ -49,11 +49,11 @@
             }
         },
         {
-            "text": "\\n",
+            "text": "\n",
             "color": "black"
         },
         {
-            "text": "\\u25cb ",
+            "text": "○ ",
             "color": "black"
         },
         {
@@ -67,11 +67,11 @@
     ],
     "players": [
         {
-            "text": "\\n",
+            "text": "\n",
             "color": "black"
         },
         {
-            "text": "\\u226b ",
+            "text": "≫ ",
             "color": "black"
         },
         {
@@ -83,11 +83,11 @@
             }
         },
         {
-            "text": "\\n",
+            "text": "\n",
             "color": "black"
         },
         {
-            "text": "\\u226b ",
+            "text": "≫ ",
             "color": "black"
         },
         {
@@ -99,11 +99,11 @@
             }
         },
         {
-            "text": "\\n",
+            "text": "\n",
             "color": "black"
         },
         {
-            "text": "\\u226b ",
+            "text": "≫ ",
             "color": "black"
         },
         {
@@ -117,11 +117,11 @@
     ],
     "utility": [
         {
-            "text": "\\n",
+            "text": "\n",
             "color": "black"
         },
         {
-            "text": "\\u25b3 ",
+            "text": "△ ",
             "color": "black"
         },
         {
@@ -133,11 +133,11 @@
             }
         },
         {
-            "text": "\\n",
+            "text": "\n",
             "color": "black"
         },
         {
-            "text": "\\u2605 ",
+            "text": "★ ",
             "color": "black"
         },
         {
@@ -151,15 +151,15 @@
     ],
     "softcore": [
         {
-            "text": "\\n",
+            "text": "\n",
             "color": "black"
         },
         {
-            "text": "\\u2620 Softcore ",
+            "text": "☠ Softcore ",
             "color": "black"
         },
         {
-            "text": "\\u2b24 ",
+            "text": "⬤ ",
             "color": "dark_green",
             "click_event": {
                 "action": "run_command",
@@ -167,7 +167,7 @@
             }
         },
         {
-            "text": "\\u2b24 ",
+            "text": "⬤ ",
             "color": "gold",
             "click_event": {
                 "action": "run_command",
@@ -175,7 +175,7 @@
             }
         },
         {
-            "text": "\\u2b24 ",
+            "text": "⬤ ",
             "color": "dark_red",
             "click_event": {
                 "action": "run_command",
@@ -185,11 +185,11 @@
     ],
     "inventory": [
         {
-            "text": "\\n",
+            "text": "\n",
             "color": "black"
         },
         {
-            "text": "\\u2b06 ",
+            "text": "⬆ ",
             "color": "black"
         },
         {
@@ -201,11 +201,11 @@
             }
         },
         {
-            "text": "\\n",
+            "text": "\n",
             "color": "black"
         },
         {
-            "text": "\\u25a3 ",
+            "text": "▣ ",
             "color": "black"
         },
         {
@@ -217,15 +217,15 @@
             }
         },
         {
-            "text": "\\n",
+            "text": "\n",
             "color": "black"
         },
         {
-            "text": "\\n",
+            "text": "\n",
             "color": "black"
         },
         {
-            "text": "\\u2b06 ",
+            "text": "⬆ ",
             "color": "black"
         },
         {
@@ -237,11 +237,11 @@
             }
         },
         {
-            "text": "\\n",
+            "text": "\n",
             "color": "black"
         },
         {
-            "text": "\\u2b07 ",
+            "text": "⬇ ",
             "color": "black"
         },
         {
@@ -255,7 +255,7 @@
     ],
     "pickaxe": [
         {
-            "text": "\\n\\u21d4 ",
+            "text": "\n⇔ ",
             "color": "black"
         },
         {
@@ -297,7 +297,7 @@
     ],
     "axe": [
         {
-            "text": "\\n\\u21d4 ",
+            "text": "\n⇔ ",
             "color": "black"
         },
         {
@@ -339,7 +339,7 @@
     ],
     "shovel": [
         {
-            "text": "\\n\\u21d4 ",
+            "text": "\n⇔ ",
             "color": "black"
         },
         {
@@ -381,7 +381,7 @@
     ],
     "hoe": [
         {
-            "text": "\\n\\u21d4 ",
+            "text": "\n⇔ ",
             "color": "black"
         },
         {
@@ -423,7 +423,7 @@
     ],
     "shears": [
         {
-            "text": "\\n\\u21d4 ",
+            "text": "\n⇔ ",
             "color": "black"
         },
         {
@@ -437,7 +437,7 @@
     ],
     "flint": [
         {
-            "text": "\\n\\u21d4 ",
+            "text": "\n⇔ ",
             "color": "black"
         },
         {

@@ -4,6 +4,8 @@ const roman = require('../data/roman.json');
 const content = require('../data/book.json');
 const config = require('../data/config.json');
 
+const LOCATIONS_PER_PAGE = 12;
+
 class Book {
     create(locations) {
         const result = {};
@@ -31,21 +33,24 @@ class Book {
 
     generatePages(type, locations) {
         let result = '[';
-        result += this.generateMagicPage();
+        result += `{raw:${this.generateMagicPage()}}`;
         if (type === 'god') {
             result += ',';
-            result += this.generateGodPage();
+            result += `{raw:${this.generateGodPage()}}`;
         }
         for (let l = 0; l < locations.length; l++) {
-            result += ',';
-            result += this.generateLocationPage(locations[l]);
+            const pages = this.generateLocationPages(locations[l]);
+            for (let p = 0; p < pages.length; p++) {
+                result += ',';
+                result += `{raw:${pages[p]}}`;
+            }
         }
         result += ']';
         return result;
     }
 
     generateGodPage() {
-        let result = `'[`;
+        let result = `[`;
         result += this.generateHeader(content.headings.god_page);
         result += this.generateSpacer();
         result += this.generateBlock(content.pickaxe);
@@ -62,12 +67,12 @@ class Book {
         result += ',';
         result += this.generateSpacer();
         result += this.generateBlock(content.inventory);
-        result += `]'`;
+        result += `]`;
         return result;
     }
 
     generateMagicPage() {
-        let result = `'[`;
+        let result = `[`;
         result += this.generateHeader(content.headings.magic_page);
         result += this.generateSpacer();
         result += this.generateBlock(content.modes);
@@ -80,7 +85,7 @@ class Book {
         result += ',';
         result += this.generateSpacer();
         result += this.generateBlock(content.softcore);
-        result += `]'`;
+        result += `]`;
         return result;
     }
 
@@ -94,26 +99,36 @@ class Book {
     generateLore(lore) {
         let result = '';
         for (let l = 0; l < lore.length; l++) {
-            result += `'[${JSON.stringify({ text: lore[l] })}]'`;
+            result += JSON.stringify({ text: lore[l] });
             if (l < lore.length - 1) result += ',';
         }
         return result;
     }
 
-    generateLocationPage(data) {
-        let result = `'[`;
-        result += this.generateHeader(data.header);
-        for (let l = 0; l < data.locations.length; l++) {
-            result += this.generateLocation(data.locations[l].label, data.locations[l].filename);
-            if (l < data.locations.length - 1) result += ',';
+    generateLocationPages(data) {
+        const pages = [];
+        const locations = data.locations;
+        const chunkSize = Math.max(1, LOCATIONS_PER_PAGE);
+        // Always emit at least one page so an empty group still renders its header
+        const chunkCount = Math.max(1, Math.ceil(locations.length / chunkSize));
+        for (let c = 0; c < chunkCount; c++) {
+            const slice = locations.slice(c * chunkSize, (c + 1) * chunkSize);
+            let result = `[`;
+            result += this.generateHeader(data.header);
+            result += this.generateSpacer();
+            for (let l = 0; l < slice.length; l++) {
+                result += this.generateLocation(slice[l].label, slice[l].filename);
+                if (l < slice.length - 1) result += ',';
+            }
+            result += `]`;
+            pages.push(result);
         }
-        result += `]'`;
-        return result;
+        return pages;
     }
 
     generateLocation(label, filename) {
         let result = '[';
-        result += '{"text":"\\\\n\\\\u25b6 ","color":"#006600"},';
+        result += '{"text":"\\n▶ ","color":"#006600"},';
         // 1.21.5+ renamed clickEvent -> click_event and the value field for run_command -> command
         result += `{"text":"${label}","color":"dark_green","click_event":{"action":"run_command","command":"/function ${config.package}:${config.folder.location}/${filename}"}}`;
         result += ']';
@@ -124,7 +139,7 @@ class Book {
         return `[{"text":"${label}","color":"dark_purple"}],`;
     }
     generateSpacer() {
-        return '[{"text":"\\\\n","color":"black"}],';
+        return '[{"text":"\\n","color":"black"}],';
     }
 
     generateCommand(command, data) {

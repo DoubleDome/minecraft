@@ -32,7 +32,10 @@
             "minecraft:the_nether": "The Nether",
             "minecraft:the_end": "The End",
             "madagascar:canvas": "Canvas",
-            "madagascar:skyblock": "Skyblock"
+            "madagascar:skyblock": "Skyblock",
+            "madagascar:caves": "Caves",
+            "madagascar:sky_islands": "Sky Islands",
+            "madagascar:waterworld": "Waterworld"
         }
     },
     "function": {
@@ -47,7 +50,10 @@
         "the_end": "minecraft:the_end",
         "canvas": "madagascar:canvas",
         "skyblock": "madagascar:skyblock",
-        "dynamite": "madagascar:dynamite"
+        "dynamite": "madagascar:dynamite",
+        "caves": "madagascar:caves",
+        "sky_islands": "madagascar:sky_islands",
+        "waterworld": "madagascar:waterworld"
     },
     "item": {
         "air": "minecraft:air",

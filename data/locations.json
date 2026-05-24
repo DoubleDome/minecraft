@@ -92,6 +92,55 @@
                 "coordinates": "10310 136 12167",
                 "rotation": "90 0",
                 "filename": "cherry_base"
+            },
+            {
+                "label": "Riverside Base",
+                "dimension": "minecraft:overworld",
+                "coordinates": "319 68 6724",
+                "rotation": "0 0",
+                "filename": "riverside_base"
+            },
+            {
+                "label": "Castaway Base",
+                "dimension": "minecraft:overworld",
+                "coordinates": "18009 63 18560",
+                "rotation": "-180 0",
+                "filename": "castaway_base"
+            },
+            {
+                "label": "Crimson Base",
+                "dimension": "minecraft:the_nether",
+                "coordinates": "1258 45 -1291",
+                "rotation": "180 -3",
+                "filename": "crimson_base"
+            },
+            {
+                "label": "Desert Base",
+                "dimension": "minecraft:overworld",
+                "coordinates": "62154 68 -9413",
+                "rotation": "-90 0",
+                "filename": "desert_base"
+            },
+            {
+                "label": "Ancient Base",
+                "dimension": "minecraft:overworld",
+                "coordinates": "-4176 -49 -11871",
+                "rotation": "-90 0",
+                "filename": "ancient_base"
+            },
+            {
+                "label": "Ancient Base II",
+                "dimension": "minecraft:overworld",
+                "coordinates": "-15640 -48 -3279",
+                "rotation": "0 0",
+                "filename": "ancient_base_2"
+            },
+            {
+                "label": "Ancient Base III",
+                "dimension": "minecraft:overworld",
+                "coordinates": "3883 -49 -4468",
+                "rotation": "-180 0",
+                "filename": "ancient_base_3"
             }
         ]
     },
@@ -181,13 +230,6 @@
                 "coordinates": "-14441 99 -12121",
                 "rotation": "-180 -15",
                 "filename": "panda_sanctuary"
-            },
-            {
-                "label": "Crimson Base",
-                "dimension": "minecraft:the_nether",
-                "coordinates": "1258 45 -1291",
-                "rotation": "180 -3",
-                "filename": "crimson_base"
             }
         ]
     },
@@ -207,6 +249,13 @@
                 "coordinates": "-10 63 -1",
                 "rotation": "135 4",
                 "filename": "skyblock"
+            },
+            {
+                "label": "Caves",
+                "dimension": "madagascar:caves",
+                "coordinates": "111 45 223",
+                "rotation": "180 0",
+                "filename": "caves"
             }
         ]
     },
@@ -296,6 +345,13 @@
                 "coordinates": "84 128 55",
                 "rotation": "180 -18",
                 "filename": "frog_light_farm"
+            },
+            {
+                "label": "Witch Farm",
+                "dimension": "minecraft:overworld",
+                "coordinates": "17743 187 13400",
+                "rotation": "0 90",
+                "filename": "witch_farm"
             }
         ]
     }

@@ -14,7 +14,6 @@ class Location {
     createLocation(label, dimension, coordinates, rotation, color, gamemode = null) {
         const command = new Command();
         command.append(`execute as @s in ${dimension} run tp @s ${coordinates} ${rotation || ''}`);
-        command.append(`execute as @s in ${dimension} run spawnpoint @s ${coordinates}`);
         command.append(`execute as @s run title @s times ${config.title.time}`);
         command.append(`execute as @s run title @s subtitle {"text":"${config.label.dimension[dimension]}", "color":"${color || config.title.color}"}`);
         command.append(`execute as @s run title @s title {"text":"${label}", "color":"${color || config.title.color}"}`);
