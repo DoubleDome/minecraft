@@ -33,7 +33,7 @@ function defaultY(dim) {
     return 200;
 }
 function regenerate() {
-    generator.init(path.resolve(process.env.BASE_PATH, process.env.PACK_PATH));
+    generator.init(path.resolve(process.env.BASE_PATH, process.env.PACK_FOLDER));
     generator.create();
 }
 
@@ -311,7 +311,7 @@ function addToMagic(body) {
 endpoints.forEach((endpoint) => {
     app.get(endpoint.path, function (req, res) {
         try {
-            generator.init(path.resolve(process.env.BASE_PATH, process.env.PACK_PATH));
+            generator.init(path.resolve(process.env.BASE_PATH, process.env.PACK_FOLDER));
             generator[endpoint.function]();
             res.send('Command generation successful!');
         } catch (error) {

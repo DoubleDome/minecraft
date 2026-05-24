@@ -32,7 +32,13 @@ There are no tests (`npm test` exits with an error, no test suite exists).
 
 ## Environment Setup
 
-Fill out `.env` with real paths before running any script. The generator writes output to the paths defined there. `index.js` will refuse to run if `BASE_PATH` or `PACK_PATH` is unset, and `creator.destroy()` will refuse to delete any directory that contains `package.json`, `.git`, or `node_modules` (it once wiped the project root when an env var was undefined).
+Fill out `.env` with real paths before running any script. The generator writes output to the paths defined there.
+
+- `BASE_PATH` — live target's parent directory (the world's `datapacks/` folder)
+- `TEST_BASE_PATH` — test target's parent directory (e.g. `.temp/`)
+- `PACK_FOLDER` — single pack-folder name shared by both targets (e.g. `madagascar_pack`); appended onto whichever base path the target selects
+
+`index.js` picks the target from CLI arg → `TARGET` env → `'test'` default. It refuses to run if the relevant `*_BASE_PATH` or `PACK_FOLDER` is unset, and `creator.destroy()` will refuse to delete any directory that contains `package.json`, `.git`, or `node_modules` (it once wiped the project root when an env var was undefined).
 
 ## Scratch Output and Test Builds
 
