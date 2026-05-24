@@ -5,25 +5,24 @@ const path = require('path');
 const resource = require('./app/resource');
 
 // Pick target: CLI arg > TARGET env > 'test' (safer default — won't clobber live).
-// Both targets share the same pack folder name; only the base path differs.
-// "live" => BASE_PATH      + PACK_FOLDER
-// "test" => TEST_BASE_PATH + PACK_FOLDER
+// "test" loads .env.test on top of .env (override:true) so test-only values
+// (typically a sandbox BASE_PATH) win without duplicating the rest of .env.
 const target = (process.argv[2] || process.env.TARGET || 'test').toLowerCase();
-
-let baseVar;
-if (target === 'live') {
-    baseVar = 'BASE_PATH';
-} else if (target === 'test') {
-    baseVar = 'TEST_BASE_PATH';
-} else {
+if (target !== 'live' && target !== 'test') {
     console.error(`ERROR: target must be 'live' or 'test', got: '${target}'`);
     process.exit(1);
 }
-const basePath = process.env[baseVar];
+if (target === 'test') {
+    require('dotenv').config({ path: '.env.test', override: true });
+}
+
+const basePath = process.env.BASE_PATH;
 const packFolder = process.env.PACK_FOLDER;
 
 if (!basePath || !packFolder) {
-    console.error(`ERROR: ${baseVar} and PACK_FOLDER must be set in .env (target=${target}). The generator wipes its output directory on init and would destroy the project root if these are missing.`);
+    const missing = !basePath && !packFolder ? 'BASE_PATH and PACK_FOLDER' : (!basePath ? 'BASE_PATH' : 'PACK_FOLDER');
+    const source = target === 'test' ? '.env (or .env.test)' : '.env';
+    console.error(`ERROR: ${missing} must be set in ${source} (target=${target}). The generator wipes its output directory on init and would destroy the project root if these are missing.`);
     process.exit(1);
 }
 

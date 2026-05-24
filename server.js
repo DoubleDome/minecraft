@@ -1,4 +1,9 @@
 require('dotenv').config();
+// Mirror index.js: when TARGET=test, layer .env.test on top of .env so the
+// server writes regenerations to the sandbox dir instead of the live pack.
+if ((process.env.TARGET || 'test').toLowerCase() === 'test') {
+    require('dotenv').config({ path: '.env.test', override: true });
+}
 
 const express = require('express');
 const app = express();

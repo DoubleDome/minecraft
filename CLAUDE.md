@@ -34,11 +34,16 @@ There are no tests (`npm test` exits with an error, no test suite exists).
 
 Fill out `.env` with real paths before running any script. The generator writes output to the paths defined there.
 
-- `BASE_PATH` — live target's parent directory (the world's `datapacks/` folder)
-- `TEST_BASE_PATH` — test target's parent directory (e.g. `.temp/`)
-- `PACK_FOLDER` — single pack-folder name shared by both targets (e.g. `madagascar_pack`); appended onto whichever base path the target selects
+- `BASE_PATH` — parent directory the generator writes into (the world's `datapacks/` folder for live)
+- `PACK_FOLDER` — pack folder name appended onto `BASE_PATH` (e.g. `madagascar_pack`)
 
-`index.js` picks the target from CLI arg → `TARGET` env → `'test'` default. It refuses to run if the relevant `*_BASE_PATH` or `PACK_FOLDER` is unset, and `creator.destroy()` will refuse to delete any directory that contains `package.json`, `.git`, or `node_modules` (it once wiped the project root when an env var was undefined).
+**Target switching:** `index.js` picks the target from CLI arg → `TARGET` env → `'test'` default. `server.js` reads `TARGET` env (defaults to `test`). When the target is `test`, both entry points layer `.env.test` on top of `.env` with `override:true` — so anything in `.env.test` (typically a sandbox `BASE_PATH=D:\Code\.temp`) wins, and everything else falls through to `.env`. Files:
+
+- `.env` — shared / live values, always loaded
+- `.env.test` — test overrides, loaded on top of `.env` only when `TARGET=test`
+- Both gitignored; scaffolds tracked as `.env.example` and `.env.test.example`
+
+`index.js` refuses to run if `BASE_PATH` or `PACK_FOLDER` is unset after the load, and `creator.destroy()` will refuse to delete any directory that contains `package.json`, `.git`, or `node_modules` (it once wiped the project root when an env var was undefined).
 
 ## Scratch Output and Test Builds
 
