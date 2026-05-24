@@ -40,7 +40,6 @@ function generatePath(location) {
             choices: [
                 { title: 'Local', value: 'local' },
                 { title: 'Datapack', value: 'datapack' },
-                { title: 'Jakarta', value: 'jakarta' },
             ],
         },
         {
