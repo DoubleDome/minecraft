@@ -1,0 +1,473 @@
+{
+    "title": "Coordinates",
+    "author": "DoubleDome",
+    "lore": [
+        "A field journal of",
+        "exploration sites,",
+        "clickable for fast travel."
+    ],
+    "entries": [
+        {
+            "label": "Main Base",
+            "dim": "overworld",
+            "x": 211,
+            "y": 76,
+            "z": 253
+        },
+        {
+            "label": "Nether Hub",
+            "dim": "the_nether",
+            "x": 30,
+            "y": 113,
+            "z": 32
+        },
+        {
+            "label": "Nether Fortress 1",
+            "dim": "the_nether",
+            "x": -87,
+            "y": 69,
+            "z": -438
+        },
+        {
+            "label": "Nether Fortress 2",
+            "dim": "the_nether",
+            "x": -87,
+            "y": 69,
+            "z": -435
+        },
+        {
+            "label": "Badlands",
+            "dim": "overworld",
+            "x": -9310,
+            "y": 94,
+            "z": 788
+        },
+        {
+            "label": "Badlands (wow)",
+            "dim": "overworld",
+            "x": -9613,
+            "y": 64,
+            "z": -1055
+        },
+        {
+            "label": "Trading Hall Rail Entrance",
+            "dim": "overworld",
+            "x": 214,
+            "y": 71,
+            "z": 333
+        },
+        {
+            "label": "Flower Forest",
+            "dim": "overworld",
+            "x": -727,
+            "y": 62,
+            "z": -3542
+        },
+        {
+            "label": "Volcano Base Gate",
+            "dim": "overworld",
+            "x": -307,
+            "y": 66,
+            "z": -377
+        },
+        {
+            "label": "Dope Mountain",
+            "dim": "overworld",
+            "x": 98,
+            "y": 65,
+            "z": -1014
+        },
+        {
+            "label": "Skeleton Spawner",
+            "dim": "overworld",
+            "x": -625,
+            "y": 71,
+            "z": -1752
+        },
+        {
+            "label": "Drowned Farm",
+            "dim": "overworld",
+            "x": -2218,
+            "y": 167,
+            "z": 1302
+        },
+        {
+            "label": "Snow Village 1",
+            "dim": "overworld",
+            "x": 1647,
+            "y": 64,
+            "z": 2213
+        },
+        {
+            "label": "Savanna Village",
+            "dim": "overworld",
+            "x": 526,
+            "y": 200,
+            "z": -1388
+        },
+        {
+            "label": "Jungle Temple 1",
+            "dim": "overworld",
+            "x": 1605,
+            "y": 200,
+            "z": -841
+        },
+        {
+            "label": "Jungle Temple 2",
+            "dim": "overworld",
+            "x": 1253,
+            "y": 200,
+            "z": -1002
+        },
+        {
+            "label": "Pandas 1",
+            "dim": "overworld",
+            "x": 1074,
+            "y": 200,
+            "z": -1005
+        },
+        {
+            "label": "Desert Village",
+            "dim": "overworld",
+            "x": 1334,
+            "y": 200,
+            "z": 8000
+        },
+        {
+            "label": "Snow Village 2",
+            "dim": "overworld",
+            "x": 1713,
+            "y": 200,
+            "z": 2749
+        },
+        {
+            "label": "Snow Village 3",
+            "dim": "overworld",
+            "x": 1638,
+            "y": 200,
+            "z": 2178
+        },
+        {
+            "label": "Coral Reef",
+            "dim": "overworld",
+            "x": -7165,
+            "y": 200,
+            "z": -222
+        },
+        {
+            "label": "Stronghold",
+            "dim": "overworld",
+            "x": -8300,
+            "y": 200,
+            "z": 75
+        },
+        {
+            "label": "Sick Reef",
+            "dim": "overworld",
+            "x": -11940,
+            "y": 200,
+            "z": 48
+        },
+        {
+            "label": "Sunflower Fields",
+            "dim": "overworld",
+            "x": -10749,
+            "y": 200,
+            "z": 475
+        },
+        {
+            "label": "Siamese Cat",
+            "dim": "overworld",
+            "x": -10982,
+            "y": 200,
+            "z": 590
+        },
+        {
+            "label": "Exposed Sunken Ruin",
+            "dim": "overworld",
+            "x": -7535,
+            "y": 200,
+            "z": 966
+        },
+        {
+            "label": "Huge Plains Village",
+            "dim": "overworld",
+            "x": 2635,
+            "y": 200,
+            "z": 611
+        },
+        {
+            "label": "Huge Sunken Ruin",
+            "dim": "overworld",
+            "x": 2756,
+            "y": 200,
+            "z": 655
+        },
+        {
+            "label": "Guardian Farm",
+            "dim": "overworld",
+            "x": 800,
+            "y": 200,
+            "z": 400
+        },
+        {
+            "label": "Pandas 2",
+            "dim": "overworld",
+            "x": 1057,
+            "y": 200,
+            "z": -1000
+        },
+        {
+            "label": "Tiny Taiga Village",
+            "dim": "overworld",
+            "x": 1769,
+            "y": 200,
+            "z": 368
+        },
+        {
+            "label": "Nether Fortress 3",
+            "dim": "the_nether",
+            "x": -563,
+            "y": 92,
+            "z": -1422
+        },
+        {
+            "label": "Nether Fortress 4",
+            "dim": "the_nether",
+            "x": -533,
+            "y": 74,
+            "z": -438
+        },
+        {
+            "label": "Woodland Mansion",
+            "dim": "overworld",
+            "x": -269,
+            "y": 65,
+            "z": -97
+        },
+        {
+            "label": "Lush Cave 1",
+            "dim": "overworld",
+            "x": -1716,
+            "y": -25,
+            "z": -12628
+        },
+        {
+            "label": "Sick Jungle Cliff",
+            "dim": "overworld",
+            "x": -2044,
+            "y": 103,
+            "z": -12949
+        },
+        {
+            "label": "Massive Open Cavern 1",
+            "dim": "overworld",
+            "x": -15771,
+            "y": 110,
+            "z": 1445
+        },
+        {
+            "label": "Lush Cave 2",
+            "dim": "overworld",
+            "x": 3487,
+            "y": 89,
+            "z": 643
+        },
+        {
+            "label": "Open Lush/Drip Cave",
+            "dim": "overworld",
+            "x": 6649,
+            "y": 38,
+            "z": 308
+        },
+        {
+            "label": "Savanna V/Drip Cave",
+            "dim": "overworld",
+            "x": -1448,
+            "y": 70,
+            "z": -11191
+        },
+        {
+            "label": "AWESOME Cave",
+            "dim": "overworld",
+            "x": 1476,
+            "y": -27,
+            "z": 2100
+        },
+        {
+            "label": "Stronghold (Looted)",
+            "dim": "overworld",
+            "x": 906,
+            "y": 70,
+            "z": 2070
+        },
+        {
+            "label": "Massive End City (Shulkers)",
+            "dim": "the_end",
+            "x": -1188,
+            "y": 62,
+            "z": 52
+        },
+        {
+            "label": "Weird Village",
+            "dim": "overworld",
+            "x": -1266,
+            "y": 62,
+            "z": -1879
+        },
+        {
+            "label": "Gigantic Cavern",
+            "dim": "overworld",
+            "x": -1339,
+            "y": 57,
+            "z": -2024
+        },
+        {
+            "label": "Witch Hut 1",
+            "dim": "overworld",
+            "x": -477,
+            "y": 71,
+            "z": -2541
+        },
+        {
+            "label": "Bastion",
+            "dim": "the_nether",
+            "x": 701,
+            "y": 120,
+            "z": -226
+        },
+        {
+            "label": "SICK Mineshaft",
+            "dim": "overworld",
+            "x": -10600,
+            "y": 68,
+            "z": 1185
+        },
+        {
+            "label": "Gorgeous Jungle Mt.",
+            "dim": "overworld",
+            "x": -8772,
+            "y": 90,
+            "z": -419
+        },
+        {
+            "label": "Sunken Ruin (on land)",
+            "dim": "overworld",
+            "x": -3085,
+            "y": 64,
+            "z": -183
+        },
+        {
+            "label": "Huge Frozen Ocean",
+            "dim": "overworld",
+            "x": -3466,
+            "y": 63,
+            "z": 1150
+        },
+        {
+            "label": "Witchhut (working)",
+            "dim": "overworld",
+            "x": 9844,
+            "y": 65,
+            "z": 9506
+        },
+        {
+            "label": "Insane Open Cavern",
+            "dim": "overworld",
+            "x": 8280,
+            "y": 98,
+            "z": 10294
+        },
+        {
+            "label": "Giant Mooshroom",
+            "dim": "overworld",
+            "x": -13000,
+            "y": 71,
+            "z": -10300
+        },
+        {
+            "label": "Pandas 3",
+            "dim": "overworld",
+            "x": 470,
+            "y": 74,
+            "z": -1626
+        },
+        {
+            "label": "Cool Open Mineshaft",
+            "dim": "overworld",
+            "x": -9716,
+            "y": 63,
+            "z": -9847
+        },
+        {
+            "label": "Huge Frozen Lake",
+            "dim": "overworld",
+            "x": -7024,
+            "y": 63,
+            "z": -9848
+        },
+        {
+            "label": "Zombie Village w/ Mount",
+            "dim": "overworld",
+            "x": -6496,
+            "y": 199,
+            "z": -11161
+        },
+        {
+            "label": "Interesting Underwater",
+            "dim": "overworld",
+            "x": -8307,
+            "y": 22,
+            "z": -10710
+        },
+        {
+            "label": "Tiny End City",
+            "dim": "the_end",
+            "x": -2763,
+            "y": 101,
+            "z": -869
+        },
+        {
+            "label": "Ice Spikes",
+            "dim": "overworld",
+            "x": 12134,
+            "y": 133,
+            "z": 3379
+        },
+        {
+            "label": "Beautiful Ice Lake",
+            "dim": "overworld",
+            "x": 12387,
+            "y": 62,
+            "z": 3231
+        },
+        {
+            "label": "Scenic Pillager Tower",
+            "dim": "overworld",
+            "x": 13639,
+            "y": 85,
+            "z": -1399
+        },
+        {
+            "label": "Hollowed Mountain",
+            "dim": "overworld",
+            "x": 12072,
+            "y": 177,
+            "z": 364
+        },
+        {
+            "label": "Sick Base Location",
+            "dim": "overworld",
+            "x": 11728,
+            "y": 114,
+            "z": 637
+        },
+        {
+            "label": "Wholesale Order",
+            "dim": "overworld",
+            "x": 300,
+            "y": 200,
+            "z": 300
+        }
+    ]
+}
