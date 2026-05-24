@@ -225,31 +225,15 @@
             "color": "black"
         },
         {
-            "text": "⬆ ",
+            "text": "▤ ",
             "color": "black"
         },
         {
-            "text": "Export Inventory",
+            "text": "Stash Inventory",
             "color": "dark_green",
             "click_event": {
                 "action": "run_command",
-                "command": "/function madagascar:gate/inventory_export"
-            }
-        },
-        {
-            "text": "\n",
-            "color": "black"
-        },
-        {
-            "text": "⬇ ",
-            "color": "black"
-        },
-        {
-            "text": "Import Inventory",
-            "color": "dark_green",
-            "click_event": {
-                "action": "run_command",
-                "command": "/function madagascar:gate/inventory_import"
+                "command": "/function madagascar:gate/inventory_stash"
             }
         }
     ],
