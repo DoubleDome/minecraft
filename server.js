@@ -53,17 +53,18 @@ app.get('/', async (req, res) => {
     res.set('Cache-Control', 'no-store');
     res.send(`<!doctype html>
 <html><head><meta charset="utf-8"><title>${SERVER_NAME}</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta http-equiv="refresh" content="10">
 <style>
-  html,body{height:100%;margin:0;background:#0f0f14;color:#e5e5e5;font-family:-apple-system,Segoe UI,Roboto,sans-serif}
-  body{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
-  h1{font-weight:400;color:#888;margin:0 0 1em;font-size:1.2em;letter-spacing:.1em;text-transform:uppercase}
-  .status{font-size:5em;font-weight:700;letter-spacing:.05em}
+  html,body{height:100%;margin:0;background:#0f0f14;color:#e5e5e5;font-family:-apple-system,Segoe UI,Roboto,sans-serif;-webkit-text-size-adjust:100%}
+  body{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:1.5em;box-sizing:border-box}
+  h1{font-weight:400;color:#888;margin:0 0 1em;font-size:1.1em;letter-spacing:.1em;text-transform:uppercase}
+  .status{font-size:clamp(3em,18vw,5em);font-weight:700;letter-spacing:.05em;line-height:1}
   .up{color:#5fc14e}
   .down{color:#ef4444}
-  .meta{color:#666;margin-top:1em;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.9em}
-  .btn{display:inline-block;margin-top:2.5em;background:#5fc14e;color:#0f0f14;text-decoration:none;padding:.8em 1.6em;border-radius:6px;font-weight:600;font-size:.95em;letter-spacing:.03em;transition:background .15s}
-  .btn:hover{background:#4ba33d}
+  .meta{color:#666;margin-top:1em;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.9em;word-break:break-all}
+  .btn{display:inline-block;margin-top:2.5em;background:#5fc14e;color:#0f0f14;text-decoration:none;padding:.9em 1.8em;border-radius:6px;font-weight:600;font-size:1rem;letter-spacing:.03em;min-height:44px;box-sizing:border-box;transition:background .15s}
+  .btn:hover,.btn:active{background:#4ba33d}
 </style></head>
 <body>
   <h1>${SERVER_NAME}</h1>
@@ -116,29 +117,32 @@ const endpoints = [
 // ----- /add-location: form + POST handler for adding locations to either book -----
 
 const FORM_CSS = `
-html,body{margin:0;background:#0f0f14;color:#e5e5e5;font-family:-apple-system,Segoe UI,Roboto,sans-serif}
-body{max-width:560px;margin:2em auto;padding:0 1.5em}
-h1{font-weight:400;color:#888;font-size:1.1em;letter-spacing:.1em;text-transform:uppercase;margin:0 0 1.5em}
-form{display:flex;flex-direction:column;gap:.9em}
-label{display:flex;flex-direction:column;gap:.3em;font-size:.85em;color:#aaa}
-input,select{background:#1a1a22;border:1px solid #333;color:#e5e5e5;padding:.55em .7em;border-radius:4px;font:inherit}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;background:#0f0f14;color:#e5e5e5;font-family:-apple-system,Segoe UI,Roboto,sans-serif;-webkit-text-size-adjust:100%}
+body{max-width:560px;margin:0 auto;padding:1.5em max(1em,env(safe-area-inset-left)) max(2em,env(safe-area-inset-bottom)) max(1em,env(safe-area-inset-right))}
+h1{font-weight:400;color:#888;font-size:1.05em;letter-spacing:.1em;text-transform:uppercase;margin:.5em 0 1.5em;line-height:1.3}
+form{display:flex;flex-direction:column;gap:1em}
+label{display:flex;flex-direction:column;gap:.35em;font-size:.85em;color:#aaa}
+/* font-size:16px prevents iOS Safari from auto-zooming inputs on focus */
+input,select{width:100%;background:#1a1a22;border:1px solid #333;color:#e5e5e5;padding:.75em .8em;border-radius:6px;font-family:inherit;font-size:16px;min-height:44px;appearance:none;-webkit-appearance:none}
+select{background-image:linear-gradient(45deg,transparent 50%,#888 50%),linear-gradient(135deg,#888 50%,transparent 50%);background-position:calc(100% - 18px) 50%,calc(100% - 13px) 50%;background-size:5px 5px,5px 5px;background-repeat:no-repeat;padding-right:2.2em}
 input:focus,select:focus{outline:none;border-color:#5fc14e}
-.row{display:flex;gap:.6em}
-.row > label{flex:1}
-fieldset{border:1px solid #2a2a35;border-radius:6px;padding:1em;margin:0;display:flex;flex-direction:column;gap:.9em}
+.row{display:flex;gap:.6em;flex-wrap:wrap}
+.row > label{flex:1 1 0;min-width:5.5em}
+fieldset{border:1px solid #2a2a35;border-radius:6px;padding:1em;margin:0;display:flex;flex-direction:column;gap:1em;min-width:0}
 legend{color:#888;font-size:.8em;padding:0 .5em;letter-spacing:.05em;text-transform:uppercase}
-button{background:#5fc14e;color:#0f0f14;border:0;padding:.8em;border-radius:4px;font-weight:600;font-size:1em;cursor:pointer;margin-top:.5em}
-button:hover{background:#4ba33d}
+button{background:#5fc14e;color:#0f0f14;border:0;padding:.95em;border-radius:6px;font-weight:600;font-size:1rem;cursor:pointer;margin-top:.5em;min-height:48px;width:100%}
+button:hover,button:active{background:#4ba33d}
 .target{display:flex;gap:.6em}
-.target label{flex:1;background:#1a1a22;border:1px solid #333;padding:.7em;border-radius:4px;cursor:pointer;text-align:center;color:#e5e5e5;font-size:.95em}
+.target label{flex:1;background:#1a1a22;border:1px solid #333;padding:.9em .5em;border-radius:6px;cursor:pointer;text-align:center;color:#e5e5e5;font-size:.95em;min-height:48px;display:flex;align-items:center;justify-content:center}
 .target input{display:none}
 .target input:checked + span{color:#5fc14e;font-weight:600}
-.hint{color:#666;font-size:.78em;margin-top:.2em}
-.msg{padding:1em;border-radius:4px;margin:1em 0}
+.hint{color:#666;font-size:.8em;margin-top:.2em;line-height:1.4}
+.msg{padding:1em;border-radius:6px;margin:1em 0;font-size:.95em;line-height:1.4}
 .msg.ok{background:#14532d;color:#bbf7d0}
 .msg.err{background:#7f1d1d;color:#fecaca}
 a{color:#5fc14e;text-decoration:none}
-a:hover{text-decoration:underline}
+a:hover,a:active{text-decoration:underline}
 .magic-only{display:none}
 body[data-target=magic] .magic-only{display:block}
 body[data-target=magic] fieldset.magic-only{display:flex}
@@ -148,7 +152,9 @@ function renderForm({ groups = [], message = '', target = 'exploration', default
     const groupOptions = groups.map(g => `<option value="${g}"${g === defaults.group ? ' selected' : ''}>${g}</option>`).join('') +
         `<option value="__new__">+ New group&hellip;</option>`;
     return `<!doctype html>
-<html><head><meta charset="utf-8"><title>Add Location</title><style>${FORM_CSS}</style></head>
+<html><head><meta charset="utf-8"><title>Add Location</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>${FORM_CSS}</style></head>
 <body data-target="${target}">
 <h1><a href="/">${SERVER_NAME}</a> &rsaquo; Add Location</h1>
 ${message}
