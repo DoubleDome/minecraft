@@ -1,5 +1,5 @@
-const backup = require('./app/backup');
-const operator = require('./app/operator');
+const backup = require('../app/backup');
+const operator = require('../app/operator');
 
 backup.init('./Marzipan', './_backup', './_old');
 
@@ -12,7 +12,7 @@ operator.test();
 
 
 
-const playerhead = require('./playerhead');
+const playerhead = require('../playerhead');
 // playerhead.load(path.resolve(__dirname, '../pack/data/madagascar/loot_tables/get_player_head.json'));
 // playerhead.create(require('../data/killers.json'));
 

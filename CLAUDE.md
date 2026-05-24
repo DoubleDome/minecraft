@@ -20,7 +20,7 @@ node index.js
 node server.js
 
 # Generate keyboard shortcut commands
-node keyboard.js
+node scripts/keyboard.js
 
 # Watch for changes and auto-regenerate (requires nodemon)
 nodemon
@@ -31,6 +31,13 @@ There are no tests (`npm test` exits with an error, no test suite exists).
 ## Environment Setup
 
 Fill out `.env` with real paths before running any script. The generator writes output to the paths defined there. `index.js` will refuse to run if `BASE_PATH` or `PACK_PATH` is unset, and `creator.destroy()` will refuse to delete any directory that contains `package.json`, `.git`, or `node_modules` (it once wiped the project root when an env var was undefined).
+
+## Scratch Output and Test Builds
+
+`.temp/` is the single scratch directory. Two distinct uses share it:
+
+1. **Generator test target.** With `TARGET=test` (the default), `index.js` writes the regenerated pack to `TEST_BASE_PATH/TEST_PACK_PATH`, which is set to `.temp/madagascar_pack/`. `creator.destroy()` wipes **that subdirectory** on every run — never store anything you want to keep inside `.temp/madagascar_pack/`.
+2. **Loose scratchpad.** Everything else under `.temp/` (anywhere outside `madagascar_pack/`) is safe scratch space. Drop log files, ad-hoc test outputs, NBT/JSON dumps, and other throwaway artifacts there. Do **not** drop them in the project root or in source dirs (`app/`, `pack/`, `scripts/`).
 
 ## Architecture
 

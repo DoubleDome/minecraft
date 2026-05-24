@@ -3,8 +3,8 @@ require('dotenv').config();
 const prompts = require('prompts');
 const path = require('path');
 
-const backup = require('./app/backup');
-const generator = require('./app/generator');
+const backup = require('../app/backup');
+const generator = require('../app/generator');
 
 const config = {
     datapack: {

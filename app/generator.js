@@ -6,6 +6,7 @@ const armorSwapper = require('./swapper_armor');
 const shulkerSwapper = require('./swapper_shulker');
 
 const book = require('./book');
+const exploration = require('./exploration');
 const inventory = require('./inventory');
 const ender = require('./ender');
 const location = require('./location');
@@ -15,15 +16,28 @@ const Load = require('./load');
 const Tick = require('./tick');
 
 const config = require('../data/config.json');
-const data = {
-    tools: require('../data/tools.json'),
-    armor: require('../data/armor.json'),
-    items: require('../data/items.json'),
-    shulkers: require('../data/shulkers.json'),
-    directions: require('../data/directions.json'),
-    locations: require('../data/locations.json'),
-    objectives: require('../data/objectives.json'),
-};
+
+// Re-read JSON each generator init so web-driven edits are picked up without
+// restarting the server. require() caches modules, so we drop them from cache.
+function freshRead(rel) {
+    const p = require.resolve(`../data/${rel}`);
+    delete require.cache[p];
+    return require(`../data/${rel}`);
+}
+function reloadData() {
+    return {
+        tools: freshRead('tools.json'),
+        armor: freshRead('armor.json'),
+        items: freshRead('items.json'),
+        equipment: freshRead('equipment.json'),
+        shulkers: freshRead('shulkers.json'),
+        directions: freshRead('directions.json'),
+        locations: freshRead('locations.json'),
+        exploration: freshRead('exploration.json'),
+        objectives: freshRead('objectives.json'),
+    };
+}
+let data = reloadData();
 
 class Generator {
     constructor() {
@@ -32,6 +46,9 @@ class Generator {
 
     init(base) {
         creator.destroy(base);
+
+        // Refresh data from disk so /add edits show up without restarting server.js.
+        data = reloadData();
 
         this.paths.base = creator.validate(path.resolve(base));
         this.paths.data = creator.validate(path.resolve(this.paths.base, config.path.data));
@@ -147,14 +164,18 @@ class Generator {
         creator.write(path.resolve(this.paths.book, 'god.mcfunction'), output.god);
         creator.write(path.resolve(this.paths.book, 'magic.mcfunction'), output.magic);
         creator.write(path.resolve(this.paths.gate, 'book.mcfunction'), output.gate);
+
+        creator.write(path.resolve(this.paths.book, 'exploration.mcfunction'), exploration.create(data.exploration));
     }
     createInventoryFunctions() {
         this.validatePaths();
-        const output = inventory.create(data.items);
+        const output = inventory.create(data.items, data.equipment, data.directions);
         creator.write(path.resolve(this.paths.inventory, `import.mcfunction`), output.import);
         creator.write(path.resolve(this.paths.inventory, `export.mcfunction`), output.export);
+        creator.write(path.resolve(this.paths.inventory, `stash.mcfunction`), output.stash);
         creator.write(path.resolve(this.paths.gate, `${config.folder.inventory}_import.mcfunction`), output.import_gate);
         creator.write(path.resolve(this.paths.gate, `${config.folder.inventory}_export.mcfunction`), output.export_gate);
+        creator.write(path.resolve(this.paths.gate, `${config.folder.inventory}_stash.mcfunction`), output.stash_gate);
     }
     createEnderFunctions() {
         this.validatePaths();
@@ -162,7 +183,6 @@ class Generator {
         creator.write(path.resolve(this.paths.ender, `place.mcfunction`), output.place);
         creator.write(path.resolve(this.paths.ender, `destroy.mcfunction`), output.destroy);
         creator.write(path.resolve(this.paths.ender, `toggle.mcfunction`), output.toggle);
-        creator.write(path.resolve(this.paths.gate, `${config.folder.ender}_inventory.mcfunction`), output.inventory_gate);
         creator.write(path.resolve(this.paths.gate, `${config.folder.ender}_existence.mcfunction`), output.existence_gate);
     }
     /* Validate file destinations and create the folders if not there 
