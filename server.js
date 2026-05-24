@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: false }));
 
 const MC_HOST = process.env.MC_HOST || 'localhost';
 const MC_PORT = parseInt(process.env.MC_PORT || '25577', 10);
-const SERVER_NAME = process.env.SERVER_NAME || 'Jakarta';
+const SERVER_NAME = process.env.SERVER_NAME || 'Minecraft Server';
 
 const LOCATIONS_PATH = path.resolve(__dirname, 'data/locations.json');
 const EXPLORATION_PATH = path.resolve(__dirname, 'data/exploration.json');
