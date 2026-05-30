@@ -19,7 +19,7 @@ class Book {
         // let temp2 = result.replace('%pages%', this.generatePages(type, locations));
         // console.log(temp2);
         result = result.replace('%pages%', this.generatePages(type, locations));
-        let temp = this.generateCommand('give @a written_book[written_book_content=%content%]', result);
+        let temp = this.generateCommand('give @s written_book[written_book_content=%content%]', result);
         console.log('\n', temp, '\n');
         return temp;
     }
