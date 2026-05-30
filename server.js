@@ -326,4 +326,12 @@ endpoints.forEach((endpoint) => {
     });
 });
 
-app.listen(3000);
+app.listen(3000, () => {
+    console.log('========================================');
+    console.log(`  ${SERVER_NAME} dashboard is RUNNING`);
+    console.log(`  Target : ${(process.env.TARGET || 'test').toLowerCase()}`);
+    console.log(`  URL    : http://localhost:3000`);
+    console.log(`  Started: ${new Date().toLocaleString()}`);
+    console.log('========================================');
+    console.log('Leave this window open. Closing it stops the server.');
+});
