@@ -119,7 +119,7 @@ All configuration is externalized to JSON:
 
 ### Dimensions (`dimensions/`)
 
-Contains Minecraft dimension definition files for the custom dimensions (Canvas, Skyblock, Dynamite) that extend beyond vanilla.
+Contains Minecraft dimension definition files for the custom dimensions that extend beyond vanilla: Canvas, Skyblock, Caves, Sky Islands, Waterworld (under `dimensions/dimension/`), plus Dynamite (defined in `pack/data/madagascar/dimension/dynamite.json`). Noise settings for Sky Islands and Waterworld live in `pack/data/madagascar/worldgen/noise_settings/`.
 
 ### Output Structure
 
