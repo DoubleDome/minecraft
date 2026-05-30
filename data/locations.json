@@ -237,6 +237,13 @@
                 "coordinates": "-14441 99 -12121",
                 "rotation": "-180 -15",
                 "filename": "panda_sanctuary"
+            },
+            {
+                "label": "OG End City",
+                "dimension": "minecraft:the_end",
+                "coordinates": "-1218 65 -249",
+                "filename": "og_end_city",
+                "rotation": "180 0"
             }
         ]
     },
