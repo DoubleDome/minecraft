@@ -18,6 +18,7 @@ class Softcore {
         result.gamemode_check = this.createGamemodeCheck();
         result.death_check = this.createDeathCheck();
         result.stop = this.createStop();
+        result.clear = this.createClear();
         result.pause = this.createPause();
         result.resume = this.createResume();
         result.toggle = this.createToggle();
@@ -59,6 +60,14 @@ class Softcore {
         this.captureLocation(command, objectives.position.start);
         command.append(`tag @s add ${config.tag.softcore}`);
         command.append(`gamemode survival @s`);
+        return command.export();
+    }
+    createClear() {
+        const command = new Command();
+        command.comment('Wipe every softcore objective for all tracked players — clears the sidebar board (online + offline).');
+        Object.values(objectives.softcore).forEach((objective) => {
+            command.append(`scoreboard players reset * ${objective.name}`);
+        });
         return command.export();
     }
     createPause(){

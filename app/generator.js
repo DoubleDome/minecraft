@@ -112,6 +112,7 @@ class Generator {
         const output = softcore.create(data.objectives);
         creator.write(path.resolve(this.paths.softcore, `start.mcfunction`), output.start);
         creator.write(path.resolve(this.paths.softcore, `stop.mcfunction`), output.stop);
+        creator.write(path.resolve(this.paths.softcore, `clear.mcfunction`), output.clear);
         creator.write(path.resolve(this.paths.softcore, `pause.mcfunction`), output.pause);
         creator.write(path.resolve(this.paths.softcore, `resume.mcfunction`), output.resume);
         creator.write(path.resolve(this.paths.softcore, `toggle.mcfunction`), output.toggle);
