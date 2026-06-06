@@ -1,0 +1,37 @@
+{
+    "type": "minecraft:block",
+    "pools": [
+        {
+            "rolls": 1.0,
+            "entries": [
+                {
+                    "type": "minecraft:alternatives",
+                    "children": [
+                        {
+                            "type": "minecraft:item",
+                            "name": "minecraft:ancient_debris",
+                            "conditions": [
+                                {
+                                    "condition": "minecraft:match_tool",
+                                    "predicate": {
+                                        "enchantments": [
+                                            { "enchantments": "madagascar:smelting", "levels": { "min": 1 } }
+                                        ]
+                                    }
+                                }
+                            ],
+                            "functions": [
+                                { "function": "minecraft:furnace_smelt" },
+                                { "function": "minecraft:explosion_decay" }
+                            ]
+                        },
+                        {
+                            "type": "minecraft:item",
+                            "name": "minecraft:ancient_debris"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
