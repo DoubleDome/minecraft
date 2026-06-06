@@ -15,8 +15,8 @@ tick system melts the trail back to lava after you leave.
 | Trail | **temporary** — magma melts back to lava ~8s after you leave it (tick system) |
 | Safety | the enchant grants immunity to `burn_from_stepping`, so **you** walk the magma path unburned |
 | Levels | max 2 (radius 3 then 4), mirroring Frost Walker |
-| Obtain | **treasure** — villager trades, chest loot, fishing (NOT the enchanting table) |
-| Exclusive with | Frost Walker (both replace the block under your feet) |
+| Obtain | **treasure** — villager trades, chest loot, fishing (NOT the enchanting table) — exactly Frost Walker's tag set |
+| Exclusive with | **Frost Walker + Depth Strider** — shares `#minecraft:exclusive_set/boots`, exactly like Frost Walker |
 
 ## Why placement is just an enchantment JSON
 
@@ -71,7 +71,8 @@ server** after deploying.
 | File | Role |
 | --- | --- |
 | `pack/data/madagascar/enchantment/lava_walker.json` | the enchantment (mirrors Frost Walker, lava + magma) |
-| `pack/data/minecraft/tags/enchantment/{treasure,tradeable,on_random_loot}.json` | treasure obtainability (Frost Walker's tags) |
+| `pack/data/minecraft/tags/enchantment/{treasure,tradeable,on_random_loot,tooltip_order}.json` | the **exact** four tags Frost Walker sits in (obtainability + tooltip sort) |
+| `pack/data/minecraft/tags/enchantment/exclusive_set/boots.json` | adds Lava Walker to Frost Walker's exclusive set (incompatible with Frost Walker + Depth Strider, both directions) |
 | `pack/data/madagascar/predicate/has_lava_walker.json` | detects the boots enchant (any level) |
 | `pack/data/madagascar/function/lava_walker/{tick,mark,revert}.mcfunction` | track + melt the temporary trail |
 | `pack/data/madagascar/function/util/load.mcfunction` | **edit:** adds the `madagascar.lw` countdown objective |
@@ -91,8 +92,10 @@ sits in.)
   moving, like Frost Walker. The re-arm guard stops it reverting while you're directly on it.
 - **Treasure = no enchanting table.** Get it from raid/trade/fishing/loot, or `/enchant` for
   testing. To allow table rolls instead, drop it from `#treasure` and add `#in_enchanting_table`.
-- **Exclusive with Frost Walker** via `exclusive_set`. Depth Strider stays compatible. Remove the
-  `exclusive_set` field to allow stacking with Frost Walker.
+- **Exclusive with Frost Walker AND Depth Strider** — `exclusive_set` points at
+  `#minecraft:exclusive_set/boots` (the same tag Frost Walker uses) and Lava Walker is appended to
+  that tag, so the incompatibility holds from both sides, exactly mirroring Frost Walker. To allow
+  stacking, give it a narrower `exclusive_set` (or drop the field) and remove it from the boots tag.
 - **Level/radius/cost** mirror Frost Walker; bump `max_level` / `radius` to taste.
 
 ## Deploy & test
