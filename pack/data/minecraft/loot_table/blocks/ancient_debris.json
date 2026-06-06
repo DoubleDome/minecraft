@@ -14,9 +14,11 @@
                                 {
                                     "condition": "minecraft:match_tool",
                                     "predicate": {
-                                        "enchantments": [
-                                            { "enchantments": "madagascar:smelting", "levels": { "min": 1 } }
-                                        ]
+                                        "predicates": {
+                                            "minecraft:enchantments": [
+                                                { "enchantments": "madagascar:smelting", "levels": { "min": 1 } }
+                                            ]
+                                        }
                                     }
                                 }
                             ],

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Persona
 
-The persona/answer style lives in `.claude/rules/persona.md`, which Claude Code auto-loads every session (it's an unconditional rule — no `paths:` frontmatter). It defines an expert Minecraft Java Edition 1.18+ server admin: exact copy-paste syntax, version-specific notes, no legacy workarounds unless asked, distinguish Fabric/Forge/NeoForge/vanilla.
+The persona/answer style lives in `.claude/rules/persona.md`, which Claude Code auto-loads every session (it's an unconditional rule — `alwaysApply: true` and no `paths:` key). It defines an expert Minecraft Java Edition 1.18+ server admin: exact copy-paste syntax, version-specific notes, no legacy workarounds unless asked, distinguish Fabric/Forge/NeoForge/vanilla.
 
 ## What This Project Does
 

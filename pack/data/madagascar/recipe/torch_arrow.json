@@ -11,7 +11,8 @@
         "components": {
             "minecraft:custom_data": {
                 "torch": true,
-                "t": ""
+                "f": "minecraft:torch",
+                "w": "minecraft:wall_torch"
             },
             "minecraft:custom_name": {
                 "text": "Torch Arrow",

@@ -11,7 +11,8 @@
         "components": {
             "minecraft:custom_data": {
                 "torch": true,
-                "t": "soul_"
+                "f": "minecraft:soul_torch",
+                "w": "minecraft:soul_wall_torch"
             },
             "minecraft:custom_name": {
                 "text": "Soul Torch Arrow",

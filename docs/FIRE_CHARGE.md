@@ -70,18 +70,25 @@ and hand the rest to vanilla. The explosive arrow already proved the explosion h
 
 ## The crux: aiming the fireball
 
-`minecraft:fireball` (AbstractHurtingProjectile) moves by accelerating along its **`Motion`**
-direction each tick (`acceleration_power` is the scalar, default ~0.1; old 1.21.x `power` list is
-gone — see field table). So the aim is set entirely by `Motion`. The freshly thrown snowball already
-has the right `Motion` (the thrower's look direction × throw speed), so we copy it across:
+`minecraft:fireball` (AbstractHurtingProjectile) moves by accelerating along a stored **`direction`**
+vector each tick (`acceleration_power` is the scalar, default ~0.1; the old 1.21.x `power` list is
+gone — see field table). It does **not** steer by `Motion` — `Motion` is only the instantaneous
+velocity, which drag erodes unless `direction` keeps feeding it. So we copy the snowball's Motion
+into **both** fields: `direction` (sustains the aim) and `Motion` (initial velocity). The freshly
+thrown snowball already has the right Motion (the thrower's look direction × throw speed):
 
 ```mcfunction
 # in madagascar:fireball/launch, run `at @s` on the marked snowball:
 summon minecraft:fireball ~ ~ ~ {ExplosionPower:1,acceleration_power:0.1,Tags:["mada_fb_new"]}
+data modify entity @e[type=minecraft:fireball,tag=mada_fb_new,limit=1,sort=nearest] direction set from entity @s Motion
 data modify entity @e[type=minecraft:fireball,tag=mada_fb_new,limit=1,sort=nearest] Motion set from entity @s Motion
 tag @e[type=minecraft:fireball,tag=mada_fb_new] remove mada_fb_new
 kill @s
 ```
+
+> Note: the copied `direction` isn't unit-length (snowball Motion is ~1.5 b/t), so the fireball
+> accelerates a touch faster than a real ghast's. Harmless — it still aims true. Tune with
+> `acceleration_power` if it's too fast.
 
 Converting on **tick 1** (rather than waiting for landing like the arrow) means the snowball's
 gravity arc hasn't kicked in yet, so the flight reads as a flat, straight fireball.
@@ -95,7 +102,8 @@ see [26X_DATAPACK_GOTCHAS.md](26X_DATAPACK_GOTCHAS.md), "Entity NBT field casing
 | --- | --- | --- | --- |
 | `minecraft:snowball` (ThrowableItemProjectile) | `Item` | CamelCase | stored thrown stack — carries the marker |
 | `minecraft:fireball` (LargeFireball) | `ExplosionPower` | CamelCase, int | default 1; matches the explosive arrow |
-| `minecraft:fireball` (AbstractHurtingProjectile) | `acceleration_power` | **snake_case** | **migrated** in 26.x; was `power` (a 3-double list) in 1.21.x |
+| `minecraft:fireball` (AbstractHurtingProjectile) | `direction` | lowercase | **the aim** — accel vector; copy snowball Motion here. Was part of the `power` list in 1.21.x |
+| `minecraft:fireball` (AbstractHurtingProjectile) | `acceleration_power` | **snake_case** | **migrated** in 26.x; scalar speed of the accel along `direction` |
 | `minecraft:fireball` (Fireball) | `Item` | CamelCase | optional — sets the rendered texture (defaults to fire charge) |
 | base Entity | `Motion`, `Tags` | CamelCase | aim source + temp tag |
 

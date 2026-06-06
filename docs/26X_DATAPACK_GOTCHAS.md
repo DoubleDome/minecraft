@@ -46,6 +46,19 @@ The old `"replace": true|false` boolean is gone. Every `minecraft:set_lore` entr
 
 A loot table that omits `mode` fails to parse with `"No key mode in MapLike[...]"` and the whole table goes dark.
 
+### `match_tool` enchantment checks live under `predicates` → `minecraft:enchantments`
+In the 26.x item-predicate schema, enchantment matching is a **sub-predicate**, not a top-level field. The `match_tool` `predicate` must wrap it:
+
+```json
+// WRONG — bare top-level key, silently dropped
+"predicate": { "enchantments": [ { "enchantments": "minecraft:silk_touch", "levels": { "min": 1 } } ] }
+
+// RIGHT — vanilla 26.1.2 (verified out of server-26.1.2.jar blocks/iron_ore.json)
+"predicate": { "predicates": { "minecraft:enchantments": [ { "enchantments": "minecraft:silk_touch", "levels": { "min": 1 } } ] } }
+```
+
+The failure mode is **silent and dangerous**: an unrecognized top-level key is ignored, leaving an *empty* item predicate — and an empty `match_tool` predicate matches **every** tool. In an `alternatives` block this means the first child always wins. The symptom that bit us: a custom-enchant ore table (silk-touch branch first) dropped the **ore block** for *every* pickaxe, Fortune included, because the silk-touch condition was always true. No parse error in `latest.log` — only the wrong drop in-game. (`stored_enchantments` is the same shape for books.)
+
 ### Item NBT predicates: `tag:{...}` → `components:{...}`
 Pre-1.20.5 item NBT used `tag:{display:{Name:"..."}}`. 26.x uses components. Both the NBT path predicate **and** the `clear`/`give` bracket selector changed:
 
