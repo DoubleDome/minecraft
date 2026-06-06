@@ -1,0 +1,31 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "category": "equipment",
+    "ingredients": [
+        "minecraft:arrow",
+        "minecraft:soul_torch"
+    ],
+    "result": {
+        "id": "minecraft:tipped_arrow",
+        "count": 1,
+        "components": {
+            "minecraft:custom_data": {
+                "torch": true,
+                "t": "soul_"
+            },
+            "minecraft:custom_name": {
+                "text": "Soul Torch Arrow",
+                "color": "aqua",
+                "italic": false
+            },
+            "minecraft:potion_contents": {
+                "custom_color": 5636095
+            },
+            "minecraft:tooltip_display": {
+                "hidden_components": [
+                    "minecraft:potion_contents"
+                ]
+            }
+        }
+    }
+}

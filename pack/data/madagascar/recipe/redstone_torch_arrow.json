@@ -1,0 +1,31 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "category": "equipment",
+    "ingredients": [
+        "minecraft:arrow",
+        "minecraft:redstone_torch"
+    ],
+    "result": {
+        "id": "minecraft:tipped_arrow",
+        "count": 1,
+        "components": {
+            "minecraft:custom_data": {
+                "torch": true,
+                "t": "redstone_"
+            },
+            "minecraft:custom_name": {
+                "text": "Redstone Torch Arrow",
+                "color": "red",
+                "italic": false
+            },
+            "minecraft:potion_contents": {
+                "custom_color": 16711680
+            },
+            "minecraft:tooltip_display": {
+                "hidden_components": [
+                    "minecraft:potion_contents"
+                ]
+            }
+        }
+    }
+}

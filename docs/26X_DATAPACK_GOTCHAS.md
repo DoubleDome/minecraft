@@ -150,6 +150,78 @@ Or by id filter (one command per known id). Macros (1.20.2+) let you parameteriz
 ### `@a`/`@s` only see online players
 Tag/scoreboard migrations via `tag @a[tag=old] add new` skip offline players. Their tags live in `world/playerdata/<uuid>.dat` and only come back into selector scope when they log in. Either run the migration while everyone's online, schedule it on a join event, or NBT-edit the offline files externally.
 
+### Datapack registries (enchantments, dimensions, damage types, worldgen) load only at startup
+A new custom enchantment dropped in `data/<ns>/enchantment/` does **not** register on `/reload`.
+`/reload` reloads the things that *reference* it (the `#minecraft:in_enchanting_table` tag, loot
+tables using the enchant id) but **not** the enchantment registry itself — so you get cascading
+errors that make it look like the enchant is broken when the file is actually fine:
+
+```
+Couldn't load tag minecraft:in_enchanting_table as it is missing following references: madagascar:smelting
+Couldn't parse data file 'minecraft:chests/...': ... Failed to get element madagascar:smelting
+```
+
+Fix: **restart the server** (stop + start). Same rule for custom dimensions, dimension types,
+damage types, jukebox songs, and worldgen — all datapack-driven *dynamic registries* build at
+world load. `/reload` only covers functions, tags, loot tables, recipes, advancements,
+predicates, and item modifiers.
+
+### Entity NBT field casing is MIXED in 26.x (unlike text-component keys)
+The 1.21.5 snake_case migration hit text-component keys uniformly (`click_event`, etc.), but
+**entity NBT is inconsistent** — some entities migrated, others kept CamelCase. Don't assume.
+Verified out of `versions/26.1.2/server-26.1.2.jar`:
+
+| Entity | Fields | Case |
+| --- | --- | --- |
+| `tnt` (PrimedTnt) | `fuse`, `explosion_power`, `block_state` | snake_case (migrated) |
+| `fireball` (LargeFireball) | `ExplosionPower` | CamelCase |
+| `creeper` | `ExplosionRadius`, `Fuse`, `ignited`, `powered` | mixed |
+| `arrow` (AbstractArrow) | `inGround`, `item`, `pickup`, `life`, `crit`, `PierceLevel` | mostly lower/camel |
+| base Entity | `Motion`, `Tags`, `Pos`, `Rotation` | CamelCase (unchanged) |
+
+Notable: TNT gained a tunable `explosion_power` (default 4). To confirm any field, `/summon` the
+entity then `/data get entity @e[...,limit=1]`, or extract the class and grep — the **live jar is
+the source of truth**:
+
+```bash
+# entity classes were reorganized into subpackages in 26.x
+unzip -o server-26.1.2.jar "net/minecraft/world/entity/**" -d /tmp/cls
+grep -aoE "[A-Za-z_]{3,28}" /tmp/cls/.../hurtingprojectile/LargeFireball.class | grep -i explosion
+```
+
+(arrows → `.../projectile/arrow/`, fireballs → `.../projectile/hurtingprojectile/`.)
+
+### Infinity consumes tipped/spectral arrows, never plain arrows
+For a custom **consumable** arrow that an Infinity bow still depletes, base it on
+`minecraft:tipped_arrow`, **not** `minecraft:arrow`. Vanilla Infinity only spares `Items.ARROW`;
+tipped and spectral are different items and are always consumed (that's why potion arrows deplete
+with Infinity). A tipped arrow with `potion_contents:{custom_color:<int>}` and no `potion` /
+`custom_effects` is a consumable, tinted arrow that applies no effect. Both still fire as the
+`minecraft:arrow` *entity*, so detection / loot logic is unchanged. (The earlier attempt — plain
+arrow + a `pickup`-state hack to recharge free Infinity shots — was fragile and got dropped.)
+
+### `custom_name` beats `item_name` on potion-type items
+A potion / tipped-arrow / splash item with no real potion auto-generates a name
+("Uncraftable Tipped Arrow") that **overrides `minecraft:item_name`**. Force a clean name with
+`minecraft:custom_name` (highest-priority name) + `italic:false`. For ordinary items `item_name`
+is fine; it's only the dynamically-named potion family where it loses.
+
+### A tipped arrow with no effects shows "No Effect" — hide it with `tooltip_display`
+A `minecraft:tipped_arrow` always renders the potion-effect tooltip. With
+`potion_contents:{custom_color:<int>}` and no `potion` / `custom_effects`, the effect list is
+empty, so vanilla prints the greyed-out **"No Effect"** line (the name is unaffected — that's
+`custom_name`). Suppress just that line with `minecraft:tooltip_display`, which replaced
+`hide_additional_tooltip` in 1.21.5; the `custom_color` tint still applies:
+
+```json
+"minecraft:tooltip_display": {
+    "hidden_components": ["minecraft:potion_contents"]
+}
+```
+
+The component bakes into the stack at craft/give time — items made before adding it still show
+"No Effect" until re-crafted or re-given.
+
 ---
 
 ## Project pipeline gotchas (D:\Code → live server)

@@ -1,0 +1,35 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "pattern": [
+        "AAA",
+        "ATA",
+        "AAA"
+    ],
+    "key": {
+        "A": "minecraft:arrow",
+        "T": "minecraft:tnt"
+    },
+    "result": {
+        "id": "minecraft:tipped_arrow",
+        "count": 8,
+        "components": {
+            "minecraft:custom_data": {
+                "explosive": true
+            },
+            "minecraft:custom_name": {
+                "text": "Explosive Arrow",
+                "color": "red",
+                "italic": false
+            },
+            "minecraft:potion_contents": {
+                "custom_color": 16711680
+            },
+            "minecraft:tooltip_display": {
+                "hidden_components": [
+                    "minecraft:potion_contents"
+                ]
+            }
+        }
+    }
+}
