@@ -1,4 +1,4 @@
-# Explosive Arrow — detonate on contact. Runs every tick via the minecraft:tick tag.
+# Bomb Arrow — detonate on contact. Runs every tick via the minecraft:tick tag.
 # The item is a TIPPED arrow, so every bow (Infinity included) consumes it natively, like
 # a potion arrow — no manual ammo accounting needed. Tipped arrows still fire as the
 # minecraft:arrow entity, so detection is unchanged: find landed arrows carrying the marker.

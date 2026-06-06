@@ -18,7 +18,7 @@
                 "explosive": true
             },
             "minecraft:custom_name": {
-                "text": "Explosive Arrow",
+                "text": "Bomb Arrow",
                 "color": "red",
                 "italic": false
             },
