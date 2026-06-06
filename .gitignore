@@ -120,3 +120,12 @@ _old
 *.bak.*
 
 .env
+
+# Server config: track only the hand-picked files in server-config/; never the
+# churny/secret runtime files even if someone copies them in by accident.
+server-config/usercache.json
+server-config/world/
+server-config/logs/
+server-config/crash-reports/
+server-config/*.jar
+server-config/session.lock

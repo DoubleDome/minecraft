@@ -1,0 +1,20 @@
+[
+  {
+    "uuid": "1751a460-989a-4983-aed4-5f56ff2f53cb",
+    "name": "MermaidPanchi3",
+    "level": 4,
+    "bypassesPlayerLimit": false
+  },
+  {
+    "uuid": "f1d5d3ab-e472-423f-9245-a4df2c058508",
+    "name": "FilbertPlays",
+    "level": 4,
+    "bypassesPlayerLimit": false
+  },
+  {
+    "uuid": "44bd6458-80d8-4bd8-9084-eaec59acf9e4",
+    "name": "DoubleDome",
+    "level": 4,
+    "bypassesPlayerLimit": false
+  }
+]
