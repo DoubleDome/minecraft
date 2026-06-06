@@ -15,7 +15,7 @@
         "count": 8,
         "components": {
             "minecraft:custom_data": {
-                "explosive": true
+                "bomb": true
             },
             "minecraft:custom_name": {
                 "text": "Bomb Arrow",
