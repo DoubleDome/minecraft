@@ -4,7 +4,7 @@ A throwable item that flies straight and explodes like a **ghast fireball** — 
 deflectable, no arc. Crafted **1:1 from a vanilla `minecraft:fire_charge`**. Pure datapack,
 vanilla 26.1.2, no mods.
 
-Builds on the Explosive Arrow pattern ([EXPLOSIVE_ARROW.md](EXPLOSIVE_ARROW.md)): same
+Builds on the Bomb Arrow pattern ([bomb_arrow.md](bomb_arrow.md)): same
 mark-the-thrown-item → detect-the-entity → spawn-a-real-`minecraft:fireball` idea. The difference:
 an arrow converts to a fireball **on landing**; a fire charge converts **in flight on tick 1**, so
 vanilla's own fireball entity does the flying, the impact, the explosion, and even the deflection —
@@ -17,7 +17,7 @@ we reimplement nothing.
 | Property | Value |
 | --- | --- |
 | Behavior | flies straight (no gravity arc), explodes on first contact with fire + block damage |
-| Blast power | `ExplosionPower:1` (a real ghast is 1; tunable — 2 craters harder, like the explosive arrow) |
+| Blast power | `ExplosionPower:1` (a real ghast is 1; tunable — 2 craters harder, like the bomb arrow) |
 | Deflectable | yes — it's an actual `minecraft:fireball`, so a melee hit reflects it (free, vanilla) |
 | Item | `minecraft:snowball` + `custom_data:{ghast:true}`, named "Fire Charge" |
 | Recipe | shapeless: 1 `minecraft:fire_charge` → 1 throwable fire charge |
@@ -65,7 +65,7 @@ A ghast fireball has four behaviors — straight no-gravity flight, impact detec
 explosion, and melee deflection. The `minecraft:fireball` entity **is** all four, for free. Trying
 to reproduce them by hand (motion each tick, raycasting impact, manual explosion) would be far more
 code and still wouldn't deflect. So we spend the snowball purely as a *direction+position carrier*
-and hand the rest to vanilla. The explosive arrow already proved the explosion half of this:
+and hand the rest to vanilla. The bomb arrow already proved the explosion half of this:
 `summon minecraft:fireball {ExplosionPower:N}` = fire + craters, gated by `mobGriefing`.
 
 ## The crux: aiming the fireball
@@ -96,12 +96,12 @@ gravity arc hasn't kicked in yet, so the flight reads as a flat, straight fireba
 ## 26.1.2 NBT field names (verified from the server jar)
 
 Extracted directly from `versions/26.1.2/server-26.1.2.jar` (the live jar is the source of truth —
-see [26X_DATAPACK_GOTCHAS.md](26X_DATAPACK_GOTCHAS.md), "Entity NBT field casing is MIXED"):
+see [26x_datapack_gotchas.md](26x_datapack_gotchas.md), "Entity NBT field casing is MIXED"):
 
 | Entity (class) | Field | Case | Notes |
 | --- | --- | --- | --- |
 | `minecraft:snowball` (ThrowableItemProjectile) | `Item` | CamelCase | stored thrown stack — carries the marker |
-| `minecraft:fireball` (LargeFireball) | `ExplosionPower` | CamelCase, int | default 1; matches the explosive arrow |
+| `minecraft:fireball` (LargeFireball) | `ExplosionPower` | CamelCase, int | default 1; matches the bomb arrow |
 | `minecraft:fireball` (AbstractHurtingProjectile) | `direction` | lowercase | **the aim** — accel vector; copy snowball Motion here. Was part of the `power` list in 1.21.x |
 | `minecraft:fireball` (AbstractHurtingProjectile) | `acceleration_power` | **snake_case** | **migrated** in 26.x; scalar speed of the accel along `direction` |
 | `minecraft:fireball` (Fireball) | `Item` | CamelCase | optional — sets the rendered texture (defaults to fire charge) |
@@ -165,7 +165,7 @@ snowball icon (the red "Fire Charge" name still disambiguates it in the tooltip)
 
 - **`mobGriefing` must be `true` (the default).** A fireball's block destruction *and* fire are
   gated by `mobGriefing` — with it `false`, the blast still damages entities but won't break blocks
-  or start fires. Same constraint as the explosive arrow.
+  or start fires. Same constraint as the bomb arrow.
 - **Aim relies on copying `Motion` before the fireball caches its direction.** This is the
   "verify in-game, not in the log" situation from the gotchas doc — `/reload` shows no error even if
   the fireball flies the wrong way. If it mis-aims, the fallback is to summon it already pointed:

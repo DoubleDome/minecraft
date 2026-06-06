@@ -1,6 +1,6 @@
 # Shulker & Inventory Swap Rewrite Plan (Minecraft 26.1)
 
-`app/swapper_shulker.js` and `app/inventory.js` are still on the pre-1.20.5 NBT model. They were left untouched during the tool-swap rewrite — see [`TOOL_SWAP_REWRITE.md`](./TOOL_SWAP_REWRITE.md) for the worked example and the format-diff reference.
+`app/swapper_shulker.js` and `app/inventory.js` are still on the pre-1.20.5 NBT model. They were left untouched during the tool-swap rewrite — see [`tool_swap_rewrite.md`](./tool_swap_rewrite.md) for the worked example and the format-diff reference.
 
 **Status update (post-`848d16c`):** `swapper_shulker.js` got a *partial* hand-applied fix for **parse errors only**. The legacy `tag:{display:{Name:…}}` predicate was triggering `Expected whitespace to end one argument` and blocking the pack from loading; the predicates have been migrated to `components:{"minecraft:custom_name":…}` and `clear @s …[custom_name='…']` so the pack now loads. **Runtime behaviour is still broken** — the function still uses `loot replace entity @s enderchest.<slot> 1 mine <scratch> minecraft:air`, which after the shulker_box loot override was deleted drops the *scratch* shulker_box (now with `components.container` populated) into the ender slot, not the labelled shulker the player was holding. So clicking "Export Shulkers" no longer crashes the pack — it just produces the wrong outcome. The redesign in this doc is still needed.
 
@@ -136,5 +136,5 @@ When work resumes:
 
 Nothing currently. Both deferred items from the earlier draft have since landed in main:
 
-- ~~`app/softcore.js` pre-1.20.5 NBT rot~~ — done in `2ccd11f` (see [`SOFTCORE_REWRITE.md`](./SOFTCORE_REWRITE.md)).
+- ~~`app/softcore.js` pre-1.20.5 NBT rot~~ — done in `2ccd11f` (see [`softcore_rewrite.md`](./softcore_rewrite.md)).
 - ~~Re-enable the god page in `app/book.js`~~ — done in `0d71643`. The god page now renders the inventory section faithfully, but the four buttons it surfaces (Export Shulkers, Toggle Enderchest, Export Inventory, Import Inventory) depend on the modules covered by this doc. Toggle Enderchest works today (ender.js was audited and is already 26.1-clean); the other three no-op silently until §3's rewrite lands.

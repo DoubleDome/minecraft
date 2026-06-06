@@ -4,7 +4,7 @@ An arrow that places a torch on whatever it hits — shoot a wall or floor to li
 Crafted **shapeless: 1 arrow + 1 torch**, in three flavors — **normal / soul / redstone** — the
 torch you craft with is the torch that gets placed. Vanilla 26.1.2, no mods.
 
-Builds directly on the Explosive Arrow pattern ([EXPLOSIVE_ARROW.md](EXPLOSIVE_ARROW.md)) — same
+Builds directly on the Bomb Arrow pattern ([bomb_arrow.md](bomb_arrow.md)) — same
 tipped-arrow trick, same marker + `inGround` detection. The new problems are **placing the right
 torch variant on the right face** and **carrying the chosen torch type through to placement**.
 
@@ -14,7 +14,7 @@ torch variant on the right face** and **carrying the chosen torch type through t
 
 | Property | Value |
 | --- | --- |
-| Item | `minecraft:tipped_arrow` + `custom_data:{torch:true,f:"<floor id>",w:"<wall id>"}` (so Infinity consumes it; see EXPLOSIVE_ARROW.md) |
+| Item | `minecraft:tipped_arrow` + `custom_data:{torch:true,f:"<floor id>",w:"<wall id>"}` (so Infinity consumes it; see bomb_arrow.md) |
 | Recipes | shapeless `minecraft:arrow` + a torch → 1 matching torch arrow. Three: torch / soul_torch / redstone_torch |
 | On landing | attach the matching torch to a real adjacent support: standing on floors, wall torch on walls |
 | Ceilings | nothing — vanilla has no ceiling-mounted torch |
@@ -35,7 +35,7 @@ building is needed. Names and tints match the torch:
 
 1. **Mark.** Each shapeless recipe stamps `custom_data:{torch:true,f:"…",w:"…"}`, a matching
    `custom_name`, and a matching tint. It's a `tipped_arrow` (no potion effect) so every bow —
-   Infinity included — consumes it, exactly like the explosive arrow.
+   Infinity included — consumes it, exactly like the bomb arrow.
 2. **Detect.** One line in the existing `arrow/tick` matches `inGround` arrows carrying the
    `torch` marker (any variant, via `{torch:1b}`) and runs placement at the arrow.
 3. **Place.** `arrow/torch` copies the `f`/`w` block ids to storage (defaulting to a normal torch)
@@ -68,7 +68,7 @@ first, then the four walls; the **first successful placement wins** via a `#done
 `store success` on the `setblock`). No rotation is used at all, so it's independent of approach
 angle. The `0.5` step-off and the boundary coin-flip are both gone.
 
-## Files (all static under `pack/`, like the explosive arrow)
+## Files (all static under `pack/`, like the bomb arrow)
 
 | File | Role |
 | --- | --- |
@@ -80,7 +80,7 @@ angle. The `0.5` step-off and the boundary coin-flip are both gone.
 | `pack/data/minecraft/tags/function/{tick,load}.json` | **edit:** register `arrow/tick` and `util/load` |
 
 `tooltip_display` hides the greyed-out "No Effect" line a no-potion tipped arrow would otherwise
-show (same trick as the explosive arrow); all three recipes include it.
+show (same trick as the bomb arrow); all three recipes include it.
 
 Detection line in `arrow/tick` (matches all three variants via `{torch:1b}`):
 ```mcfunction
@@ -118,7 +118,7 @@ the mount.
 
 - **Works from any angle** — the variant comes from probing real neighbours, not the shot angle, so
   arced/diagonal/steep hits place correctly, and there's no offset to calibrate (no rotation used).
-  Still a "verify in-game" feature ([26X_DATAPACK_GOTCHAS.md](26X_DATAPACK_GOTCHAS.md)): `/reload`
+  Still a "verify in-game" feature ([26x_datapack_gotchas.md](26x_datapack_gotchas.md)): `/reload`
   shows no error even if a torch lands wrong.
 - **Ceilings get nothing** — vanilla has no ceiling torch (only-above support matches no probe).
 - **Inside corners** (multiple solid neighbours) take floor-first, then N/E/S/W priority — a valid
@@ -128,7 +128,7 @@ the mount.
   placement validation is the final backstop.
 - **Adding more torch types** is one recipe with the right `f`/`w` block ids — no code change; the
   reusable placer already handles any floor/wall block pair (e.g. a modded torch).
-- **Consumption:** identical to the explosive arrow — tipped-arrow base means 1 consumed per shot
+- **Consumption:** identical to the bomb arrow — tipped-arrow base means 1 consumed per shot
   on every bow. 1 torch in → 1 torch arrow → 1 torch placed (clean conservation; bump
   `result.count` if you want more per craft).
 

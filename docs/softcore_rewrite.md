@@ -172,7 +172,7 @@ These need to be checked in a live 26.1 server before declaring the rewrite done
 2. **`data modify block … profile.name` without prior `profile` set.** The plan does a `set value {name:""}` first to be safe. Worth testing whether `profile.name set from …` alone works — if it does, drop the initialiser line.
 3. **`Inventory[{Slot:0b}].components."minecraft:profile".name` read timing.** The `loot replace entity` and the subsequent `data modify storage … set from entity @s Inventory[…]` execute in the same function. Player NBT writes from `loot replace` should be visible within the same function tick, but worth confirming the storage read actually gets the new head's profile and not a stale value.
 4. **Death sequence interaction with respawn screen.** `softcore/stop` runs when `deaths=1.. AND health=1..` — which means the player has died, hit the respawn screen, and clicked respawn. At that moment their location is the spawn point, not the death point. The death location is preserved via `LastDeathLocation` on the player's NBT, so the marker placement still works. Worth verifying nothing in `loot replace entity` cares about the player being "alive at death location" specifically.
-5. **`coordinate.shulker.item` retirement.** Once this rewrite lands, no module references `coordinate.shulker.item`. The field can be deleted from `data/config.json`. Same for `util/command.js:createShulker` / `clearBlock` if `swapper_shulker.js` and `inventory.js` are also rewritten (see `SHULKER_SWAP_REWRITE.md`); until then, leave them.
+5. **`coordinate.shulker.item` retirement.** Once this rewrite lands, no module references `coordinate.shulker.item`. The field can be deleted from `data/config.json`. Same for `util/command.js:createShulker` / `clearBlock` if `swapper_shulker.js` and `inventory.js` are also rewritten (see `shulker_swap_rewrite.md`); until then, leave them.
 
 ---
 
@@ -183,4 +183,4 @@ Small. Two functions in one file (`app/softcore.js`), totalling ~6 lines changed
 Out of scope (separate work, if you want them):
 
 - The `get_softcore_stats.json` typo (§2). One-character fix but I have no evidence anyone is calling it.
-- Re-enabling the god page (which has "Softcore" controls — the green/gold/red dots that call `gate/softcore_start` / `softcore/toggle` / `softcore/stop`). The dots are already in `book.json` and the gates work fine; the god page just isn't being emitted to the book yet. Tracked in `SHULKER_SWAP_REWRITE.md` §4 as "Out of scope".
+- Re-enabling the god page (which has "Softcore" controls — the green/gold/red dots that call `gate/softcore_start` / `softcore/toggle` / `softcore/stop`). The dots are already in `book.json` and the gates work fine; the god page just isn't being emitted to the book yet. Tracked in `shulker_swap_rewrite.md` §4 as "Out of scope".

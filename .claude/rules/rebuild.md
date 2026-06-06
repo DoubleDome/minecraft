@@ -32,4 +32,4 @@ need a server **restart**, not `/reload`).
    (or `TARGET=test`) for a dry run that never touches the server; use `node index.js live` to ship.
 4. **Verify after deploy.** Confirm the changed bytes actually landed in the live pack (grep/ls the
    specific file) — `/reload` shows no error even when content is wrong (see
-   `docs/26X_DATAPACK_GOTCHAS.md`, "Verify text components in-game, not just in the log").
+   `docs/26x_datapack_gotchas.md`, "Verify text components in-game, not just in the log").

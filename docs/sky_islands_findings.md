@@ -114,7 +114,7 @@ Keep the multi_noise biome_source with parameter **ranges** (not points) that co
 
 ## Workflow gotchas this exposed
 
-To add to `docs/26X_DATAPACK_GOTCHAS.md`:
+To add to `docs/26x_datapack_gotchas.md`:
 
 1. **Dimension/worldgen configs don't hot-reload.** `/reload` only refreshes functions, tags, recipes, advancements. Dimension JSON, biome JSON, noise_settings JSON all require a full server restart. Editing then `/reload`ing is silently wrong — new chunks still use the old config until restart.
 
