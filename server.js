@@ -84,6 +84,17 @@ app.get('/status.json', async (req, res) => {
     res.json({ online: await checkServer(), host: MC_HOST, port: MC_PORT, checked: new Date().toISOString() });
 });
 
+// Serve the built resource pack over the LAN so the server can push it to clients
+// (server.properties resource-pack=http://<lan-ip>:3000/madagascar_rp.zip). Rebuild with
+// `node scripts/resourcepack.js`; the zip + its sha1 live in dist/.
+const RP_ZIP = path.resolve(__dirname, 'dist/madagascar_rp.zip');
+app.get('/madagascar_rp.zip', (req, res) => {
+    if (!fs.existsSync(RP_ZIP)) {
+        return res.status(404).send('Resource pack not built. Run: node scripts/resourcepack.js');
+    }
+    res.download(RP_ZIP, 'madagascar_rp.zip');
+});
+
 const endpoints = [
     {
         path: '/export/',

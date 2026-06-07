@@ -22,6 +22,7 @@
                 "text": "Recall Fruit",
                 "color": "light_purple"
             },
+            "minecraft:item_model": "madagascar:recall_fruit",
             "minecraft:enchantment_glint_override": true
         }
     }

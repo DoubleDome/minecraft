@@ -129,3 +129,6 @@ server-config/logs/
 server-config/crash-reports/
 server-config/*.jar
 server-config/session.lock
+
+# Built resource pack artifacts
+dist/

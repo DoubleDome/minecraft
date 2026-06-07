@@ -15,7 +15,8 @@
                 "text": "Fire Charge",
                 "color": "red",
                 "italic": false
-            }
+            },
+            "minecraft:item_model": "madagascar:fire_charge"
         }
     }
 }
