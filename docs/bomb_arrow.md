@@ -104,8 +104,11 @@ rendering in the italic "renamed" style.
 - **`mobGriefing` must be `true` (the default).** A ghast fireball's block destruction *and*
   fire are gated by `mobGriefing`. With it `false`, the arrow still damages entities but won't
   break blocks or start fires.
-- **Direct mob body-shots** may not set `inGround` instantly — the arrow usually drops and
-  sticks a tick later, then explodes next to the mob. Block/ground hits detonate immediately.
+- **Direct entity hits** are handled by a second detector. A non-piercing arrow that strikes a
+  mob/player is *absorbed* (becomes a stuck arrow) and never sets `inGround`, so block hits would
+  boom but direct hits wouldn't. Fix: `arrow/tick` also detonates a bomb arrow when a damageable
+  entity (not in `#madagascar:bomb_ignore`, not the tagged shooter) is within ~2 blocks — a
+  contact/proximity fuse. Side effect: passing within ~2 blocks of any mob detonates early.
 - **Result components** (the marker on the crafted arrow) rely on crafting-recipe `result`
   supporting `components` (1.21.2+). To confirm it stuck: craft one and run
   `data get entity @s SelectedItem` while holding it — look for `minecraft:custom_data`.
