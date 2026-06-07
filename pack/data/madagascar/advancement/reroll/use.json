@@ -1,0 +1,21 @@
+{
+    "criteria": {
+        "use": {
+            "trigger": "minecraft:player_interacted_with_entity",
+            "conditions": {
+                "item": {
+                    "items": "minecraft:stick",
+                    "predicates": {
+                        "minecraft:custom_data": "{trade_reroller:true}"
+                    }
+                },
+                "entity": {
+                    "type": "minecraft:villager"
+                }
+            }
+        }
+    },
+    "rewards": {
+        "function": "madagascar:reroll/run"
+    }
+}
