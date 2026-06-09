@@ -3,5 +3,6 @@
 # ExplosionRadius 3 -> 6 at detonation, exactly a charged creeper. Fuse:0 + ignited:1b makes it
 # blow within a tick (no collision needed, unlike the bomb arrow's fireball). Block destruction is
 # gated by gamerule mobGriefing=true (default); the power-6 entity damage applies regardless.
-summon minecraft:creeper ~ ~ ~ {powered:1b,ignited:1b,Fuse:0,ExplosionRadius:3}
+# Invisible:1b hides the one-tick creeper flash before it detonates; the explosion still renders.
+summon minecraft:creeper ~ ~ ~ {powered:1b,ignited:1b,Fuse:0,ExplosionRadius:3,Invisible:1b}
 kill @s
