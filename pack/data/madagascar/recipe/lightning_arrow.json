@@ -1,0 +1,30 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "category": "equipment",
+    "ingredients": [
+        "minecraft:copper_ingot",
+        "minecraft:arrow"
+    ],
+    "result": {
+        "id": "minecraft:tipped_arrow",
+        "count": 1,
+        "components": {
+            "minecraft:custom_data": {
+                "lightning": true
+            },
+            "minecraft:custom_name": {
+                "text": "Lightning Arrow",
+                "color": "yellow",
+                "italic": false
+            },
+            "minecraft:potion_contents": {
+                "custom_color": 16776960
+            },
+            "minecraft:tooltip_display": {
+                "hidden_components": [
+                    "minecraft:potion_contents"
+                ]
+            }
+        }
+    }
+}
