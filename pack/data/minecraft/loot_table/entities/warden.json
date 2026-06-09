@@ -1,0 +1,50 @@
+{
+  "type": "minecraft:entity",
+  "random_sequence": "minecraft:entities/warden",
+  "pools": [
+    {
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:sculk_catalyst"
+        }
+      ]
+    },
+    {
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:random_chance",
+          "chance": 0.5
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:goat_horn",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "minecraft:instrument": "minecraft:ponder_goat_horn",
+                "minecraft:custom_data": {
+                  "sonic_horn": true
+                },
+                "minecraft:custom_name": {
+                  "text": "Sonic Horn",
+                  "color": "dark_aqua",
+                  "italic": false
+                },
+                "minecraft:max_damage": 16,
+                "minecraft:damage": 0
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "criteria": {
+    "blow": {
+      "trigger": "minecraft:using_item",
+      "conditions": {
+        "item": {
+          "items": "minecraft:goat_horn",
+          "predicates": {
+            "minecraft:custom_data": "{sonic_horn:true}"
+          }
+        }
+      }
+    }
+  },
+  "rewards": {
+    "function": "madagascar:horn/sonic"
+  }
+}
