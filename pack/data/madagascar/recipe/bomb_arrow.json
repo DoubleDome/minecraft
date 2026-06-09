@@ -1,29 +1,24 @@
 {
-    "type": "minecraft:crafting_shaped",
+    "type": "minecraft:crafting_shapeless",
     "category": "equipment",
-    "pattern": [
-        "AAA",
-        "ATA",
-        "AAA"
+    "ingredients": [
+        "minecraft:arrow",
+        "minecraft:gunpowder"
     ],
-    "key": {
-        "A": "minecraft:arrow",
-        "T": "minecraft:tnt"
-    },
     "result": {
         "id": "minecraft:tipped_arrow",
-        "count": 8,
+        "count": 1,
         "components": {
             "minecraft:custom_data": {
                 "bomb": true
             },
             "minecraft:custom_name": {
                 "text": "Bomb Arrow",
-                "color": "red",
+                "color": "dark_red",
                 "italic": false
             },
             "minecraft:potion_contents": {
-                "custom_color": 16711680
+                "custom_color": 11141120
             },
             "minecraft:tooltip_display": {
                 "hidden_components": [
