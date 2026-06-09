@@ -1,0 +1,31 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "category": "equipment",
+    "ingredients": [
+        "minecraft:arrow",
+        "minecraft:blue_ice"
+    ],
+    "result": {
+        "id": "minecraft:tipped_arrow",
+        "count": 1,
+        "components": {
+            "minecraft:custom_data": {
+                "freeze": true,
+                "freeze_ticks": 320
+            },
+            "minecraft:custom_name": {
+                "text": "Frost Arrow III",
+                "color": "aqua",
+                "italic": false
+            },
+            "minecraft:potion_contents": {
+                "custom_color": 10079487
+            },
+            "minecraft:tooltip_display": {
+                "hidden_components": [
+                    "minecraft:potion_contents"
+                ]
+            }
+        }
+    }
+}
