@@ -1,0 +1,31 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "category": "equipment",
+    "ingredients": [
+        "minecraft:copper_ingot",
+        "minecraft:gunpowder",
+        "minecraft:arrow"
+    ],
+    "result": {
+        "id": "minecraft:tipped_arrow",
+        "count": 1,
+        "components": {
+            "minecraft:custom_data": {
+                "charged_bomb": true
+            },
+            "minecraft:custom_name": {
+                "text": "Charged Bomb Arrow",
+                "color": "gold",
+                "italic": false
+            },
+            "minecraft:potion_contents": {
+                "custom_color": 16744192
+            },
+            "minecraft:tooltip_display": {
+                "hidden_components": [
+                    "minecraft:potion_contents"
+                ]
+            }
+        }
+    }
+}
