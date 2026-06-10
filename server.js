@@ -1,7 +1,13 @@
 require('dotenv').config();
-// Mirror index.js: when TARGET=test, layer .env.test on top of .env so the
-// server writes regenerations to the sandbox dir instead of the live pack.
-if ((process.env.TARGET || 'test').toLowerCase() === 'test') {
+// Pick target like index.js: CLI arg > TARGET env > 'test'. So `node server.js live`
+// ships to the live world and `node server.js` (or `npm run serve`) stays on the
+// sandbox. "test" layers .env.test on top of .env (override) so its BASE_PATH wins.
+const TARGET = (process.argv[2] || process.env.TARGET || 'test').toLowerCase();
+if (TARGET !== 'live' && TARGET !== 'test') {
+    console.error(`ERROR: target must be 'live' or 'test', got: '${TARGET}'`);
+    process.exit(1);
+}
+if (TARGET === 'test') {
     require('dotenv').config({ path: '.env.test', override: true });
 }
 
@@ -14,8 +20,6 @@ const net = require('net');
 const generator = require('./app/generator');
 const { rebuild } = require('./app/rebuild');
 const playerstats = require('./app/playerstats');
-
-const TARGET = (process.env.TARGET || 'test').toLowerCase();
 
 app.use(express.urlencoded({ extended: false }));
 
@@ -540,7 +544,7 @@ const PORT = parseInt(process.env.PORT || '3000', 10);
 app.listen(PORT, () => {
     console.log('========================================');
     console.log(`  ${SERVER_NAME} dashboard is RUNNING`);
-    console.log(`  Target : ${(process.env.TARGET || 'test').toLowerCase()}`);
+    console.log(`  Target : ${TARGET}`);
     console.log(`  URL    : http://localhost:${PORT}`);
     console.log(`  Started: ${new Date().toLocaleString()}`);
     console.log('========================================');
