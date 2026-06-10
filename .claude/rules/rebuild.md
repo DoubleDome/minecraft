@@ -26,10 +26,14 @@ need a server **restart**, not `/reload`).
 1. **Treat the rebuild as part of the edit.** A source edit is not "done" until `node index.js live`
    has run and the new bytes are confirmed in the live pack. Never report a change as deployed off a
    source edit alone.
-2. **Back up the live pack first** (it gets wiped on every run — `creator.destroy` has no sentinel in
-   the live folder): `cp -r <live pack> .temp/madagascar_pack.live.bak` before `node index.js live`.
+2. **The live pack is backed up automatically before every wipe.** Both rebuild paths share
+   `app/rebuild.js`, which snapshots the live pack to `.temp/madagascar_pack.live.bak` before
+   `creator.destroy` wipes it (the live folder has no sentinel). No manual `cp -r` needed; the
+   snapshot is overwritten each run, so it's the previous build, not a history.
 3. **`live` is the deploy target; `test` (default) only writes to `.temp/`.** Use `node index.js`
    (or `TARGET=test`) for a dry run that never touches the server; use `node index.js live` to ship.
+   The web server is the exception: launch it with `$env:TARGET='live'; node server.js` so its
+   `/rebuild` button deploys to the live world while the CLI stays safe-by-default.
 4. **Verify after deploy.** Confirm the changed bytes actually landed in the live pack (grep/ls the
    specific file) — `/reload` shows no error even when content is wrong (see
    `docs/26x_datapack_gotchas.md`, "Verify text components in-game, not just in the log").

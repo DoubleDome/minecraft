@@ -1,8 +1,6 @@
 /* Generate Everything
 ---------------------------------------------------- */
 require('dotenv').config();
-const path = require('path');
-const resource = require('./app/resource');
 
 // Pick target: CLI arg > TARGET env > 'test' (safer default — won't clobber live).
 // "test" loads .env.test on top of .env (override:true) so test-only values
@@ -16,21 +14,15 @@ if (target === 'test') {
     require('dotenv').config({ path: '.env.test', override: true });
 }
 
-const basePath = process.env.BASE_PATH;
-const packFolder = process.env.PACK_FOLDER;
-
-if (!basePath || !packFolder) {
-    const missing = !basePath && !packFolder ? 'BASE_PATH and PACK_FOLDER' : (!basePath ? 'BASE_PATH' : 'PACK_FOLDER');
-    const source = target === 'test' ? '.env (or .env.test)' : '.env';
-    console.error(`ERROR: ${missing} must be set in ${source} (target=${target}). The generator wipes its output directory on init and would destroy the project root if these are missing.`);
+// Shared rebuild — same safeguards as the web endpoint (env guard, live backup
+// before wipe, source-dir sentinel). See app/rebuild.js / .claude/rules/rebuild.md.
+const { rebuild } = require('./app/rebuild');
+try {
+    const { outputDir, resourceResult, backup } = rebuild(target);
+    console.log(`[generator] target=${target}  output=${outputDir}`);
+    if (backup) console.log(`[generator] backed up previous live pack -> ${backup}`);
+    if (resourceResult) console.log(resourceResult);
+} catch (e) {
+    console.error(`ERROR: ${e.message}`);
     process.exit(1);
 }
-
-const outputDir = path.resolve(basePath, packFolder);
-console.log(`[generator] target=${target}  output=${outputDir}\n`);
-
-const datapackGenerator = require('./app/generator');
-datapackGenerator.init(outputDir);
-datapackGenerator.create();
-
-console.log(resource.create(require('./data/resources.json')));

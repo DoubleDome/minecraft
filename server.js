@@ -12,6 +12,9 @@ const fs = require('fs');
 const net = require('net');
 
 const generator = require('./app/generator');
+const { rebuild } = require('./app/rebuild');
+
+const TARGET = (process.env.TARGET || 'test').toLowerCase();
 
 app.use(express.urlencoded({ extended: false }));
 
@@ -42,6 +45,10 @@ function regenerate() {
     generator.create();
 }
 
+// Full rebuild — delegates to the shared app/rebuild.js so the web endpoint and
+// `node index.js <target>` run identical safeguards (env guard, live backup before
+// wipe, source-dir sentinel). Writes to whatever target server.js was started under.
+
 function checkServer() {
     return new Promise((resolve) => {
         const socket = new net.Socket();
@@ -59,7 +66,6 @@ app.get('/', async (req, res) => {
     res.send(`<!doctype html>
 <html><head><meta charset="utf-8"><title>${SERVER_NAME}</title>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta http-equiv="refresh" content="10">
 <style>
   html,body{height:100%;margin:0;background:#0f0f14;color:#e5e5e5;font-family:-apple-system,Segoe UI,Roboto,sans-serif;-webkit-text-size-adjust:100%}
   body{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:1.5em;box-sizing:border-box}
@@ -68,21 +74,79 @@ app.get('/', async (req, res) => {
   .up{color:#5fc14e}
   .down{color:#ef4444}
   .meta{color:#666;margin-top:1em;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.9em;word-break:break-all}
-  .btn{display:inline-block;margin-top:2.5em;background:#5fc14e;color:#0f0f14;text-decoration:none;padding:.9em 1.8em;border-radius:6px;font-weight:600;font-size:1rem;letter-spacing:.03em;min-height:44px;box-sizing:border-box;transition:background .15s}
+  .btn{display:inline-block;margin-top:1em;background:#5fc14e;color:#0f0f14;text-decoration:none;padding:.9em 1.8em;border-radius:6px;font-weight:600;font-size:1rem;letter-spacing:.03em;min-height:44px;box-sizing:border-box;transition:background .15s;border:0;cursor:pointer;font-family:inherit}
   .btn:hover,.btn:active{background:#4ba33d}
+  .btn.secondary{background:#1a1a22;color:#e5e5e5;border:1px solid #333}
+  .btn.secondary:hover,.btn.secondary:active{background:#23232e}
+  .btn:disabled{opacity:.5;cursor:default}
+  .actions{display:flex;flex-direction:column;gap:.6em;margin-top:2.5em}
+  #rebuild-msg{min-height:1.2em;margin-top:1em;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85em;line-height:1.4}
+  #rebuild-msg.ok{color:#5fc14e}
+  #rebuild-msg.err{color:#ef4444}
 </style></head>
 <body>
   <h1>${SERVER_NAME}</h1>
   <div class="status ${up ? 'up' : 'down'}">${up ? 'ONLINE' : 'OFFLINE'}</div>
   <div class="meta">${MC_HOST}:${MC_PORT}</div>
   <div class="meta">checked ${new Date().toLocaleTimeString()}</div>
-  <a class="btn" href="/add-location">+ Add a location</a>
+  <div class="actions">
+    <a class="btn" href="/add-location">+ Add a location</a>
+    <button class="btn secondary" id="rebuild-btn" onclick="rebuild()">Rebuild pack (${TARGET})</button>
+  </div>
+  <div id="rebuild-msg"></div>
+<script>
+  // Refresh the page every 10s to re-check server status — but skip the reload
+  // while a rebuild is in flight so the result message isn't wiped mid-request.
+  let busy = false;
+  setInterval(() => { if (!busy) location.reload(); }, 10000);
+  async function rebuild() {
+    if (busy) return;
+    busy = true;
+    const btn = document.getElementById('rebuild-btn');
+    const msg = document.getElementById('rebuild-msg');
+    btn.disabled = true;
+    msg.className = '';
+    msg.textContent = 'Rebuilding\\u2026';
+    try {
+      const r = await fetch('/rebuild', { method: 'POST' });
+      const j = await r.json();
+      if (j.ok) {
+        msg.className = 'ok';
+        msg.textContent = '\\u2713 Rebuilt ' + j.target + (j.backup ? ' (backed up)' : '') + ' \\u2014 run /reload in-game';
+      } else {
+        msg.className = 'err';
+        msg.textContent = '\\u2717 ' + (j.error || 'rebuild failed');
+      }
+    } catch (e) {
+      msg.className = 'err';
+      msg.textContent = '\\u2717 ' + e;
+    } finally {
+      btn.disabled = false;
+      busy = false;
+    }
+  }
+</script>
 </body></html>`);
 });
 
 app.get('/status.json', async (req, res) => {
     res.json({ online: await checkServer(), host: MC_HOST, port: MC_PORT, checked: new Date().toISOString() });
 });
+
+// Rebuild the whole pack on demand. GET so it's a trivial curl/browser hit,
+// matching the /export/* endpoints. Run /reload in-game afterward (a server
+// restart is still needed for dynamic registries — see rebuild rules).
+app.post('/rebuild', handleRebuild);
+app.get('/rebuild', handleRebuild);
+function handleRebuild(req, res) {
+    res.set('Cache-Control', 'no-store');
+    try {
+        const { outputDir, resourceResult, backup } = rebuild(TARGET);
+        res.json({ ok: true, target: TARGET, output: outputDir, backup, resource: resourceResult, rebuilt: new Date().toISOString() });
+    } catch (e) {
+        res.status(500).json({ ok: false, target: TARGET, error: String(e.message || e) });
+    }
+}
 
 // Serve the built resource pack over the LAN so the server can push it to clients
 // (server.properties resource-pack=http://<lan-ip>:3000/madagascar_rp.zip). Rebuild with
