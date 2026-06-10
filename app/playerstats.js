@@ -120,37 +120,47 @@ function customGroups(custom) {
     return groups;
 }
 
-// Side-by-side comparison across all players. Returns { players, rows } where each
-// row is one metric with a per-player value and the uuid of the row leader (max).
+// Side-by-side comparison across all players, covering every stat. Returns
+// { players, groups } where each group has rows; each row is one metric with a
+// per-player value and the uuid of the row leader (max raw value).
 function compareStats() {
     const data = listPlayers().map(p => readStats(p.uuid)).filter(Boolean);
     const sum = (arr) => arr.reduce((s, r) => s + r.value, 0);
-    const metrics = [
-        ['Playtime', d => d.custom.play_time || 0, fmt.ticksToH],
-        ['Total distance', d => d.travelTotalCm, fmt.cmToKm],
-        ['Deaths', d => d.custom.deaths || 0, fmt.num],
-        ['Mob kills', d => d.custom.mob_kills || 0, fmt.num],
-        ['Player kills', d => d.custom.player_kills || 0, fmt.num],
-        ['Damage dealt', d => d.custom.damage_dealt || 0, fmt.num],
-        ['Damage taken', d => d.custom.damage_taken || 0, fmt.num],
-        ['Villager trades', d => d.custom.traded_with_villager || 0, fmt.num],
-        ['Items enchanted', d => d.custom.enchant_item || 0, fmt.num],
-        ['Animals bred', d => d.custom.animals_bred || 0, fmt.num],
-        ['Fish caught', d => d.custom.fish_caught || 0, fmt.num],
-        ['Raids won', d => d.custom.raid_win || 0, fmt.num],
-        ['Nights slept', d => d.custom.sleep_in_bed || 0, fmt.num],
-        ['Bells rung', d => d.custom.bell_ring || 0, fmt.num],
-        ['Jumps', d => d.custom.jump || 0, fmt.num],
-        ['Blocks mined', d => sum(d.mined), fmt.num],
-        ['Items crafted', d => sum(d.crafted), fmt.num],
-        ['Mob types killed', d => d.killed.length, fmt.num],
-    ];
-    const rows = metrics.map(([label, get, format]) => {
-        const values = data.map(d => ({ uuid: d.uuid, name: d.name, raw: get(d), display: format(get(d)) }));
-        const max = Math.max(...values.map(v => v.raw));
+    const mkRow = (label, getRaw, format) => {
+        const values = data.map(d => { const raw = getRaw(d); return { uuid: d.uuid, name: d.name, raw, display: format(raw) }; });
+        const max = Math.max(...values.map(v => v.raw), 0);
         return { label, leader: max > 0 ? values.find(v => v.raw === max).uuid : null, values };
-    });
-    return { players: data.map(d => ({ uuid: d.uuid, name: d.name })), rows };
+    };
+    const groups = [];
+
+    // Derived aggregates (not single custom keys).
+    groups.push({ name: 'Totals', rows: [
+        mkRow('Total distance', d => d.travelTotalCm, fmt.cmToKm),
+        mkRow('Blocks mined', d => sum(d.mined), fmt.num),
+        mkRow('Items crafted', d => sum(d.crafted), fmt.num),
+        mkRow('Items used', d => sum(d.used), fmt.num),
+        mkRow('Items picked up', d => sum(d.picked_up), fmt.num),
+        mkRow('Mob types killed', d => d.killed.length, fmt.num),
+        mkRow('Block types mined', d => d.mined.length, fmt.num),
+    ] });
+
+    // Travel by mode (union across players, ordered by combined distance).
+    const modes = [...new Set(data.flatMap(d => d.travel.map(t => t.mode)))];
+    const modeTotal = (m) => data.reduce((s, d) => s + (d.custom[m + '_one_cm'] || 0), 0);
+    modes.sort((a, b) => modeTotal(b) - modeTotal(a));
+    if (modes.length) groups.push({ name: 'Travel by mode', rows: modes.map(m => mkRow(m, d => d.custom[m + '_one_cm'] || 0, fmt.cmToKm)) });
+
+    // Every custom stat, by catalog group; only rows present for at least one player.
+    for (const [name, ids] of CUSTOM_GROUPS) {
+        const present = ids.filter(id => data.some(d => id in d.custom));
+        if (present.length) groups.push({ name, rows: present.map(id => mkRow(id.replace(/_/g, ' '), d => d.custom[id] || 0, v => fmtCustom(id, v))) });
+    }
+    // Catalog-unknown custom keys.
+    const known = new Set(CUSTOM_GROUPS.flatMap(([, ids]) => ids));
+    const other = [...new Set(data.flatMap(d => Object.keys(d.custom)))].filter(id => !known.has(id) && !id.endsWith('_one_cm')).sort();
+    if (other.length) groups.push({ name: 'Other', rows: other.map(id => mkRow(id.replace(/_/g, ' '), d => d.custom[id] || 0, v => fmtCustom(id, v))) });
+
+    return { players: data.map(d => ({ uuid: d.uuid, name: d.name })), groups };
 }
 
 module.exports = { listPlayers, readStats, compareStats, customGroups, resolveUuid, nameOf, fmt, clean };

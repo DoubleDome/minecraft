@@ -424,6 +424,7 @@ table.cmp td.v{width:auto}
 table.cmp th{font-size:.78em;color:#5fc14e;text-transform:uppercase;letter-spacing:.04em;text-align:right;padding:.4em .5em;border-bottom:1px solid #2a2a35}
 table.cmp td.v.lead{color:#5fc14e;font-weight:700}
 table.cmp td.v.lead::after{content:" \\2605";font-size:.7em}
+table.cmp tr.grp td{background:#16161d;color:#888;font-size:.72em;text-transform:uppercase;letter-spacing:.08em;padding:.7em .5em .35em;border-bottom:1px solid #2a2a35}
 `;
 
 function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
@@ -450,10 +451,15 @@ function renderStatsIndex(players) {
 }
 
 function renderStatsCompare(cmp) {
+    const span = cmp.players.length + 1;
     const head = cmp.players.map(p => `<th><a href="/stats/${esc(p.uuid)}">${esc(p.name)}</a></th>`).join('');
-    const body = cmp.rows.map(r => {
-        const cells = r.values.map(v => `<td class="v${v.uuid === r.leader ? ' lead' : ''}">${v.display}</td>`).join('');
-        return `<tr><td class="metric">${esc(r.label)}</td>${cells}</tr>`;
+    const body = cmp.groups.map(grp => {
+        const groupRow = `<tr class="grp"><td colspan="${span}">${esc(grp.name)}</td></tr>`;
+        const rows = grp.rows.map(r => {
+            const cells = r.values.map(v => `<td class="v${v.uuid === r.leader ? ' lead' : ''}">${v.display}</td>`).join('');
+            return `<tr><td class="metric">${esc(r.label)}</td>${cells}</tr>`;
+        }).join('');
+        return groupRow + rows;
     }).join('');
     return `<!doctype html><html><head><meta charset="utf-8"><title>Compare — Player Stats</title>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">

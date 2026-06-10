@@ -77,13 +77,17 @@ function breakdown(d) {
 if (who === 'compare') {
     const cmp = compareStats();
     const names = cmp.players.map(p => p.name);
-    const labelW = Math.max(...cmp.rows.map(r => r.label.length));
+    const allLabels = cmp.groups.flatMap(g => g.rows.map(r => r.label));
+    const labelW = Math.max(...allLabels.map(l => l.length), 0);
     const colW = Math.max(12, ...names.map(n => n.length));
     console.log('\n' + ''.padEnd(labelW) + '  ' + names.map(n => n.padStart(colW)).join('  '));
     console.log('-'.repeat(labelW + (colW + 2) * names.length));
-    for (const r of cmp.rows) {
-        const cells = r.values.map(v => (v.uuid === r.leader ? '*' : ' ') + v.display.padStart(colW - 1)).join('  ');
-        console.log(r.label.padEnd(labelW) + '  ' + cells);
+    for (const grp of cmp.groups) {
+        console.log('\n' + grp.name.toUpperCase());
+        for (const r of grp.rows) {
+            const cells = r.values.map(v => (v.uuid === r.leader ? '*' : ' ') + v.display.padStart(colW - 1)).join('  ');
+            console.log(r.label.padEnd(labelW) + '  ' + cells);
+        }
     }
     console.log('\n(* = leader in that row)');
 } else if (who) {
