@@ -82,6 +82,44 @@ const fmt = {
     cmToKm: (c) => (c / 100000).toFixed(2) + ' km',
 };
 
+// Full catalog of minecraft:custom stats (minecraft.wiki/w/Statistics), grouped for
+// display. Distance (_one_cm) stats are handled by the dedicated travel section, so
+// they're excluded here. Any custom key not listed falls into "Other" so new/unknown
+// stats are never dropped.
+const TIME_STATS = new Set(['play_time', 'total_world_time', 'time_since_death', 'time_since_rest', 'sneak_time']);
+const CUSTOM_GROUPS = [
+    ['Time', ['play_time', 'total_world_time', 'time_since_death', 'time_since_rest', 'sneak_time']],
+    ['Combat', ['mob_kills', 'player_kills', 'deaths', 'animals_bred', 'jump', 'fish_caught']],
+    ['Damage', ['damage_dealt', 'damage_dealt_absorbed', 'damage_dealt_resisted', 'damage_taken', 'damage_absorbed', 'damage_blocked_by_shield', 'damage_resisted']],
+    ['Villagers & Trading', ['talked_to_villager', 'traded_with_villager']],
+    ['Containers', ['open_chest', 'open_barrel', 'open_shulker_box', 'open_enderchest', 'inspect_dispenser', 'inspect_dropper', 'inspect_hopper']],
+    ['Stations', ['interact_with_crafting_table', 'interact_with_furnace', 'interact_with_blast_furnace', 'interact_with_smoker', 'interact_with_anvil', 'interact_with_grindstone', 'interact_with_brewingstand', 'interact_with_beacon', 'interact_with_cartography_table', 'interact_with_loom', 'interact_with_smithing_table', 'interact_with_stonecutter', 'interact_with_lectern', 'interact_with_campfire']],
+    ['Usage & Toys', ['enchant_item', 'play_record', 'play_noteblock', 'tune_noteblock', 'target_hit', 'bell_ring', 'fill_cauldron', 'use_cauldron', 'pot_flower', 'eat_cake_slice']],
+    ['Cleaning', ['clean_armor', 'clean_banner', 'clean_shulker_box']],
+    ['Raids & Traps', ['raid_trigger', 'raid_win', 'trigger_trapped_chest']],
+    ['Misc', ['leave_game', 'sleep_in_bed', 'drop']],
+];
+
+function fmtCustom(id, v) {
+    if (id.endsWith('_one_cm')) return fmt.cmToKm(v);
+    if (TIME_STATS.has(id)) return fmt.ticksToH(v);
+    return fmt.num(v);
+}
+
+// Every custom stat the player has, bucketed into the groups above. Returns ordered
+// [{ name, entries:[{id,label,value,display}] }]; empty groups dropped.
+function customGroups(custom) {
+    const used = new Set();
+    const mk = (id) => ({ id, label: id.replace(/_/g, ' '), value: custom[id], display: fmtCustom(id, custom[id]) });
+    const groups = CUSTOM_GROUPS.map(([name, ids]) => {
+        const entries = ids.filter(id => id in custom).map(id => { used.add(id); return mk(id); });
+        return { name, entries };
+    }).filter(g => g.entries.length);
+    const other = Object.keys(custom).filter(id => !used.has(id) && !id.endsWith('_one_cm')).sort();
+    if (other.length) groups.push({ name: 'Other', entries: other.map(mk) });
+    return groups;
+}
+
 // Side-by-side comparison across all players. Returns { players, rows } where each
 // row is one metric with a per-player value and the uuid of the row leader (max).
 function compareStats() {
@@ -115,4 +153,4 @@ function compareStats() {
     return { players: data.map(d => ({ uuid: d.uuid, name: d.name })), rows };
 }
 
-module.exports = { listPlayers, readStats, compareStats, resolveUuid, nameOf, fmt, clean };
+module.exports = { listPlayers, readStats, compareStats, customGroups, resolveUuid, nameOf, fmt, clean };

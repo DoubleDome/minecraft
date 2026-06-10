@@ -479,19 +479,26 @@ function renderStatsPlayer(d, topN) {
     ].join('');
     const travelRows = d.travel.map(t => `<tr><td>${esc(t.mode)}</td><td class="v">${f.cmToKm(t.cm)}</td></tr>`).join('')
         + `<tr><td><strong>TOTAL</strong></td><td class="v"><strong>${f.cmToKm(d.travelTotalCm)}</strong></td></tr>`;
+    // Every custom stat, grouped — nothing hidden.
+    const customHtml = playerstats.customGroups(d.custom).map(grp =>
+        `<h2>${esc(grp.name)}</h2><table>` +
+        grp.entries.map(e => `<tr><td>${esc(e.label)}</td><td class="v">${e.display}</td></tr>`).join('') +
+        `</table>`).join('');
     return `<!doctype html><html><head><meta charset="utf-8"><title>${esc(d.name)} — Stats</title>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <style>${STATS_CSS}</style></head><body>
 <h1><a href="/">${SERVER_NAME}</a> &rsaquo; <a href="/stats">Stats</a> &rsaquo; ${esc(d.name)}</h1>
 <h2>Overview</h2><div class="cards">${cards}</div>
 <h2>Travel by mode</h2><table>${travelRows}</table>
+${customHtml}
 <h2>Mobs killed (${d.killed.length} types)</h2>${statTable(d.killed, topN, f.num)}
 <h2>Killed by</h2>${statTable(d.killed_by, 99, f.num)}
 <h2>Blocks mined (${d.mined.length} types)</h2>${statTable(d.mined, topN, f.num)}
-<h2>Items used</h2>${statTable(d.used, topN, f.num)}
-<h2>Items crafted</h2>${statTable(d.crafted, topN, f.num)}
-<h2>Items picked up</h2>${statTable(d.picked_up, topN, f.num)}
-<h2>Tools/items broken</h2>${statTable(d.broken, topN, f.num)}
+<h2>Items used (${d.used.length})</h2>${statTable(d.used, topN, f.num)}
+<h2>Items crafted (${d.crafted.length})</h2>${statTable(d.crafted, topN, f.num)}
+<h2>Items picked up (${d.picked_up.length})</h2>${statTable(d.picked_up, topN, f.num)}
+<h2>Items dropped (${d.dropped.length})</h2>${statTable(d.dropped, topN, f.num)}
+<h2>Tools/items broken (${d.broken.length})</h2>${statTable(d.broken, topN, f.num)}
 </body></html>`;
 }
 

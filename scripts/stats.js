@@ -12,7 +12,7 @@
  * Data comes from app/playerstats.js, shared with the web view in server.js.
  */
 require('dotenv').config();
-const { listPlayers, readStats, compareStats, fmt } = require('../app/playerstats');
+const { listPlayers, readStats, compareStats, customGroups, fmt } = require('../app/playerstats');
 
 const args = process.argv.slice(2);
 let topN = 15;
@@ -31,37 +31,21 @@ function table(rows, { limit = topN, conv = fmt.num } = {}) {
 }
 
 function breakdown(d) {
-    const g = (k) => d.custom[k] || 0;
     console.log('\n' + '='.repeat(52));
     console.log('  ' + d.name + '   (' + d.uuid + ')');
     console.log('='.repeat(52));
-
-    section('Overview');
-    const overview = [
-        ['Playtime', fmt.ticksToH(g('play_time'))],
-        ['World time loaded', fmt.ticksToH(g('total_world_time'))],
-        ['Deaths', fmt.num(g('deaths'))],
-        ['Mob kills', fmt.num(g('mob_kills'))],
-        ['Player kills', fmt.num(g('player_kills'))],
-        ['Damage dealt', fmt.num(g('damage_dealt'))],
-        ['Damage taken', fmt.num(g('damage_taken'))],
-        ['Damage blocked (shield)', fmt.num(g('damage_blocked_by_shield'))],
-        ['Jumps', fmt.num(g('jump'))],
-        ['Sleep in bed', fmt.num(g('sleep_in_bed'))],
-        ['Fish caught', fmt.num(g('fish_caught'))],
-        ['Animals bred', fmt.num(g('animals_bred'))],
-        ['Items enchanted', fmt.num(g('enchant_item'))],
-        ['Villager trades', fmt.num(g('traded_with_villager'))],
-        ['Raids won', fmt.num(g('raid_win'))],
-        ['Bells rung', fmt.num(g('bell_ring'))],
-    ];
-    const ow = Math.max(...overview.map(([k]) => k.length));
-    for (const [k, v] of overview) console.log('  ' + k.padEnd(ow) + '  ' + String(v).padStart(12));
 
     section('Travel (by mode)');
     const dw = Math.max(...d.travel.map(t => t.mode.length), 5);
     for (const t of d.travel) console.log('  ' + t.mode.padEnd(dw) + '  ' + fmt.cmToKm(t.cm).padStart(12));
     console.log('  ' + 'TOTAL'.padEnd(dw) + '  ' + fmt.cmToKm(d.travelTotalCm).padStart(12));
+
+    // Every custom stat, grouped — nothing hidden.
+    for (const grp of customGroups(d.custom)) {
+        section(grp.name);
+        const w = Math.max(...grp.entries.map(e => e.label.length));
+        for (const e of grp.entries) console.log('  ' + e.label.padEnd(w) + '  ' + e.display.padStart(12));
+    }
 
     section(`Mobs killed (top ${topN})`);
     const killed = table(d.killed);
@@ -82,6 +66,9 @@ function breakdown(d) {
 
     section(`Items picked up (top ${topN})`);
     table(d.picked_up);
+
+    section(`Items dropped (top ${topN})`);
+    table(d.dropped);
 
     section(`Tools/items broken (top ${topN})`);
     table(d.broken);
