@@ -53,6 +53,7 @@ function breakdown(d) {
         ['Items enchanted', fmt.num(g('enchant_item'))],
         ['Villager trades', fmt.num(g('traded_with_villager'))],
         ['Raids won', fmt.num(g('raid_win'))],
+        ['Bells rung', fmt.num(g('bell_ring'))],
     ];
     const ow = Math.max(...overview.map(([k]) => k.length));
     for (const [k, v] of overview) console.log('  ' + k.padEnd(ow) + '  ' + String(v).padStart(12));

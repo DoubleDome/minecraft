@@ -101,6 +101,7 @@ function compareStats() {
         ['Fish caught', d => d.custom.fish_caught || 0, fmt.num],
         ['Raids won', d => d.custom.raid_win || 0, fmt.num],
         ['Nights slept', d => d.custom.sleep_in_bed || 0, fmt.num],
+        ['Bells rung', d => d.custom.bell_ring || 0, fmt.num],
         ['Jumps', d => d.custom.jump || 0, fmt.num],
         ['Blocks mined', d => sum(d.mined), fmt.num],
         ['Items crafted', d => sum(d.crafted), fmt.num],

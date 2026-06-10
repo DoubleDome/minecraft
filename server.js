@@ -475,6 +475,7 @@ function renderStatsPlayer(d, topN) {
         card('Animals bred', f.num(g('animals_bred'))),
         card('Fish caught', f.num(g('fish_caught'))),
         card('Raids won', f.num(g('raid_win'))),
+        card('Bells rung', f.num(g('bell_ring'))),
     ].join('');
     const travelRows = d.travel.map(t => `<tr><td>${esc(t.mode)}</td><td class="v">${f.cmToKm(t.cm)}</td></tr>`).join('')
         + `<tr><td><strong>TOTAL</strong></td><td class="v"><strong>${f.cmToKm(d.travelTotalCm)}</strong></td></tr>`;
