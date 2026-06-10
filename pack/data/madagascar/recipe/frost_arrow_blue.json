@@ -9,17 +9,21 @@
         "id": "minecraft:tipped_arrow",
         "count": 1,
         "components": {
-            "minecraft:custom_data": {
-                "freeze": true,
-                "freeze_ticks": 320
+            "minecraft:potion_contents": {
+                "custom_color": 10079487,
+                "custom_effects": [
+                    {
+                        "id": "minecraft:slowness",
+                        "amplifier": 100,
+                        "duration": 2560,
+                        "show_particles": false
+                    }
+                ]
             },
             "minecraft:custom_name": {
                 "text": "Frost Arrow III",
                 "color": "aqua",
                 "italic": false
-            },
-            "minecraft:potion_contents": {
-                "custom_color": 10079487
             },
             "minecraft:tooltip_display": {
                 "hidden_components": [

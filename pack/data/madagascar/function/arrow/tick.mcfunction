@@ -37,18 +37,12 @@ execute as @e[type=minecraft:arrow,nbt={item:{components:{"minecraft:custom_data
 execute as @e[type=minecraft:arrow,nbt={item:{components:{"minecraft:custom_data":{charged_bomb:1b}}}}] at @s if entity @e[distance=..2,tag=!charged_bomb_owner,type=!#madagascar:bomb_ignore] run function madagascar:arrow/charged_bomb
 tag @e[tag=charged_bomb_owner] remove charged_bomb_owner
 
-# Frost Arrow — freeze the struck mob: NoAI (can't move or attack, still killable) for a timed
-# duration, then auto-thaw. DIRECT HIT only: the target is selected by hitbox overlap (a zero-size
-# `dx=0,dy=0,dz=0` volume at the arrow's position = the mob whose bounding box contains the arrow),
-# not by proximity — so near-misses don't freeze, and it works regardless of mob height. Shooter
-# tagged via `on origin` so the arrow spawning inside the firer at launch doesn't freeze them; reuse
-# #bomb_ignore to skip projectiles/markers/etc. freeze_hit reads the per-tier duration, consumes the arrow.
-execute as @e[type=minecraft:arrow,nbt={item:{components:{"minecraft:custom_data":{freeze:1b}}}}] on origin run tag @s add freeze_owner
-execute as @e[type=minecraft:arrow,nbt={item:{components:{"minecraft:custom_data":{freeze:1b}}}}] at @s if entity @e[dx=0,dy=0,dz=0,tag=!freeze_owner,type=!#madagascar:bomb_ignore] run function madagascar:arrow/freeze_hit
-tag @e[tag=freeze_owner] remove freeze_owner
-
-# Frozen-mob timer: tick each frozen mob down; thaw (restore AI) and untag when it reaches 0.
-# The madagascar.freeze objective is created in arrow/load.
-scoreboard players remove @e[tag=mada_frozen] madagascar.freeze 1
-execute as @e[tag=mada_frozen,scores={madagascar.freeze=..0}] run data merge entity @s {NoAI:0b}
-tag @e[tag=mada_frozen,scores={madagascar.freeze=..0}] remove mada_frozen
+# Frost Arrow — works like a flame arrow: the tipped arrow applies its effect on a DIRECT HIT via
+# vanilla's own collision detection (no custom hitbox math). The effect is a hidden marker Slowness
+# (amplifier 100) that doubles as the timer — vanilla counts its duration down, so the effect length
+# IS the freeze length (ice 4s / packed 8s / blue 16s, set per recipe).
+# Freeze: a mob carrying the marker that isn't frozen yet -> NoAI (can't move or attack, killable).
+execute as @e[type=!minecraft:player,nbt={active_effects:[{id:"minecraft:slowness",amplifier:100b}]},tag=!mada_frozen] run function madagascar:arrow/apply_freeze
+# Thaw: a frozen mob whose marker effect has expired (vanilla ran the timer out) -> restore AI, drop
+# the glow/team, untag (arrow/thaw).
+execute as @e[tag=mada_frozen,nbt=!{active_effects:[{id:"minecraft:slowness",amplifier:100b}]}] run function madagascar:arrow/thaw

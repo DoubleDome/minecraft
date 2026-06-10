@@ -2,8 +2,10 @@
 
 An arrow that **freezes the mob it hits in place** — `NoAI`, so the target can't move, pathfind, or
 attack, but still takes damage and dies normally. The freeze auto-thaws after a set time. Three
-tiers by ice type. Pure datapack, vanilla 26.1.2, no mods. Same mark → detect pattern as the
-[Bomb Arrow](bomb_arrow.md), but **single-target** (the struck mob) instead of a blast.
+tiers by ice type. Pure datapack, vanilla 26.1.2, no mods.
+
+It **works like a flame arrow**: the freeze is delivered by a tipped arrow's on-hit effect, so
+vanilla's own collision code decides what got hit — no custom hitbox/proximity detection at all.
 
 ---
 
@@ -11,66 +13,79 @@ tiers by ice type. Pure datapack, vanilla 26.1.2, no mods. Same mark → detect 
 
 | Recipe | Name | Freeze |
 | --- | --- | --- |
-| 1 arrow + 1 `minecraft:ice` | Frost Arrow | **4s** (80 ticks) |
-| 1 arrow + 1 `minecraft:packed_ice` | Frost Arrow II | **8s** (160 ticks) |
-| 1 arrow + 1 `minecraft:blue_ice` | Frost Arrow III | **16s** (320 ticks) |
+| 1 arrow + 1 `minecraft:ice` | Frost Arrow | **4s** |
+| 1 arrow + 1 `minecraft:packed_ice` | Frost Arrow II | **8s** |
+| 1 arrow + 1 `minecraft:blue_ice` | Frost Arrow III | **16s** |
 
-All shapeless, yield 1. The duration is baked into the arrow's `custom_data.freeze_ticks`.
+All shapeless, yield 1.
 
-## How it works (mark → detect → freeze → thaw)
+## How it works (marker effect → NoAI → vanilla timer)
 
-1. **Mark.** The recipe stamps `custom_data {freeze:true, freeze_ticks:N}` on a `tipped_arrow`
-   (aqua name, pale-blue tint). The marker + duration ride the fired `minecraft:arrow` entity in its
-   `item` NBT.
-2. **Detect.** `madagascar:arrow/tick` finds a freeze-marked arrow that is **embedded in a mob** —
-   the mob whose hitbox contains the arrow, via a zero-size `dx=0,dy=0,dz=0` volume selector (a true
-   direct hit, not proximity, and height-independent). The shooter is excluded (tagged via
-   **`on origin`**, since the arrow spawns inside the firer at launch) and `#madagascar:bomb_ignore`
-   entities are skipped. On a match it runs `arrow/freeze_hit`.
-3. **Freeze.** `arrow/freeze_hit` (as the arrow) copies `freeze_ticks` into storage, applies it to
-   the **nearest** valid target via the `arrow/apply_freeze` macro, and consumes the arrow.
-   `apply_freeze` sets `NoAI:1b`, tags the mob `mada_frozen`, and sets its `madagascar.freeze`
-   countdown score.
-4. **Thaw.** Each tick, `arrow/tick` decrements every `mada_frozen` mob's score; at 0 it restores
-   `NoAI:0b` and removes the tag. The `madagascar.freeze` objective is created in `arrow/load`
-   (registered on the `minecraft:load` tag).
+The arrow is a `tipped_arrow` whose `potion_contents` carries one **hidden marker effect**:
+`minecraft:slowness`, amplifier **100**, `show_particles:false`. Nothing else relies on custom
+detection:
 
-## Why `NoAI` (not Slowness)
+1. **Hit.** On a direct hit, vanilla applies the arrow's effect to the struck entity — the same
+   mechanism a Flame/tipped arrow uses. This is engine-level and reliable; it only fires on an
+   actual hit, never a near-miss, and works on any mob height.
+2. **Freeze.** Each tick, `madagascar:arrow/tick` finds any mob carrying the marker (slowness
+   amplifier 100) that isn't already frozen and runs `arrow/apply_freeze` → sets `NoAI:1b`, tags it
+   `mada_frozen`, joins it to the `mada_frost` team, and adds Glowing so it shows an **aqua frozen
+   outline** (the team color tints the glow). (Players are excluded from `NoAI`.)
+3. **Timer.** The marker effect's **duration is the freeze length** — vanilla counts it down for us.
+   No scoreboard. Effects keep ticking under `NoAI`, so the timer runs even while frozen.
+4. **Thaw.** When the marker expires off a `mada_frozen` mob, `arrow/tick` runs `arrow/thaw`:
+   restores `NoAI:0b`, clears the Glowing + team, and removes the tag.
 
-The goal is "held but harmless and killable." `NoAI` is the only single vanilla flag that stops
-**movement and attacking** at once while leaving the mob damageable. Slowness only stops walking —
-a slowed mob still swings at you. The trade-off: a `NoAI` mob is a **statue** (no head-tracking or
-idle animation) for the duration. To keep it animated-but-harmless instead, swap `apply_freeze` for
-`minecraft:movement_speed`/`attack_damage` attribute zeroing — but that needs a save/restore of the
-prior values, so `NoAI` is simpler and fully reversible.
+### The "tint" is a glowing outline
+
+Vanilla can't recolor a mob's actual texture (that needs a resource pack). The frozen tint is a
+**Glowing outline colored by a team** (`mada_frost`, color `aqua`) — the standard way to highlight a
+mob a given color. Change the shade by editing the team color in `arrow/load.mcfunction` to any of
+the 16 named colors (`blue`, `dark_aqua`, `white`, ...). The outline is visible through walls, which
+also makes frozen mobs easy to spot.
+
+### Duration math (the 1/8 rule)
+
+Tipped arrows apply a potion effect at **1/8 of its stored duration**. So to freeze for 4s (80
+ticks) the recipe stores `duration: 640`; packed = `1280` (8s), blue = `2560` (16s). **If in-game
+timing comes out 8× off, that 1/8 rule is the knob** — scale the recipe `duration` values.
+
+## Why this approach
+
+Earlier versions tried to detect the hit ourselves (proximity, then a hitbox-overlap cube). Letting
+the tipped arrow apply an effect hands the hit detection to vanilla, which is both simpler and more
+reliable. The marker effect does double duty: the on-hit signal *and* the timer.
+
+`NoAI` is what stops **movement and attacking at once** while leaving the mob killable — the marker
+slowness (even at amplifier 100) only stops walking, not attacking, so `NoAI` is still required.
 
 ## Files
 
 | File | Role |
 | --- | --- |
-| `pack/data/madagascar/recipe/frost_arrow.json` / `_packed.json` / `_blue.json` | the three tiers; output carries `{freeze, freeze_ticks}`. |
-| `pack/data/madagascar/function/arrow/freeze_hit.mcfunction` | read duration, freeze nearest target, consume arrow. |
-| `pack/data/madagascar/function/arrow/apply_freeze.mcfunction` | macro: `NoAI:1b` + tag + countdown on the mob. |
-| `pack/data/madagascar/function/arrow/load.mcfunction` | create the `madagascar.freeze` objective. |
-| `pack/data/madagascar/function/arrow/tick.mcfunction` | detector + per-tick thaw loop. |
-| `pack/data/minecraft/tags/function/load.json` | adds `madagascar:arrow/load` to the load tag. |
+| `pack/data/madagascar/recipe/frost_arrow.json` / `_packed.json` / `_blue.json` | the three tiers; output is a tipped arrow carrying the marker effect. |
+| `pack/data/madagascar/function/arrow/apply_freeze.mcfunction` | `NoAI:1b` + tag + aqua glow/team on the struck mob. |
+| `pack/data/madagascar/function/arrow/thaw.mcfunction` | undo: restore AI, clear glow/team, untag. |
+| `pack/data/madagascar/function/arrow/load.mcfunction` | create the `mada_frost` team and set its color. |
+| `pack/data/madagascar/function/arrow/tick.mcfunction` | per-tick freeze + thaw rules keyed on the marker effect. |
+| `pack/data/minecraft/tags/function/load.json` | registers `arrow/load`. |
 
 ## Caveats
 
-- **Statue effect** — frozen mobs don't animate (see above). Intentional.
-- **Direct hit only** — the arrow must actually embed in the mob (its hitbox contains the arrow), so
-  near-misses don't freeze. Unlike the blast arrows' ~2-block proximity fuse, flying *past* a mob
-  does nothing. If an arrow somehow overlaps two hitboxes, only the nearest mob freezes.
-- **Chunk unload** — the thaw loop only runs on loaded mobs; a frozen mob in an unloaded chunk keeps
-  its remaining ticks and resumes counting down when reloaded. It never thaws "early."
+- **Marker effect on players** — a frost arrow that hits a *player* still applies slowness amplifier
+  100 (hidden) for the duration, nearly stopping their movement; `NoAI` does nothing to players, so
+  they aren't fully frozen. If undesired, exclude players from the effect or clear it from them.
+- **Statue effect** — `NoAI` mobs don't head-track or idle-animate while held. Intentional.
+- **Direct hit only** — vanilla applies the effect on contact, so near-misses do nothing.
 - **`NoAI` removes gravity** — a mob frozen mid-air (e.g. a phantom) hangs until thaw.
-- **Killing a frozen mob** is clean — its score is dropped with the entity, no leftover state.
+- **Killing a frozen mob** is clean — no leftover state.
 
 ## Test without grinding the recipe
 
 ```
-give @s minecraft:tipped_arrow[custom_data={freeze:true,freeze_ticks:80},custom_name={text:"Frost Arrow",color:"aqua",italic:false},potion_contents={custom_color:10079487},tooltip_display={hidden_components:["minecraft:potion_contents"]}] 16
+give @s minecraft:tipped_arrow[potion_contents={custom_color:10079487,custom_effects:[{id:"minecraft:slowness",amplifier:100,duration:640,show_particles:false}]},custom_name={text:"Frost Arrow",color:"aqua",italic:false},tooltip_display={hidden_components:["minecraft:potion_contents"]}] 16
 ```
 
 Shoot a mob — it should lock in place (no attacking), be freely killable, and unfreeze after ~4s if
-left alive. Bump `freeze_ticks` to 160/320 to test the packed/blue tiers.
+left alive. Bump `duration` to 1280 / 2560 for the packed / blue tiers.
