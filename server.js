@@ -13,6 +13,7 @@ const net = require('net');
 
 const generator = require('./app/generator');
 const { rebuild } = require('./app/rebuild');
+const playerstats = require('./app/playerstats');
 
 const TARGET = (process.env.TARGET || 'test').toLowerCase();
 
@@ -91,6 +92,7 @@ app.get('/', async (req, res) => {
   <div class="meta">checked ${new Date().toLocaleTimeString()}</div>
   <div class="actions">
     <a class="btn" href="/add-location">+ Add a location</a>
+    <a class="btn secondary" href="/stats">Player stats</a>
     <button class="btn secondary" id="rebuild-btn" onclick="rebuild()">Rebuild pack (${TARGET})</button>
   </div>
   <div id="rebuild-msg"></div>
@@ -388,6 +390,102 @@ function addToMagic(body) {
     writeJson(LOCATIONS_PATH, locations);
 }
 
+// ----- /stats: player stat breakdown from the world's stat files -----
+
+const STATS_CSS = `
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;background:#0f0f14;color:#e5e5e5;font-family:-apple-system,Segoe UI,Roboto,sans-serif;-webkit-text-size-adjust:100%}
+body{max-width:820px;margin:0 auto;padding:1.5em max(1em,env(safe-area-inset-left)) max(2em,env(safe-area-inset-bottom)) max(1em,env(safe-area-inset-right))}
+h1{font-weight:400;color:#888;font-size:1.05em;letter-spacing:.08em;text-transform:uppercase;margin:.5em 0 1em;line-height:1.3}
+h2{font-weight:600;color:#5fc14e;font-size:.8em;letter-spacing:.08em;text-transform:uppercase;margin:1.8em 0 .6em;border-bottom:1px solid #2a2a35;padding-bottom:.4em}
+a{color:#5fc14e;text-decoration:none}a:hover{text-decoration:underline}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.6em}
+.card{background:#1a1a22;border:1px solid #2a2a35;border-radius:8px;padding:.8em .9em}
+.card .v{font-size:1.3em;font-weight:700;color:#fff;font-variant-numeric:tabular-nums}
+.card .k{font-size:.72em;color:#888;text-transform:uppercase;letter-spacing:.05em;margin-top:.2em}
+table{width:100%;border-collapse:collapse;font-size:.9em}
+td{padding:.32em .5em;border-bottom:1px solid #1d1d26}
+td.v{text-align:right;font-variant-numeric:tabular-nums;color:#cfcfcf;width:8em}
+tr:hover td{background:#16161d}
+.more{color:#666;font-size:.8em;padding:.5em}
+.plist{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.5em}
+.plist a{display:flex;justify-content:space-between;background:#1a1a22;border:1px solid #2a2a35;border-radius:8px;padding:.9em 1em;color:#e5e5e5}
+.plist a:hover{border-color:#5fc14e;text-decoration:none}
+.plist .pt{color:#888;font-variant-numeric:tabular-nums}
+`;
+
+function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
+const prettify = (k) => k.replace(/_/g, ' ');
+
+function statTable(rows, topN, conv) {
+    if (!rows.length) return '<table><tr><td class="more">none</td></tr></table>';
+    const body = rows.slice(0, topN).map(r => `<tr><td>${esc(prettify(r.key))}</td><td class="v">${conv(r.value)}</td></tr>`).join('');
+    const more = rows.length > topN ? `<div class="more">…and ${rows.length - topN} more</div>` : '';
+    return `<table>${body}</table>${more}`;
+}
+
+function renderStatsIndex(players) {
+    const rows = players.map(p =>
+        `<li><a href="/stats/${esc(p.uuid)}"><span>${esc(p.name)}</span><span class="pt">${playerstats.fmt.ticksToH(p.playtime)}</span></a></li>`
+    ).join('');
+    return `<!doctype html><html><head><meta charset="utf-8"><title>Player Stats</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>${STATS_CSS}</style></head><body>
+<h1><a href="/">${SERVER_NAME}</a> &rsaquo; Player Stats</h1>
+<ul class="plist">${rows || '<li class="more">No stat files found.</li>'}</ul>
+</body></html>`;
+}
+
+function renderStatsPlayer(d, topN) {
+    const f = playerstats.fmt;
+    const g = (k) => d.custom[k] || 0;
+    const card = (k, v) => `<div class="card"><div class="v">${v}</div><div class="k">${k}</div></div>`;
+    const cards = [
+        card('Playtime', f.ticksToH(g('play_time'))),
+        card('Total distance', f.cmToKm(d.travelTotalCm)),
+        card('Deaths', f.num(g('deaths'))),
+        card('Mob kills', f.num(g('mob_kills'))),
+        card('Player kills', f.num(g('player_kills'))),
+        card('Damage dealt', f.num(g('damage_dealt'))),
+        card('Damage taken', f.num(g('damage_taken'))),
+        card('Villager trades', f.num(g('traded_with_villager'))),
+        card('Items enchanted', f.num(g('enchant_item'))),
+        card('Animals bred', f.num(g('animals_bred'))),
+        card('Fish caught', f.num(g('fish_caught'))),
+        card('Raids won', f.num(g('raid_win'))),
+    ].join('');
+    const travelRows = d.travel.map(t => `<tr><td>${esc(t.mode)}</td><td class="v">${f.cmToKm(t.cm)}</td></tr>`).join('')
+        + `<tr><td><strong>TOTAL</strong></td><td class="v"><strong>${f.cmToKm(d.travelTotalCm)}</strong></td></tr>`;
+    return `<!doctype html><html><head><meta charset="utf-8"><title>${esc(d.name)} — Stats</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>${STATS_CSS}</style></head><body>
+<h1><a href="/">${SERVER_NAME}</a> &rsaquo; <a href="/stats">Stats</a> &rsaquo; ${esc(d.name)}</h1>
+<h2>Overview</h2><div class="cards">${cards}</div>
+<h2>Travel by mode</h2><table>${travelRows}</table>
+<h2>Mobs killed (${d.killed.length} types)</h2>${statTable(d.killed, topN, f.num)}
+<h2>Killed by</h2>${statTable(d.killed_by, 99, f.num)}
+<h2>Blocks mined (${d.mined.length} types)</h2>${statTable(d.mined, topN, f.num)}
+<h2>Items used</h2>${statTable(d.used, topN, f.num)}
+<h2>Items crafted</h2>${statTable(d.crafted, topN, f.num)}
+<h2>Items picked up</h2>${statTable(d.picked_up, topN, f.num)}
+<h2>Tools/items broken</h2>${statTable(d.broken, topN, f.num)}
+</body></html>`;
+}
+
+app.get('/stats', (req, res) => {
+    res.set('Cache-Control', 'no-store');
+    res.send(renderStatsIndex(playerstats.listPlayers()));
+});
+
+app.get('/stats/:player', (req, res) => {
+    const d = playerstats.readStats(req.params.player);
+    if (!d) return res.status(404).send('No stats for that player. <a href="/stats">Back</a>');
+    if (req.query.format === 'json') return res.json(d);
+    const topN = Math.min(Math.max(parseInt(req.query.top, 10) || 20, 1), 500);
+    res.set('Cache-Control', 'no-store');
+    res.send(renderStatsPlayer(d, topN));
+});
+
 endpoints.forEach((endpoint) => {
     app.get(endpoint.path, function (req, res) {
         try {
@@ -401,11 +499,12 @@ endpoints.forEach((endpoint) => {
     });
 });
 
-app.listen(3000, () => {
+const PORT = parseInt(process.env.PORT || '3000', 10);
+app.listen(PORT, () => {
     console.log('========================================');
     console.log(`  ${SERVER_NAME} dashboard is RUNNING`);
     console.log(`  Target : ${(process.env.TARGET || 'test').toLowerCase()}`);
-    console.log(`  URL    : http://localhost:3000`);
+    console.log(`  URL    : http://localhost:${PORT}`);
     console.log(`  Started: ${new Date().toLocaleString()}`);
     console.log('========================================');
     console.log('Leave this window open. Closing it stops the server.');
