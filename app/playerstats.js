@@ -82,4 +82,36 @@ const fmt = {
     cmToKm: (c) => (c / 100000).toFixed(2) + ' km',
 };
 
-module.exports = { listPlayers, readStats, resolveUuid, nameOf, fmt, clean };
+// Side-by-side comparison across all players. Returns { players, rows } where each
+// row is one metric with a per-player value and the uuid of the row leader (max).
+function compareStats() {
+    const data = listPlayers().map(p => readStats(p.uuid)).filter(Boolean);
+    const sum = (arr) => arr.reduce((s, r) => s + r.value, 0);
+    const metrics = [
+        ['Playtime', d => d.custom.play_time || 0, fmt.ticksToH],
+        ['Total distance', d => d.travelTotalCm, fmt.cmToKm],
+        ['Deaths', d => d.custom.deaths || 0, fmt.num],
+        ['Mob kills', d => d.custom.mob_kills || 0, fmt.num],
+        ['Player kills', d => d.custom.player_kills || 0, fmt.num],
+        ['Damage dealt', d => d.custom.damage_dealt || 0, fmt.num],
+        ['Damage taken', d => d.custom.damage_taken || 0, fmt.num],
+        ['Villager trades', d => d.custom.traded_with_villager || 0, fmt.num],
+        ['Items enchanted', d => d.custom.enchant_item || 0, fmt.num],
+        ['Animals bred', d => d.custom.animals_bred || 0, fmt.num],
+        ['Fish caught', d => d.custom.fish_caught || 0, fmt.num],
+        ['Raids won', d => d.custom.raid_win || 0, fmt.num],
+        ['Nights slept', d => d.custom.sleep_in_bed || 0, fmt.num],
+        ['Jumps', d => d.custom.jump || 0, fmt.num],
+        ['Blocks mined', d => sum(d.mined), fmt.num],
+        ['Items crafted', d => sum(d.crafted), fmt.num],
+        ['Mob types killed', d => d.killed.length, fmt.num],
+    ];
+    const rows = metrics.map(([label, get, format]) => {
+        const values = data.map(d => ({ uuid: d.uuid, name: d.name, raw: get(d), display: format(get(d)) }));
+        const max = Math.max(...values.map(v => v.raw));
+        return { label, leader: max > 0 ? values.find(v => v.raw === max).uuid : null, values };
+    });
+    return { players: data.map(d => ({ uuid: d.uuid, name: d.name })), rows };
+}
+
+module.exports = { listPlayers, readStats, compareStats, resolveUuid, nameOf, fmt, clean };

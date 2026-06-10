@@ -412,6 +412,13 @@ tr:hover td{background:#16161d}
 .plist a{display:flex;justify-content:space-between;background:#1a1a22;border:1px solid #2a2a35;border-radius:8px;padding:.9em 1em;color:#e5e5e5}
 .plist a:hover{border-color:#5fc14e;text-decoration:none}
 .plist .pt{color:#888;font-variant-numeric:tabular-nums}
+.toplink{display:inline-block;margin:0 0 1em;background:#1a1a22;border:1px solid #2a2a35;border-radius:6px;padding:.6em 1em;color:#e5e5e5}
+.toplink:hover{border-color:#5fc14e;text-decoration:none}
+table.cmp td.metric{color:#aaa}
+table.cmp td.v{width:auto}
+table.cmp th{font-size:.78em;color:#5fc14e;text-transform:uppercase;letter-spacing:.04em;text-align:right;padding:.4em .5em;border-bottom:1px solid #2a2a35}
+table.cmp td.v.lead{color:#5fc14e;font-weight:700}
+table.cmp td.v.lead::after{content:" \\2605";font-size:.7em}
 `;
 
 function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
@@ -432,7 +439,22 @@ function renderStatsIndex(players) {
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <style>${STATS_CSS}</style></head><body>
 <h1><a href="/">${SERVER_NAME}</a> &rsaquo; Player Stats</h1>
+<a class="toplink" href="/stats/compare">&#9878; Compare all players</a>
 <ul class="plist">${rows || '<li class="more">No stat files found.</li>'}</ul>
+</body></html>`;
+}
+
+function renderStatsCompare(cmp) {
+    const head = cmp.players.map(p => `<th><a href="/stats/${esc(p.uuid)}">${esc(p.name)}</a></th>`).join('');
+    const body = cmp.rows.map(r => {
+        const cells = r.values.map(v => `<td class="v${v.uuid === r.leader ? ' lead' : ''}">${v.display}</td>`).join('');
+        return `<tr><td class="metric">${esc(r.label)}</td>${cells}</tr>`;
+    }).join('');
+    return `<!doctype html><html><head><meta charset="utf-8"><title>Compare — Player Stats</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>${STATS_CSS}</style></head><body>
+<h1><a href="/">${SERVER_NAME}</a> &rsaquo; <a href="/stats">Stats</a> &rsaquo; Compare</h1>
+<table class="cmp"><thead><tr><th></th>${head}</tr></thead><tbody>${body}</tbody></table>
 </body></html>`;
 }
 
@@ -475,6 +497,13 @@ function renderStatsPlayer(d, topN) {
 app.get('/stats', (req, res) => {
     res.set('Cache-Control', 'no-store');
     res.send(renderStatsIndex(playerstats.listPlayers()));
+});
+
+app.get('/stats/compare', (req, res) => {
+    const cmp = playerstats.compareStats();
+    if (req.query.format === 'json') return res.json(cmp);
+    res.set('Cache-Control', 'no-store');
+    res.send(renderStatsCompare(cmp));
 });
 
 app.get('/stats/:player', (req, res) => {

@@ -12,7 +12,7 @@
  * Data comes from app/playerstats.js, shared with the web view in server.js.
  */
 require('dotenv').config();
-const { listPlayers, readStats, fmt } = require('../app/playerstats');
+const { listPlayers, readStats, compareStats, fmt } = require('../app/playerstats');
 
 const args = process.argv.slice(2);
 let topN = 15;
@@ -86,7 +86,19 @@ function breakdown(d) {
     table(d.broken);
 }
 
-if (who) {
+if (who === 'compare') {
+    const cmp = compareStats();
+    const names = cmp.players.map(p => p.name);
+    const labelW = Math.max(...cmp.rows.map(r => r.label.length));
+    const colW = Math.max(12, ...names.map(n => n.length));
+    console.log('\n' + ''.padEnd(labelW) + '  ' + names.map(n => n.padStart(colW)).join('  '));
+    console.log('-'.repeat(labelW + (colW + 2) * names.length));
+    for (const r of cmp.rows) {
+        const cells = r.values.map(v => (v.uuid === r.leader ? '*' : ' ') + v.display.padStart(colW - 1)).join('  ');
+        console.log(r.label.padEnd(labelW) + '  ' + cells);
+    }
+    console.log('\n(* = leader in that row)');
+} else if (who) {
     const d = readStats(who);
     if (!d) { console.error('Unknown player or no stats file:', who); process.exit(1); }
     breakdown(d);
