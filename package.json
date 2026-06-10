@@ -7,6 +7,8 @@
     "start": "node server.js",
     "serve": "node server.js",
     "serve:live": "node server.js live",
+    "dev": "node --watch server.js",
+    "dev:live": "node --watch server.js live",
     "build": "node index.js",
     "build:live": "node index.js live",
     "test": "echo \"Error: no test specified\" && exit 1"

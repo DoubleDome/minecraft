@@ -16,6 +16,7 @@ const app = express();
 const path = require('path');
 const fs = require('fs');
 const net = require('net');
+const clc = require('cli-color');
 
 const generator = require('./app/generator');
 const { rebuild } = require('./app/rebuild');
@@ -542,11 +543,18 @@ endpoints.forEach((endpoint) => {
 
 const PORT = parseInt(process.env.PORT || '3000', 10);
 app.listen(PORT, () => {
-    console.log('========================================');
-    console.log(`  ${SERVER_NAME} dashboard is RUNNING`);
-    console.log(`  Target : ${TARGET}`);
+    const live = TARGET === 'live';
+    const c = live ? clc.redBright : clc.greenBright;     // red = writes to the world, green = sandbox
+    const mode = live ? '● LIVE — deploys to the world' : '○ TEST — sandbox (.temp)';
+    const bar = c('========================================');
+    let outputDir = '(BASE_PATH/PACK_FOLDER unset)';
+    try { outputDir = path.resolve(process.env.BASE_PATH, process.env.PACK_FOLDER); } catch {}
+    console.log(bar);
+    console.log(`  ${SERVER_NAME} dashboard is ${clc.bold('RUNNING')}`);
+    console.log(`  Mode   : ${c.bold(mode)}`);
+    console.log(`  Output : ${outputDir}`);
     console.log(`  URL    : http://localhost:${PORT}`);
     console.log(`  Started: ${new Date().toLocaleString()}`);
-    console.log('========================================');
+    console.log(bar);
     console.log('Leave this window open. Closing it stops the server.');
 });
