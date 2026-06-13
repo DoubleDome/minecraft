@@ -30,6 +30,15 @@ nodemon
 
 There are no tests (`npm test` exits with an error, no test suite exists).
 
+## Live Server (RCON access)
+
+The live server at `D:\jakarta-vanilla-26.1.2` runs with **RCON enabled**, so its console can be driven remotely — most usefully to run `/reload` after `node index.js live` instead of waiting for the player to type it, plus `data get` / `give` / `summon` for verification. Ports (from `server.properties`): RCON `25575`, game `25577`, query `25565`.
+
+- **The RCON password lives in `server.properties` only — never copy it into this repo** (CLAUDE.md, scripts, commit messages). `server.properties` sits outside the repo, under the server dir.
+- **Treat RCON as an outward action on a production host: confirm with the user before sending commands** (a permission gate also guards it). It is not implied by the user merely *asking whether* access exists.
+- **RCON runs from the console with no player context** — target players explicitly (`@a`, name, or coords), and you **cannot observe gameplay visually**. Player-facing tests (e.g. "throw a fire charge while flying") still need a human in-game; the console can only `/reload` and run/inspect commands.
+- **What `/reload` does and doesn't pick up:** functions, recipes, tags, loot tables, advancements, predicates, and item modifiers reload live; dynamic registries (enchantments, dimensions, damage types, worldgen) need a server **restart** (see `.claude/rules/rebuild.md`).
+
 ## Environment Setup
 
 Fill out `.env` with real paths before running any script. The generator writes output to the paths defined there.
@@ -182,3 +191,11 @@ Caveats: barrel silently drops overflow past 27 stacks; only the first matching 
 - **Magic Book** (`data/locations.json`) — adds to a named group (existing or new), generates a `/function madagascar:location/<filename>` teleport
 
 Both paths call `generator.create()` after writing so the pack rebuilds before the player runs `/reload`. Strips UTF-8 BOM on JSON read (PowerShell's `Set-Content -Encoding UTF8` writes one and `JSON.parse` rejects it).
+
+### Custom projectile patterns (arrows, fireballs)
+
+These features (bomb/lightning/charged-bomb/frost arrows, throwable fire charge) all work by marking a thrown vanilla item, detecting the entity each tick, and handing behavior back to vanilla. Two hard-won rules — **lean on vanilla's collision and owner mechanics; don't reinvent them:**
+
+1. **Detect a direct entity hit with a vanilla-applied marker effect, never proximity polling.** Make the projectile a `tipped_arrow` whose `potion_contents.custom_effects` carries a hidden marker — an inert effect at `amplifier:100` (bomb=`weakness`, lightning=`mining_fatigue`, charged=`unluck`; kept distinct per projectile so they don't cross-trigger, and clear of frost's `slowness`/`glowing`). Vanilla collision applies it on a *real* hit, so a tick rule detonates any entity carrying the marker, then clears it — run *as the victim*, and **never `kill @s`** (the blast deals the damage). A `distance=..2` proximity fuse is unreliable: a drawn arrow flies ~3 b/t, so the once-per-tick sample tunnels past the target *and* false-triggers near bystanders. Block-landing detection stays a separate detector (`inGround:1b` on the marked arrow) and is unaffected.
+
+2. **A summoned projectile that must pass through its thrower needs an `Owner`.** When converting a snowball into a `minecraft:fireball` (or similar), copy the source entity's `Owner` UUID onto the spawned projectile (`data modify entity <new> Owner set from entity @s Owner`). Vanilla's "a projectile can't hit its own shooter until it has left the shooter's hitbox" grace **only applies when an `Owner` is set** — without it, a projectile spawned on top of the player detonates on them, most visibly when **flying** (thrower and projectile co-move at flight speed and never separate). `Owner` is a stable base-`Projectile` field (CamelCase), unaffected by the 26.x snake_case migrations.

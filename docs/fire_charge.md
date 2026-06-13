@@ -177,10 +177,13 @@ snowball icon (the red "Fire Charge" name still disambiguates it in the tooltip)
 - **First-tick conversion can rarely miss point-blank shots** — if the snowball hits a wall the same
   tick it spawns, it poofs before the scan. Negligible at normal range; the fireball spawns at the
   snowball's position so very-close shots still detonate on you.
-- **Self-damage.** Like a real ghast fireball, it can hurt the thrower at close range. Add the
-  thrower as the fireball's owner if you want it to pass through them: copy the snowball's `Owner`/
-  thrower UUID onto the fireball (optional; vanilla ghast fireballs don't ignore their target
-  anyway).
+- **Self-damage / throwing while flying.** `launch.mcfunction` copies the snowball's `Owner`
+  (thrower UUID) onto the fireball, so vanilla's "a projectile can't hit its own shooter until it
+  has left the shooter's hitbox" grace applies and the fireball passes through the thrower — exactly
+  like a real ghast fireball. This is essential when **flying**: thrower and fireball co-move at
+  flight speed and never separate, so without an `Owner` the fireball's first collision check hits
+  the player and detonates in their face. With `Owner` set it only re-arms against the thrower after
+  clearing them (e.g. if deflected back).
 - **Tuning knobs:** blast size → `ExplosionPower` in `launch.mcfunction`; flight speed →
   `acceleration_power`; output count → `result.count` in the recipe; name/color →
   `result.components."minecraft:custom_name"`.

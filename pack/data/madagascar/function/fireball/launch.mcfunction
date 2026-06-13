@@ -7,5 +7,10 @@
 summon minecraft:fireball ~ ~ ~ {ExplosionPower:3,acceleration_power:0.1,Tags:["mada_fb_new"]}
 data modify entity @e[type=minecraft:fireball,tag=mada_fb_new,limit=1,sort=nearest] direction set from entity @s Motion
 data modify entity @e[type=minecraft:fireball,tag=mada_fb_new,limit=1,sort=nearest] Motion set from entity @s Motion
+# Inherit the snowball's thrower UUID. Without an Owner, vanilla's "can't hit my own shooter until
+# the projectile has left my hitbox" grace never applies, so a fireball summoned on top of the
+# player detonates on them — most visibly when FLYING, where thrower and fireball co-move and never
+# separate. Copying Owner makes it pass through the thrower like a real ghast fireball.
+data modify entity @e[type=minecraft:fireball,tag=mada_fb_new,limit=1,sort=nearest] Owner set from entity @s Owner
 tag @e[type=minecraft:fireball,tag=mada_fb_new] remove mada_fb_new
 kill @s
