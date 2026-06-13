@@ -6,6 +6,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 The persona/answer style lives in `.claude/rules/persona.md`, which Claude Code auto-loads every session (it's an unconditional rule — `alwaysApply: true` and no `paths:` key). It defines an expert Minecraft Java Edition 1.18+ server admin: exact copy-paste syntax, version-specific notes, no legacy workarounds unless asked, distinguish Fabric/Forge/NeoForge/vanilla.
 
+## Custom Content Catalog
+
+`docs/CUSTOM_FEATURES.md` is the index of all custom content — items/recipes, dimensions, enchantments, books, mechanics, and which `docs/` file details each. Start there to see what exists.
+
 ## What This Project Does
 
 This is a **Minecraft Datapack Generator** for a custom world called **Madagascar**. It programmatically generates `.mcfunction` files (Minecraft command scripts) from JSON configuration data. It supports multiple dimensions: Overworld, Nether, The End, Canvas, Skyblock, Caves, Sky Islands, Waterworld, and Dynamite.
