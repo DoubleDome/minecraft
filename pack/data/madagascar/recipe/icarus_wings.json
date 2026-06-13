@@ -1,0 +1,25 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "F F",
+        "FWF",
+        "F F"
+    ],
+    "key": {
+        "F": "minecraft:feather",
+        "W": "minecraft:honeycomb"
+    },
+    "result": {
+        "id": "minecraft:elytra",
+        "count": 1,
+        "components": {
+            "minecraft:max_damage": 60,
+            "minecraft:repair_cost": 1000,
+            "minecraft:item_name": { "text": "Wings of Icarus", "italic": false, "color": "#EFC75E" },
+            "minecraft:lore": [
+                { "text": "\"Do not fly too close to the sun.\"", "italic": true, "color": "gray" }
+            ],
+            "minecraft:custom_data": { "madagascar": { "icarus_wings": true } }
+        }
+    }
+}
