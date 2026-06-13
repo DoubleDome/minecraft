@@ -23,7 +23,7 @@ class Resource {
     createNameItem(base, name, index) {
         return `type=item\nitems=minecraft:${base}\nnbt.display.Name=ipattern:*${name}*\n`;
     }
-    createNamedEntity(name, index) {
+    createNamedEntity(base, name, index) {
         return `${name}\nskins.${index}=${index}\nname.${index}=${name}\n--------------------\n`;
     }
 }

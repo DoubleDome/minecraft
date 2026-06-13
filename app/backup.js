@@ -11,8 +11,9 @@ class Backup {
     }
 
     create() {
-        // Build Folder Name
-        const folderName = this.getTodaysDate();
+        // Folder name includes the time so multiple backups the same day don't collide
+        // (a date-only name silently kept the FIRST snapshot of the day, dropping later ones).
+        const folderName = `${this.getTodaysDate()}_${this.getClock()}`;
         const destinationPath = `${this.backupPath}/${folderName}`;
 
         if (fs.existsSync(destinationPath)) {
@@ -81,6 +82,10 @@ class Backup {
     getMonth(date) {
         const month = date.getMonth() + 1;
         return this.formatNumber(month);
+    }
+    getClock() {
+        const d = new Date();
+        return `${this.formatNumber(d.getHours())}-${this.formatNumber(d.getMinutes())}-${this.formatNumber(d.getSeconds())}`;
     }
     formatNumber(number) {
         return number < 10 ? `0${number}` : number;

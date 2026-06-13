@@ -185,10 +185,6 @@ const endpoints = [
         function: 'createToolFunctions',
     },
     {
-        path: '/export/armor',
-        function: 'createArmorFunctions',
-    },
-    {
         path: '/export/shulkers',
         function: 'createShulkerFunctions',
     },
