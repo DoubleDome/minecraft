@@ -46,9 +46,17 @@ class Generator {
         this.paths = {};
     }
 
+    // Full (destructive) init: wipe the output, then set up paths. Used by create()
+    // and the CLI / Rebuild button when the whole pack is regenerated.
     init(base) {
         creator.destroy(base);
+        this.setup(base);
+    }
 
+    // Non-destructive setup: refresh data from disk and ensure the output dirs
+    // exist, WITHOUT wiping anything. This is what targeted in-place updates use
+    // (e.g. adding one location) so a small content change doesn't rebuild the world.
+    setup(base) {
         // Refresh data from disk so /add edits show up without restarting server.js.
         data = reloadData();
 

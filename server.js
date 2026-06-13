@@ -46,9 +46,14 @@ function defaultY(dim) {
     if (dim === 'the_end') return 80;
     return 200;
 }
+// Targeted, in-place content update for web edits: regenerate only the book +
+// location functions into the existing pack. No destroy/clone, so it's fast, safe,
+// and can't gut the pack or duplicate load.mcfunction. Use fullRebuild()/the
+// Rebuild button for code changes that need a full destroy+clone.
 function regenerate() {
-    generator.init(path.resolve(process.env.BASE_PATH, process.env.PACK_FOLDER));
-    generator.create();
+    generator.setup(path.resolve(process.env.BASE_PATH, process.env.PACK_FOLDER));
+    generator.createBookFunctions();     // magic + exploration books + book gate
+    generator.createLocationFunctions(); // magic-book teleport functions
 }
 
 // Full rebuild — delegates to the shared app/rebuild.js so the web endpoint and
@@ -309,18 +314,12 @@ app.get('/add-location', (req, res) => {
 
 app.post('/add-location', (req, res) => {
     const { target } = req.body;
-    // Snapshot the data file so a failed rebuild can't leave a half-added entry
-    // (the write happens before regenerate(); without this, an error orphans the
-    // entry — it then reports "already exists" yet never reaches the book).
-    const dataFile = target === 'magic' ? LOCATIONS_PATH : EXPLORATION_PATH;
-    let snapshot = null;
-    try { snapshot = fs.readFileSync(dataFile); } catch {}
     try {
         if (target === 'exploration') addToExploration(req.body);
         else if (target === 'magic') addToMagic(req.body);
         else throw new Error(`unknown target: ${target}`);
 
-        regenerate();
+        regenerate(); // targeted, in-place — only the books/locations are rewritten
 
         const locations = readJson(LOCATIONS_PATH);
         const groups = locations.map(g => g.header);
@@ -328,10 +327,9 @@ app.post('/add-location', (req, res) => {
         const msg = `<div class="msg ok"><strong>Added.</strong> Rebuilt to the ${where}. Run <code>/reload</code> in-game to pick it up.</div>`;
         res.send(renderForm({ groups, message: msg, target }));
     } catch (e) {
-        if (snapshot !== null) { try { fs.writeFileSync(dataFile, snapshot); } catch {} } // roll back
         const locations = readJson(LOCATIONS_PATH);
         const groups = locations.map(g => g.header);
-        const msg = `<div class="msg err"><strong>Failed (no changes saved):</strong> ${String(e.message || e).replace(/</g, '&lt;')}</div>`;
+        const msg = `<div class="msg err"><strong>Failed:</strong> ${String(e.message || e).replace(/</g, '&lt;')}</div>`;
         res.status(400).send(renderForm({ groups, message: msg, target, defaults: req.body }));
     }
 });
@@ -544,12 +542,18 @@ app.get('/stats/:player', (req, res) => {
 endpoints.forEach((endpoint) => {
     app.get(endpoint.path, function (req, res) {
         try {
-            generator.init(path.resolve(process.env.BASE_PATH, process.env.PACK_FOLDER));
-            generator[endpoint.function]();
+            const out = path.resolve(process.env.BASE_PATH, process.env.PACK_FOLDER);
+            if (endpoint.function === 'create') {
+                generator.init(out);   // full rebuild: keep the destroy + clone
+                generator.create();
+            } else {
+                generator.setup(out);  // targeted: in-place, never wipes the pack
+                generator[endpoint.function]();
+            }
             res.send('Command generation successful!');
         } catch (error) {
-            res.send('Command generation failed!');
-            // console.log(error);
+            console.error(error);
+            res.status(500).send('Command generation failed!');
         }
     });
 });
