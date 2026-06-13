@@ -148,6 +148,13 @@
                 "coordinates": "319 68 6724",
                 "rotation": "0 0",
                 "filename": "riverside_base"
+            },
+            {
+                "label": "Trail Base",
+                "dimension": "minecraft:overworld",
+                "coordinates": "-6774 65 18689",
+                "filename": "trail_base",
+                "rotation": "0 0"
             }
         ]
     },
