@@ -1,13 +1,13 @@
 {
     "type": "minecraft:crafting_shaped",
     "pattern": [
-        "F F",
-        "FWF",
-        "F F"
+        "FHF",
+        "FHF",
+        "FHF"
     ],
     "key": {
         "F": "minecraft:feather",
-        "W": "minecraft:honeycomb"
+        "H": "minecraft:honeycomb"
     },
     "result": {
         "id": "minecraft:elytra",
