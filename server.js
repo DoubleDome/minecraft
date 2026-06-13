@@ -241,7 +241,7 @@ body[data-target=magic] fieldset.magic-only{display:flex}
 `;
 
 function renderForm({ groups = [], message = '', target = 'exploration', defaults = {} } = {}) {
-    const groupOptions = groups.map(g => `<option value="${g}"${g === defaults.group ? ' selected' : ''}>${g}</option>`).join('') +
+    const groupOptions = groups.map(g => `<option value="${esc(g)}"${g === defaults.group ? ' selected' : ''}>${esc(g)}</option>`).join('') +
         `<option value="__new__">+ New group&hellip;</option>`;
     return `<!doctype html>
 <html><head><meta charset="utf-8"><title>Add Location</title>
@@ -257,7 +257,7 @@ ${message}
   </div>
 
   <label>Label
-    <input name="label" required value="${defaults.label || ''}" placeholder="e.g. Spooky Cave">
+    <input name="label" required value="${esc(defaults.label || '')}" placeholder="e.g. Spooky Cave">
   </label>
 
   <label>Dimension
@@ -367,7 +367,9 @@ function addToMagic(body) {
     }
     if (!groupName) throw new Error('Group required');
 
-    const filename = String(body.filename || '').trim() || slugify(label);
+    // slugify the user-supplied filename too — it becomes a function-file path, so
+    // a raw value like "../foo" would be a path-traversal vector.
+    const filename = slugify(body.filename || '') || slugify(label);
     if (!filename) throw new Error('Filename required (could not derive from label)');
 
     const yaw = body.yaw === '' || body.yaw == null ? null : Number(body.yaw);
@@ -542,12 +544,10 @@ app.get('/stats/:player', (req, res) => {
 endpoints.forEach((endpoint) => {
     app.get(endpoint.path, function (req, res) {
         try {
-            const out = path.resolve(process.env.BASE_PATH, process.env.PACK_FOLDER);
             if (endpoint.function === 'create') {
-                generator.init(out);   // full rebuild: keep the destroy + clone
-                generator.create();
+                rebuild(TARGET); // safe full rebuild: env guard + live backup before the wipe
             } else {
-                generator.setup(out);  // targeted: in-place, never wipes the pack
+                generator.setup(path.resolve(process.env.BASE_PATH, process.env.PACK_FOLDER)); // targeted: in-place, never wipes
                 generator[endpoint.function]();
             }
             res.send('Command generation successful!');
