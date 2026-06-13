@@ -132,10 +132,10 @@ Contains Minecraft dimension definition files for the custom dimensions that ext
 
 **Special spawners are gated by `dimension_type`, not dimension key.** Vanilla's special spawners — wandering trader, cat, pillager patrol, village siege, and **phantom** (insomnia) — run in any dimension whose `dimension_type` is `minecraft:overworld`, regardless of the dimension's own key. So custom dimensions that *reuse* the `minecraft:overworld` type get them; dimensions with a custom type do not:
 
-- `minecraft:overworld` type → Skyblock, Canvas, Waterworld → **do** get traders/cats/patrols/phantoms.
-- custom type → Sky Islands (`madagascar:sky_islands`), Caves (`madagascar:caves`), Dynamite → **don't**.
+- `minecraft:overworld` type → Skyblock, Canvas, Waterworld, **and now Sky Islands + Caves** (switched from their custom types on 2026-06-13 to enable phantoms/wandering-traders + sleeping) → **do** get traders/cats/patrols/phantoms.
+- custom type → only Dynamite (`madagascar:dynamite`) → **doesn't**.
 
-Verified by entity-file census (2026-06-13): skyblock's `entities/` held 25 wandering traders + 20 cats; caves — explored just as heavily (70 region files vs skyblock's 87) — had zero, matching the admin's experience of never seeing traders there. So **phantoms cannot spawn naturally in Sky Islands or Caves**; to enable them, give the dimension the `minecraft:overworld` type or add a function-based insomnia spawner. (Phantoms only ever come from this special spawner — no biome lists them.) Note: Skyblock is also a single-player world copied in, but the traders there are genuinely spawning, not imported.
+Verified by entity-file census (2026-06-13): skyblock's `entities/` held 25 wandering traders + 20 cats; caves — explored just as heavily (70 region files vs skyblock's 87) — had zero, matching the admin's experience of never seeing traders there. That proved the gate is the `dimension_type`, so Sky Islands + Caves were switched to `minecraft:overworld` to turn the spawners on. A dimension's `generator` (worldgen) is independent of its `dimension_type`, so switching the type **keeps the custom terrain** — Sky Islands still generates floating islands. The overworld type also gives `bed_works: true` (sleeping). Changing a `dimension_type` is a dynamic registry edit: it needs a **server restart**, not `/reload`. (Phantoms only ever come from the special spawner — no biome lists them.) Note: Skyblock is also a single-player world copied in, but the traders there are genuinely spawning, not imported.
 
 ### Output Structure
 
