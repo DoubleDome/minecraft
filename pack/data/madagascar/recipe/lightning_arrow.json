@@ -18,7 +18,10 @@
                 "italic": false
             },
             "minecraft:potion_contents": {
-                "custom_color": 16776960
+                "custom_color": 16776960,
+                "custom_effects": [
+                    { "id": "minecraft:mining_fatigue", "amplifier": 100, "duration": 100 }
+                ]
             },
             "minecraft:tooltip_display": {
                 "hidden_components": [

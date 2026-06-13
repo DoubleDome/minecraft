@@ -18,7 +18,10 @@
                 "italic": false
             },
             "minecraft:potion_contents": {
-                "custom_color": 11141120
+                "custom_color": 11141120,
+                "custom_effects": [
+                    { "id": "minecraft:weakness", "amplifier": 100, "duration": 100 }
+                ]
             },
             "minecraft:tooltip_display": {
                 "hidden_components": [

@@ -110,9 +110,13 @@ rendering in the italic "renamed" style.
   fire either way — a creeper blast never ignites.)
 - **Direct entity hits** are handled by a second detector. A non-piercing arrow that strikes a
   mob/player is *absorbed* (becomes a stuck arrow) and never sets `inGround`, so block hits would
-  boom but direct hits wouldn't. Fix: `arrow/tick` also detonates a bomb arrow when a damageable
-  entity (not in `#madagascar:bomb_ignore`, not the tagged shooter) is within ~2 blocks — a
-  contact/proximity fuse. Side effect: passing within ~2 blocks of any mob detonates early.
+  boom but direct hits wouldn't. Fix (same trick as the frost arrow): the tipped bomb arrow carries
+  a hidden marker effect (`weakness` amp 100) that vanilla's own arrow collision applies to whatever
+  it strikes; `arrow/tick` detonates any entity carrying that marker via `arrow/bomb_hit`, which
+  summons the blast and clears the marker so it fires exactly once and never kills the victim
+  outright. Reliable on any entity, players included — no proximity/tunneling guesswork, and it can't
+  trigger at the muzzle. (An earlier version used a ~2-block proximity fuse, which missed fast arrows
+  and detonated early near bystanders.)
 - **Result components** (the marker on the crafted arrow) rely on crafting-recipe `result`
   supporting `components` (1.21.2+). To confirm it stuck: craft one and run
   `data get entity @s SelectedItem` while holding it — look for `minecraft:custom_data`.
@@ -131,7 +135,7 @@ node index.js live      # clones pack/ into the live world's datapack
 Test without grinding the recipe:
 ```
 # give yourself the exact crafted arrow
-give @s minecraft:tipped_arrow[custom_data={bomb:true},custom_name={text:"Bomb Arrow",color:"dark_red",italic:false},potion_contents={custom_color:11141120},tooltip_display={hidden_components:["minecraft:potion_contents"]}] 16
+give @s minecraft:tipped_arrow[custom_data={bomb:true},custom_name={text:"Bomb Arrow",color:"dark_red",italic:false},potion_contents={custom_color:11141120,custom_effects:[{id:"minecraft:weakness",amplifier:100,duration:100}]},tooltip_display={hidden_components:["minecraft:potion_contents"]}] 16
 ```
 Shoot at a block — it should crater on impact (no fire). Then craft it for real
 (1 arrow + 1 gunpowder) to confirm the recipe stamps the marker.
