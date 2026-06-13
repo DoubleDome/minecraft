@@ -1,4 +1,5 @@
 const path = require('path');
+const fs = require('fs');
 
 const creator = require('./creator');
 const toolSwapper = require('./swapper_tools');
@@ -18,11 +19,12 @@ const Tick = require('./tick');
 const config = require('../data/config.json');
 
 // Re-read JSON each generator init so web-driven edits are picked up without
-// restarting the server. require() caches modules, so we drop them from cache.
+// restarting the server. Use fs (not require) so the data files stay OUT of the
+// module graph — otherwise `node --watch` watches them and a web edit to
+// locations.json/exploration.json restarts the server mid-rebuild. Strips BOM.
 function freshRead(rel) {
-    const p = require.resolve(`../data/${rel}`);
-    delete require.cache[p];
-    return require(`../data/${rel}`);
+    const p = path.resolve(__dirname, '../data', rel);
+    return JSON.parse(fs.readFileSync(p, 'utf8').replace(/^﻿/, ''));
 }
 function reloadData() {
     return {

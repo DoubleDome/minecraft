@@ -309,6 +309,12 @@ app.get('/add-location', (req, res) => {
 
 app.post('/add-location', (req, res) => {
     const { target } = req.body;
+    // Snapshot the data file so a failed rebuild can't leave a half-added entry
+    // (the write happens before regenerate(); without this, an error orphans the
+    // entry — it then reports "already exists" yet never reaches the book).
+    const dataFile = target === 'magic' ? LOCATIONS_PATH : EXPLORATION_PATH;
+    let snapshot = null;
+    try { snapshot = fs.readFileSync(dataFile); } catch {}
     try {
         if (target === 'exploration') addToExploration(req.body);
         else if (target === 'magic') addToMagic(req.body);
@@ -318,12 +324,14 @@ app.post('/add-location', (req, res) => {
 
         const locations = readJson(LOCATIONS_PATH);
         const groups = locations.map(g => g.header);
-        const msg = `<div class="msg ok"><strong>Added.</strong> Datapack regenerated. Run <code>/reload</code> in-game to pick it up.</div>`;
+        const where = TARGET === 'live' ? 'live world' : 'sandbox (.temp)';
+        const msg = `<div class="msg ok"><strong>Added.</strong> Rebuilt to the ${where}. Run <code>/reload</code> in-game to pick it up.</div>`;
         res.send(renderForm({ groups, message: msg, target }));
     } catch (e) {
+        if (snapshot !== null) { try { fs.writeFileSync(dataFile, snapshot); } catch {} } // roll back
         const locations = readJson(LOCATIONS_PATH);
         const groups = locations.map(g => g.header);
-        const msg = `<div class="msg err"><strong>Failed:</strong> ${String(e.message || e).replace(/</g, '&lt;')}</div>`;
+        const msg = `<div class="msg err"><strong>Failed (no changes saved):</strong> ${String(e.message || e).replace(/</g, '&lt;')}</div>`;
         res.status(400).send(renderForm({ groups, message: msg, target, defaults: req.body }));
     }
 });
