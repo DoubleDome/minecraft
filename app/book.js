@@ -94,7 +94,7 @@ class Book {
     }
 
     generateMetadata(title, author, lore, version, generation) {
-        return `{title:"${title} ${roman[version]}",author:"${author}",generation:3,pages:%pages%},lore=[${this.generateLore(lore)}]`;
+        return `{title:${JSON.stringify(`${title} ${roman[version]}`)},author:${JSON.stringify(author)},generation:3,pages:%pages%},lore=[${this.generateLore(lore)}]`;
     }
     generateLore(lore) {
         let result = '';
@@ -130,13 +130,13 @@ class Book {
         let result = '[';
         result += '{"text":"\\n▶ ","color":"#006600"},';
         // 1.21.5+ renamed clickEvent -> click_event and the value field for run_command -> command
-        result += `{"text":"${label}","color":"dark_green","click_event":{"action":"run_command","command":"/function ${config.package}:${config.folder.location}/${filename}"}}`;
+        result += JSON.stringify({ text: label, color: 'dark_green', click_event: { action: 'run_command', command: `/function ${config.package}:${config.folder.location}/${filename}` } });
         result += ']';
         return result;
     }
 
     generateHeader(label) {
-        return `[{"text":"${label}","color":"dark_purple"}],`;
+        return JSON.stringify([{ text: label, color: 'dark_purple' }]) + ',';
     }
     generateSpacer() {
         return '[{"text":"\\n","color":"black"}],';

@@ -46,8 +46,12 @@ class Inventory {
         });
     }
     reindexItems(command, count) {
+        // `count` is the configured max, not the runtime list length — fewer items
+        // may have been captured. Guard each set with `if data ...[i]` so indices
+        // past the real end are skipped instead of erroring every run.
         for (let index = 0; index < count; index++) {
-            command.append(`data modify storage ${config.namespace} ${config.storage.inventory}[${index}] merge value {Slot:${index}b}`);
+            const p = `${config.namespace} ${config.storage.inventory}[${index}]`;
+            command.append(`execute if data storage ${p} run data modify storage ${p} merge value {Slot:${index}b}`);
         }
     }
 
@@ -87,10 +91,12 @@ class Inventory {
             command.append(`data modify storage ${chestPath} insert 0 from entity @s Inventory[{id:"${id}"}]`);
         });
 
-        // Reindex chest storage entries into valid container slots (0..N-1).
+        // Reindex chest storage entries into valid container slots (0..N-1). Only
+        // present items were inserted, so guard each index to skip the empties
+        // (otherwise every absent armor/equipment slot errors on each stash).
         const chestEntries = ARMOR_SLOTS.length + equipment.length;
         for (let i = 0; i < chestEntries; i++) {
-            command.append(`data modify storage ${chestPath}[${i}] merge value {Slot:${i}b}`);
+            command.append(`execute if data storage ${chestPath}[${i}] run data modify storage ${chestPath}[${i}] merge value {Slot:${i}b}`);
         }
 
         // Strip captured items off the player so they don't double into the barrel.
@@ -104,7 +110,7 @@ class Inventory {
         // Whatever remains in Inventory is "the other crap" -> barrel.
         command.append(`data modify storage ${barrelPath} set from entity @s Inventory`);
         for (let i = 0; i < BARREL_CAPACITY; i++) {
-            command.append(`data modify storage ${barrelPath}[${i}] merge value {Slot:${i}b}`);
+            command.append(`execute if data storage ${barrelPath}[${i}] run data modify storage ${barrelPath}[${i}] merge value {Slot:${i}b}`);
         }
 
         // Place chest (eye level) + barrel (foot level) per facing.

@@ -15,8 +15,8 @@ class Location {
         const command = new Command();
         command.append(`execute as @s in ${dimension} run tp @s ${coordinates} ${rotation || ''}`);
         command.append(`execute as @s run title @s times ${config.title.time}`);
-        command.append(`execute as @s run title @s subtitle {"text":"${config.label.dimension[dimension]}", "color":"${color || config.title.color}"}`);
-        command.append(`execute as @s run title @s title {"text":"${label}", "color":"${color || config.title.color}"}`);
+        command.append(`execute as @s run title @s subtitle ${JSON.stringify({ text: config.label.dimension[dimension], color: color || config.title.color })}`);
+        command.append(`execute as @s run title @s title ${JSON.stringify({ text: label, color: color || config.title.color })}`);
         if (gamemode) command.append(`gamemode ${gamemode} @s`);
         return command.export();
     }

@@ -75,6 +75,14 @@ class Generator {
         this.validatePaths();
         creator.clone(this.paths.pack, this.paths.base);
 
+        // Reset the shared Load/Tick singletons first. They persist for the life
+        // of the process, and createFoundation()/createSoftcoreFunctions()/etc.
+        // only ever APPEND — so a second create() in a long-lived server (e.g. the
+        // Rebuild button pressed twice) would otherwise duplicate every team/
+        // objective/tick line into load.mcfunction & tick.mcfunction.
+        Load.getInstance().reset();
+        Tick.getInstance().reset();
+
         this.createFoundation();
 
         this.createBookFunctions();
