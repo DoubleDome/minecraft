@@ -1,6 +1,28 @@
 # Migration plan: `madagascar` → `jakarta` (package + namespace)
 
-Status: **DRAFT — not started.** Rename the datapack package and namespace from
+Status: **ATTEMPT 1 ROLLED BACK — blocked by `level.dat`.** Source rename + live
+file moves all worked; the server then **refused to load** and we rolled back
+cleanly (live is fully restored to `madagascar`; the rename is preserved on branch
+`jakarta-migration`).
+
+## ⛔ BLOCKER (attempt 1): custom dimensions are baked into `level.dat`
+On start, the server failed with:
+> `Failed to get element ResourceKey[minecraft:dimension_type / madagascar:sky_islands]` … `madagascar:caves` … **"Overworld settings missing" → Failed to load datapacks, can't proceed**
+
+`level.dat` → `Data.WorldGenSettings.dimensions` stores a **baked copy** of every
+custom dimension (id + `type` + generator), frozen from when the world was created.
+It even still held the *original* `madagascar:sky_islands` with `settings:"minecraft:floating_islands"` and custom `madagascar:caves`/`sky_islands` **types** — none of which exist after the rename. Datapack dimension JSONs do **not** update this stored copy, so renaming the dimension namespace makes `level.dat` unresolvable → fatal load failure. (Folder move + datapack rename alone are not enough.)
+
+### Forward options to actually finish the migration
+- **(A) Edit `level.dat` (the real fix).** Rewrite `Data.WorldGenSettings.dimensions`: rename the 6 keys `madagascar:*`→`jakarta:*` and set each entry's `type`/`generator.settings` to match the current `jakarta` dimension JSONs (caves/sky_islands → `minecraft:overworld` type; sky_islands/waterworld settings → `jakarta:*`; dynamite → `jakarta:dynamite`). Needs an NBT tool (NBTExplorer/MCA Selector, or a `prismarine-nbt` script), `level.dat` backed up first (`level.dat_old` exists). Correct + complete, but it's surgery on the world's core file.
+- **(B) Hybrid — keep the 6 dimension ids as `madagascar:*`, rename everything else to `jakarta`.** Avoids `level.dat` entirely (dimension ids are invisible to players — they only see the "Sky Islands" labels). Functions/items/objectives/recipes/resource-pack all become `jakarta`; the dimension JSONs + their `type`s + the config `dimension` map stay `madagascar:*`. Lower risk, slightly inconsistent.
+- **(C) Don't migrate** — stay `madagascar`.
+
+Recommendation: **(B)** if the goal is "looks/reads as jakarta" with minimal risk, or **(A)** done carefully (on a world copy first) if you want it fully `jakarta` including dimension ids.
+
+---
+
+(Original plan below.) Rename the datapack package and namespace from
 `madagascar` to `jakarta`, regenerate the pack, and clean up the live scoreboard
 (including folding the softcore objectives under a `jakarta.softcore.*` umbrella).
 
