@@ -18,7 +18,7 @@ Last updated: 2026-06-13.
 | **Lightning Arrow** | tipped_arrow | `recipe/lightning_arrow.json` | Calls a lightning strike on impact. | `docs/features/lightning_arrow.md` |
 | **Frost Arrow I/II/III** | tipped_arrow | `recipe/frost_arrow*.json` | Freezes the target (NoAI/encased); tiers = strength. | `docs/features/frost_arrow.md` |
 | **Torch / Redstone Torch / Soul Torch Arrow** | tipped_arrow | `recipe/*torch_arrow.json` | Places the matching torch where it lands. | `docs/features/torch_arrow.md` |
-| **Recall Fruit** | popped_chorus_fruit | `recipe/recall_fruit.json` | Teleport-recall to a saved point. | `docs/features/recall_fruit.md` |
+| **Golden Chorus Fruit** | popped_chorus_fruit | `recipe/recall_fruit.json` (1 chorus fruit ringed by 8 gold ingots) | Teleport-recall to your saved spawn. | `docs/features/recall_fruit.md` |
 | **Trade Reroller** | stick | `recipe/trade_reroller.json` | Rerolls a villager's trades. | `docs/features/trade_reroller.md` |
 | **Sonic Horn** | goat_horn | `/give` or 50% Warden drop | Fires the Warden sonic boom (10 armor-piercing dmg, 15-block line), 7s cooldown, 16 uses. | `docs/features/sonic_horn.md` |
 | **Heavy Stick** | stick | `recipe/heavy_stick.json` | Knockback 255 launcher stick (custom item model). | — |

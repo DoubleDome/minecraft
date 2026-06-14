@@ -1,4 +1,4 @@
-# Recall Fruit
+# Golden Chorus Fruit
 
 A consumable that warps you to your **personal spawn point** — "a chorus fruit, but back to your
 spawn instead of random." Vanilla 26.1.2, no mods.
@@ -9,10 +9,10 @@ spawn instead of random." Vanilla 26.1.2, no mods.
 
 | Property | Value |
 | --- | --- |
-| Item | `minecraft:popped_chorus_fruit` made consumable (eat ~1.6s), named "Recall Fruit", purple glint |
+| Item | `minecraft:popped_chorus_fruit` made consumable (eat ~1.6s), named "Golden Chorus Fruit" (gold), custom gold-chorus texture (`jakarta:golden_chorus_fruit`), enchant glint |
 | On eat | teleport to the player's personal spawn (bed / respawn anchor), cross-dimension aware |
 | No spawn set | refund the fruit + a "sleep in a bed first" message |
-| Recipe | shapeless `chorus_fruit` + `ender_pearl` → 1 Recall Fruit |
+| Recipe | shaped — 1 `chorus_fruit` surrounded by 8 `gold_ingot` → 1 Golden Chorus Fruit |
 | Consumed | yes — eating removes one (the `consumable` component) |
 
 ## Why `popped_chorus_fruit` (not chorus fruit)
@@ -48,7 +48,7 @@ respawn: { pos: [I; x, y, z], dimension: "minecraft:overworld", angle: 0.0f, for
 
 | File | Role |
 | --- | --- |
-| `pack/data/madagascar/recipe/recall_fruit.json` | shapeless chorus_fruit + ender_pearl → Recall Fruit |
+| `pack/data/jakarta/recipe/recall_fruit.json` | shaped: chorus_fruit ringed by 8 gold_ingot → Golden Chorus Fruit |
 | `pack/data/madagascar/function/recall/tick.mcfunction` | detect the `used` score, run go, reset |
 | `pack/data/madagascar/function/recall/go.mcfunction` | spawn set? warp : refund + message |
 | `pack/data/madagascar/function/recall/warp.mcfunction` | effects + read `respawn` + teleport |
@@ -80,6 +80,6 @@ node index.js live
 /reload
 ```
 ```
-give @s minecraft:popped_chorus_fruit[minecraft:consumable={consume_seconds:1.6f,animation:"eat",sound:"minecraft:entity.generic.eat",has_consume_particles:true},minecraft:custom_data={recall:true},minecraft:item_name={text:"Recall Fruit",color:"light_purple"},minecraft:enchantment_glint_override=true] 4
+give @s minecraft:popped_chorus_fruit[minecraft:consumable={consume_seconds:1.6f,animation:"eat",sound:"minecraft:entity.generic.eat",has_consume_particles:true},minecraft:custom_data={recall:true},minecraft:item_name={text:"Golden Chorus Fruit",color:"gold"},minecraft:item_model="jakarta:golden_chorus_fruit",minecraft:enchantment_glint_override=true] 4
 ```
 Set a bed spawn, wander off, then hold-right-click to eat — you should warp back with portal FX.

@@ -1,6 +1,6 @@
 {
     "model": {
         "type": "minecraft:model",
-        "model": "jakarta:item/recall_fruit"
+        "model": "jakarta:item/golden_chorus_fruit"
     }
 }

@@ -1,6 +1,6 @@
 {
     "parent": "minecraft:item/generated",
     "textures": {
-        "layer0": "jakarta:item/recall_fruit"
+        "layer0": "jakarta:item/golden_chorus_fruit"
     }
 }
