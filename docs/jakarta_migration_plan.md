@@ -29,7 +29,7 @@ backup**, ideally rehearsed on a copy of the world first.
 
 ## 2. Open decisions (resolve before executing)
 
-1. **Existing custom items** (Wings of Icarus, Sonic Horns, arrows in chests, Recall Fruit, Fire Charges) will go inert after the namespace flip (their `custom_data` marker + `item_model` point at `madagascar:`). Options:
+1. **Existing custom items** (Wings of Icarus, Sonic Horns, arrows in chests, Recall Fruit, Fire Charges) will go inert after the namespace flip (their `custom_data` marker + `item_model` point at `madagascar:`). **Verified:** all three players' inventories are full of `madagascar:` items, and their God/Magic books have buttons that call `/function madagascar:…` — so after the rename, held items lose behavior/texture **and the book buttons break** (function not found). Books are easy to re-issue (`/function jakarta:book/…` or re-give); held gadget items need re-crafting. Options:
    - (a) **Accept it** — old copies stop working / lose texture; players re-craft. Simplest. *(recommended)*
    - (b) Write a one-time fixer that scans loaded inventories/containers and rewrites the components. Expensive, never fully complete.
 2. **Rehearse on a world copy first?** Strongly recommended given the dimension/playerdata edits. *(recommended: yes)*
@@ -61,10 +61,10 @@ backup**, ideally rehearsed on a copy of the world first.
 - [ ] Rebuild resource pack (`node scripts/resourcepack.js`) → `dist/jakarta_rp.zip` + sha1; update `server.properties` `resource-pack` URL + `resource-pack-sha1` + `resource-pack-id` (new UUID).
 
 ## 6. Phase 3 — Live-world migration (server STOPPED)
-**6a. Dimensions** (riskiest):
+**6a. Dimensions** — *de-risked*: **verified all players are in `minecraft:overworld`** (Dimension, LastDeathLocation, and respawn all overworld for DoubleDome/Filbert/Mermaid), so **no player `Dimension` NBT rewrite is needed**. This was the scary part; it's gone.
 - [ ] Move `world/dimensions/madagascar/*` → `world/dimensions/jakarta/*` (all 6, incl. skyblock).
-- [ ] Rewrite player `Dimension` NBT: any player whose `world/players/data/<uuid>.dat` (or playerdata) has `Dimension:"madagascar:<x>"` → `"jakarta:<x>"` (NBT edit; affects anyone last logged-off in a custom dim). Also check `LastDeathLocation.dimension` and `respawn.dimension`/spawn dims.
-- [ ] Check `level.dat` / forced chunks / any stored dimension ids.
+- [ ] (Guard) re-confirm no player `.dat` has `Dimension:"madagascar:*"` right before the move (in case someone visited a custom dim after this check).
+- [ ] Check `level.dat` for any stored dimension ids / forced chunks.
 
 **6b. Scoreboards** (`scoreboard.dat`):
 - [ ] Criterion objectives (`stats.*`, `killer.*`, `softcore.health`) self-heal from player stats on login — no migration needed; new `jakarta.*` ones created by `load`.
@@ -93,5 +93,5 @@ backup**, ideally rehearsed on a copy of the world first.
 
 ## Effort / risk
 - **Code rename + pack gen + scoreboard reorg**: ~1–2 hrs, low risk (git-reversible, config-driven).
-- **Live dimension + playerdata migration**: the real risk — fiddly NBT edits, must be rehearsed; mistakes can strand players or orphan the copied skyblock world.
-- **Existing-item breakage**: unavoidable with option (a); cosmetic + re-craft.
+- **Live dimension migration**: now **low risk** — verified no players are in custom dims, so it's a folder move (no playerdata NBT surgery). Just back up first and re-confirm the guard before moving; the copied skyblock folder is the main thing to move carefully.
+- **Existing-item breakage**: unavoidable with option (a) — re-issue books, re-craft gadget items. Cosmetic + minor friction.
