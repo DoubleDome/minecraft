@@ -1,6 +1,20 @@
 # Migration plan: `madagascar` → `jakarta` (package + namespace)
 
-Status: **DRAFT — not started.** Rename the datapack package and namespace from
+Status: **IN PROGRESS** (branch `jakarta-migration`). Everything done so far is
+reversible — no deletes, server not yet started.
+
+### Execution log
+- ✅ **Phase 1 — source rename** committed (`f845585`): `data/madagascar`→`data/jakarta`, all `madagascar:`/`madagascar.`→`jakarta`, config, resource-pack assets. Test build clean (0 residual `madagascar`).
+- ✅ **Phase 2 — deploy**: `jakarta_pack` generated into the live world's `datapacks/`; resource pack rebuilt (`dist/jakarta_rp.zip`, sha1 `73ec618…`); `server.properties` updated (URL/sha1/id/prompt).
+- ✅ **Phase 3a — dimensions**: `world/dimensions/madagascar` → `world/dimensions/jakarta` (1.2 GB, instant rename; all 6 dims incl. skyblock).
+- ✅ **Phase 3c — old pack disabled**: `madagascar_pack` moved to `_migration_backup/` (out of `datapacks/`, won't load).
+- ⏳ **NEXT (needs server started)**: start server → verify dims load with builds intact + jakarta pack loads clean (logs) → **then** scoreboard reset (remove orphan `madagascar.*` via RCON) → verify in-game.
+- ⏳ **Cleanup (after verify)**: delete `_migration_backup/`, old `dist/madagascar_rp.*`; merge branch; softcore reorg (optional, deferred).
+- **Rollback if needed**: move `world/dimensions/jakarta`→`madagascar`, restore `_migration_backup/madagascar_pack` to `datapacks/`, revert `server.properties`, `git checkout main`.
+
+---
+
+Rename the datapack package and namespace from
 `madagascar` to `jakarta`, regenerate the pack, and clean up the live scoreboard
 (including folding the softcore objectives under a `jakarta.softcore.*` umbrella).
 
