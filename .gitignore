@@ -16,6 +16,9 @@ logs
 # Built resource-pack artifacts
 dist/
 
+# Loose reference images / scratch assets at repo root
+textures/
+
 # Editor / OS
 .vs
 .DS_Store
