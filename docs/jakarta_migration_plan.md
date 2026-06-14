@@ -64,10 +64,9 @@ backup**, ideally rehearsed on a copy of the world first.
 - [ ] (Guard) re-confirm no player `.dat` has `Dimension:"madagascar:*"` right before the move (in case someone visited a custom dim after this check).
 - [ ] Check `level.dat` for any stored dimension ids / forced chunks.
 
-**6b. Scoreboards** (`scoreboard.dat`):
-- [ ] Criterion objectives (`stats.*`, `killer.*`, `softcore.health`) self-heal from player stats on login — no migration needed; new `jakarta.*` ones created by `load`.
-- [ ] Carry persistent dummies before deleting old: `softcore.deaths`, `softcore.death_dimension` → `scoreboard players operation @a <new> = @a <old>` (run after first load creates the new objectives).
-- [ ] Remove the old `madagascar.*` objectives (108) **and** the 2 leftover `hardcore.*` once values are carried.
+**6b. Scoreboards** — *full reset, no value migration.* (Owner: softcore stats can be reset; the mode has changed too much to count as the same — so nothing to preserve.)
+- [ ] New `jakarta.*` objectives are created fresh by `load` (criterion ones self-heal from player stats; dummies start at 0).
+- [ ] Remove ALL old `madagascar.*` objectives (108) + the 2 leftover `hardcore.*`. No `scoreboard players operation` carry-over.
 - [ ] `save-all flush`.
 
 **6c. Existing items / books**: nothing to do — accepted breakage (decision #1). Old `madagascar:` items/books go inert; new ones work.
@@ -92,11 +91,11 @@ backup**, ideally rehearsed on a copy of the world first.
 ## Things still worth worrying about
 1. **Dimension folder path must EXACTLY match the new dim id.** A dim `jakarta:sky_islands` must live at `world/dimensions/jakarta/sky_islands/`. If the path is wrong, the game treats the dimension as empty and **regenerates fresh chunks — losing existing builds** (skyblock = your copied SP world; highest stakes). Verify each of the 6 folders lands at the exact path and loads its old chunks before deleting the `madagascar` copies.
 2. **Old + new pack must not load together on first start.** While both `madagascar_pack` and `jakarta_pack` are in `datapacks/`, the old pack's `load` still re-creates `madagascar.*` objectives and both register functions. **Remove/disable `madagascar_pack` before the first start with `jakarta_pack`**, or you get duplicate objectives and stale `madagascar.*` back.
-3. **Scoreboard semantics aren't fully nailed down.** Earlier the `stats.*` objectives showed *per-life-ish* low values, not clean lifetime — so I can't 100% predict how softcore stats behave after the objective rename. Rehearse on a copy and confirm softcore still tracks correctly before trusting it live.
+3. ~~Scoreboard semantics~~ — **RESOLVED: full reset, don't care.** Owner is fine resetting softcore stats (the mode has changed too much to be the same), so we don't need to understand or preserve the old values — just create fresh `jakarta.*` and delete the old. The earlier per-life-vs-lifetime mystery no longer matters.
 4. **`config.namespace` (`minecraft:madagascar`) drives `data modify storage` paths** (stash, etc.). Renaming moves the storage namespace; it's transient (stash is momentary, recall uses `madagascar:recall`), so low risk — but verify nothing persistent reads the old storage.
 5. **Resource pack must update as a set** — new `resource-pack` URL **and** `resource-pack-sha1` **and** `resource-pack-id`; a mismatch makes clients silently reject the pack (no custom textures).
 6. **Generator/seed must stay byte-identical** so moved chunks line up with newly generated ones at the borders. True as long as we *only* rename (don't touch noise settings/biome sources in the same pass).
-7. **`migrate_softcore.mcfunction` + the 2 leftover `hardcore.*` objectives** — decide if that migration is already done; if so retire it, else it needs its 3 refs renamed and the hardcore objectives kept through the move.
+7. **`migrate_softcore.mcfunction` + the 2 leftover `hardcore.*` objectives** — with the scoreboard reset (#3), just **retire/delete** the migration and let the hardcore objectives be removed with everything else. Nothing to preserve.
 
 ## Effort / risk
 - **Code rename + pack gen + scoreboard reorg**: ~1–2 hrs, low risk (git-reversible, config-driven).
