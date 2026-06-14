@@ -14,7 +14,7 @@ The persona/answer style lives in `.claude/rules/persona.md`, which Claude Code 
 
 This is a **Minecraft Datapack Generator** for a custom world called **Madagascar**. It programmatically generates `.mcfunction` files (Minecraft command scripts) from JSON configuration data. It supports multiple dimensions: Overworld, Nether, The End, Canvas, Skyblock, Caves, Sky Islands, Waterworld, and Dynamite.
 
-The live server runs vanilla Minecraft **26.1.2** at `D:\jakarta-vanilla-26.1.2\`. Generated packs land in that world's `datapacks/madagascar_pack/` folder.
+The live server runs vanilla Minecraft **26.1.2** at `D:\jakarta-vanilla-26.1.2\`. Generated packs land in that world's `datapacks/jakarta_pack/` folder.
 
 ## Running the Project
 
@@ -48,7 +48,7 @@ The live server at `D:\jakarta-vanilla-26.1.2` runs with **RCON enabled**, so it
 Fill out `.env` with real paths before running any script. The generator writes output to the paths defined there.
 
 - `BASE_PATH` — parent directory the generator writes into (the world's `datapacks/` folder for live)
-- `PACK_FOLDER` — pack folder name appended onto `BASE_PATH` (e.g. `madagascar_pack`)
+- `PACK_FOLDER` — pack folder name appended onto `BASE_PATH` (e.g. `jakarta_pack`)
 
 **Target switching:** `index.js` picks the target from CLI arg → `TARGET` env → `'test'` default. `server.js` reads `TARGET` env (defaults to `test`). When the target is `test`, both entry points layer `.env.test` on top of `.env` with `override:true` — so anything in `.env.test` (typically a sandbox `BASE_PATH=D:\Code\.temp`) wins, and everything else falls through to `.env`. Files:
 
@@ -62,8 +62,8 @@ Fill out `.env` with real paths before running any script. The generator writes 
 
 `.temp/` is the single scratch directory. Two distinct uses share it:
 
-1. **Generator test target.** With `TARGET=test` (the default), `index.js` writes the regenerated pack to `TEST_BASE_PATH/TEST_PACK_PATH`, which is set to `.temp/madagascar_pack/`. `creator.destroy()` wipes **that subdirectory** on every run — never store anything you want to keep inside `.temp/madagascar_pack/`.
-2. **Loose scratchpad.** Everything else under `.temp/` (anywhere outside `madagascar_pack/`) is safe scratch space. Drop log files, ad-hoc test outputs, NBT/JSON dumps, and other throwaway artifacts there. Do **not** drop them in the project root or in source dirs (`app/`, `pack/`, `scripts/`).
+1. **Generator test target.** With `TARGET=test` (the default), `index.js` writes the regenerated pack to `TEST_BASE_PATH/TEST_PACK_PATH`, which is set to `.temp/jakarta_pack/`. `creator.destroy()` wipes **that subdirectory** on every run — never store anything you want to keep inside `.temp/jakarta_pack/`.
+2. **Loose scratchpad.** Everything else under `.temp/` (anywhere outside `jakarta_pack/`) is safe scratch space. Drop log files, ad-hoc test outputs, NBT/JSON dumps, and other throwaway artifacts there. Do **not** drop them in the project root or in source dirs (`app/`, `pack/`, `scripts/`).
 
 ## Architecture
 
@@ -116,7 +116,7 @@ Each file in `app/` corresponds to a Minecraft game feature:
 
 All configuration is externalized to JSON:
 
-1. `config.json`, master config: namespace (`minecraft:madagascar`), folder names, dimension IDs, item IDs, teams, scoreboards, game rules, storage paths
+1. `config.json`, master config: namespace (`minecraft:jakarta`), folder names, dimension IDs, item IDs, teams, scoreboards, game rules, storage paths
 2. `locations.json`, Magic Book waypoints grouped by header (Bases, Landmarks, Dimensions, Farms, etc.)
 3. `exploration.json`, Coordinates Book flat entries list (`{label, dim, x, y, z}`), written by `/add-location`
 4. `objectives.json`, scoreboard objective definitions (kills, stats, time, distance)
@@ -146,7 +146,7 @@ Verified by entity-file census (2026-06-13): skyblock's `entities/` held 25 wand
 Generated `.mcfunction` files follow this path pattern:
 
 ```
-{PACK_PATH}/data/madagascar/function/
+{PACK_PATH}/data/jakarta/function/
 |- load.mcfunction
 |- tick.mcfunction
 |- book/          <- god.mcfunction, magic.mcfunction, exploration.mcfunction
@@ -161,7 +161,7 @@ Generated `.mcfunction` files follow this path pattern:
 
 ## Key Conventions
 
-1. **Namespace:** `minecraft:madagascar`, all functions are registered under this namespace
+1. **Namespace:** `minecraft:jakarta`, all functions are registered under this namespace
 2. **Command building:** Use `util/command.js` for constructing Minecraft commands; it provides a fluent API for appending raw commands, adding comments, and building scoreboard operations
 3. **JSON-driven:** Add new items, locations, or objectives by editing the relevant `data/*.json` file, the generators read these at runtime
 4. **`todo.txt`** tracks one outstanding task: add `pack.mcdata` to the build process
@@ -199,7 +199,7 @@ Caveats: barrel silently drops overflow past 27 stacks; only the first matching 
 
 `server.js` exposes a styled web form at `/add-location` that adds new entries to either:
 - **Exploration Book** (`data/exploration.json`) — flat entry list, paginated 12/page, generated by `app/exploration.js`
-- **Magic Book** (`data/locations.json`) — adds to a named group (existing or new), generates a `/function madagascar:location/<filename>` teleport
+- **Magic Book** (`data/locations.json`) — adds to a named group (existing or new), generates a `/function jakarta:location/<filename>` teleport
 
 Both paths call `generator.create()` after writing so the pack rebuilds before the player runs `/reload`. Strips UTF-8 BOM on JSON read (PowerShell's `Set-Content -Encoding UTF8` writes one and `JSON.parse` rejects it).
 

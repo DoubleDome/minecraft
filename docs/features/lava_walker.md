@@ -50,32 +50,32 @@ the tick only **tracks and melts**:
 1. **Track.** `lava_walker/tick` runs `lava_walker/mark` on each Lava Walker player standing on
    **enchant-placed** magma — identified as magma with **lava directly beneath** (`~ ~-1 ~` magma,
    `~ ~-2 ~` lava), which excludes natural magma blocks. It drops one invisible `marker` per cell
-   (deduped) with a ~8s countdown on the `madagascar.lw` scoreboard.
+   (deduped) with a ~8s countdown on the `jakarta.lw` scoreboard.
 2. **Melt.** `lava_walker/revert` ages each marker; at zero it `fill`s a ±4 disk of
    `magma_block` → `lava` at the marker and removes itself — **unless a player is within 4 blocks**,
    in which case it re-arms (so the path never reverts out from under someone, which would drop them
    in the lava). ±4 covers the level-2 disk radius.
 
-Detection uses the `madagascar:has_lava_walker` predicate (boots enchantment, any level), so it's
+Detection uses the `jakarta:has_lava_walker` predicate (boots enchantment, any level), so it's
 level-agnostic and reloadable.
 
 ## ⚠️ Enchantments need a server RESTART, not `/reload`
 
 Enchantments are a **startup-only datapack registry** (see
 [26x_datapack_gotchas.md](../reports/26x_datapack_gotchas.md)). `/reload` will load the *referencing* tags but
-not register `madagascar:lava_walker`, producing "missing reference" errors. **Stop and restart the
+not register `jakarta:lava_walker`, producing "missing reference" errors. **Stop and restart the
 server** after deploying.
 
 ## Files (all static under `pack/`)
 
 | File | Role |
 | --- | --- |
-| `pack/data/madagascar/enchantment/lava_walker.json` | the enchantment (mirrors Frost Walker, lava + magma) |
+| `pack/data/jakarta/enchantment/lava_walker.json` | the enchantment (mirrors Frost Walker, lava + magma) |
 | `pack/data/minecraft/tags/enchantment/{treasure,tradeable,on_random_loot,tooltip_order}.json` | the **exact** four tags Frost Walker sits in (obtainability + tooltip sort) |
 | `pack/data/minecraft/tags/enchantment/exclusive_set/boots.json` | adds Lava Walker to Frost Walker's exclusive set (incompatible with Frost Walker + Depth Strider, both directions) |
-| `pack/data/madagascar/predicate/has_lava_walker.json` | detects the boots enchant (any level) |
-| `pack/data/madagascar/function/lava_walker/{tick,mark,revert}.mcfunction` | track + melt the temporary trail |
-| `pack/data/madagascar/function/util/load.mcfunction` | **edit:** adds the `madagascar.lw` countdown objective |
+| `pack/data/jakarta/predicate/has_lava_walker.json` | detects the boots enchant (any level) |
+| `pack/data/jakarta/function/lava_walker/{tick,mark,revert}.mcfunction` | track + melt the temporary trail |
+| `pack/data/jakarta/function/util/load.mcfunction` | **edit:** adds the `jakarta.lw` countdown objective |
 | `pack/data/minecraft/tags/function/tick.json` | **edit:** registers `lava_walker/tick` |
 
 (All three tags use `"replace": false` to append to vanilla — they're exactly the tags Frost Walker
@@ -107,9 +107,9 @@ node index.js live
 Test:
 ```
 # put it on boots directly
-enchant @s madagascar:lava_walker
+enchant @s jakarta:lava_walker
 # or a book to combine in an anvil
-give @s enchanted_book[minecraft:stored_enchantments={"madagascar:lava_walker":1}]
+give @s enchanted_book[minecraft:stored_enchantments={"jakarta:lava_walker":1}]
 ```
 Wear the boots and walk to the edge of a lava lake — the surface should turn to magma you can walk
 on without burning. Confirm with `/enchant` that it's "Lava Walker" (not "Unknown enchantment",

@@ -22,13 +22,13 @@ Vanilla has no "bomb arrow" item, so it's built in three parts:
 1. **Mark.** The crafting recipe stamps the output arrow with a `custom_data` marker
    (`{bomb:true}`) and a dark-red `item_name`. When fired, a `minecraft:arrow` entity stores
    the item it was shot from in its `item` NBT — so the marker rides along on the entity.
-2. **Detect.** Every tick, `madagascar:arrow/tick` scans for arrows that have just landed
+2. **Detect.** Every tick, `jakarta:arrow/tick` scans for arrows that have just landed
    (`inGround:1b`) **and** carry the marker, and runs the detonation on each.
-3. **Detonate.** `madagascar:arrow/bomb` summons a primed creeper with `ExplosionRadius:2`
+3. **Detonate.** `jakarta:arrow/bomb` summons a primed creeper with `ExplosionRadius:2`
    at the arrow, then removes the arrow.
 
-The tick scan is wired in by adding `madagascar:arrow/tick` to the `minecraft:tick` function
-tag (alongside the generated `madagascar:tick`).
+The tick scan is wired in by adding `jakarta:arrow/tick` to the `minecraft:tick` function
+tag (alongside the generated `jakarta:tick`).
 
 ## Why a creeper (not TNT or a fireball)
 
@@ -72,10 +72,10 @@ code changes are needed:
 
 | File | Role |
 | --- | --- |
-| `pack/data/madagascar/recipe/bomb_arrow.json` | The arrow + gunpowder shapeless recipe; output carries the `custom_data` marker. |
-| `pack/data/madagascar/function/arrow/tick.mcfunction` | Per-tick: find landed marked arrows, call explode. |
-| `pack/data/madagascar/function/arrow/bomb.mcfunction` | Summon the creeper blast, remove the arrow. |
-| `pack/data/minecraft/tags/function/tick.json` | Adds `madagascar:arrow/tick` to the tick loop. |
+| `pack/data/jakarta/recipe/bomb_arrow.json` | The arrow + gunpowder shapeless recipe; output carries the `custom_data` marker. |
+| `pack/data/jakarta/function/arrow/tick.mcfunction` | Per-tick: find landed marked arrows, call explode. |
+| `pack/data/jakarta/function/arrow/bomb.mcfunction` | Summon the creeper blast, remove the arrow. |
+| `pack/data/minecraft/tags/function/tick.json` | Adds `jakarta:arrow/tick` to the tick loop. |
 
 ## Ammo consumption — why it's a tipped arrow
 

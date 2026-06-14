@@ -52,7 +52,7 @@ placed nothing. Both **dropped**.
 The real difficulty: the arrow's `Pos` sits **on the hit face**, so `align xyz` is a coin-flip
 between the **open cell** and the **solid block** it hit, and vanilla exposes neither the hit block
 nor the face. So instead of locating the cell precisely, we **probe the blocks around the landing
-point** ([`util/place_mounted`](../pack/data/madagascar/function/util/place_mounted.mcfunction)) and
+point** ([`util/place_mounted`](../pack/data/jakarta/function/util/place_mounted.mcfunction)) and
 handle **both** roundings:
 
 | Our aligned cell is… | We look for… | Place |
@@ -72,11 +72,11 @@ angle. The `0.5` step-off and the boundary coin-flip are both gone.
 
 | File | Role |
 | --- | --- |
-| `pack/data/madagascar/recipe/{torch,soul_torch,redstone_torch}_arrow.json` | the three shapeless recipes; each bakes `f`/`w` block ids into the marker |
-| `pack/data/madagascar/function/arrow/torch.mcfunction` | copy `f`/`w` → storage (default normal torch), call the placer, `kill @s` |
-| `pack/data/madagascar/function/util/place_mounted.mcfunction` | **reusable macro:** probe neighbours, place `$(floor)` / `$(wall)[facing=…]` |
-| `pack/data/madagascar/function/util/load.mcfunction` | creates the `madagascar.place` scratch objective (the `#done` flag) |
-| `pack/data/madagascar/function/arrow/tick.mcfunction` | **edit:** torch-detection line |
+| `pack/data/jakarta/recipe/{torch,soul_torch,redstone_torch}_arrow.json` | the three shapeless recipes; each bakes `f`/`w` block ids into the marker |
+| `pack/data/jakarta/function/arrow/torch.mcfunction` | copy `f`/`w` → storage (default normal torch), call the placer, `kill @s` |
+| `pack/data/jakarta/function/util/place_mounted.mcfunction` | **reusable macro:** probe neighbours, place `$(floor)` / `$(wall)[facing=…]` |
+| `pack/data/jakarta/function/util/load.mcfunction` | creates the `jakarta.place` scratch objective (the `#done` flag) |
+| `pack/data/jakarta/function/arrow/tick.mcfunction` | **edit:** torch-detection line |
 | `pack/data/minecraft/tags/function/{tick,load}.json` | **edit:** register `arrow/tick` and `util/load` |
 
 `tooltip_display` hides the greyed-out "No Effect" line a no-potion tipped arrow would otherwise
@@ -84,17 +84,17 @@ show (same trick as the bomb arrow); all three recipes include it.
 
 Detection line in `arrow/tick` (matches all three variants via `{torch:1b}`):
 ```mcfunction
-execute as @e[type=minecraft:arrow,nbt={inGround:1b,item:{components:{"minecraft:custom_data":{torch:1b}}}}] at @s run function madagascar:arrow/torch
+execute as @e[type=minecraft:arrow,nbt={inGround:1b,item:{components:{"minecraft:custom_data":{torch:1b}}}}] at @s run function jakarta:arrow/torch
 ```
 
 `arrow/torch.mcfunction` — default `f`/`w` to a normal torch (covers old arrows), overwrite from the
 marker, run the reusable placer, remove the arrow:
 ```mcfunction
-data modify storage madagascar:place floor set value "minecraft:torch"
-data modify storage madagascar:place wall set value "minecraft:wall_torch"
-data modify storage madagascar:place floor set from entity @s item.components."minecraft:custom_data".f
-data modify storage madagascar:place wall set from entity @s item.components."minecraft:custom_data".w
-function madagascar:util/place_mounted with storage madagascar:place
+data modify storage jakarta:place floor set value "minecraft:torch"
+data modify storage jakarta:place wall set value "minecraft:wall_torch"
+data modify storage jakarta:place floor set from entity @s item.components."minecraft:custom_data".f
+data modify storage jakarta:place wall set from entity @s item.components."minecraft:custom_data".w
+function jakarta:util/place_mounted with storage jakarta:place
 kill @s
 ```
 
@@ -102,16 +102,16 @@ kill @s
 lines treat our cell as open (support = a neighbour); last five treat it as the solid block hit
 (open cell = a neighbour). `#done` (set by `store success`) makes the first placement win:
 ```mcfunction
-scoreboard players set #done madagascar.place 0
-$execute align xyz if score #done madagascar.place matches 0 if block ~ ~ ~ #minecraft:replaceable unless block ~ ~-1 ~ #minecraft:replaceable store success score #done madagascar.place run setblock ~ ~ ~ $(floor)
-$execute align xyz if score #done madagascar.place matches 0 if block ~ ~ ~ #minecraft:replaceable unless block ~ ~ ~-1 #minecraft:replaceable store success score #done madagascar.place run setblock ~ ~ ~ $(wall)[facing=south]
+scoreboard players set #done jakarta.place 0
+$execute align xyz if score #done jakarta.place matches 0 if block ~ ~ ~ #minecraft:replaceable unless block ~ ~-1 ~ #minecraft:replaceable store success score #done jakarta.place run setblock ~ ~ ~ $(floor)
+$execute align xyz if score #done jakarta.place matches 0 if block ~ ~ ~ #minecraft:replaceable unless block ~ ~ ~-1 #minecraft:replaceable store success score #done jakarta.place run setblock ~ ~ ~ $(wall)[facing=south]
 # … +3 more wall directions (open cell), then 5 mirrored lines for the "our cell is solid" case …
 ```
 (`wall[facing=F]` attaches to the block opposite `F`: support north → facing south, south → north,
 east → west, west → east. See the deployed file for all ten lines.)
 
-To **reuse** elsewhere: store `floor` + `wall` block ids in `madagascar:place` and
-`function madagascar:util/place_mounted with storage madagascar:place`, positioned where you want
+To **reuse** elsewhere: store `floor` + `wall` block ids in `jakarta:place` and
+`function jakarta:util/place_mounted with storage jakarta:place`, positioned where you want
 the mount.
 
 ## Caveats & tuning

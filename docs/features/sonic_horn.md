@@ -23,7 +23,7 @@ no mods.
 **Mark → detect → fire.** Vanilla has no "on right-click item" function hook, so activation rides the
 `minecraft:using_item` advancement trigger, filtered to a goat horn carrying the `sonic_horn` marker.
 
-1. **`advancement/sonic_horn.json`** — `using_item` trigger → reward function `madagascar:horn/sonic`.
+1. **`advancement/sonic_horn.json`** — `using_item` trigger → reward function `jakarta:horn/sonic`.
 2. **`horn/sonic`** (runs as the player) — the trigger fires *every tick* of the multi-second blow, so
    it fires on the **edge** only: when the player isn't already tagged `horn_blowing` and the horn is in
    the **main hand**. It tags `horn_blowing` + refreshes `horn_grace` (cleared a few ticks after the
@@ -33,14 +33,14 @@ no mods.
    horn → no per-tick dud spam), plays the boom sound, then raycasts the beam, then wears the horn.
 4. **`horn/ray`** — recursive 0.5-block steps along the look vector (30 steps = 15 blocks): draws the
    `sonic_boom` particle, damages fresh targets at each point, stops at range or the first
-   non-passable block (`#madagascar:beam_pass`).
+   non-passable block (`#jakarta:beam_pass`).
 5. **`horn/hit`** — tags the entity (hit once) and deals `damage @s 10 minecraft:sonic_boom by
    <shooter>`. Reusing the vanilla damage type inherits its armor/shield/resistance bypass via the
    `#minecraft:bypasses_*` damage-type tags — no manual armor math.
 
 ## Durability, Mending, Unbreaking
 
-- **Wear** — `horn/wear` → `apply_wear` consumes 1 point per shot via the `madagascar:horn_wear`
+- **Wear** — `horn/wear` → `apply_wear` consumes 1 point per shot via the `jakarta:horn_wear`
   item modifier (`set_damage` `add:-0.0625` = −1/16). At damage ≥ 16 the horn goes **dud** (the gate
   in `horn/fire` blocks firing) and plays the break sound — it is **not** removed, so Mending can
   bring it back.
@@ -60,10 +60,10 @@ no mods.
 | File | Role |
 | --- | --- |
 | `pack/data/minecraft/loot_table/entities/warden.json` | overrides vanilla: keeps sculk catalyst, adds 50 % Sonic Horn (`set_components` stamps the marker, name, `max_damage:16`, `damage:0`). |
-| `pack/data/madagascar/advancement/sonic_horn.json` | `using_item` trigger → reward `horn/sonic`. |
-| `pack/data/madagascar/function/horn/*.mcfunction` | `load`, `tick`, `sonic`, `fire`, `ray`, `hit`, `wear`, `roll` (macro), `apply_wear`. |
-| `pack/data/madagascar/item_modifier/horn_wear.json` | `set_damage add:-1/16` — one point of wear. |
-| `pack/data/madagascar/tags/block/beam_pass.json` | blocks the beam passes through (air/water/plants). |
+| `pack/data/jakarta/advancement/sonic_horn.json` | `using_item` trigger → reward `horn/sonic`. |
+| `pack/data/jakarta/function/horn/*.mcfunction` | `load`, `tick`, `sonic`, `fire`, `ray`, `hit`, `wear`, `roll` (macro), `apply_wear`. |
+| `pack/data/jakarta/item_modifier/horn_wear.json` | `set_damage add:-1/16` — one point of wear. |
+| `pack/data/jakarta/tags/block/beam_pass.json` | blocks the beam passes through (air/water/plants). |
 | `pack/data/minecraft/tags/item/enchantable/durability.json` | adds `goat_horn` → Mending/Unbreaking on an anvil. |
 | `pack/data/minecraft/tags/function/{load,tick}.json` | wire `horn/load` and `horn/tick`. |
 

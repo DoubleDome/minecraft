@@ -28,7 +28,7 @@ detection:
 1. **Hit.** On a direct hit, vanilla applies the arrow's effect to the struck entity — the same
    mechanism a Flame/tipped arrow uses. This is engine-level and reliable; it only fires on an
    actual hit, never a near-miss, and works on any mob height.
-2. **Freeze.** Each tick, `madagascar:arrow/tick` finds any mob carrying the marker (slowness
+2. **Freeze.** Each tick, `jakarta:arrow/tick` finds any mob carrying the marker (slowness
    amplifier 100) that isn't already frozen and runs `arrow/apply_freeze` → sets `NoAI:1b`, tags it
    `mada_frozen`, joins it to the `mada_frost` team, and adds Glowing so it shows an **aqua frozen
    outline** (the team color tints the glow). (Players are excluded from `NoAI`.)
@@ -64,11 +64,11 @@ slowness (even at amplifier 100) only stops walking, not attacking, so `NoAI` is
 
 | File | Role |
 | --- | --- |
-| `pack/data/madagascar/recipe/frost_arrow.json` / `_packed.json` / `_blue.json` | the three tiers; output is a tipped arrow carrying the marker effect. |
-| `pack/data/madagascar/function/arrow/apply_freeze.mcfunction` | `NoAI:1b` + tag + aqua glow/team on the struck mob. |
-| `pack/data/madagascar/function/arrow/thaw.mcfunction` | undo: restore AI, clear glow/team, untag. |
-| `pack/data/madagascar/function/arrow/load.mcfunction` | create the `mada_frost` team and set its color. |
-| `pack/data/madagascar/function/arrow/tick.mcfunction` | per-tick freeze + thaw rules keyed on the marker effect. |
+| `pack/data/jakarta/recipe/frost_arrow.json` / `_packed.json` / `_blue.json` | the three tiers; output is a tipped arrow carrying the marker effect. |
+| `pack/data/jakarta/function/arrow/apply_freeze.mcfunction` | `NoAI:1b` + tag + aqua glow/team on the struck mob. |
+| `pack/data/jakarta/function/arrow/thaw.mcfunction` | undo: restore AI, clear glow/team, untag. |
+| `pack/data/jakarta/function/arrow/load.mcfunction` | create the `mada_frost` team and set its color. |
+| `pack/data/jakarta/function/arrow/tick.mcfunction` | per-tick freeze + thaw rules keyed on the marker effect. |
 | `pack/data/minecraft/tags/function/load.json` | registers `arrow/load`. |
 
 ## Caveats

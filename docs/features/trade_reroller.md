@@ -25,12 +25,12 @@ after one trade the lectern trick is dead. This tool force-unemploys via NBT, by
 ## How it works (mark → trigger → reroll)
 
 1. **Mark.** The recipe stamps the stick with `custom_data:{trade_reroller:true}` and a green name.
-2. **Trigger.** [`advancement/reroll/use.json`](../pack/data/madagascar/advancement/reroll/use.json)
+2. **Trigger.** [`advancement/reroll/use.json`](../pack/data/jakarta/advancement/reroll/use.json)
    uses `minecraft:player_interacted_with_entity` (item = the marked stick, entity = a villager). It
    fires from the entity-interact packet handler, so it triggers on the right-click regardless of the
-   trade GUI opening. Its reward runs `madagascar:reroll/run`.
-3. **Reroll.** [`reroll/run`](../pack/data/madagascar/function/reroll/run.mcfunction) revokes the
-   advancement (re-arming the one-shot trigger) and calls [`reroll/wipe`](../pack/data/madagascar/function/reroll/wipe.mcfunction)
+   trade GUI opening. Its reward runs `jakarta:reroll/run`.
+3. **Reroll.** [`reroll/run`](../pack/data/jakarta/function/reroll/run.mcfunction) revokes the
+   advancement (re-arming the one-shot trigger) and calls [`reroll/wipe`](../pack/data/jakarta/function/reroll/wipe.mcfunction)
    on the nearest villager in reach, which:
    - zeroes `Xp` (drops the "traded = locked" state),
    - `data remove`s `Offers` (clears the trade list),
@@ -52,10 +52,10 @@ after one trade the lectern trick is dead. This tool force-unemploys via NBT, by
 
 | File | Role |
 | --- | --- |
-| `pack/data/madagascar/recipe/trade_reroller.json` | the stick recipe (stick + emerald) |
-| `pack/data/madagascar/advancement/reroll/use.json` | interact-with-villager trigger → reward fn |
-| `pack/data/madagascar/function/reroll/run.mcfunction` | re-arm trigger + target the clicked villager |
-| `pack/data/madagascar/function/reroll/wipe.mcfunction` | clear Xp/Offers + unemploy = reroll |
+| `pack/data/jakarta/recipe/trade_reroller.json` | the stick recipe (stick + emerald) |
+| `pack/data/jakarta/advancement/reroll/use.json` | interact-with-villager trigger → reward fn |
+| `pack/data/jakarta/function/reroll/run.mcfunction` | re-arm trigger + target the clicked villager |
+| `pack/data/jakarta/function/reroll/wipe.mcfunction` | clear Xp/Offers + unemploy = reroll |
 
 ## Caveats & tuning
 

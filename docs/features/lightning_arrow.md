@@ -23,14 +23,14 @@ fireball blast):
 
 1. **Mark.** The shapeless recipe stamps the output arrow with `custom_data {lightning:true}`
    and a yellow name/tint. Fired, the `minecraft:arrow` entity carries the marker in its `item` NBT.
-2. **Detect.** `madagascar:arrow/tick` (already in the `minecraft:tick` tag) runs **two** detectors
+2. **Detect.** `jakarta:arrow/tick` (already in the `minecraft:tick` tag) runs **two** detectors
    each tick — the same pair as the bomb arrow:
    - landed arrow (`inGround:1b`) carrying the marker, and
    - a direct entity hit: an absorbed arrow never sets `inGround`, so a ~2-block proximity fuse
      catches mob/player hits. The shooter is tagged `lightning_owner` first so a point-blank shot
-     doesn't strike at the muzzle, and `#madagascar:bomb_ignore` is reused to skip
+     doesn't strike at the muzzle, and `#jakarta:bomb_ignore` is reused to skip
      projectiles/markers/etc.
-3. **Strike.** `madagascar:arrow/lightning` summons the bolt at the arrow, then removes the arrow.
+3. **Strike.** `jakarta:arrow/lightning` summons the bolt at the arrow, then removes the arrow.
 
 ## Ammo consumption — tipped arrow (same as bomb)
 
@@ -45,11 +45,11 @@ full rationale.
 
 | File | Role |
 | --- | --- |
-| `pack/data/madagascar/recipe/lightning_arrow.json` | shapeless copper + arrow; output carries the marker. |
-| `pack/data/madagascar/function/arrow/lightning.mcfunction` | summon the bolt, remove the arrow. |
-| `pack/data/madagascar/function/arrow/tick.mcfunction` | the two detector lines (shared per-tick scan). |
+| `pack/data/jakarta/recipe/lightning_arrow.json` | shapeless copper + arrow; output carries the marker. |
+| `pack/data/jakarta/function/arrow/lightning.mcfunction` | summon the bolt, remove the arrow. |
+| `pack/data/jakarta/function/arrow/tick.mcfunction` | the two detector lines (shared per-tick scan). |
 
-No tick-tag change needed — `madagascar:arrow/tick` is already wired in by the bomb arrow.
+No tick-tag change needed — `jakarta:arrow/tick` is already wired in by the bomb arrow.
 
 ## Caveats
 

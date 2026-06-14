@@ -49,15 +49,15 @@ fireball automatically.
    red `custom_name` "Fire Charge". When thrown, the `minecraft:snowball` entity stores the item it
    was thrown from in its **`Item`** NBT — so the marker rides along on the entity (same mechanism
    as the arrow's `item`, just a different field name).
-2. **Detect.** Every tick, `madagascar:fireball/tick` scans for snowballs carrying the marker and,
+2. **Detect.** Every tick, `jakarta:fireball/tick` scans for snowballs carrying the marker and,
    on the first tick they exist, runs the conversion at each — `at @s` so the fireball spawns at the
    snowball's exact position and inherits its trajectory.
-3. **Convert.** `madagascar:fireball/launch` summons a `minecraft:fireball`, copies the snowball's
+3. **Convert.** `jakarta:fireball/launch` summons a `minecraft:fireball`, copies the snowball's
    `Motion` onto it (this is what aims it), sets `ExplosionPower` + `acceleration_power`, then kills
    the snowball. From there vanilla flies and detonates it on contact — exactly a ghast fireball.
 
-The tick scan is wired in by adding `madagascar:fireball/tick` to the `minecraft:tick` function tag
-(alongside the existing `madagascar:tick` and `madagascar:arrow/tick`).
+The tick scan is wired in by adding `jakarta:fireball/tick` to the `minecraft:tick` function tag
+(alongside the existing `jakarta:tick` and `jakarta:arrow/tick`).
 
 ## Why convert to a real `minecraft:fireball` (not fake the flight)
 
@@ -78,7 +78,7 @@ into **both** fields: `direction` (sustains the aim) and `Motion` (initial veloc
 thrown snowball already has the right Motion (the thrower's look direction × throw speed):
 
 ```mcfunction
-# in madagascar:fireball/launch, run `at @s` on the marked snowball:
+# in jakarta:fireball/launch, run `at @s` on the marked snowball:
 summon minecraft:fireball ~ ~ ~ {ExplosionPower:1,acceleration_power:0.1,Tags:["mada_fb_new"]}
 data modify entity @e[type=minecraft:fireball,tag=mada_fb_new,limit=1,sort=nearest] direction set from entity @s Motion
 data modify entity @e[type=minecraft:fireball,tag=mada_fb_new,limit=1,sort=nearest] Motion set from entity @s Motion
@@ -116,10 +116,10 @@ see [26x_datapack_gotchas.md](../reports/26x_datapack_gotchas.md), "Entity NBT f
 
 | File | Role |
 | --- | --- |
-| `pack/data/madagascar/recipe/fire_charge_throw.json` | shapeless 1 `fire_charge` → marked throwable snowball |
-| `pack/data/madagascar/function/fireball/tick.mcfunction` | per-tick: find marked snowballs, call launch |
-| `pack/data/madagascar/function/fireball/launch.mcfunction` | summon fireball, copy Motion, set power, kill snowball |
-| `pack/data/minecraft/tags/function/tick.json` | **edit:** add `madagascar:fireball/tick` to the tick loop |
+| `pack/data/jakarta/recipe/fire_charge_throw.json` | shapeless 1 `fire_charge` → marked throwable snowball |
+| `pack/data/jakarta/function/fireball/tick.mcfunction` | per-tick: find marked snowballs, call launch |
+| `pack/data/jakarta/function/fireball/launch.mcfunction` | summon fireball, copy Motion, set power, kill snowball |
+| `pack/data/minecraft/tags/function/tick.json` | **edit:** add `jakarta:fireball/tick` to the tick loop |
 
 Recipe sketch (`fire_charge_throw.json`):
 ```json
@@ -142,14 +142,14 @@ Detection line (`fireball/tick.mcfunction`):
 ```mcfunction
 # Throwable Fire Charge: marked snowballs become real ghast fireballs on their first tick, so
 # vanilla handles the flight/impact/explosion. Item field is CamelCase on snowballs.
-execute as @e[type=minecraft:snowball,nbt={Item:{components:{"minecraft:custom_data":{ghast:1b}}}}] at @s run function madagascar:fireball/launch
+execute as @e[type=minecraft:snowball,nbt={Item:{components:{"minecraft:custom_data":{ghast:1b}}}}] at @s run function jakarta:fireball/launch
 ```
 
 `launch.mcfunction` is the four lines from "The crux" above.
 
 Tick tag edit:
 ```json
-{ "values": ["madagascar:tick", "madagascar:arrow/tick", "madagascar:fireball/tick"] }
+{ "values": ["jakarta:tick", "jakarta:arrow/tick", "jakarta:fireball/tick"] }
 ```
 
 ## Looks: hotbar texture (optional, needs a resource pack)

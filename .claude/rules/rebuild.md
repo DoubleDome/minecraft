@@ -7,7 +7,7 @@ alwaysApply: true
 
 Editing files under `pack/`, `app/`, `data/`, `dimensions/`, `util/`, or `scripts/` changes
 **source only** — nothing reaches the live Minecraft server until the generator runs. The live
-world reads `D:\jakarta-vanilla-26.1.2\world\datapacks\madagascar_pack`, which is **regenerated**,
+world reads `D:\jakarta-vanilla-26.1.2\world\datapacks\jakarta_pack`, which is **regenerated**,
 not edited in place.
 
 **After any source change, rebuild and deploy without being asked:**
@@ -16,7 +16,7 @@ not edited in place.
 node index.js live
 ```
 
-This clones `pack/` and runs every generator into the live world's `madagascar_pack/`. The user
+This clones `pack/` and runs every generator into the live world's `jakarta_pack/`. The user
 then runs `/reload` in-game (functions, recipes, tags, loot tables, advancements, predicates, and
 item modifiers reload live; dynamic registries — enchantments, dimensions, damage types, worldgen —
 need a server **restart**, not `/reload`).
@@ -27,7 +27,7 @@ need a server **restart**, not `/reload`).
    has run and the new bytes are confirmed in the live pack. Never report a change as deployed off a
    source edit alone.
 2. **The live pack is backed up automatically before every wipe.** Both rebuild paths share
-   `app/rebuild.js`, which snapshots the live pack to `.temp/madagascar_pack.live.bak` before
+   `app/rebuild.js`, which snapshots the live pack to `.temp/jakarta_pack.live.bak` before
    `creator.destroy` wipes it (the live folder has no sentinel). No manual `cp -r` needed; the
    snapshot is overwritten each run, so it's the previous build, not a history.
 3. **`live` is the deploy target; `test` (default) only writes to `.temp/`.** Use `node index.js`

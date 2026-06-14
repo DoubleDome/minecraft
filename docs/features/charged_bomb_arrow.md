@@ -34,11 +34,11 @@ on top of a custom value.
 
 1. **Mark.** The shapeless recipe stamps `custom_data {charged_bomb:true}` and a gold name/orange
    tint on the output `tipped_arrow`. The marker rides the fired `minecraft:arrow` entity's `item` NBT.
-2. **Detect.** `madagascar:arrow/tick` (already in the `minecraft:tick` tag) runs the same two
+2. **Detect.** `jakarta:arrow/tick` (already in the `minecraft:tick` tag) runs the same two
    detectors as the bomb/lightning arrows: a landed arrow (`inGround:1b`), and a ~2-block proximity
    fuse for absorbed direct hits. The shooter is tagged via **`on origin`** (a projectile's spawner;
    `on owner` is a tamed pet's owner and would leave the shooter untagged → muzzle detonation).
-3. **Blast.** `madagascar:arrow/charged_bomb` summons the primed powered creeper, then removes the arrow.
+3. **Blast.** `jakarta:arrow/charged_bomb` summons the primed powered creeper, then removes the arrow.
 
 ## Ammo / item behavior
 
@@ -50,9 +50,9 @@ with a gold name and orange tint and the "No Effect" line suppressed via `toolti
 
 | File | Role |
 | --- | --- |
-| `pack/data/madagascar/recipe/charged_bomb_arrow.json` | shapeless copper + gunpowder + arrow; output carries the marker. |
-| `pack/data/madagascar/function/arrow/charged_bomb.mcfunction` | summon the powered creeper, remove the arrow. |
-| `pack/data/madagascar/function/arrow/tick.mcfunction` | the two detector lines (shared per-tick scan). |
+| `pack/data/jakarta/recipe/charged_bomb_arrow.json` | shapeless copper + gunpowder + arrow; output carries the marker. |
+| `pack/data/jakarta/function/arrow/charged_bomb.mcfunction` | summon the powered creeper, remove the arrow. |
+| `pack/data/jakarta/function/arrow/tick.mcfunction` | the two detector lines (shared per-tick scan). |
 
 ## Caveats
 

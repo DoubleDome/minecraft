@@ -26,8 +26,8 @@ makes the popped fruit eatable; it has no `food`, so it's always edible and rest
 ## How it works (eat → detect → warp)
 
 1. **Eat.** The recipe stamps `consumable` + `custom_data:{recall:true}` + name/glint. Eating it
-   consumes one and increments the `madagascar.recall` objective.
-2. **Detect.** `recall/tick` runs `recall/go` on any player whose `madagascar.recall` ticked, then
+   consumes one and increments the `jakarta.recall` objective.
+2. **Detect.** `recall/tick` runs `recall/go` on any player whose `jakarta.recall` ticked, then
    resets the score.
 3. **Warp.** `recall/go` checks for a personal spawn; if present, `recall/warp` plays the departure
    effect, reads the spawn, teleports, and plays the arrival effect. No spawn → refund + message.
@@ -49,11 +49,11 @@ respawn: { pos: [I; x, y, z], dimension: "minecraft:overworld", angle: 0.0f, for
 | File | Role |
 | --- | --- |
 | `pack/data/jakarta/recipe/recall_fruit.json` | shaped: chorus_fruit ringed by 8 gold_ingot → Golden Chorus Fruit |
-| `pack/data/madagascar/function/recall/tick.mcfunction` | detect the `used` score, run go, reset |
-| `pack/data/madagascar/function/recall/go.mcfunction` | spawn set? warp : refund + message |
-| `pack/data/madagascar/function/recall/warp.mcfunction` | effects + read `respawn` + teleport |
-| `pack/data/madagascar/function/recall/teleport.mcfunction` | **macro:** `execute in $(dim) run tp …` |
-| `pack/data/madagascar/function/util/load.mcfunction` | **edit:** adds the `madagascar.recall` used objective |
+| `pack/data/jakarta/function/recall/tick.mcfunction` | detect the `used` score, run go, reset |
+| `pack/data/jakarta/function/recall/go.mcfunction` | spawn set? warp : refund + message |
+| `pack/data/jakarta/function/recall/warp.mcfunction` | effects + read `respawn` + teleport |
+| `pack/data/jakarta/function/recall/teleport.mcfunction` | **macro:** `execute in $(dim) run tp …` |
+| `pack/data/jakarta/function/util/load.mcfunction` | **edit:** adds the `jakarta.recall` used objective |
 | `pack/data/minecraft/tags/function/tick.json` | **edit:** registers `recall/tick` |
 
 No new dynamic registry, so `/reload` is enough (no restart needed, unlike enchantments).
