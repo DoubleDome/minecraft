@@ -11,7 +11,7 @@ Last updated: 2026-06-13.
 
 | Item | Base | Recipe / source | What it does | Doc |
 | --- | --- | --- | --- | --- |
-| **Wings of Icarus** | elytra | `recipe/icarus_wings.json` (6 feather + 2 honeycomb + 1 string) | Cheap, fast-breaking (128 dura), unenchantable elytra. **Melts above y=256** (wax drains durability ~6/tick); warning band y224–256. | `function/icarus/` |
+| **Icarus Wings** | elytra | `recipe/icarus_wings.json` (6 feather + 2 honeycomb + 1 string) | Cheap, fast-breaking (128 dura), unenchantable elytra. **Melts above y=256** (wax drains durability ~6/tick); warning band y224–256. | `function/icarus/` |
 | **Fire Charge** | snowball → fireball | `recipe/fire_charge_throw.json` | Throwable ghast fireball; inherits thrower `Owner` so it passes through you when flying. | `docs/features/fire_charge.md` |
 | **Bomb Arrow** | tipped_arrow | `recipe/bomb_arrow.json` | Explodes on block/entity hit (marker-effect detection). | `docs/features/bomb_arrow.md` |
 | **Charged Bomb Arrow** | tipped_arrow | `recipe/charged_bomb_arrow.json` | Larger, instant explosion. | `docs/features/charged_bomb_arrow.md` |
