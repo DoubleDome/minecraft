@@ -29,10 +29,8 @@ backup**, ideally rehearsed on a copy of the world first.
 
 ## 2. Open decisions (resolve before executing)
 
-1. **Existing custom items** (Wings of Icarus, Sonic Horns, arrows in chests, Recall Fruit, Fire Charges) will go inert after the namespace flip (their `custom_data` marker + `item_model` point at `madagascar:`). **Verified:** all three players' inventories are full of `madagascar:` items, and their God/Magic books have buttons that call `/function madagascar:…` — so after the rename, held items lose behavior/texture **and the book buttons break** (function not found). Books are easy to re-issue (`/function jakarta:book/…` or re-give); held gadget items need re-crafting. Options:
-   - (a) **Accept it** — old copies stop working / lose texture; players re-craft. Simplest. *(recommended)*
-   - (b) Write a one-time fixer that scans loaded inventories/containers and rewrites the components. Expensive, never fully complete.
-2. **Rehearse on a world copy first?** Strongly recommended given the dimension/playerdata edits. *(recommended: yes)*
+1. **Existing custom items + in-game books → RESOLVED: accept the breakage, no fixer.** Already-crafted `madagascar:` gadget items and the God/Magic book items in inventories go inert / lose texture after the flip, and book buttons (calling `/function madagascar:…`) stop working. **Per the owner: don't care about existing in-game books/items** — no fixer, no book re-issue. Fresh items/books made after the rename work normally.
+2. **Rehearse on a world copy first?** Cheaper insurance now that the dimension move is just a folder move; still recommended. Confirm.
 3. **Softcore objective reorg scope** (folded into this migration): move `stats`, `killer`, `distance`, `start`, `death`, `time`, `softcore` under `jakarta.softcore.*`; leave `constants`/`temp` as shared `jakarta.*`. Confirm.
 4. **Pack folder**: `madagascar_pack` → `jakarta_pack` (PACK_FOLDER env).
 
@@ -72,7 +70,7 @@ backup**, ideally rehearsed on a copy of the world first.
 - [ ] Remove the old `madagascar.*` objectives (108) **and** the 2 leftover `hardcore.*` once values are carried.
 - [ ] `save-all flush`.
 
-**6c. Existing items**: per decision #1 — (a) accept inert/old items, or (b) run the fixer.
+**6c. Existing items / books**: nothing to do — accepted breakage (decision #1). Old `madagascar:` items/books go inert; new ones work.
 
 ## 7. Phase 4 — Deploy, restart, verify
 - [ ] Start server (fresh start = loads `jakarta_pack`, dimension types, registries).
@@ -91,7 +89,16 @@ backup**, ideally rehearsed on a copy of the world first.
 
 ---
 
+## Things still worth worrying about
+1. **Dimension folder path must EXACTLY match the new dim id.** A dim `jakarta:sky_islands` must live at `world/dimensions/jakarta/sky_islands/`. If the path is wrong, the game treats the dimension as empty and **regenerates fresh chunks — losing existing builds** (skyblock = your copied SP world; highest stakes). Verify each of the 6 folders lands at the exact path and loads its old chunks before deleting the `madagascar` copies.
+2. **Old + new pack must not load together on first start.** While both `madagascar_pack` and `jakarta_pack` are in `datapacks/`, the old pack's `load` still re-creates `madagascar.*` objectives and both register functions. **Remove/disable `madagascar_pack` before the first start with `jakarta_pack`**, or you get duplicate objectives and stale `madagascar.*` back.
+3. **Scoreboard semantics aren't fully nailed down.** Earlier the `stats.*` objectives showed *per-life-ish* low values, not clean lifetime — so I can't 100% predict how softcore stats behave after the objective rename. Rehearse on a copy and confirm softcore still tracks correctly before trusting it live.
+4. **`config.namespace` (`minecraft:madagascar`) drives `data modify storage` paths** (stash, etc.). Renaming moves the storage namespace; it's transient (stash is momentary, recall uses `madagascar:recall`), so low risk — but verify nothing persistent reads the old storage.
+5. **Resource pack must update as a set** — new `resource-pack` URL **and** `resource-pack-sha1` **and** `resource-pack-id`; a mismatch makes clients silently reject the pack (no custom textures).
+6. **Generator/seed must stay byte-identical** so moved chunks line up with newly generated ones at the borders. True as long as we *only* rename (don't touch noise settings/biome sources in the same pass).
+7. **`migrate_softcore.mcfunction` + the 2 leftover `hardcore.*` objectives** — decide if that migration is already done; if so retire it, else it needs its 3 refs renamed and the hardcore objectives kept through the move.
+
 ## Effort / risk
 - **Code rename + pack gen + scoreboard reorg**: ~1–2 hrs, low risk (git-reversible, config-driven).
 - **Live dimension migration**: now **low risk** — verified no players are in custom dims, so it's a folder move (no playerdata NBT surgery). Just back up first and re-confirm the guard before moving; the copied skyblock folder is the main thing to move carefully.
-- **Existing-item breakage**: unavoidable with option (a) — re-issue books, re-craft gadget items. Cosmetic + minor friction.
+- **Existing-item breakage**: accepted (owner doesn't care about current in-game items/books) — nothing to do.
