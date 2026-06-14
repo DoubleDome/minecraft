@@ -2,7 +2,7 @@
     "type": "minecraft:overworld",
     "generator": {
         "type": "minecraft:noise",
-        "settings": "jakarta:sky_islands",
+        "settings": "madagascar:sky_islands",
         "biome_source": {
             "type": "minecraft:multi_noise",
             "biomes": [

@@ -259,35 +259,35 @@
         "locations": [
             {
                 "label": "Canvas",
-                "dimension": "jakarta:canvas",
+                "dimension": "madagascar:canvas",
                 "coordinates": "0 70 0",
                 "filename": "canvas",
                 "gamemode": "creative"
             },
             {
                 "label": "Skyblock",
-                "dimension": "jakarta:skyblock",
+                "dimension": "madagascar:skyblock",
                 "coordinates": "-10 63 -1",
                 "rotation": "135 4",
                 "filename": "skyblock"
             },
             {
                 "label": "Caves",
-                "dimension": "jakarta:caves",
+                "dimension": "madagascar:caves",
                 "coordinates": "111 45 223",
                 "rotation": "180 0",
                 "filename": "caves"
             },
             {
                 "label": "Sky Islands",
-                "dimension": "jakarta:sky_islands",
+                "dimension": "madagascar:sky_islands",
                 "coordinates": "19 185 -77",
                 "rotation": "-90 0",
                 "filename": "sky_islands"
             },
             {
                 "label": "Waterworld",
-                "dimension": "jakarta:waterworld",
+                "dimension": "madagascar:waterworld",
                 "coordinates": "0 300 0",
                 "rotation": "0 0",
                 "filename": "waterworld"

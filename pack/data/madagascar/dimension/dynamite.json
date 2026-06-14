@@ -1,5 +1,5 @@
 {
-  "type": "jakarta:dynamite",
+  "type": "madagascar:dynamite",
   "generator": {
     "type": "minecraft:flat",
     "settings": {

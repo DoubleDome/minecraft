@@ -31,11 +31,11 @@
             "minecraft:overworld": "Overworld",
             "minecraft:the_nether": "The Nether",
             "minecraft:the_end": "The End",
-            "jakarta:canvas": "Canvas",
-            "jakarta:skyblock": "Skyblock",
-            "jakarta:caves": "Caves",
-            "jakarta:sky_islands": "Sky Islands",
-            "jakarta:waterworld": "Waterworld"
+            "madagascar:canvas": "Canvas",
+            "madagascar:skyblock": "Skyblock",
+            "madagascar:caves": "Caves",
+            "madagascar:sky_islands": "Sky Islands",
+            "madagascar:waterworld": "Waterworld"
         }
     },
     "function": {
@@ -48,12 +48,12 @@
         "overworld": "minecraft:overworld",
         "the_nether": "minecraft:the_nether",
         "the_end": "minecraft:the_end",
-        "canvas": "jakarta:canvas",
-        "skyblock": "jakarta:skyblock",
-        "dynamite": "jakarta:dynamite",
-        "caves": "jakarta:caves",
-        "sky_islands": "jakarta:sky_islands",
-        "waterworld": "jakarta:waterworld"
+        "canvas": "madagascar:canvas",
+        "skyblock": "madagascar:skyblock",
+        "dynamite": "madagascar:dynamite",
+        "caves": "madagascar:caves",
+        "sky_islands": "madagascar:sky_islands",
+        "waterworld": "madagascar:waterworld"
     },
     "item": {
         "air": "minecraft:air",
