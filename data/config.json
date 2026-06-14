@@ -18,7 +18,8 @@
         "shulker": "shulker",
         "tool_swap": "tool_swap",
         "inventory": "inventory",
-        "ender": "ender"
+        "ender": "ender",
+        "fuse": "fuse"
     },
     "label": {
         "message": {

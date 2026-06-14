@@ -13,6 +13,7 @@ const ender = require('./ender');
 const location = require('./location');
 const softcore = require('./softcore');
 const dynamite = require('./dynamite');
+const fusion = require('./fusion');
 const Load = require('./load');
 const Tick = require('./tick');
 
@@ -92,6 +93,7 @@ class Generator {
         this.createInventoryFunctions();
         this.createEnderFunctions();
         this.createSoftcoreFunctions();
+        this.createFusionFunctions();
         // this.createDynamiteGame();
         this.createLoader();
         this.createTicker();
@@ -195,6 +197,10 @@ class Generator {
         creator.write(path.resolve(this.paths.gate, `${config.folder.inventory}_import.mcfunction`), output.import_gate);
         creator.write(path.resolve(this.paths.gate, `${config.folder.inventory}_export.mcfunction`), output.export_gate);
         creator.write(path.resolve(this.paths.gate, `${config.folder.inventory}_stash.mcfunction`), output.stash_gate);
+    }
+    createFusionFunctions() {
+        this.validatePaths();
+        this.writeFiles(this.paths.fuse, fusion.create());
     }
     createEnderFunctions() {
         this.validatePaths();

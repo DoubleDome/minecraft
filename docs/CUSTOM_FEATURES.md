@@ -12,15 +12,15 @@ Last updated: 2026-06-13.
 | Item | Base | Recipe / source | What it does | Doc |
 | --- | --- | --- | --- | --- |
 | **Wings of Icarus** | elytra | `recipe/icarus_wings.json` (6 feather + 2 honeycomb + 1 string) | Cheap, fast-breaking (128 dura), unenchantable elytra. **Melts above y=256** (wax drains durability ~6/tick); warning band y224–256. | `function/icarus/` |
-| **Fire Charge** | snowball → fireball | `recipe/fire_charge_throw.json` | Throwable ghast fireball; inherits thrower `Owner` so it passes through you when flying. | `docs/fire_charge.md` |
-| **Bomb Arrow** | tipped_arrow | `recipe/bomb_arrow.json` | Explodes on block/entity hit (marker-effect detection). | `docs/bomb_arrow.md` |
-| **Charged Bomb Arrow** | tipped_arrow | `recipe/charged_bomb_arrow.json` | Larger, instant explosion. | `docs/charged_bomb_arrow.md` |
-| **Lightning Arrow** | tipped_arrow | `recipe/lightning_arrow.json` | Calls a lightning strike on impact. | `docs/lightning_arrow.md` |
-| **Frost Arrow I/II/III** | tipped_arrow | `recipe/frost_arrow*.json` | Freezes the target (NoAI/encased); tiers = strength. | `docs/frost_arrow.md` |
-| **Torch / Redstone Torch / Soul Torch Arrow** | tipped_arrow | `recipe/*torch_arrow.json` | Places the matching torch where it lands. | `docs/torch_arrow.md` |
-| **Recall Fruit** | popped_chorus_fruit | `recipe/recall_fruit.json` | Teleport-recall to a saved point. | `docs/recall_fruit.md` |
-| **Trade Reroller** | stick | `recipe/trade_reroller.json` | Rerolls a villager's trades. | `docs/trade_reroller.md` |
-| **Sonic Horn** | goat_horn | `/give` or 50% Warden drop | Fires the Warden sonic boom (10 armor-piercing dmg, 15-block line), 7s cooldown, 16 uses. | `docs/sonic_horn.md` |
+| **Fire Charge** | snowball → fireball | `recipe/fire_charge_throw.json` | Throwable ghast fireball; inherits thrower `Owner` so it passes through you when flying. | `docs/features/fire_charge.md` |
+| **Bomb Arrow** | tipped_arrow | `recipe/bomb_arrow.json` | Explodes on block/entity hit (marker-effect detection). | `docs/features/bomb_arrow.md` |
+| **Charged Bomb Arrow** | tipped_arrow | `recipe/charged_bomb_arrow.json` | Larger, instant explosion. | `docs/features/charged_bomb_arrow.md` |
+| **Lightning Arrow** | tipped_arrow | `recipe/lightning_arrow.json` | Calls a lightning strike on impact. | `docs/features/lightning_arrow.md` |
+| **Frost Arrow I/II/III** | tipped_arrow | `recipe/frost_arrow*.json` | Freezes the target (NoAI/encased); tiers = strength. | `docs/features/frost_arrow.md` |
+| **Torch / Redstone Torch / Soul Torch Arrow** | tipped_arrow | `recipe/*torch_arrow.json` | Places the matching torch where it lands. | `docs/features/torch_arrow.md` |
+| **Recall Fruit** | popped_chorus_fruit | `recipe/recall_fruit.json` | Teleport-recall to a saved point. | `docs/features/recall_fruit.md` |
+| **Trade Reroller** | stick | `recipe/trade_reroller.json` | Rerolls a villager's trades. | `docs/features/trade_reroller.md` |
+| **Sonic Horn** | goat_horn | `/give` or 50% Warden drop | Fires the Warden sonic boom (10 armor-piercing dmg, 15-block line), 7s cooldown, 16 uses. | `docs/features/sonic_horn.md` |
 | **Heavy Stick** | stick | `recipe/heavy_stick.json` | Knockback 255 launcher stick (custom item model). | — |
 | **Blaze Rod / Moss Block** | — | `recipe/blaze_rod.json`, `recipe/moss.json` | Utility recipes making otherwise-uncraftable items craftable. | — |
 
@@ -32,7 +32,7 @@ is the `generator`; the `dimension_type` controls runtime behavior (sky, sleep, 
 | Dimension | `dimension_type` | Notes |
 | --- | --- | --- |
 | **Skyblock** | `minecraft:overworld` | A single-player world copied in; special spawners active (traders/cats). |
-| **Sky Islands** | `minecraft:overworld` | Floating islands in void (forked `floating_islands` noise). See `docs/sky_islands_findings.md`. |
+| **Sky Islands** | `minecraft:overworld` | Floating islands in void (forked `floating_islands` noise). See `docs/reports/sky_islands_findings.md`. |
 | **Caves** | `minecraft:overworld` | Cave world (`minecraft:caves` noise), bedrock-roofed. |
 | **Waterworld** | `minecraft:overworld` | Ocean world (custom noise settings). |
 | **Canvas** | `minecraft:overworld` | Custom build/canvas dimension. |
@@ -49,7 +49,7 @@ pillager patrol, siege) run only in dimensions whose `dimension_type` is
 
 | Enchantment | Effect |
 | --- | --- |
-| **Lava Walker** | Frostwalker-for-lava (turns lava to walkable surface). See `docs/lava_walker.md`. |
+| **Lava Walker** | Frostwalker-for-lava (turns lava to walkable surface). See `docs/features/lava_walker.md`. |
 | **Smelting** | Auto-smelts mined blocks (auto-smelt tool enchant). |
 
 ## Books (given via `/function madagascar:book/...`)
@@ -67,12 +67,13 @@ Generated from `app/*.js` into `function/`:
 
 | System | What it does | Source |
 | --- | --- | --- |
-| **Tool / Armor / Shulker swap** | Hotswap gear loadouts. | `app/swapper_*.js` (`docs/tool_swap_rewrite.md`, `docs/shulker_swap_rewrite.md`) |
+| **Tool / Armor / Shulker swap** | Hotswap gear loadouts. | `app/swapper_*.js` (`docs/reports/tool_swap_rewrite.md`, `docs/plans/shulker_swap_rewrite.md`) |
 | **Inventory import/export/stash** | Save/restore loadouts; **stash** drops a chest+barrel and sorts gear in. | `app/inventory.js` |
 | **Ender chest summon** | Places/destroys an ender chest in front of you. | `app/ender.js` |
 | **Location waypoints** | `/function madagascar:location/<name>` teleports. | `app/location.js` |
-| **Softcore mode** | Softcore game functions (start/stop/pause/death handling). | `app/softcore.js` (`docs/softcore_rewrite.md`) |
+| **Softcore mode** | Softcore game functions (start/stop/pause/death handling). | `app/softcore.js` (`docs/plans/softcore_rewrite.md`) |
 | **Dynamite mode** | Dynamite game mode (own dimension). | `app/dynamite.js` |
+| **Fusion Altar** | Drop 2 same-tier swords + a Nether Star on a **smithing table** → next-tier sword (e.g. 2× "Iron Sword II" → "Iron Sword III"). All 7 materials, unlimited tiers; raw-damage buffs (`base + (tier-1)×2`), unbreakable at tier ≥ 4, enchants discarded. Pure functions (no recipes) — reloads live. | `app/fusion.js` → `function/fuse/` |
 
 Static-function gadgets (under `pack/data/madagascar/function/`): `arrow/`,
 `fireball/`, `horn/` (sonic horn), `lava_walker/`, `recall/`, `reroll/`, `icarus/`.
@@ -80,7 +81,7 @@ Static-function gadgets (under `pack/data/madagascar/function/`): `arrow/`,
 ## Resource pack
 
 Custom item textures/models served over LAN. Build with `node scripts/resourcepack.js`;
-served at `/madagascar_rp.zip` by `server.js`. See `docs/resource_pack.md`.
+served at `/madagascar_rp.zip` by `server.js`. See `docs/features/resource_pack.md`.
 
 ## Dashboard (server.js)
 
