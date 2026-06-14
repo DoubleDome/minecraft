@@ -63,8 +63,8 @@ class Generator {
         this.paths.base = creator.validate(path.resolve(base));
         this.paths.data = creator.validate(path.resolve(this.paths.base, config.path.data));
         this.paths.minecraft = creator.validate(path.resolve(this.paths.data, config.path.minecraft));
-        this.paths.madagascar = creator.validate(path.resolve(this.paths.data, config.path.madagascar));
-        this.paths.functions = creator.validate(path.resolve(this.paths.madagascar, config.path.functions));
+        this.paths.jakarta = creator.validate(path.resolve(this.paths.data, config.path.jakarta));
+        this.paths.functions = creator.validate(path.resolve(this.paths.jakarta, config.path.functions));
         this.paths.pack = path.resolve(__dirname, '../', config.path.pack);
         Object.keys(config.folder).forEach(key => {
             this.paths[key] = creator.validate(path.resolve(this.paths.functions, config.folder[key]));

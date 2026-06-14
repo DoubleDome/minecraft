@@ -166,7 +166,7 @@ class Softcore {
         dimensions.shift();
 
         dimensions.forEach((value, index) => {
-            command.append(`execute if score ${config.player.temp} ${objectives.softcore.death_dimension.name} matches ${index} run execute as @s run execute in ${value} run function madagascar:softcore/prepare_marker`);
+            command.append(`execute if score ${config.player.temp} ${objectives.softcore.death_dimension.name} matches ${index} run execute as @s run execute in ${value} run function jakarta:softcore/prepare_marker`);
         });
         return command.export();
     }

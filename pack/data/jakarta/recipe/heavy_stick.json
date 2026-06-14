@@ -1,0 +1,23 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "category": "equipment",
+    "ingredients": [
+        "minecraft:heavy_core",
+        "minecraft:stick"
+    ],
+    "result": {
+        "id": "minecraft:stick",
+        "count": 1,
+        "components": {
+            "minecraft:enchantments": {
+                "minecraft:knockback": 255
+            },
+            "minecraft:custom_name": {
+                "text": "Heavy Stick",
+                "color": "aqua",
+                "italic": false
+            },
+            "minecraft:item_model": "jakarta:heavy_stick"
+        }
+    }
+}

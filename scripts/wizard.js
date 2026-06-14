@@ -10,7 +10,7 @@ const config = {
     datapack: {
         label: 'Datapack',
         base: '/Users/aletoled/Library/Application Support/minecraft/saves/',
-        pack: 'Datapack/datapacks/madagascar_pack',
+        pack: 'Datapack/datapacks/jakarta_pack',
     },
     local: {
         label: 'Local',

@@ -32,7 +32,7 @@
                                     "predicate": {
                                         "predicates": {
                                             "minecraft:enchantments": [
-                                                { "enchantments": "madagascar:smelting", "levels": { "min": 1 } }
+                                                { "enchantments": "jakarta:smelting", "levels": { "min": 1 } }
                                             ]
                                         }
                                     }

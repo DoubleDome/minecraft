@@ -1,0 +1,29 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "ingredients": [
+        "minecraft:chorus_fruit",
+        "#minecraft:beds"
+    ],
+    "result": {
+        "id": "minecraft:popped_chorus_fruit",
+        "count": 1,
+        "components": {
+            "minecraft:consumable": {
+                "consume_seconds": 1.6,
+                "animation": "eat",
+                "sound": "minecraft:entity.generic.eat",
+                "has_consume_particles": true
+            },
+            "minecraft:custom_data": {
+                "recall": true
+            },
+            "minecraft:item_name": {
+                "text": "Recall Fruit",
+                "color": "light_purple"
+            },
+            "minecraft:item_model": "jakarta:recall_fruit",
+            "minecraft:enchantment_glint_override": true
+        }
+    }
+}

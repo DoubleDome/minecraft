@@ -17,10 +17,10 @@ const crypto = require('crypto');
 
 const ROOT = path.resolve(__dirname, '..');
 const SRC = path.join(ROOT, 'resourcepack');
-const TEX_DIR = path.join(SRC, 'assets', 'madagascar', 'textures', 'item');
+const TEX_DIR = path.join(SRC, 'assets', 'jakarta', 'textures', 'item');
 const DIST = path.join(ROOT, 'dist');
-const ZIP_PATH = path.join(DIST, 'madagascar_rp.zip');
-const SHA_PATH = path.join(DIST, 'madagascar_rp.sha1.txt');
+const ZIP_PATH = path.join(DIST, 'jakarta_rp.zip');
+const SHA_PATH = path.join(DIST, 'jakarta_rp.sha1.txt');
 
 const FORCE = process.argv.includes('--force');
 
@@ -205,9 +205,9 @@ function ensureTextures() {
         const p = path.join(TEX_DIR, name);
         if (FORCE || !fs.existsSync(p)) {
             fs.writeFileSync(p, make());
-            console.log(`  texture  ${fs.existsSync(p) ? 'wrote' : 'wrote'}  assets/madagascar/textures/item/${name}`);
+            console.log(`  texture  ${fs.existsSync(p) ? 'wrote' : 'wrote'}  assets/jakarta/textures/item/${name}`);
         } else {
-            console.log(`  texture  kept   assets/madagascar/textures/item/${name} (exists; --force to regen)`);
+            console.log(`  texture  kept   assets/jakarta/textures/item/${name} (exists; --force to regen)`);
         }
     }
 }
@@ -291,7 +291,7 @@ function main() {
     console.log(`  sha1: ${sha1}`);
     console.log('\nserver.properties:');
     console.log(`  resource-pack-sha1=${sha1}`);
-    console.log('  resource-pack=http://<LAN-IP>:3000/madagascar_rp.zip');
+    console.log('  resource-pack=http://<LAN-IP>:3000/jakarta_rp.zip');
 }
 
 main();

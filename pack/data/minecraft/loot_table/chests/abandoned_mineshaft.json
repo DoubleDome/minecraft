@@ -34,7 +34,7 @@
           "functions": [
             {
               "function": "minecraft:enchant_randomly",
-              "options": ["madagascar:smelting"]
+              "options": ["jakarta:smelting"]
             }
           ],
           "name": "minecraft:book",

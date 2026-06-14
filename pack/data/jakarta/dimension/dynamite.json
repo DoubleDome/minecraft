@@ -1,0 +1,10 @@
+{
+  "type": "jakarta:dynamite",
+  "generator": {
+    "type": "minecraft:flat",
+    "settings": {
+      "layers": [],
+      "structure_overrides": []
+    }
+  }
+}

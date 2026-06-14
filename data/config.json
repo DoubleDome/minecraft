@@ -1,12 +1,12 @@
 {
-    "namespace": "minecraft:madagascar",
-    "package": "madagascar",
+    "namespace": "minecraft:jakarta",
+    "package": "jakarta",
     "path": {
         "pack": "pack",
-        "root": "datapacks/madagascar_pack/",
+        "root": "datapacks/jakarta_pack/",
         "data": "data",
         "minecraft": "minecraft",
-        "madagascar": "madagascar",
+        "jakarta": "jakarta",
         "functions": "function"
     },
     "folder": {
@@ -31,29 +31,29 @@
             "minecraft:overworld": "Overworld",
             "minecraft:the_nether": "The Nether",
             "minecraft:the_end": "The End",
-            "madagascar:canvas": "Canvas",
-            "madagascar:skyblock": "Skyblock",
-            "madagascar:caves": "Caves",
-            "madagascar:sky_islands": "Sky Islands",
-            "madagascar:waterworld": "Waterworld"
+            "jakarta:canvas": "Canvas",
+            "jakarta:skyblock": "Skyblock",
+            "jakarta:caves": "Caves",
+            "jakarta:sky_islands": "Sky Islands",
+            "jakarta:waterworld": "Waterworld"
         }
     },
     "function": {
-        "book": "madagascar:gate/book",
-        "get_random_number": "madagascar:get_random_number",
-        "get_player_head": "madagascar:get_player_head"
+        "book": "jakarta:gate/book",
+        "get_random_number": "jakarta:get_random_number",
+        "get_player_head": "jakarta:get_player_head"
     },
     "dimension": {
         "default": "minecraft:overworld",
         "overworld": "minecraft:overworld",
         "the_nether": "minecraft:the_nether",
         "the_end": "minecraft:the_end",
-        "canvas": "madagascar:canvas",
-        "skyblock": "madagascar:skyblock",
-        "dynamite": "madagascar:dynamite",
-        "caves": "madagascar:caves",
-        "sky_islands": "madagascar:sky_islands",
-        "waterworld": "madagascar:waterworld"
+        "canvas": "jakarta:canvas",
+        "skyblock": "jakarta:skyblock",
+        "dynamite": "jakarta:dynamite",
+        "caves": "jakarta:caves",
+        "sky_islands": "jakarta:sky_islands",
+        "waterworld": "jakarta:waterworld"
     },
     "item": {
         "air": "minecraft:air",

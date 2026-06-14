@@ -26,8 +26,8 @@ class Book {
 
     createBookGate() {
         const command = new Command();
-        command.append(`execute if entity @s[team=${config.team.god.name}] run function madagascar:book/god`);
-        command.append(`execute unless entity @s[team=${config.team.god.name}] run function madagascar:book/magic`);
+        command.append(`execute if entity @s[team=${config.team.god.name}] run function jakarta:book/god`);
+        command.append(`execute unless entity @s[team=${config.team.god.name}] run function jakarta:book/magic`);
         return command.export();
     }
 

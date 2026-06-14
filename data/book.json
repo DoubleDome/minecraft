@@ -163,7 +163,7 @@
             "color": "dark_green",
             "click_event": {
                 "action": "run_command",
-                "command": "/function madagascar:gate/softcore_start"
+                "command": "/function jakarta:gate/softcore_start"
             }
         },
         {
@@ -171,7 +171,7 @@
             "color": "gold",
             "click_event": {
                 "action": "run_command",
-                "command": "/function madagascar:softcore/toggle"
+                "command": "/function jakarta:softcore/toggle"
             }
         },
         {
@@ -179,7 +179,7 @@
             "color": "dark_red",
             "click_event": {
                 "action": "run_command",
-                "command": "/function madagascar:softcore/stop"
+                "command": "/function jakarta:softcore/stop"
             }
         }
     ],
@@ -197,7 +197,7 @@
             "color": "dark_green",
             "click_event": {
                 "action": "run_command",
-                "command": "/function madagascar:gate/shulker_export"
+                "command": "/function jakarta:gate/shulker_export"
             }
         },
         {
@@ -213,7 +213,7 @@
             "color": "dark_green",
             "click_event": {
                 "action": "run_command",
-                "command": "/function madagascar:ender/toggle"
+                "command": "/function jakarta:ender/toggle"
             }
         },
         {
@@ -233,7 +233,7 @@
             "color": "dark_green",
             "click_event": {
                 "action": "run_command",
-                "command": "/function madagascar:gate/inventory_stash"
+                "command": "/function jakarta:gate/inventory_stash"
             }
         }
     ],
@@ -251,7 +251,7 @@
             "color": "gold",
             "click_event": {
                 "action": "run_command",
-                "command": "/function madagascar:gate/tool_swap_silk_pickaxe"
+                "command": "/function jakarta:gate/tool_swap_silk_pickaxe"
             }
         },
         {
@@ -263,7 +263,7 @@
             "color": "gold",
             "click_event": {
                 "action": "run_command",
-                "command": "/function madagascar:gate/tool_swap_fortune_pickaxe"
+                "command": "/function jakarta:gate/tool_swap_fortune_pickaxe"
             }
         },
         {
@@ -293,7 +293,7 @@
             "color": "gold",
             "click_event": {
                 "action": "run_command",
-                "command": "/function madagascar:gate/tool_swap_silk_axe"
+                "command": "/function jakarta:gate/tool_swap_silk_axe"
             }
         },
         {
@@ -305,7 +305,7 @@
             "color": "gold",
             "click_event": {
                 "action": "run_command",
-                "command": "/function madagascar:gate/tool_swap_fortune_axe"
+                "command": "/function jakarta:gate/tool_swap_fortune_axe"
             }
         },
         {
@@ -335,7 +335,7 @@
             "color": "gold",
             "click_event": {
                 "action": "run_command",
-                "command": "/function madagascar:gate/tool_swap_silk_shovel"
+                "command": "/function jakarta:gate/tool_swap_silk_shovel"
             }
         },
         {
@@ -347,7 +347,7 @@
             "color": "gold",
             "click_event": {
                 "action": "run_command",
-                "command": "/function madagascar:gate/tool_swap_fortune_shovel"
+                "command": "/function jakarta:gate/tool_swap_fortune_shovel"
             }
         },
         {
@@ -377,7 +377,7 @@
             "color": "gold",
             "click_event": {
                 "action": "run_command",
-                "command": "/function madagascar:gate/tool_swap_silk_hoe"
+                "command": "/function jakarta:gate/tool_swap_silk_hoe"
             }
         },
         {
@@ -389,7 +389,7 @@
             "color": "gold",
             "click_event": {
                 "action": "run_command",
-                "command": "/function madagascar:gate/tool_swap_fortune_hoe"
+                "command": "/function jakarta:gate/tool_swap_fortune_hoe"
             }
         },
         {
@@ -415,7 +415,7 @@
             "color": "gold",
             "click_event": {
                 "action": "run_command",
-                "command": "/function madagascar:gate/tool_swap_shears"
+                "command": "/function jakarta:gate/tool_swap_shears"
             }
         }
     ],
@@ -429,7 +429,7 @@
             "color": "gold",
             "click_event": {
                 "action": "run_command",
-                "command": "/function madagascar:gate/tool_swap_flint_and_steel"
+                "command": "/function jakarta:gate/tool_swap_flint_and_steel"
             }
         }
     ]
