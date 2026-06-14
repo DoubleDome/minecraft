@@ -96,7 +96,7 @@ gravity arc hasn't kicked in yet, so the flight reads as a flat, straight fireba
 ## 26.1.2 NBT field names (verified from the server jar)
 
 Extracted directly from `versions/26.1.2/server-26.1.2.jar` (the live jar is the source of truth —
-see [26x_datapack_gotchas.md](26x_datapack_gotchas.md), "Entity NBT field casing is MIXED"):
+see [26x_datapack_gotchas.md](../reports/26x_datapack_gotchas.md), "Entity NBT field casing is MIXED"):
 
 | Entity (class) | Field | Case | Notes |
 | --- | --- | --- | --- |

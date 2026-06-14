@@ -62,7 +62,7 @@ level-agnostic and reloadable.
 ## ⚠️ Enchantments need a server RESTART, not `/reload`
 
 Enchantments are a **startup-only datapack registry** (see
-[26x_datapack_gotchas.md](26x_datapack_gotchas.md)). `/reload` will load the *referencing* tags but
+[26x_datapack_gotchas.md](../reports/26x_datapack_gotchas.md)). `/reload` will load the *referencing* tags but
 not register `madagascar:lava_walker`, producing "missing reference" errors. **Stop and restart the
 server** after deploying.
 

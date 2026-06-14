@@ -36,4 +36,4 @@ need a server **restart**, not `/reload`).
    `/rebuild` button deploys to the live world while the CLI stays safe-by-default.
 4. **Verify after deploy.** Confirm the changed bytes actually landed in the live pack (grep/ls the
    specific file) — `/reload` shows no error even when content is wrong (see
-   `docs/26x_datapack_gotchas.md`, "Verify text components in-game, not just in the log").
+   `docs/reports/26x_datapack_gotchas.md`, "Verify text components in-game, not just in the log").

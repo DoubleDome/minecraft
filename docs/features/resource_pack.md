@@ -33,7 +33,7 @@ resourcepack/
     textures/item/<name>.png                   # 16x16 art  ← currently placeholders
 ```
 
-`min_format`/`max_format` are arrays per the 26.x convention (see `docs/26x_datapack_gotchas.md`).
+`min_format`/`max_format` are arrays per the 26.x convention (see `docs/reports/26x_datapack_gotchas.md`).
 The **resource-pack** format is `84`; the data-pack format is `101` — different numbers.
 
 ## Build

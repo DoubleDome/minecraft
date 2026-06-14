@@ -118,7 +118,7 @@ the mount.
 
 - **Works from any angle** — the variant comes from probing real neighbours, not the shot angle, so
   arced/diagonal/steep hits place correctly, and there's no offset to calibrate (no rotation used).
-  Still a "verify in-game" feature ([26x_datapack_gotchas.md](26x_datapack_gotchas.md)): `/reload`
+  Still a "verify in-game" feature ([26x_datapack_gotchas.md](../reports/26x_datapack_gotchas.md)): `/reload`
   shows no error even if a torch lands wrong.
 - **Ceilings get nothing** — vanilla has no ceiling torch (only-above support matches no probe).
 - **Inside corners** (multiple solid neighbours) take floor-first, then N/E/S/W priority — a valid

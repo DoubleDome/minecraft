@@ -186,7 +186,7 @@ Source-file deltas:
 
 Deferred to follow-up work (see separate plan docs):
 
-- `app/swapper_shulker.js` and `app/inventory.js` — same NBT / loot-mine rot, untouched in this rewrite. See `docs/shulker_swap_rewrite.md`.
+- `app/swapper_shulker.js` and `app/inventory.js` — same NBT / loot-mine rot, untouched in this rewrite. See `docs/plans/shulker_swap_rewrite.md`.
 - The book's god page — already rewired in Phase A's predecessor work (the magic page was re-enabled in `2610219`); the god page's per-tool buttons still rely on `tool_swap_*` gate names which match the new generator output.
 
 ---
