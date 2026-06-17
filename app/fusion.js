@@ -83,7 +83,10 @@ class Fusion {
         c.comment('Tag this material\'s sword items on the table; read tier (vanilla = 1)');
         c.append(`$tag @e[type=item,nbt={Item:{id:"minecraft:$(mat)_sword"}},distance=..${RADIUS}] add fuse_m`);
         c.append(`scoreboard players set @e[tag=fuse_m,distance=..${RADIUS}] fuse_tier 1`);
-        c.append(`execute as @e[tag=fuse_m,distance=..${RADIUS}] store result score @s fuse_tier run data get entity @s Item.components."minecraft:custom_data".fusion_tier`);
+        // Only override the default when the item actually has fusion_tier. Without the
+        // `if data` guard, a failed `data get` on a vanilla sword makes `store result`
+        // write 0 -> anchor tier 0 -> output "Sword I" instead of "Sword II".
+        c.append(`execute as @e[tag=fuse_m,distance=..${RADIUS}] if data entity @s Item.components."minecraft:custom_data".fusion_tier store result score @s fuse_tier run data get entity @s Item.components."minecraft:custom_data".fusion_tier`);
         c.comment('Anchor = nearest sword; keep only swords of that same tier');
         c.append('scoreboard players set #k fuse_tier 0');
         c.append(`execute as @e[tag=fuse_m,distance=..${RADIUS},sort=nearest,limit=1] run scoreboard players operation #k fuse_tier = @s fuse_tier`);

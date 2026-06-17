@@ -12,7 +12,38 @@ class Book {
         result.god = this.createBook('god', locations);
         result.magic = this.createBook('magic', locations);
         result.gate = this.createBookGate();
+        result.magicRecipe = this.createMagicRecipe(locations);
         return result;
+    }
+
+    // Craftable Magic Book: bake the same generated written_book_content into a
+    // shapeless recipe result (book + ender pearl), so crafting yields the real,
+    // current book directly. Regenerated each build, so new waypoints show up.
+    // (The God book stays /function-only — a recipe can't permission-gate admin tools.)
+    createMagicRecipe(locations) {
+        const title = `${content.titles.magic} ${roman[content.version]}`;
+        // generatePages now emits valid JSON ("raw" is quoted), so we can parse it.
+        const pages = JSON.parse(this.generatePages('magic', locations));
+        const recipe = {
+            type: 'minecraft:crafting_shapeless',
+            category: 'misc',
+            ingredients: ['minecraft:book', 'minecraft:ender_pearl'],
+            result: {
+                id: 'minecraft:written_book',
+                count: 1,
+                components: {
+                    'minecraft:written_book_content': {
+                        title,
+                        author: content.author,
+                        generation: 3,
+                        pages,
+                    },
+                    'minecraft:lore': content.lore.map(text => ({ text })),
+                    'minecraft:custom_data': { magic_book: true },
+                },
+            },
+        };
+        return JSON.stringify(recipe, null, 4);
     }
     createBook(type, locations) {
         let result = this.generateMetadata(content.titles[type], content.author, content.lore, content.version, content.generation);
@@ -33,16 +64,16 @@ class Book {
 
     generatePages(type, locations) {
         let result = '[';
-        result += `{raw:${this.generateMagicPage()}}`;
+        result += `{"raw":${this.generateMagicPage()}}`;
         if (type === 'god') {
             result += ',';
-            result += `{raw:${this.generateGodPage()}}`;
+            result += `{"raw":${this.generateGodPage()}}`;
         }
         for (let l = 0; l < locations.length; l++) {
             const pages = this.generateLocationPages(locations[l]);
             for (let p = 0; p < pages.length; p++) {
                 result += ',';
-                result += `{raw:${pages[p]}}`;
+                result += `{"raw":${pages[p]}}`;
             }
         }
         result += ']';

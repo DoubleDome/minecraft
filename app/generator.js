@@ -187,6 +187,10 @@ class Generator {
         creator.write(path.resolve(this.paths.gate, 'book.mcfunction'), output.gate);
 
         creator.write(path.resolve(this.paths.book, 'exploration.mcfunction'), exploration.create(data.exploration));
+
+        // Craftable Magic Book recipe (content baked from book.js, regenerated each build).
+        const recipeDir = creator.validate(path.resolve(this.paths.jakarta, 'recipe'));
+        creator.write(path.resolve(recipeDir, 'magic_book.json'), output.magicRecipe);
     }
     createInventoryFunctions() {
         this.validatePaths();
