@@ -147,7 +147,7 @@ class Fusion {
     // (enchantments intentionally NOT carried). Tagged fuse_new so do can finish it.
     createSpawn() {
         const c = new Command();
-        c.append(`$summon item ~ ~0.4 ~ {Tags:["fuse_new"],PickupDelay:20,Item:{id:"minecraft:$(mat)_sword",count:1,components:{"minecraft:item_name":{text:"$(matName) Sword $(roman)",color:"$(color)",italic:false},"minecraft:enchantment_glint_override":true,"minecraft:custom_data":{fusion_sword:true,material:"$(mat)",fusion_tier:$(tier)},"minecraft:attribute_modifiers":{modifiers:[{type:"minecraft:attack_damage",id:"${pkg}:fusion.attack_damage",amount:$(dmg)d,operation:"add_value",slot:"mainhand"},{type:"minecraft:attack_speed",id:"${pkg}:fusion.attack_speed",amount:-2.4d,operation:"add_value",slot:"mainhand"}]}}}}`);
+        c.append(`$summon item ~ ~0.4 ~ {Tags:["fuse_new"],PickupDelay:20,Item:{id:"minecraft:$(mat)_sword",count:1,components:{"minecraft:item_name":{text:"$(matName) Sword $(roman)",color:"$(color)",italic:false},"minecraft:enchantment_glint_override":true,"minecraft:custom_data":{fusion_sword:true,material:"$(mat)",fusion_tier:$(tier)},"minecraft:attribute_modifiers":[{type:"minecraft:attack_damage",id:"${pkg}:fusion.attack_damage",amount:$(dmg)d,operation:"add_value",slot:"mainhand"},{type:"minecraft:attack_speed",id:"${pkg}:fusion.attack_speed",amount:-2.4d,operation:"add_value",slot:"mainhand"}]}}}`);
         return c.export();
     }
 
