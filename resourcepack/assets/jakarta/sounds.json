@@ -1,0 +1,11 @@
+{
+    "music_disc.better_luck_next_time": {
+        "category": "record",
+        "sounds": [
+            {
+                "name": "jakarta:music/better_luck_next_time",
+                "stream": true
+            }
+        ]
+    }
+}
