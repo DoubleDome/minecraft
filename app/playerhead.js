@@ -15,7 +15,7 @@ const killerTemplate = {
             condition: 'minecraft:entity_scores',
             entity: 'this',
             scores: {
-                'madagascar.softcore.deaths': 0,
+                'jakarta.softcore.deaths': 0,
             },
         },
     ],
@@ -23,7 +23,7 @@ const killerTemplate = {
 };
 
 const objectiveTemplate = {
-    name: 'madagascar.stats.flight_distance',
+    name: 'jakarta.stats.flight_distance',
     type: 'minecraft.custom:minecraft.aviate_one_cm',
     value: 0,
 };
@@ -49,7 +49,7 @@ class Playerhead {
     addKiller(killer) {
         const clone = JSON.parse(JSON.stringify(killerTemplate));
         clone.conditions[0].scores = {};
-        clone.conditions[0].scores[`madagascar.softcore.killer.${killer.type}`] = 1;
+        clone.conditions[0].scores[`jakarta.softcore.killer.${killer.type}`] = 1;
         clone.lore[0][1].text = killer.label;
         source.pools[0].entries[0].functions.splice(8, 0, clone);
     }
@@ -63,7 +63,7 @@ class Playerhead {
     }
     addObjective(killer) {
         const clone = JSON.parse(JSON.stringify(objectiveTemplate));
-        clone.name = `madagascar.killer.${killer.type}`;
+        clone.name = `jakarta.killer.${killer.type}`;
         clone.type = `minecraft.killed_by:minecraft.${killer.type}`;
         return clone;
     }

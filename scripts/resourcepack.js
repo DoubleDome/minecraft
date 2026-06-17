@@ -17,10 +17,10 @@ const crypto = require('crypto');
 
 const ROOT = path.resolve(__dirname, '..');
 const SRC = path.join(ROOT, 'resourcepack');
-const TEX_DIR = path.join(SRC, 'assets', 'madagascar', 'textures', 'item');
+const TEX_DIR = path.join(SRC, 'assets', 'jakarta', 'textures', 'item');
 const DIST = path.join(ROOT, 'dist');
-const ZIP_PATH = path.join(DIST, 'madagascar_rp.zip');
-const SHA_PATH = path.join(DIST, 'madagascar_rp.sha1.txt');
+const ZIP_PATH = path.join(DIST, 'jakarta_rp.zip');
+const SHA_PATH = path.join(DIST, 'jakarta_rp.sha1.txt');
 
 const FORCE = process.argv.includes('--force');
 
@@ -79,24 +79,8 @@ function canvas() {
 }
 
 // Placeholder textures — recognizable-ish, clearly stand-ins for real art.
-function texRecallFruit() {
-    // Light-purple chorus-style fruit: filled blob + darker rim + green stem.
-    const c = canvas();
-    const cx = 8, cy = 9, R = 6;
-    for (let y = 0; y < 16; y++) for (let x = 0; x < 16; x++) {
-        const d = Math.hypot(x - cx + 0.5, y - cy + 0.5);
-        if (d <= R) {
-            const rim = d > R - 1.2;
-            if (rim) c.set(x, y, 0x8e, 0x44, 0xad);          // dark purple rim
-            else c.set(x, y, 0xc7, 0x7d, 0xf2);              // light purple body
-        }
-    }
-    // highlight
-    c.set(6, 6, 0xe7, 0xc6, 0xff); c.set(7, 6, 0xe7, 0xc6, 0xff); c.set(6, 7, 0xe7, 0xc6, 0xff);
-    // stem
-    c.set(8, 2, 0x4c, 0x7a, 0x34); c.set(8, 3, 0x4c, 0x7a, 0x34); c.set(9, 3, 0x6a, 0xa3, 0x4a);
-    return encodePNG(16, 16, c.buf);
-}
+// (Golden Chorus Fruit ships real art at textures/item/golden_chorus_fruit.png,
+// so it has no placeholder here.)
 function texTradeReroller() {
     // Wooden wand: brown diagonal handle (bottom-left -> top-right) with a faceted
     // emerald gem mounted on the tip.
@@ -193,7 +177,6 @@ function texHeavyStick() {
 }
 
 const PLACEHOLDERS = {
-    'recall_fruit.png': texRecallFruit,
     'trade_reroller.png': texTradeReroller,
     'fire_charge.png': texFireCharge,
     'heavy_stick.png': texHeavyStick,
@@ -205,9 +188,9 @@ function ensureTextures() {
         const p = path.join(TEX_DIR, name);
         if (FORCE || !fs.existsSync(p)) {
             fs.writeFileSync(p, make());
-            console.log(`  texture  ${fs.existsSync(p) ? 'wrote' : 'wrote'}  assets/madagascar/textures/item/${name}`);
+            console.log(`  texture  ${fs.existsSync(p) ? 'wrote' : 'wrote'}  assets/jakarta/textures/item/${name}`);
         } else {
-            console.log(`  texture  kept   assets/madagascar/textures/item/${name} (exists; --force to regen)`);
+            console.log(`  texture  kept   assets/jakarta/textures/item/${name} (exists; --force to regen)`);
         }
     }
 }
@@ -291,7 +274,7 @@ function main() {
     console.log(`  sha1: ${sha1}`);
     console.log('\nserver.properties:');
     console.log(`  resource-pack-sha1=${sha1}`);
-    console.log('  resource-pack=http://<LAN-IP>:3000/madagascar_rp.zip');
+    console.log('  resource-pack=http://<LAN-IP>:3000/jakarta_rp.zip');
 }
 
 main();

@@ -2,15 +2,15 @@
     "dimension": "madagascar:dynamite",
     "folder": "dynamite",
     "time": 12850,
-    "timer": "madagascar:timer",
+    "timer": "jakarta:timer",
     "max_board_size": 20,
     "objectives": {
-        "zero": { "name": "madagascar.constants.zero", "type": "dummy", "value": 0 },
-        "countdown": { "name": "madagascar.temp.countdown", "type": "dummy", "value": 3 },
-        "round": { "name": "madagascar.temp.round", "type": "dummy", "value": 1 },
-        "total_rounds": { "name": "madagascar.temp.total_rounds", "type": "dummy", "value": 4 },
-        "timer": { "name": "madagascar.temp.timer", "type": "dummy", "value": 0 },
-        "deaths": { "name": "madagascar.stats.deaths", "type": "deathCount", "label": "Deaths", "value": 0 }
+        "zero": { "name": "jakarta.constants.zero", "type": "dummy", "value": 0 },
+        "countdown": { "name": "jakarta.temp.countdown", "type": "dummy", "value": 3 },
+        "round": { "name": "jakarta.temp.round", "type": "dummy", "value": 1 },
+        "total_rounds": { "name": "jakarta.temp.total_rounds", "type": "dummy", "value": 4 },
+        "timer": { "name": "jakarta.temp.timer", "type": "dummy", "value": 0 },
+        "deaths": { "name": "jakarta.stats.deaths", "type": "deathCount", "label": "Deaths", "value": 0 }
     },
     "round": {
         "duration": 30,

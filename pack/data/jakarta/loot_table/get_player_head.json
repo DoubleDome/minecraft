@@ -1,0 +1,800 @@
+{
+    "type": "minecraft:entity",
+    "pools": [
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "minecraft:player_head",
+                    "functions": [
+                        { "function": "minecraft:fill_player_head", "entity": "this" },
+                        { "function": "minecraft:set_enchantments", "enchantments": { "minecraft:vanishing_curse": 1 }, "add": true },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [{ "text": "", "color": "gray", "italic": false }],
+                                [{ "text": "Softcore Death #", "italic": false }, { "score": { "name": "@s", "objective": "jakarta.softcore.deaths" } }],
+                                [
+                                    { "text": "Start Location: ", "color": "gray", "italic": false },
+                                    { "score": { "name": "@s", "objective": "jakarta.start.x" }, "color": "gold" },
+                                    { "text": " ", "color": "gray", "italic": false },
+                                    { "score": { "name": "@s", "objective": "jakarta.start.y" }, "color": "gold" },
+                                    { "text": " ", "color": "gray", "italic": false },
+                                    { "score": { "name": "@s", "objective": "jakarta.start.z" }, "color": "gold" }
+                                ],
+                                [
+                                    { "text": "Death Location: ", "color": "gray", "italic": false },
+                                    { "score": { "name": "@s", "objective": "jakarta.death.x" }, "color": "gold" },
+                                    { "text": " ", "color": "gray", "italic": false },
+                                    { "score": { "name": "@s", "objective": "jakarta.death.y" }, "color": "gold" },
+                                    { "text": " ", "color": "gray", "italic": false },
+                                    { "score": { "name": "@s", "objective": "jakarta.death.z" }, "color": "gold" }
+                                ]
+                            ],
+                            "mode": "replace_all"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Death Dimension: ", "color": "gray", "italic": false },
+                                    { "text": "Overworld", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.softcore.death_dimension": 0 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Death Dimension: ", "color": "gray", "italic": false },
+                                    { "text": "The Nether", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.softcore.death_dimension": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Death Dimension: ", "color": "gray", "italic": false },
+                                    { "text": "The End", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.softcore.death_dimension": 2 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Death Dimension: ", "color": "gray", "italic": false },
+                                    { "text": "Canvas", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.softcore.death_dimension": 3 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Death Dimension: ", "color": "gray", "italic": false },
+                                    { "text": "Skyblock", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.softcore.death_dimension": 4 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Ravager", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.ravager": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Pillager", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.pillager": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Panda", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.panda": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Fox", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.fox": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Trader Llama", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.trader_llama": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Wandering Trader", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.wandering_trader": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Zombie Villager", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.zombie_villager": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Zombie Horse", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.zombie_horse": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Zombie", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.zombie": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Wolf", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.wolf": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Witch", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.witch": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Vindicator", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.vindicator": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Villager", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.villager": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Vex", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.vex": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Turtle", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.turtle": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Stray", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.stray": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Spider", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.spider": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Snow Golem", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.snow_golem": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Slime", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.slime": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Skeleton Horse", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.skeleton_horse": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Skeleton", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.skeleton": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Silverfish", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.silverfish": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Shulker", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.shulker": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Rabbit", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.rabbit": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Pufferfish", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.pufferfish": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Polar Bear", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.polar_bear": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Phantom", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.phantom": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Magma Cube", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.magma_cube": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Llama", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.llama": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Iron Golem", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.iron_golem": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Illusioner", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.illusioner": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Husk", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.husk": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Guardian", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.guardian": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Evoker", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.evoker": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Endermite", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.endermite": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Enderman", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.enderman": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Ender Dragon", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.ender_dragon": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Elder Guardian", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.elder_guardian": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Drowned", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.drowned": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Dolphin", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.dolphin": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Creeper", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.creeper": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Cave Spider", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.cave_spider": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Wither", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.wither": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Ghast", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.ghast": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Zombified Piglin", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.zombified_piglin": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Wither Skeleton", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.wither_skeleton": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Blaze", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.blaze": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Bee", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.bee": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Zoglin", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.zoglin": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Strider", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.strider": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Piglin Brute", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.piglin_brute": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Piglin", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.piglin": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Killed by: ", "color": "gray", "italic": false },
+                                    { "text": "Hoglin", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "conditions": [{ "condition": "minecraft:entity_scores", "entity": "this", "scores": { "jakarta.killer.hoglin": 1 } }],
+                            "mode": "append"
+                        },
+                        {
+                            "function": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    { "text": "Totems Used: ", "color": "gray", "italic": false },
+                                    { "score": { "name": "@s", "objective": "jakarta.stats.totems_used" }, "color": "gold" }
+                                ],
+                                [
+                                    { "text": "Nights Slept: ", "color": "gray", "italic": false },
+                                    { "score": { "name": "@s", "objective": "jakarta.stats.nights_slept" }, "color": "gold" }
+                                ],
+                                [
+                                    { "text": "Total Playtime: ", "color": "gray", "italic": false },
+                                    { "score": { "name": "@s", "objective": "jakarta.time.hours" }, "color": "gold" },
+                                    { "text": "h ", "color": "gold" },
+                                    { "score": { "name": "@s", "objective": "jakarta.time.minutes" }, "color": "gold" },
+                                    { "text": "m ", "color": "gold" },
+                                    { "score": { "name": "@s", "objective": "jakarta.time.seconds" }, "color": "gold" },
+                                    { "text": "s", "color": "gold" }
+                                ],
+                                [
+                                    { "text": "Total Points: ", "color": "gray", "italic": false },
+                                    { "score": { "name": "@s", "objective": "jakarta.stats.points" }, "color": "gold" }
+                                ],
+                                [
+                                    { "text": "Mobs Killed: ", "color": "gray", "italic": false },
+                                    { "score": { "name": "@s", "objective": "jakarta.stats.mob_kills" }, "color": "gold" }
+                                ],
+                                [
+                                    { "text": "Damage Dealt: ", "color": "gray", "italic": false },
+                                    { "score": { "name": "@s", "objective": "jakarta.stats.damage.dealt" }, "color": "gold" }
+                                ],
+                                [
+                                    { "text": "Damage Taken: ", "color": "gray", "italic": false },
+                                    { "score": { "name": "@s", "objective": "jakarta.stats.damage.taken" }, "color": "gold" }
+                                ],
+                                [
+                                    { "text": "Distance on Land: ", "color": "gray", "italic": false },
+                                    { "score": { "name": "@s", "objective": "jakarta.distance.land.km" }, "color": "gold" },
+                                    { "text": "km ", "color": "gold", "italic": false },
+                                    { "score": { "name": "@s", "objective": "jakarta.distance.land.m" }, "color": "gold" },
+                                    { "text": "m", "color": "gold", "italic": false }
+                                ],
+                                [
+                                    { "text": "Distance at Sea: ", "color": "gray", "italic": false },
+                                    { "score": { "name": "@s", "objective": "jakarta.distance.sea.km" }, "color": "gold" },
+                                    { "text": "km ", "color": "gold", "italic": false },
+                                    { "score": { "name": "@s", "objective": "jakarta.distance.sea.m" }, "color": "gold" },
+                                    { "text": "m", "color": "gold", "italic": false }
+                                ],
+                                [
+                                    { "text": "Distance in Air: ", "color": "gray", "italic": false },
+                                    { "score": { "name": "@s", "objective": "jakarta.distance.air.km" }, "color": "gold" },
+                                    { "text": "km ", "color": "gold", "italic": false },
+                                    { "score": { "name": "@s", "objective": "jakarta.distance.air.m" }, "color": "gold" },
+                                    { "text": "m", "color": "gold", "italic": false }
+                                ]
+                            ],
+                            "mode": "append"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

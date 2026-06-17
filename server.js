@@ -161,14 +161,14 @@ function handleRebuild(req, res) {
 }
 
 // Serve the built resource pack over the LAN so the server can push it to clients
-// (server.properties resource-pack=http://<lan-ip>:3000/madagascar_rp.zip). Rebuild with
+// (server.properties resource-pack=http://<lan-ip>:3000/jakarta_rp.zip). Rebuild with
 // `node scripts/resourcepack.js`; the zip + its sha1 live in dist/.
-const RP_ZIP = path.resolve(__dirname, 'dist/madagascar_rp.zip');
-app.get('/madagascar_rp.zip', (req, res) => {
+const RP_ZIP = path.resolve(__dirname, 'dist/jakarta_rp.zip');
+app.get('/jakarta_rp.zip', (req, res) => {
     if (!fs.existsSync(RP_ZIP)) {
         return res.status(404).send('Resource pack not built. Run: node scripts/resourcepack.js');
     }
-    res.download(RP_ZIP, 'madagascar_rp.zip');
+    res.download(RP_ZIP, 'jakarta_rp.zip');
 });
 
 const endpoints = [

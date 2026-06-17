@@ -3,7 +3,7 @@
 // endpoint (POST /rebuild) behave identically. Safeguards (see .claude/rules/rebuild.md):
 //   1. Refuse to run with BASE_PATH/PACK_FOLDER unset — init() wipes its output dir,
 //      and an unset var once resolved to the project root and wiped it.
-//   2. On the LIVE target, snapshot the world pack to .temp/madagascar_pack.live.bak
+//   2. On the LIVE target, snapshot the world pack to .temp/jakarta_pack.live.bak
 //      before init()'s destroy wipes it. creator.destroy has no sentinel inside the
 //      live folder, so this backup is the only undo.
 //   3. creator.destroy's source-dir sentinel still runs inside init() either way.
@@ -15,7 +15,7 @@ const generator = require('./generator');
 const resource = require('./resource');
 
 // Keep only the latest pre-rebuild snapshot of the live pack.
-const LIVE_PACK_BACKUP = path.resolve(__dirname, '../.temp/madagascar_pack.live.bak');
+const LIVE_PACK_BACKUP = path.resolve(__dirname, '../.temp/jakarta_pack.live.bak');
 
 function readJson(p) {
     // Strip UTF-8 BOM (PowerShell's Set-Content -Encoding UTF8 writes one; JSON.parse rejects it).

@@ -13,6 +13,7 @@ const ender = require('./ender');
 const location = require('./location');
 const softcore = require('./softcore');
 const dynamite = require('./dynamite');
+const fusion = require('./fusion');
 const Load = require('./load');
 const Tick = require('./tick');
 
@@ -63,8 +64,8 @@ class Generator {
         this.paths.base = creator.validate(path.resolve(base));
         this.paths.data = creator.validate(path.resolve(this.paths.base, config.path.data));
         this.paths.minecraft = creator.validate(path.resolve(this.paths.data, config.path.minecraft));
-        this.paths.madagascar = creator.validate(path.resolve(this.paths.data, config.path.madagascar));
-        this.paths.functions = creator.validate(path.resolve(this.paths.madagascar, config.path.functions));
+        this.paths.jakarta = creator.validate(path.resolve(this.paths.data, config.path.jakarta));
+        this.paths.functions = creator.validate(path.resolve(this.paths.jakarta, config.path.functions));
         this.paths.pack = path.resolve(__dirname, '../', config.path.pack);
         Object.keys(config.folder).forEach(key => {
             this.paths[key] = creator.validate(path.resolve(this.paths.functions, config.folder[key]));
@@ -92,6 +93,7 @@ class Generator {
         this.createInventoryFunctions();
         this.createEnderFunctions();
         this.createSoftcoreFunctions();
+        this.createFusionFunctions();
         // this.createDynamiteGame();
         this.createLoader();
         this.createTicker();
@@ -185,6 +187,10 @@ class Generator {
         creator.write(path.resolve(this.paths.gate, 'book.mcfunction'), output.gate);
 
         creator.write(path.resolve(this.paths.book, 'exploration.mcfunction'), exploration.create(data.exploration));
+
+        // Craftable Magic Book recipe (content baked from book.js, regenerated each build).
+        const recipeDir = creator.validate(path.resolve(this.paths.jakarta, 'recipe'));
+        creator.write(path.resolve(recipeDir, 'magic_book.json'), output.magicRecipe);
     }
     createInventoryFunctions() {
         this.validatePaths();
@@ -195,6 +201,10 @@ class Generator {
         creator.write(path.resolve(this.paths.gate, `${config.folder.inventory}_import.mcfunction`), output.import_gate);
         creator.write(path.resolve(this.paths.gate, `${config.folder.inventory}_export.mcfunction`), output.export_gate);
         creator.write(path.resolve(this.paths.gate, `${config.folder.inventory}_stash.mcfunction`), output.stash_gate);
+    }
+    createFusionFunctions() {
+        this.validatePaths();
+        this.writeFiles(this.paths.fuse, fusion.create());
     }
     createEnderFunctions() {
         this.validatePaths();

@@ -1,0 +1,6 @@
+{
+    "model": {
+        "type": "minecraft:model",
+        "model": "jakarta:item/trade_reroller"
+    }
+}

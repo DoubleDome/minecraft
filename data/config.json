@@ -1,12 +1,12 @@
 {
-    "namespace": "minecraft:madagascar",
-    "package": "madagascar",
+    "namespace": "minecraft:jakarta",
+    "package": "jakarta",
     "path": {
         "pack": "pack",
-        "root": "datapacks/madagascar_pack/",
+        "root": "datapacks/jakarta_pack/",
         "data": "data",
         "minecraft": "minecraft",
-        "madagascar": "madagascar",
+        "jakarta": "jakarta",
         "functions": "function"
     },
     "folder": {
@@ -18,7 +18,8 @@
         "shulker": "shulker",
         "tool_swap": "tool_swap",
         "inventory": "inventory",
-        "ender": "ender"
+        "ender": "ender",
+        "fuse": "fuse"
     },
     "label": {
         "message": {
@@ -39,9 +40,9 @@
         }
     },
     "function": {
-        "book": "madagascar:gate/book",
-        "get_random_number": "madagascar:get_random_number",
-        "get_player_head": "madagascar:get_player_head"
+        "book": "jakarta:gate/book",
+        "get_random_number": "jakarta:get_random_number",
+        "get_player_head": "jakarta:get_player_head"
     },
     "dimension": {
         "default": "minecraft:overworld",

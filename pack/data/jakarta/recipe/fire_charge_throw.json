@@ -1,0 +1,22 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "category": "equipment",
+    "ingredients": [
+        "minecraft:fire_charge"
+    ],
+    "result": {
+        "id": "minecraft:snowball",
+        "count": 1,
+        "components": {
+            "minecraft:custom_data": {
+                "ghast": true
+            },
+            "minecraft:custom_name": {
+                "text": "Fire Charge",
+                "color": "red",
+                "italic": false
+            },
+            "minecraft:item_model": "jakarta:fire_charge"
+        }
+    }
+}
