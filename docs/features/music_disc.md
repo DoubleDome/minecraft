@@ -4,7 +4,10 @@ A custom disc is three pieces wired by a shared id (`jakarta:<name>`):
 
 1. **Audio** (resource pack): an Ogg **Vorbis** `.ogg` under
    `resourcepack/assets/jakarta/sounds/<path>.ogg`. MP3 will not play — Minecraft only
-   reads Ogg Vorbis. Records can be stereo (jukebox audio is global, not positional).
+   reads Ogg Vorbis. The file **must be mono**: OpenAL only applies distance attenuation
+   to mono sources, so a stereo `.ogg` plays as a global, non-positional sound at constant
+   volume no matter how far you are from the jukebox. Every vanilla disc is mono for this
+   reason. Down-mix with `ffmpeg -i in -ac 1 ... | oggenc` (see "Adding another disc").
 2. **Sound event** (resource pack): an entry in `resourcepack/assets/jakarta/sounds.json`
    that names the sound event and points at the `.ogg`. Use `"category": "record"` so it
    follows the Jukebox/Note-Block volume slider, and `"stream": true` so long tracks
@@ -51,12 +54,15 @@ So: a brand-new disc = full server restart. Tweaking only `disc/give.mcfunction`
 
 ## Adding another disc
 
-1. Convert source audio to Ogg Vorbis (this build's ffmpeg lacks `libvorbis`, so use the
-   native encoder):
+1. Convert source audio to **mono** Ogg Vorbis. This build's ffmpeg has no working Vorbis
+   encoder (no `libvorbis`, and the native `vorbis` encoder errors out), so down-mix to a
+   mono WAV with ffmpeg and encode with `oggenc` (from `vorbis-tools`):
    ```bash
-   ffmpeg -i in.mp3 -vn -c:a vorbis -strict -2 -q:a 6 \
-     resourcepack/assets/jakarta/sounds/music/<name>.ogg
+   ffmpeg -i in.mp3 -ac 1 -ar 44100 /tmp/<name>.wav
+   oggenc -q 5 -o resourcepack/assets/jakarta/sounds/music/<name>.ogg /tmp/<name>.wav
    ```
+   `-ac 1` is mandatory — stereo discs play at constant volume (see piece 1 above).
+   Verify with `ffprobe ... <name>.ogg` that `channels=1`.
 2. Add a `music_disc.<name>` block to `sounds.json` pointing at `jakarta:music/<name>`.
 3. Add `pack/data/jakarta/jukebox_song/<name>.json` (set `length_in_seconds` to the real
    duration — `ffprobe` the `.ogg`).
