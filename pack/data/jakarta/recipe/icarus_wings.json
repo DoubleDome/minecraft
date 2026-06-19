@@ -14,7 +14,7 @@
         "id": "minecraft:elytra",
         "count": 1,
         "components": {
-            "minecraft:max_damage": 128,
+            "minecraft:max_damage": 216,
             "minecraft:repair_cost": 1000,
             "minecraft:item_name": {
                 "text": "Icarus Wings",
