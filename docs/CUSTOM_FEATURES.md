@@ -84,7 +84,7 @@ Generated from `app/*.js` into `function/`:
 | **Softcore mode** | Softcore game functions (start/stop/pause/death handling). | `app/softcore.js` (`docs/plans/softcore_rewrite.md`) |
 | **Dynamite mode** | Dynamite game mode (own dimension). | `app/dynamite.js` |
 | **Fusion Altar** | Drop 2 same-tier swords + a Nether Star on a **smithing table** → next-tier sword (two vanilla swords → Sword II; 2× "Iron Sword II" → "Iron Sword III"). All 7 materials, unlimited tiers; raw-damage buffs (`base + (tier-1)×2`), unbreakable at tier ≥ 4, enchants discarded. Pure functions (no recipes) — reloads live. | `app/fusion.js` → `function/fuse/` |
-| **Friends team / friendly fire** | `friends` team created on load (all players joined, `friendlyFire false`). Toggle from the God page (green dot = on, red = off → `/team modify friends friendlyFire true\|false`). Replaced the old `god` team. | `app/generator.js` (`createFoundation`), `app/book.js`, `data/config.json` |
+| **Friendly team / friendly fire** | `friendly` team created on load (all players joined, `friendlyFire false`). Toggle from the God page (green dot = on, red = off → `/team modify friendly friendlyFire true\|false`). Replaced the old `god` team. | `app/generator.js` (`createFoundation`), `app/book.js`, `data/config.json` |
 
 Static-function gadgets (under `pack/data/jakarta/function/`): `arrow/`,
 `fireball/`, `horn/` (sonic horn), `lava_walker/`, `recall/`, `reroll/`, `icarus/`.

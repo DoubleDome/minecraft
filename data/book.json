@@ -251,7 +251,7 @@
             "color": "dark_green",
             "click_event": {
                 "action": "run_command",
-                "command": "/team modify friends friendlyFire true"
+                "command": "/team modify friendly friendlyFire true"
             }
         },
         {
@@ -259,7 +259,7 @@
             "color": "dark_red",
             "click_event": {
                 "action": "run_command",
-                "command": "/team modify friends friendlyFire false"
+                "command": "/team modify friendly friendlyFire false"
             }
         }
     ]

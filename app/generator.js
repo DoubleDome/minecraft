@@ -111,11 +111,11 @@ class Generator {
     }
 
     createFoundation() {
-        Load.getInstance().append(`team add ${config.team.friends.name} "${config.team.friends.label}"`);
-        Load.getInstance().append(`team modify ${config.team.friends.name} friendlyFire false`);
-        Load.getInstance().append(`team join ${config.team.friends.name} DoubleDome`);
-        Load.getInstance().append(`team join ${config.team.friends.name} FilbertPlays`);
-        Load.getInstance().append(`team join ${config.team.friends.name} MermaidPanchi3`);
+        Load.getInstance().append(`team add ${config.team.friendly.name} "${config.team.friendly.label}"`);
+        Load.getInstance().append(`team modify ${config.team.friendly.name} friendlyFire false`);
+        Load.getInstance().append(`team join ${config.team.friendly.name} DoubleDome`);
+        Load.getInstance().append(`team join ${config.team.friendly.name} FilbertPlays`);
+        Load.getInstance().append(`team join ${config.team.friendly.name} MermaidPanchi3`);
         Load.getInstance().addObjectives(data.objectives.constants);
         Load.getInstance().addObjectives(data.objectives.temp);
         Load.getInstance().setObjectives(config.player.constants, data.objectives.constants);

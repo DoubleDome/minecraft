@@ -94,9 +94,9 @@
         "death": "death_marker"
     },
     "team": {
-        "friends": {
-            "name": "friends",
-            "label": "Friends"
+        "friendly": {
+            "name": "friendly",
+            "label": "Friendly"
         }
     },
     "coordinate": {
