@@ -23,6 +23,7 @@ const { rebuild } = require('./app/rebuild');
 const playerstats = require('./app/playerstats');
 
 app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 const MC_HOST = process.env.MC_HOST || 'localhost';
 const MC_PORT = parseInt(process.env.MC_PORT || '25577', 10);
@@ -52,8 +53,39 @@ function defaultY(dim) {
 // Rebuild button for code changes that need a full destroy+clone.
 function regenerate() {
     generator.setup(path.resolve(process.env.BASE_PATH, process.env.PACK_FOLDER));
+    // Prune stale teleport functions first: createLocationFunctions only writes,
+    // never deletes, so a renamed/deleted location would leave an orphaned
+    // .mcfunction behind. The location folder only ever holds magic-book teleports,
+    // so clearing it before regenerating is safe.
+    const locDir = generator.paths.location;
+    if (locDir && fs.existsSync(locDir)) {
+        for (const f of fs.readdirSync(locDir)) {
+            if (f.endsWith('.mcfunction')) fs.unlinkSync(path.join(locDir, f));
+        }
+    }
     generator.createBookFunctions();     // magic + exploration books + book gate
     generator.createLocationFunctions(); // magic-book teleport functions
+}
+
+// Convert the flat ordered rows from the /locations editor back into the grouped
+// locations.json shape. Groups are emitted in order of first appearance, and rows
+// keep their order within each group — so dragging rows reorders both.
+function buildGroupedLocations(rows, groupOrder) {
+    const byHeader = new Map();
+    for (const { group, entry } of rows) {
+        if (!byHeader.has(group)) byHeader.set(group, { header: group, locations: [] });
+        byHeader.get(group).locations.push(entry);
+    }
+    // Section order follows the explicit groupOrder (the draggable chips); fall back to
+    // first-seen order. Groups not present in groupOrder (e.g. a reassigned row) go last.
+    const order = Array.isArray(groupOrder) && groupOrder.length ? groupOrder : [...byHeader.keys()];
+    const groups = [];
+    const seen = new Set();
+    for (const h of order) {
+        if (byHeader.has(h) && !seen.has(h)) { groups.push(byHeader.get(h)); seen.add(h); }
+    }
+    for (const [h, g] of byHeader) if (!seen.has(h)) groups.push(g);
+    return groups;
 }
 
 // Full rebuild — delegates to the shared app/rebuild.js so the web endpoint and
@@ -102,6 +134,7 @@ app.get('/', async (req, res) => {
   <div class="meta">checked ${new Date().toLocaleTimeString()}</div>
   <div class="actions">
     <a class="btn" href="/add-location">+ Add a location</a>
+    <a class="btn secondary" href="/locations">Edit locations</a>
     <a class="btn secondary" href="/stats">Player stats</a>
     <button class="btn secondary" id="rebuild-btn" onclick="rebuild()">Rebuild pack (${TARGET})</button>
   </div>
@@ -398,6 +431,220 @@ function addToMagic(body) {
     group.locations.push(entry);
     writeJson(LOCATIONS_PATH, locations);
 }
+
+// ----- /locations: editable, drag-reorderable table of all Magic Book waypoints -----
+
+const LOCATIONS_CSS = `
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;background:#0f0f14;color:#e5e5e5;font-family:-apple-system,Segoe UI,Roboto,sans-serif;-webkit-text-size-adjust:100%}
+body{max-width:1100px;margin:0 auto;padding:1.5em max(1em,env(safe-area-inset-left)) 5em max(1em,env(safe-area-inset-right))}
+h1{font-weight:400;color:#888;font-size:1.05em;letter-spacing:.08em;text-transform:uppercase;margin:.5em 0 1em;line-height:1.3}
+a{color:#5fc14e;text-decoration:none}a:hover{text-decoration:underline}
+.hint{color:#666;font-size:.82em;line-height:1.5;margin:.2em 0 1em}
+.wrap{overflow-x:auto;border:1px solid #2a2a35;border-radius:8px}
+table{border-collapse:collapse;width:100%;font-size:.85em;min-width:960px}
+th{position:sticky;top:0;background:#16161d;color:#5fc14e;text-transform:uppercase;font-size:.68em;letter-spacing:.05em;text-align:left;padding:.6em .5em;border-bottom:1px solid #2a2a35;white-space:nowrap}
+td{padding:.25em .35em;border-bottom:1px solid #1d1d26;vertical-align:middle}
+tbody tr:hover{background:#16161d}
+tr.dragging{opacity:.35}
+input,select{width:100%;background:#1a1a22;border:1px solid #333;color:#e5e5e5;padding:.45em .5em;border-radius:5px;font-family:inherit;font-size:15px;min-width:5em}
+input:focus,select:focus{outline:none;border-color:#5fc14e}
+input.num{min-width:4.5em;width:5.5em}
+td.dim{white-space:nowrap;color:#9fb6ad;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.82em;padding-left:.6em;padding-right:1em}
+td.drag{text-align:center}
+.handle{cursor:grab;font-size:1.25em;color:#666;user-select:none;padding:0 .15em;display:inline-block}
+.handle:active{cursor:grabbing}
+button.x{background:#3a1a1a;color:#ef8d8d;border:1px solid #5b2a2a;border-radius:5px;padding:.45em .65em;cursor:pointer;font-size:.9em;line-height:1}
+button.x:hover{background:#5b2a2a}
+.grouporder{display:flex;align-items:center;gap:.5em;flex-wrap:wrap;margin:.2em 0 1.1em}
+.grouporder .glabel{color:#888;font-size:.7em;text-transform:uppercase;letter-spacing:.05em;margin-right:.2em}
+.chip{background:#1a1a22;border:1px solid #333;border-radius:6px;padding:.45em .7em;cursor:grab;font-size:.85em;user-select:none;white-space:nowrap}
+.chip:active{cursor:grabbing}
+.chip.dragging{opacity:.35}
+.bar{display:flex;gap:.6em;align-items:center;margin:1.2em 0;flex-wrap:wrap}
+.btn{background:#5fc14e;color:#0f0f14;border:0;padding:.85em 1.5em;border-radius:6px;font-weight:600;font-size:1rem;cursor:pointer;font-family:inherit;min-height:44px}
+.btn:hover{background:#4ba33d}
+.btn.secondary{background:#1a1a22;color:#e5e5e5;border:1px solid #333}
+.btn.secondary:hover{background:#23232e}
+.btn:disabled{opacity:.5;cursor:default}
+#msg{min-height:1.3em;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85em;line-height:1.4}
+#msg.ok{color:#5fc14e}#msg.err{color:#ef4444}
+`;
+
+function locationRow(group, loc, groups) {
+    const [x = '', y = '', z = ''] = String(loc.coordinates || '').trim().split(/\s+/);
+    const [yaw = '', pitch = ''] = String(loc.rotation || '').trim().split(/\s+/);
+    const dim = loc.dimension || '';
+    const gm = loc.gamemode || '';
+    const gmOpt = (v, l) => `<option value="${v}"${gm === v ? ' selected' : ''}>${l}</option>`;
+    const groupOpts = groups.map(g => `<option value="${esc(g)}"${g === group ? ' selected' : ''}>${esc(g)}</option>`).join('');
+    // Group is a dropdown of existing sections. Dimension is read-only (display text +
+    // hidden field that round-trips). Filename isn't shown — it's derived from the label.
+    return `<tr>
+  <td class="drag"><span class="handle" draggable="true" ondragstart="onDragStart(event)" ondragend="onDragEnd(event)">&#9783;</span></td>
+  <td><select name="group">${groupOpts}</select></td>
+  <td><input name="label" value="${esc(loc.label || '')}"></td>
+  <td class="dim">${esc(dim)}<input type="hidden" name="dimension" value="${esc(dim)}"></td>
+  <td><input name="x" type="number" step="any" class="num" value="${esc(x)}"></td>
+  <td><input name="y" type="number" step="any" class="num" value="${esc(y)}"></td>
+  <td><input name="z" type="number" step="any" class="num" value="${esc(z)}"></td>
+  <td><input name="yaw" type="number" step="any" class="num" value="${esc(yaw)}"></td>
+  <td><input name="pitch" type="number" step="any" class="num" value="${esc(pitch)}"></td>
+  <td><select name="gamemode">${gmOpt('', '—')}${gmOpt('survival', 'Survival')}${gmOpt('creative', 'Creative')}${gmOpt('adventure', 'Adventure')}${gmOpt('spectator', 'Spectator')}</select></td>
+  <td class="del"><button type="button" class="x" onclick="this.closest('tr').remove()">&#10005;</button>${loc.color ? `<input type="hidden" name="color" value="${esc(loc.color)}">` : ''}</td>
+</tr>`;
+}
+
+function renderLocationsPage(locations, message = '') {
+    const groupList = [...new Set(locations.map(g => g.header))];
+    const rows = locations.flatMap(g => g.locations.map(loc => locationRow(g.header, loc, groupList))).join('');
+    const chips = groupList.map(g => `<span class="chip" draggable="true" ondragstart="onChipDragStart(event)" ondragend="onChipDragEnd(event)" data-group="${esc(g)}">&#9783; ${esc(g)}</span>`).join('');
+    const where = TARGET === 'live' ? 'live world' : 'sandbox (.temp)';
+    return `<!doctype html>
+<html><head><meta charset="utf-8"><title>Edit Locations</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>${LOCATIONS_CSS}</style></head>
+<body>
+<h1><a href="/">${SERVER_NAME}</a> &rsaquo; Edit Locations</h1>
+<div class="hint">Edit, reorder, or delete existing Magic Book waypoints. Drag a row's <b>&#9783;</b> handle to reorder it; drag the <b>Group order</b> chips to reorder whole sections; change a row's <b>Group</b> to move that waypoint between sections. Dimension is fixed and the filename follows the label &mdash; to add a waypoint or change those, use <a href="/add-location">the form</a> (delete + re-add). Saving writes <code>data/locations.json</code> and regenerates into the <b>${where}</b> &mdash; run <code>/reload</code> in-game after.</div>
+<div class="grouporder"><span class="glabel">Group order</span><span id="grouporder">${chips}</span></div>
+<div class="wrap"><table>
+<thead><tr><th></th><th>Group</th><th>Label</th><th>Dimension</th><th>X</th><th>Y</th><th>Z</th><th>Yaw</th><th>Pitch</th><th>Mode</th><th></th></tr></thead>
+<tbody id="rows">${rows}</tbody>
+</table></div>
+<div class="bar">
+  <button class="btn" id="save-btn" onclick="save()">Save &amp; Regenerate</button>
+  <a class="btn secondary" href="/add-location">+ Add via form</a>
+</div>
+<div id="msg">${message}</div>
+<script>
+  var busy = false;
+  var dragRow = null;
+  var tbody = document.getElementById('rows');
+  function onDragStart(e){ dragRow = e.target.closest('tr'); e.dataTransfer.effectAllowed = 'move'; setTimeout(function(){ dragRow.classList.add('dragging'); }, 0); }
+  function onDragEnd(){ if(dragRow) dragRow.classList.remove('dragging'); dragRow = null; }
+  tbody.addEventListener('dragover', function(e){
+    e.preventDefault();
+    if(!dragRow) return;
+    var after = afterElement(e.clientY);
+    if(after == null) tbody.appendChild(dragRow);
+    else tbody.insertBefore(dragRow, after);
+  });
+  function afterElement(y){
+    var rows = Array.prototype.slice.call(tbody.querySelectorAll('tr:not(.dragging)'));
+    var closest = { offset: -Infinity, el: null };
+    for(var i=0;i<rows.length;i++){
+      var box = rows[i].getBoundingClientRect();
+      var offset = y - box.top - box.height/2;
+      if(offset < 0 && offset > closest.offset) closest = { offset: offset, el: rows[i] };
+    }
+    return closest.el;
+  }
+  // --- group-order chips (drag to reorder whole sections) ---
+  var dragChip = null;
+  var chipbar = document.getElementById('grouporder');
+  function onChipDragStart(e){ dragChip = e.target.closest('.chip'); e.dataTransfer.effectAllowed = 'move'; setTimeout(function(){ dragChip.classList.add('dragging'); }, 0); }
+  function onChipDragEnd(){ if(dragChip) dragChip.classList.remove('dragging'); dragChip = null; }
+  chipbar.addEventListener('dragover', function(e){
+    e.preventDefault();
+    if(!dragChip) return;
+    var after = chipAfter(e.clientX);
+    if(after == null) chipbar.appendChild(dragChip);
+    else chipbar.insertBefore(dragChip, after);
+  });
+  function chipAfter(x){
+    var chips = Array.prototype.slice.call(chipbar.querySelectorAll('.chip:not(.dragging)'));
+    var closest = { offset: -Infinity, el: null };
+    for(var i=0;i<chips.length;i++){
+      var box = chips[i].getBoundingClientRect();
+      var offset = x - box.left - box.width/2;
+      if(offset < 0 && offset > closest.offset) closest = { offset: offset, el: chips[i] };
+    }
+    return closest.el;
+  }
+  function collectGroupOrder(){
+    return Array.prototype.slice.call(chipbar.querySelectorAll('.chip')).map(function(c){ return c.getAttribute('data-group'); });
+  }
+  function val(tr, name){ var el = tr.querySelector('[name=' + name + ']'); return el ? el.value : ''; }
+  function collect(){
+    return Array.prototype.slice.call(tbody.querySelectorAll('tr')).map(function(tr){
+      return {
+        group: val(tr,'group'), label: val(tr,'label'), dimension: val(tr,'dimension'),
+        x: val(tr,'x'), y: val(tr,'y'), z: val(tr,'z'),
+        yaw: val(tr,'yaw'), pitch: val(tr,'pitch'),
+        gamemode: val(tr,'gamemode'), color: val(tr,'color')
+      };
+    });
+  }
+  async function save(){
+    if(busy) return; busy = true;
+    var btn = document.getElementById('save-btn');
+    var msg = document.getElementById('msg');
+    btn.disabled = true; msg.className = ''; msg.textContent = 'Saving\\u2026';
+    try {
+      var r = await fetch('/locations', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ locations: collect(), groupOrder: collectGroupOrder() }) });
+      var j = await r.json();
+      if(j.ok){ msg.className = 'ok'; msg.textContent = '\\u2713 Saved ' + j.count + ' waypoints in ' + j.groups + ' groups \\u2014 run /reload in-game'; }
+      else { msg.className = 'err'; msg.textContent = '\\u2717 ' + (j.error || 'save failed'); }
+    } catch(e){ msg.className = 'err'; msg.textContent = '\\u2717 ' + e; }
+    finally { btn.disabled = false; busy = false; }
+  }
+</script>
+</body></html>`;
+}
+
+app.get('/locations', (req, res) => {
+    res.set('Cache-Control', 'no-store');
+    res.send(renderLocationsPage(readJson(LOCATIONS_PATH)));
+});
+
+app.post('/locations', (req, res) => {
+    res.set('Cache-Control', 'no-store');
+    try {
+        const rows = Array.isArray(req.body && req.body.locations) ? req.body.locations : null;
+        if (!rows) throw new Error('Expected { locations: [...] }');
+        const groupOrder = Array.isArray(req.body && req.body.groupOrder) ? req.body.groupOrder : null;
+
+        const seen = new Set();
+        const built = rows.map((r, i) => {
+            const at = `Row ${i + 1}`;
+            const label = String(r.label || '').trim();
+            if (!label) throw new Error(`${at}: label required`);
+            const group = String(r.group || '').trim();
+            if (!group) throw new Error(`${at} (${label}): group required`);
+            const dimension = String(r.dimension || '').trim();
+            if (!dimension) throw new Error(`${at} (${label}): dimension required`);
+            const x = Number(r.x), y = Number(r.y), z = Number(r.z);
+            if (![x, y, z].every(Number.isFinite)) throw new Error(`${at} (${label}): X/Y/Z must be numbers`);
+
+            // Filename is derived from the label (no rename — to change it, delete the
+            // row and re-add via the form). slugify also guards path traversal; the
+            // result keys the teleport function so it must be unique.
+            const filename = slugify(label);
+            if (!filename) throw new Error(`${at} (${label}): label must contain letters or numbers`);
+            if (seen.has(filename)) throw new Error(`Two waypoints resolve to the same filename "${filename}" (${label}) — give them distinct labels`);
+            seen.add(filename);
+
+            const entry = { label, dimension, coordinates: `${x} ${y} ${z}` };
+            const yaw = r.yaw === '' || r.yaw == null ? null : Number(r.yaw);
+            const pitch = r.pitch === '' || r.pitch == null ? null : Number(r.pitch);
+            if (yaw != null && pitch != null && Number.isFinite(yaw) && Number.isFinite(pitch)) entry.rotation = `${yaw} ${pitch}`;
+            const gamemode = String(r.gamemode || '').trim();
+            if (gamemode) entry.gamemode = gamemode;
+            const color = String(r.color || '').trim();
+            if (color) entry.color = color;
+            entry.filename = filename;
+            return { group, entry };
+        });
+
+        const grouped = buildGroupedLocations(built, groupOrder);
+        writeJson(LOCATIONS_PATH, grouped);
+        regenerate(); // targeted, in-place — prunes stale teleports, rewrites books + locations
+        res.json({ ok: true, count: built.length, groups: grouped.length });
+    } catch (e) {
+        res.status(400).json({ ok: false, error: String(e.message || e) });
+    }
+});
 
 // ----- /stats: player stat breakdown from the world's stat files -----
 

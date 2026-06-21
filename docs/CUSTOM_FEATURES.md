@@ -96,7 +96,9 @@ served at `/jakarta_rp.zip` by `server.js`. See `docs/features/resource_pack.md`
 
 ## Dashboard (server.js)
 
-- Status page, `/add-location` (web form → book), `/rebuild` (deploy button),
+- Status page, `/add-location` (web form → book), `/locations` (editable,
+  drag-reorderable table of every Magic Book waypoint → rewrites `locations.json`
+  and regenerates the book + teleport functions), `/rebuild` (deploy button),
   `/stats` + `/stats/compare` (player stat breakdown from world stat files).
 - RCON helper: `node scripts/rcon.js` (info / players / top / dump / raw).
 - Stat CLI: `node scripts/stats.js [player|compare]`.
