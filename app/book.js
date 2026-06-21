@@ -57,8 +57,8 @@ class Book {
 
     createBookGate() {
         const command = new Command();
-        command.append(`execute if entity @s[team=${config.team.god.name}] run function jakarta:book/god`);
-        command.append(`execute unless entity @s[team=${config.team.god.name}] run function jakarta:book/magic`);
+        command.append(`execute if entity @s[name=DoubleDome] run function jakarta:book/god`);
+        command.append(`execute unless entity @s[name=DoubleDome] run function jakarta:book/magic`);
         return command.export();
     }
 
@@ -84,20 +84,10 @@ class Book {
         let result = `[`;
         result += this.generateHeader(content.headings.god_page);
         result += this.generateSpacer();
-        result += this.generateBlock(content.pickaxe);
-        result += ',';
-        result += this.generateBlock(content.axe);
-        result += ',';
-        result += this.generateBlock(content.shovel);
-        result += ',';
-        result += this.generateBlock(content.hoe);
-        result += ',';
-        result += this.generateBlock(content.shears);
-        result += ',';
-        result += this.generateBlock(content.flint);
+        result += this.generateBlock(content.inventory);
         result += ',';
         result += this.generateSpacer();
-        result += this.generateBlock(content.inventory);
+        result += this.generateBlock(content.friendlyfire);
         result += `]`;
         return result;
     }

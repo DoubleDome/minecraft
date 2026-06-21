@@ -237,199 +237,29 @@
             }
         }
     ],
-    "pickaxe": [
+    "friendlyfire": [
         {
-            "text": "\n⇔ ",
+            "text": "\n",
             "color": "black"
         },
         {
-            "text": "Pickaxe:  ",
+            "text": "⚔ Friendly Fire ",
             "color": "black"
         },
         {
-            "text": "#",
-            "color": "gold",
+            "text": "⬤ ",
+            "color": "dark_green",
             "click_event": {
                 "action": "run_command",
-                "command": "/function jakarta:gate/tool_swap_silk_pickaxe"
+                "command": "/team modify friends friendlyFire true"
             }
         },
         {
-            "text": " - ",
-            "color": "#cccccc"
-        },
-        {
-            "text": "$",
-            "color": "gold",
+            "text": "⬤ ",
+            "color": "dark_red",
             "click_event": {
                 "action": "run_command",
-                "command": "/function jakarta:gate/tool_swap_fortune_pickaxe"
-            }
-        },
-        {
-            "text": " - ",
-            "color": "#cccccc"
-        },
-        {
-            "text": "W",
-            "color": "gold",
-            "click_event": {
-                "action": "run_command",
-                "command": "/give @s minecraft:wooden_pickaxe"
-            }
-        }
-    ],
-    "axe": [
-        {
-            "text": "\n⇔ ",
-            "color": "black"
-        },
-        {
-            "text": "Axe:       ",
-            "color": "black"
-        },
-        {
-            "text": "#",
-            "color": "gold",
-            "click_event": {
-                "action": "run_command",
-                "command": "/function jakarta:gate/tool_swap_silk_axe"
-            }
-        },
-        {
-            "text": " - ",
-            "color": "#cccccc"
-        },
-        {
-            "text": "$",
-            "color": "gold",
-            "click_event": {
-                "action": "run_command",
-                "command": "/function jakarta:gate/tool_swap_fortune_axe"
-            }
-        },
-        {
-            "text": " - ",
-            "color": "#cccccc"
-        },
-        {
-            "text": "W",
-            "color": "gold",
-            "click_event": {
-                "action": "run_command",
-                "command": "/give @s minecraft:wooden_axe"
-            }
-        }
-    ],
-    "shovel": [
-        {
-            "text": "\n⇔ ",
-            "color": "black"
-        },
-        {
-            "text": "Shovel:   ",
-            "color": "black"
-        },
-        {
-            "text": "#",
-            "color": "gold",
-            "click_event": {
-                "action": "run_command",
-                "command": "/function jakarta:gate/tool_swap_silk_shovel"
-            }
-        },
-        {
-            "text": " - ",
-            "color": "#cccccc"
-        },
-        {
-            "text": "$",
-            "color": "gold",
-            "click_event": {
-                "action": "run_command",
-                "command": "/function jakarta:gate/tool_swap_fortune_shovel"
-            }
-        },
-        {
-            "text": " - ",
-            "color": "#cccccc"
-        },
-        {
-            "text": "W",
-            "color": "gold",
-            "click_event": {
-                "action": "run_command",
-                "command": "/give @s minecraft:wooden_shovel"
-            }
-        }
-    ],
-    "hoe": [
-        {
-            "text": "\n⇔ ",
-            "color": "black"
-        },
-        {
-            "text": "Hoe:       ",
-            "color": "black"
-        },
-        {
-            "text": "#",
-            "color": "gold",
-            "click_event": {
-                "action": "run_command",
-                "command": "/function jakarta:gate/tool_swap_silk_hoe"
-            }
-        },
-        {
-            "text": " - ",
-            "color": "#cccccc"
-        },
-        {
-            "text": "$",
-            "color": "gold",
-            "click_event": {
-                "action": "run_command",
-                "command": "/function jakarta:gate/tool_swap_fortune_hoe"
-            }
-        },
-        {
-            "text": " - ",
-            "color": "#cccccc"
-        },
-        {
-            "text": "W",
-            "color": "gold",
-            "click_event": {
-                "action": "run_command",
-                "command": "/give @s minecraft:wooden_hoe"
-            }
-        }
-    ],
-    "shears": [
-        {
-            "text": "\n⇔ ",
-            "color": "black"
-        },
-        {
-            "text": "Shears",
-            "color": "gold",
-            "click_event": {
-                "action": "run_command",
-                "command": "/function jakarta:gate/tool_swap_shears"
-            }
-        }
-    ],
-    "flint": [
-        {
-            "text": "\n⇔ ",
-            "color": "black"
-        },
-        {
-            "text": "Flint + Steel",
-            "color": "gold",
-            "click_event": {
-                "action": "run_command",
-                "command": "/function jakarta:gate/tool_swap_flint_and_steel"
+                "command": "/team modify friends friendlyFire false"
             }
         }
     ]

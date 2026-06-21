@@ -94,9 +94,9 @@
         "death": "death_marker"
     },
     "team": {
-        "god": {
-            "name": "god",
-            "label": "God"
+        "friends": {
+            "name": "friends",
+            "label": "Friends"
         }
     },
     "coordinate": {
