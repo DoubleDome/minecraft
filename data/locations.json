@@ -155,6 +155,13 @@
                 "coordinates": "-6774 65 18689",
                 "filename": "trail_base",
                 "rotation": "0 0"
+            },
+            {
+                "label": "Niflheim",
+                "dimension": "minecraft:overworld",
+                "coordinates": "1007 88 4552",
+                "filename": "niflheim",
+                "rotation": "0 0"
             }
         ]
     },
