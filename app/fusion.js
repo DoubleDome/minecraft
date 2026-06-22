@@ -49,7 +49,10 @@ class Fusion {
         Load.getInstance().addObjective('fuse_calc', 'dummy');
         Load.getInstance().append(`scoreboard players set #STEP fuse_calc ${STEP}`);
         Load.getInstance().append(`data modify storage ${storage} roman set value ${JSON.stringify(roman)}`);
-        Tick.getInstance().append(`function ${pkg}:fuse/tick`);
+        // Self-scheduled every 10 ticks instead of riding the per-tick tag. The nether-star
+        // item scan doesn't need 20 Hz (dropped items sit for minutes), so this cuts its
+        // per-tick cost ~10x. `replace` keeps a single pending schedule across reloads.
+        Load.getInstance().append(`schedule function ${pkg}:fuse/tick 1t replace`);
     }
 
     createTick() {
@@ -58,6 +61,7 @@ class Fusion {
         c.append('tag @e[type=item,tag=fuse_m] remove fuse_m');
         c.append('tag @e[type=item,tag=fuse_pair] remove fuse_pair');
         c.append(`execute as @e[type=item,nbt={Item:{id:"minecraft:nether_star"}}] at @s if block ~ ~-1 ~ minecraft:smithing_table run function ${pkg}:fuse/at_star`);
+        c.append(`schedule function ${pkg}:fuse/tick 10t replace`);
         return c.export();
     }
 
