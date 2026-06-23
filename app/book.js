@@ -88,6 +88,9 @@ class Book {
         result += ',';
         result += this.generateSpacer();
         result += this.generateBlock(content.friendlyfire);
+        result += ',';
+        result += this.generateSpacer();
+        result += this.generateBlock(content.softcore);
         result += `]`;
         return result;
     }
@@ -103,9 +106,6 @@ class Book {
         result += ',';
         result += this.generateSpacer();
         result += this.generateBlock(content.utility);
-        result += ',';
-        result += this.generateSpacer();
-        result += this.generateBlock(content.softcore);
         result += `]`;
         return result;
     }
