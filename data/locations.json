@@ -119,21 +119,21 @@
                 "dimension": "minecraft:overworld",
                 "coordinates": "-4176 -49 -11871",
                 "rotation": "-90 0",
-                "filename": "ancient_base"
+                "filename": "ancient_base_i"
             },
             {
                 "label": "Ancient Base II",
                 "dimension": "minecraft:overworld",
                 "coordinates": "-15640 -48 -3279",
                 "rotation": "0 0",
-                "filename": "ancient_base_2"
+                "filename": "ancient_base_ii"
             },
             {
                 "label": "Ancient Base III",
                 "dimension": "minecraft:overworld",
                 "coordinates": "3883 -49 -4468",
                 "rotation": "-180 0",
-                "filename": "ancient_base_3"
+                "filename": "ancient_base_iii"
             },
             {
                 "label": "Pale Garden Base",
@@ -153,15 +153,15 @@
                 "label": "Trail Base",
                 "dimension": "minecraft:overworld",
                 "coordinates": "-6774 65 18689",
-                "filename": "trail_base",
-                "rotation": "0 0"
+                "rotation": "0 0",
+                "filename": "trail_base"
             },
             {
                 "label": "Niflheim",
                 "dimension": "minecraft:overworld",
-                "coordinates": "1007 88 4552",
-                "filename": "niflheim",
-                "rotation": "0 0"
+                "coordinates": "1008 85 4578",
+                "rotation": "0 0",
+                "filename": "niflheim"
             }
         ]
     },
@@ -243,21 +243,21 @@
                 "dimension": "minecraft:overworld",
                 "coordinates": "4922 1 -7352",
                 "rotation": "0 0",
-                "filename": "minecart_spider_farm"
+                "filename": "minecart_c_s_farm"
             },
             {
                 "label": "Panda Santuary",
                 "dimension": "minecraft:overworld",
                 "coordinates": "-14441 99 -12121",
                 "rotation": "-180 -15",
-                "filename": "panda_sanctuary"
+                "filename": "panda_santuary"
             },
             {
                 "label": "OG End City",
                 "dimension": "minecraft:the_end",
                 "coordinates": "-1218 65 -249",
-                "filename": "og_end_city",
-                "rotation": "180 0"
+                "rotation": "180 0",
+                "filename": "og_end_city"
             }
         ]
     },
@@ -268,8 +268,8 @@
                 "label": "Canvas",
                 "dimension": "madagascar:canvas",
                 "coordinates": "0 70 0",
-                "filename": "canvas",
-                "gamemode": "creative"
+                "gamemode": "creative",
+                "filename": "canvas"
             },
             {
                 "label": "Skyblock",
@@ -330,7 +330,7 @@
                 "dimension": "minecraft:the_nether",
                 "coordinates": "-1832 68 -1533",
                 "rotation": "180 0",
-                "filename": "wither_skeleton_farm"
+                "filename": "w_skeleton_farm"
             },
             {
                 "label": "Raid Farm",
@@ -400,7 +400,7 @@
                 "dimension": "minecraft:overworld",
                 "coordinates": "18079 17 19064",
                 "rotation": "0 0",
-                "filename": "guardian_farm_2"
+                "filename": "guardian_farm_ii"
             }
         ]
     }
