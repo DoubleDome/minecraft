@@ -147,6 +147,22 @@
                 "action": "run_command",
                 "command": "/xp set @s 30 levels"
             }
+        },
+        {
+            "text": "\n",
+            "color": "black"
+        },
+        {
+            "text": "➶ ",
+            "color": "black"
+        },
+        {
+            "text": "64 Rockets",
+            "color": "dark_green",
+            "click_event": {
+                "action": "run_command",
+                "command": "/give @s minecraft:firework_rocket[minecraft:fireworks={flight_duration:3}] 64"
+            }
         }
     ],
     "softcore": [

@@ -468,6 +468,20 @@
             "x": 300,
             "y": 200,
             "z": 300
+        },
+        {
+            "label": "Cave Village",
+            "dim": "overworld",
+            "x": 1480,
+            "y": 67,
+            "z": 2787
+        },
+        {
+            "label": "Cave Village",
+            "dim": "overworld",
+            "x": 1400,
+            "y": 68,
+            "z": 2787
         }
     ]
 }
