@@ -35,8 +35,6 @@ is the `generator`; the `dimension_type` controls runtime behavior (sky, sleep, 
 | **Sky Islands** | `minecraft:overworld` | Floating islands in void (forked `floating_islands` noise). See `docs/reports/sky_islands_findings.md`. |
 | **Caves** | `minecraft:overworld` | Cave world (`minecraft:caves` noise), bedrock-roofed. |
 | **Waterworld** | `minecraft:overworld` | Ocean world (custom noise settings). |
-| **Canvas** | `minecraft:overworld` | Custom build/canvas dimension. |
-| **Dynamite** | `madagascar:dynamite` | Game-mode dimension (the only remaining custom dimension type). |
 
 **Rule that bit us:** vanilla special spawners (phantom, wandering trader, cat,
 pillager patrol, siege) run only in dimensions whose `dimension_type` is
@@ -82,7 +80,7 @@ Generated from `app/*.js` into `function/`:
 | **Ender chest summon** | Places/destroys an ender chest in front of you. | `app/ender.js` |
 | **Location waypoints** | `/function jakarta:location/<name>` teleports. | `app/location.js` |
 | **Softcore mode** | Softcore game functions (start/stop/pause/death handling). | `app/softcore.js` (`docs/plans/softcore_rewrite.md`) |
-| **Dynamite mode** | Dynamite game mode (own dimension). | `app/dynamite.js` |
+| **Dynamite mode** | Dynamite game mode. Disabled in `generator.js`, and its `madagascar:dynamite` dimension was removed 2026-10-03 (world data in `D:\Backup\2026.10.03_removed_canvas_dynamite`). | `app/dynamite.js` |
 | **Fusion Altar** | Drop 2 same-tier swords + a Nether Star on a **smithing table** → next-tier sword (two vanilla swords → Sword II; 2× "Iron Sword II" → "Iron Sword III"). All 7 materials, unlimited tiers; raw-damage buffs (`base + (tier-1)×2`), unbreakable at tier ≥ 4, enchants discarded. Pure functions (no recipes) — reloads live. | `app/fusion.js` → `function/fuse/` |
 | **Friendly team / friendly fire** | `friendly` team created on load (all players joined, `friendlyFire false`). Toggle from the God page (green dot = on, red = off → `/team modify friendly friendlyFire true\|false`). Replaced the old `god` team. | `app/generator.js` (`createFoundation`), `app/book.js`, `data/config.json` |
 

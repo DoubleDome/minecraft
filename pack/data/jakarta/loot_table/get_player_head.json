@@ -210,7 +210,7 @@
                                         "italic": false
                                     },
                                     {
-                                        "text": "Canvas",
+                                        "text": "Skyblock",
                                         "color": "gold",
                                         "italic": false
                                     }
@@ -236,7 +236,7 @@
                                         "italic": false
                                     },
                                     {
-                                        "text": "Skyblock",
+                                        "text": "Caves",
                                         "color": "gold",
                                         "italic": false
                                     }
@@ -247,6 +247,58 @@
                                 "entity": "this",
                                 "scores": {
                                     "jakarta.softcore.death_dimension": 4
+                                }
+                            },
+                            "mode": "append"
+                        },
+                        {
+                            "type": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    {
+                                        "text": "Death Dimension: ",
+                                        "color": "gray",
+                                        "italic": false
+                                    },
+                                    {
+                                        "text": "Sky Islands",
+                                        "color": "gold",
+                                        "italic": false
+                                    }
+                                ]
+                            ],
+                            "condition": {
+                                "type": "minecraft:entity_scores",
+                                "entity": "this",
+                                "scores": {
+                                    "jakarta.softcore.death_dimension": 5
+                                }
+                            },
+                            "mode": "append"
+                        },
+                        {
+                            "type": "minecraft:set_lore",
+                            "entity": "this",
+                            "lore": [
+                                [
+                                    {
+                                        "text": "Death Dimension: ",
+                                        "color": "gray",
+                                        "italic": false
+                                    },
+                                    {
+                                        "text": "Waterworld",
+                                        "color": "gold",
+                                        "italic": false
+                                    }
+                                ]
+                            ],
+                            "condition": {
+                                "type": "minecraft:entity_scores",
+                                "entity": "this",
+                                "scores": {
+                                    "jakarta.softcore.death_dimension": 6
                                 }
                             },
                             "mode": "append"

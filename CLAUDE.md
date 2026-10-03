@@ -12,7 +12,7 @@ The persona/answer style lives in `.claude/rules/persona.md`, which Claude Code 
 
 ## What This Project Does
 
-This is a **Minecraft Datapack Generator** for a custom world called **Madagascar**. It programmatically generates `.mcfunction` files (Minecraft command scripts) from JSON configuration data. It supports multiple dimensions: Overworld, Nether, The End, Canvas, Skyblock, Caves, Sky Islands, Waterworld, and Dynamite.
+This is a **Minecraft Datapack Generator** for a custom world called **Madagascar**. It programmatically generates `.mcfunction` files (Minecraft command scripts) from JSON configuration data. It supports multiple dimensions: Overworld, Nether, The End, Skyblock, Caves, Sky Islands, and Waterworld. Canvas and Dynamite were removed on 2026-10-03; their world data is in `D:\Backup\2026.10.03_removed_canvas_dynamite`.
 
 The live server runs vanilla Minecraft **26.3** at `D:\jakarta-vanilla-26.3\`. Generated packs land in that world's `datapacks/jakarta_pack/` folder.
 
@@ -134,12 +134,14 @@ All configuration is externalized to JSON:
 
 ### Dimensions (`dimensions/`)
 
-Contains Minecraft dimension definition files for the custom dimensions that extend beyond vanilla: Canvas, Skyblock, Caves, Sky Islands, Waterworld (under `dimensions/dimension/`), plus Dynamite (defined in `pack/data/madagascar/dimension/dynamite.json`). Noise settings for Sky Islands and Waterworld live in `pack/data/madagascar/worldgen/noise_settings/`.
+Contains Minecraft dimension definition files for the custom dimensions that extend beyond vanilla: Skyblock, Caves, Sky Islands, Waterworld (under `dimensions/dimension/`). Noise settings for Sky Islands and Waterworld live in `pack/data/madagascar/worldgen/noise_settings/`.
+
+**Softcore indexes dimensions by position** in `config.dimension` (minus `default`): `softcore.js` stores the index in `jakarta.softcore.death_dimension`, and `pack/data/jakarta/loot_table/get_player_head.json` hard-codes the index → name lore. Adding or removing a dimension means updating both.
 
 **Special spawners are gated by `dimension_type`, not dimension key.** Vanilla's special spawners — wandering trader, cat, pillager patrol, village siege, and **phantom** (insomnia) — run in any dimension whose `dimension_type` is `minecraft:overworld`, regardless of the dimension's own key. So custom dimensions that *reuse* the `minecraft:overworld` type get them; dimensions with a custom type do not:
 
-- `minecraft:overworld` type → Skyblock, Canvas, Waterworld, **and now Sky Islands + Caves** (switched from their custom types on 2026-06-13 to enable phantoms/wandering-traders + sleeping) → **do** get traders/cats/patrols/phantoms.
-- custom type → only Dynamite (`madagascar:dynamite`) → **doesn't**.
+- `minecraft:overworld` type → Skyblock, Waterworld, **and now Sky Islands + Caves** (switched from their custom types on 2026-06-13 to enable phantoms/wandering-traders + sleeping) → **do** get traders/cats/patrols/phantoms.
+- custom type → none since Dynamite (`madagascar:dynamite`) was removed. A custom type would **not** get them.
 
 Verified by entity-file census (2026-06-13): skyblock's `entities/` held 25 wandering traders + 20 cats; caves — explored just as heavily (70 region files vs skyblock's 87) — had zero, matching the admin's experience of never seeing traders there. That proved the gate is the `dimension_type`, so Sky Islands + Caves were switched to `minecraft:overworld` to turn the spawners on. A dimension's `generator` (worldgen) is independent of its `dimension_type`, so switching the type **keeps the custom terrain** — Sky Islands still generates floating islands. The overworld type also gives `bed_works: true` (sleeping). Changing a `dimension_type` is a dynamic registry edit: it needs a **server restart**, not `/reload`. (Phantoms only ever come from the special spawner — no biome lists them.) Note: Skyblock is also a single-player world copied in, but the traders there are genuinely spawning, not imported.
 

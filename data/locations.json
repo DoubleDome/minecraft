@@ -265,13 +265,6 @@
         "header": "Dimensions",
         "locations": [
             {
-                "label": "Canvas",
-                "dimension": "madagascar:canvas",
-                "coordinates": "0 70 0",
-                "gamemode": "creative",
-                "filename": "canvas"
-            },
-            {
                 "label": "Skyblock",
                 "dimension": "madagascar:skyblock",
                 "coordinates": "-10 63 -1",
