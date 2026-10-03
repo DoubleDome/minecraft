@@ -16,11 +16,13 @@ const app = express();
 const path = require('path');
 const fs = require('fs');
 const net = require('net');
+const { execFile } = require('child_process');
 const clc = require('cli-color');
 
 const generator = require('./app/generator');
 const { rebuild } = require('./app/rebuild');
 const playerstats = require('./app/playerstats');
+const rcon = require('./util/rcon');
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -92,14 +94,14 @@ function buildGroupedLocations(rows, groupOrder) {
 // `node index.js <target>` run identical safeguards (env guard, live backup before
 // wipe, source-dir sentinel). Writes to whatever target server.js was started under.
 
-function checkServer() {
+function checkServer(port = MC_PORT, host = MC_HOST) {
     return new Promise((resolve) => {
         const socket = new net.Socket();
         socket.setTimeout(2000);
         socket.once('connect', () => { socket.destroy(); resolve(true); });
         socket.once('timeout', () => { socket.destroy(); resolve(false); });
         socket.once('error', () => resolve(false));
-        socket.connect(MC_PORT, MC_HOST);
+        socket.connect(port, host);
     });
 }
 
@@ -135,8 +137,10 @@ app.get('/', async (req, res) => {
   <div class="actions">
     <a class="btn" href="/add-location">+ Add a location</a>
     <a class="btn secondary" href="/locations">Edit locations</a>
+    <a class="btn secondary" href="/exploration">Edit exploration book</a>
     <a class="btn secondary" href="/stats">Player stats</a>
     <button class="btn secondary" id="rebuild-btn" onclick="rebuild()">Rebuild pack (${TARGET})</button>
+    <button class="btn secondary" id="restart-btn" onclick="restart()">Restart server</button>
   </div>
   <div id="rebuild-msg"></div>
 <script>
@@ -170,6 +174,48 @@ app.get('/', async (req, res) => {
       busy = false;
     }
   }
+  // Restart: first click arms, second click (within 5s) sends. If players are online
+  // the server answers 409 and the button re-arms as a forced restart.
+  let armed = null, armTimer = null;
+  function disarmAfter(ms, btn) { clearTimeout(armTimer); armTimer = setTimeout(() => { armed = null; busy = false; btn.textContent = 'Restart server'; }, ms); }
+  async function restart() {
+    const btn = document.getElementById('restart-btn');
+    const msg = document.getElementById('rebuild-msg');
+    if (!armed) {
+      busy = true; armed = 'confirm';
+      btn.textContent = 'Click again to restart';
+      disarmAfter(5000, btn);
+      return;
+    }
+    const force = armed === 'force';
+    clearTimeout(armTimer); armed = null; btn.disabled = true;
+    msg.className = ''; msg.textContent = 'Requesting restart\\u2026';
+    try {
+      const r = await fetch('/restart', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ confirm: true, force }) });
+      const j = await r.json();
+      if (j.needsForce) {
+        msg.className = 'err'; msg.textContent = '\\u26A0 ' + j.error + ' \\u2014 click again to restart anyway';
+        btn.disabled = false; btn.textContent = 'Restart anyway'; armed = 'force';
+        disarmAfter(8000, btn);
+        return;
+      }
+      if (!j.ok) throw new Error(j.error || 'restart failed');
+      poll();
+    } catch (e) {
+      msg.className = 'err'; msg.textContent = '\\u2717 ' + e.message;
+      btn.disabled = false; btn.textContent = 'Restart server'; busy = false;
+    }
+  }
+  async function poll() {
+    const msg = document.getElementById('rebuild-msg');
+    try {
+      const s = await (await fetch('/restart/status')).json();
+      if (s.phase === 'done') { msg.className = 'ok'; msg.textContent = '\\u2713 Server restarted'; setTimeout(() => location.reload(), 2000); return; }
+      if (s.phase === 'failed') { msg.className = 'err'; msg.textContent = '\\u2717 Restart failed: ' + s.error; busy = false; document.getElementById('restart-btn').disabled = false; document.getElementById('restart-btn').textContent = 'Restart server'; return; }
+      msg.className = ''; msg.textContent = 'Restart: ' + s.phase + '\\u2026';
+    } catch (e) { /* dashboard briefly busy; keep polling */ }
+    setTimeout(poll, 2000);
+  }
 </script>
 </body></html>`);
 });
@@ -192,6 +238,78 @@ function handleRebuild(req, res) {
         res.status(500).json({ ok: false, target: TARGET, error: String(e.message || e) });
     }
 }
+
+// ----- /restart: stop the server over RCON, wait for it to exit, start it again -----
+// POST only (never GET), so a link preview or prefetch can't trigger it. Refuses while
+// players are online unless the request says force:true. The server is (re)started by
+// the `start-minecraft` scheduled task, the same detached launch used at boot.
+const START_TASK = process.env.START_TASK || 'start-minecraft';
+const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+let restartState = { phase: 'idle', at: null, error: null };
+
+function javaRunning() {
+    return new Promise((resolve) => {
+        execFile('tasklist', ['/FI', 'IMAGENAME eq java.exe', '/NH'], (err, out) => resolve(!err && /java\.exe/i.test(out)));
+    });
+}
+
+async function waitFor(check, timeoutMs) {
+    const end = Date.now() + timeoutMs;
+    while (Date.now() < end) { if (await check()) return true; await sleep(2000); }
+    return false;
+}
+
+async function doRestart(wasUp) {
+    const set = (phase) => { restartState = { phase, at: new Date().toISOString(), error: null }; console.log(clc.yellow(`[restart] ${phase}`)); };
+    try {
+        if (wasUp) {
+            set('warning players');
+            await rcon.run(['say Server restarting in 10 seconds']);
+            await sleep(10000);
+            set('stopping');
+            await rcon.run(['stop']).catch(() => {}); // the server may drop the socket mid-reply
+            const rconPort = Number(rcon.readProps()['rcon.port'] || 25575);
+            // RCON is the last listener to close, after every dimension is saved.
+            if (!await waitFor(async () => !(await checkServer(rconPort, '127.0.0.1')), 180000)) throw new Error('server did not stop within 3 minutes');
+            if (!await waitFor(async () => !(await javaRunning()), 60000)) throw new Error('java.exe still running 60s after stop');
+        }
+        set('starting');
+        await new Promise((resolve, reject) => execFile('schtasks', ['/Run', '/TN', START_TASK], (err, out, errOut) => err ? reject(new Error(String(errOut || err.message).trim())) : resolve()));
+        if (!await waitFor(() => checkServer(), 300000)) throw new Error('server did not come back within 5 minutes');
+        set('done');
+    } catch (e) {
+        restartState = { phase: 'failed', at: new Date().toISOString(), error: String(e.message || e) };
+        console.log(clc.red(`[restart] failed: ${restartState.error}`));
+    }
+}
+
+app.get('/restart/status', (req, res) => {
+    res.set('Cache-Control', 'no-store');
+    res.json(restartState);
+});
+
+app.post('/restart', async (req, res) => {
+    res.set('Cache-Control', 'no-store');
+    try {
+        if (!req.body || req.body.confirm !== true) throw new Error('confirmation required');
+        if (!['idle', 'done', 'failed'].includes(restartState.phase)) throw new Error(`a restart is already in progress (${restartState.phase})`);
+        const up = await checkServer();
+        if (up && req.body.force !== true) {
+            const [list] = await rcon.run(['list']);
+            const m = String(list).match(/There are (\d+) of/);
+            const online = m ? Number(m[1]) : 0;
+            if (online > 0) {
+                const names = String(list).split(':').slice(1).join(':').trim();
+                return res.status(409).json({ ok: false, needsForce: true, online, error: `${online} player(s) online: ${names}` });
+            }
+        }
+        restartState = { phase: 'queued', at: new Date().toISOString(), error: null };
+        doRestart(up); // runs in the background; poll /restart/status
+        res.json({ ok: true, wasUp: up });
+    } catch (e) {
+        res.status(400).json({ ok: false, error: String(e.message || e) });
+    }
+});
 
 // Serve the built resource pack over the LAN so the server can push it to clients
 // (server.properties resource-pack=http://<lan-ip>:3000/jakarta_rp.zip). Rebuild with
@@ -641,6 +759,120 @@ app.post('/locations', (req, res) => {
         writeJson(LOCATIONS_PATH, grouped);
         regenerate(); // targeted, in-place — prunes stale teleports, rewrites books + locations
         res.json({ ok: true, count: built.length, groups: grouped.length });
+    } catch (e) {
+        res.status(400).json({ ok: false, error: String(e.message || e) });
+    }
+});
+
+// ----- /exploration: editable, drag-reorderable table of Exploration Book entries -----
+
+const EXPLORATION_DIMS = ['overworld', 'the_nether', 'the_end'];
+
+function explorationRow(entry) {
+    const dimOpts = EXPLORATION_DIMS.map(d => `<option value="${d}"${entry.dim === d ? ' selected' : ''}>${d}</option>`).join('');
+    return `<tr>
+  <td class="drag"><span class="handle" draggable="true" ondragstart="onDragStart(event)" ondragend="onDragEnd(event)">&#9783;</span></td>
+  <td><input name="label" value="${esc(entry.label || '')}"></td>
+  <td><select name="dim">${dimOpts}</select></td>
+  <td><input name="x" type="number" step="any" class="num" value="${esc(entry.x ?? '')}"></td>
+  <td><input name="y" type="number" step="any" class="num" value="${esc(entry.y ?? '')}"></td>
+  <td><input name="z" type="number" step="any" class="num" value="${esc(entry.z ?? '')}"></td>
+  <td class="del"><button type="button" class="x" onclick="this.closest('tr').remove()">&#10005;</button></td>
+</tr>`;
+}
+
+function renderExplorationPage(data) {
+    const rows = (data.entries || []).map(explorationRow).join('');
+    const where = TARGET === 'live' ? 'live world' : 'sandbox (.temp)';
+    return `<!doctype html>
+<html><head><meta charset="utf-8"><title>Edit Exploration Book</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>${LOCATIONS_CSS}table{min-width:640px}</style></head>
+<body>
+<h1><a href="/">${SERVER_NAME}</a> &rsaquo; Edit Exploration Book</h1>
+<div class="hint">Edit, reorder, or delete Coordinates Book entries. Row order is page order in the book. Drag a row's <b>&#9783;</b> handle to move it; <b>&#10005;</b> removes it (nothing is written until you save). To add an entry, use <a href="/add-location">the form</a>. Saving writes <code>data/exploration.json</code> and regenerates into the <b>${where}</b> &mdash; run <code>/reload</code> in-game after.</div>
+<div class="wrap"><table>
+<thead><tr><th></th><th>Label</th><th>Dimension</th><th>X</th><th>Y</th><th>Z</th><th></th></tr></thead>
+<tbody id="rows">${rows}</tbody>
+</table></div>
+<div class="bar">
+  <button class="btn" id="save-btn" onclick="save()">Save &amp; Regenerate</button>
+  <a class="btn secondary" href="/add-location">+ Add via form</a>
+</div>
+<div id="msg"></div>
+<script>
+  var busy = false;
+  var dragRow = null;
+  var tbody = document.getElementById('rows');
+  function onDragStart(e){ dragRow = e.target.closest('tr'); e.dataTransfer.effectAllowed = 'move'; setTimeout(function(){ dragRow.classList.add('dragging'); }, 0); }
+  function onDragEnd(){ if(dragRow) dragRow.classList.remove('dragging'); dragRow = null; }
+  tbody.addEventListener('dragover', function(e){
+    e.preventDefault();
+    if(!dragRow) return;
+    var after = afterElement(e.clientY);
+    if(after == null) tbody.appendChild(dragRow);
+    else tbody.insertBefore(dragRow, after);
+  });
+  function afterElement(y){
+    var rows = Array.prototype.slice.call(tbody.querySelectorAll('tr:not(.dragging)'));
+    var closest = { offset: -Infinity, el: null };
+    for(var i=0;i<rows.length;i++){
+      var box = rows[i].getBoundingClientRect();
+      var offset = y - box.top - box.height/2;
+      if(offset < 0 && offset > closest.offset) closest = { offset: offset, el: rows[i] };
+    }
+    return closest.el;
+  }
+  function val(tr, name){ var el = tr.querySelector('[name=' + name + ']'); return el ? el.value : ''; }
+  function collect(){
+    return Array.prototype.slice.call(tbody.querySelectorAll('tr')).map(function(tr){
+      return { label: val(tr,'label'), dim: val(tr,'dim'), x: val(tr,'x'), y: val(tr,'y'), z: val(tr,'z') };
+    });
+  }
+  async function save(){
+    if(busy) return; busy = true;
+    var btn = document.getElementById('save-btn');
+    var msg = document.getElementById('msg');
+    btn.disabled = true; msg.className = ''; msg.textContent = 'Saving\\u2026';
+    try {
+      var r = await fetch('/exploration', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ entries: collect() }) });
+      var j = await r.json();
+      if(j.ok){ msg.className = 'ok'; msg.textContent = '\\u2713 Saved ' + j.count + ' entries \\u2014 run /reload in-game'; }
+      else { msg.className = 'err'; msg.textContent = '\\u2717 ' + (j.error || 'save failed'); }
+    } catch(e){ msg.className = 'err'; msg.textContent = '\\u2717 ' + e; }
+    finally { btn.disabled = false; busy = false; }
+  }
+</script>
+</body></html>`;
+}
+
+app.get('/exploration', (req, res) => {
+    res.set('Cache-Control', 'no-store');
+    res.send(renderExplorationPage(readJson(EXPLORATION_PATH)));
+});
+
+app.post('/exploration', (req, res) => {
+    res.set('Cache-Control', 'no-store');
+    try {
+        const rows = Array.isArray(req.body && req.body.entries) ? req.body.entries : null;
+        if (!rows) throw new Error('Expected { entries: [...] }');
+        const entries = rows.map((r, i) => {
+            const label = String(r.label || '').trim();
+            if (!label) throw new Error(`Row ${i + 1}: label required`);
+            const dim = String(r.dim || '').trim();
+            if (!EXPLORATION_DIMS.includes(dim)) throw new Error(`Row ${i + 1} (${label}): unknown dimension "${dim}"`);
+            const x = Number(r.x), y = Number(r.y), z = Number(r.z);
+            if ([r.x, r.y, r.z].some(v => v === '' || v == null) || ![x, y, z].every(Number.isFinite)) {
+                throw new Error(`Row ${i + 1} (${label}): X/Y/Z must be numbers`);
+            }
+            return { label, dim, x, y, z };
+        });
+        // Keep title/author/lore; only the entry list is editable here.
+        const data = readJson(EXPLORATION_PATH);
+        data.entries = entries;
+        writeJson(EXPLORATION_PATH, data);
+        regenerate();
+        res.json({ ok: true, count: entries.length });
     } catch (e) {
         res.status(400).json({ ok: false, error: String(e.message || e) });
     }

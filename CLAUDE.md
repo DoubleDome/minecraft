@@ -74,6 +74,8 @@ Fill out `.env` with real paths before running any script. The generator writes 
    - `GET /` — status page (pings the Minecraft server TCP port, shows ONLINE/OFFLINE, links to `/add-location`)
    - `GET /status.json` — JSON variant of the status check
    - `GET /add-location` and `POST /add-location` — web form for adding entries to either the Exploration Book (writes `data/exploration.json`) or the Magic Book (writes a chosen group in `data/locations.json`). Auto-runs `generator.create()` after a successful POST so the pack rebuilds before `/reload`.
+   - `GET/POST /exploration` — table editor for the Exploration Book (`data/exploration.json`): edit, drag-reorder (row order = book page order), delete; save regenerates the books. `/locations` is the same for the Magic Book.
+   - `POST /restart` + `GET /restart/status` — restarts the Minecraft server: RCON `say` warning, 10 s, `stop`, waits for the RCON port to close and `java.exe` to exit (so `session.lock` is free), then `schtasks /Run /TN start-minecraft`. POST-only and needs `{confirm:true}`; refuses with 409 while players are online unless `force:true`. RCON settings are read at call time from `server.properties` next to `WORLD_PATH` (`util/rcon.js`), never stored in the repo.
    - A list of generator endpoints under the `endpoints` array (book, locations, inventory, etc.) that trigger individual generators on demand. Each one re-reads its JSON data file, so web-driven edits are picked up without restarting the server.
 
 ### Core Flow
