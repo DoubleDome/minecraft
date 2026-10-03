@@ -2,7 +2,7 @@
     "type": "minecraft:block",
     "pools": [
         {
-            "rolls": 1.0,
+            "rolls": 1,
             "entries": [
                 {
                     "type": "minecraft:alternatives",
@@ -10,21 +10,28 @@
                         {
                             "type": "minecraft:item",
                             "name": "minecraft:ancient_debris",
-                            "conditions": [
-                                {
-                                    "condition": "minecraft:match_tool",
-                                    "predicate": {
-                                        "predicates": {
-                                            "minecraft:enchantments": [
-                                                { "enchantments": "jakarta:smelting", "levels": { "min": 1 } }
-                                            ]
-                                        }
+                            "condition": {
+                                "type": "minecraft:match_tool",
+                                "predicate": {
+                                    "predicates": {
+                                        "minecraft:enchantments": [
+                                            {
+                                                "enchantments": "jakarta:smelting",
+                                                "levels": {
+                                                    "min": 1
+                                                }
+                                            }
+                                        ]
                                     }
                                 }
-                            ],
-                            "functions": [
-                                { "function": "minecraft:furnace_smelt" },
-                                { "function": "minecraft:explosion_decay" }
+                            },
+                            "modifier": [
+                                {
+                                    "type": "minecraft:furnace_smelt"
+                                },
+                                {
+                                    "type": "minecraft:explosion_decay"
+                                }
                             ]
                         },
                         {

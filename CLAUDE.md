@@ -14,7 +14,7 @@ The persona/answer style lives in `.claude/rules/persona.md`, which Claude Code 
 
 This is a **Minecraft Datapack Generator** for a custom world called **Madagascar**. It programmatically generates `.mcfunction` files (Minecraft command scripts) from JSON configuration data. It supports multiple dimensions: Overworld, Nether, The End, Canvas, Skyblock, Caves, Sky Islands, Waterworld, and Dynamite.
 
-The live server runs vanilla Minecraft **26.1.2** at `D:\jakarta-vanilla-26.1.2\`. Generated packs land in that world's `datapacks/jakarta_pack/` folder.
+The live server runs vanilla Minecraft **26.3** at `D:\jakarta-vanilla-26.3\`. Generated packs land in that world's `datapacks/jakarta_pack/` folder.
 
 ## Running the Project
 
@@ -36,7 +36,7 @@ There are no tests (`npm test` exits with an error, no test suite exists).
 
 ## Live Server (RCON access)
 
-The live server at `D:\jakarta-vanilla-26.1.2` runs with **RCON enabled**, so its console can be driven remotely — most usefully to run `/reload` after `node index.js live` instead of waiting for the player to type it, plus `data get` / `give` / `summon` for verification. Ports (from `server.properties`): RCON `25575`, game `25577`, query `25565`.
+The live server at `D:\jakarta-vanilla-26.3` runs with **RCON enabled**, so its console can be driven remotely — most usefully to run `/reload` after `node index.js live` instead of waiting for the player to type it, plus `data get` / `give` / `summon` for verification. Ports (from `server.properties`): RCON `25575`, game `25577`, query `25565`.
 
 - **The RCON password lives in `server.properties` only — never copy it into this repo** (CLAUDE.md, scripts, commit messages). `server.properties` sits outside the repo, under the server dir.
 - **Treat RCON as an outward action on a production host: confirm with the user before sending commands** (a permission gate also guards it). It is not implied by the user merely *asking whether* access exists.
@@ -168,17 +168,24 @@ Generated `.mcfunction` files follow this path pattern:
 
 ## Minecraft Version Notes
 
-Targeting vanilla **26.1.2** (live server). Mojang switched to calendar-based versioning in 2026: `YEAR.DROP.HOTFIX`, so `26.1` = first 2026 game drop, `26.1.2` = its second hotfix. 1.21.x is now legacy.
+Targeting vanilla **26.3** (live server; upgraded from 26.2 on 2026-10-03). Mojang switched to calendar-based versioning in 2026: `YEAR.DROP.HOTFIX`, so `26.1` = first 2026 game drop, `26.1.2` = its second hotfix. 1.21.x is now legacy.
 
 Format and behavior pins that affect generation:
 
 1. Books use **item components**, not legacy NBT: `give @a written_book[written_book_content={pages:[...]}]`
 2. Text components use **snake_case** event keys as of 1.21.5: `click_event` (not `clickEvent`) and the value key is now `command` (not `value`) for `run_command` actions. Same applies to `hover_event`.
 3. Book pages inside `written_book_content` are objects of the form `{raw: '[{...}]'}`, not bare JSON strings.
-4. **Pack metadata** (since 25w31a): `pack.mcmeta` accepts `min_format` / `max_format` (integer or `[major, minor]`) in addition to legacy `pack_format`. Current vanilla: data pack `[101, 1]`, resource pack `[84, 0]`.
+4. **Pack metadata** (since 25w31a): `pack.mcmeta` accepts `min_format` / `max_format` (integer or `[major, minor]`) in addition to legacy `pack_format`. Current vanilla (26.3): data pack `[121, 0]`, resource pack `[97, 1]`. `pack/pack.mcmeta` is pinned to 121.0 because the source is 26.3-format only.
 5. **Villager trades** were rewritten in 26.1 to the `villager_trade` registry. Old 1.21.x trade datapacks fail validation on 26.x.
 6. **World clocks** (26.1): `/time` requires `of <clock>` for non-overworld dimensions.
 7. **Stricter item-stack validation**: items with conflicting component data are treated as empty on load.
+8. **26.3 data-format overhaul** (data pack 121). Write new pack JSON in this shape; 26.2-style files fail at registry load and stop the server:
+   - Loot/predicate conditions are keyed by `type` (was `condition`), and an object holds **one** `condition` (was a `conditions` list; wrap several in `minecraft:all_of`). Advancement trigger fields like `entity`/`player` take a single condition, not a list.
+   - Loot functions are keyed by `type` (was `function`) and listed under `modifier` (was `functions`). An item-modifier file is a single object, not a top-level list. Advancement `rewards.function` is unchanged (it names an mcfunction).
+   - Number providers need an explicit type: `{"type":"minecraft:uniform","min":0,"max":9}`. Bare `{min,max}` is rejected.
+   - Block states: `"minecraft:stone"` or `{"id":..., "properties":{...}}` (was `{Name, Properties}`). In a **block-state-provider** field (e.g. `replace_disk.block_state`) always use the object form `{"id": ...}`; a bare string there is read as a reference to a named provider and fails to bind.
+   - Damage-type tag ids in damage predicates carry `#`: `"id": "#minecraft:bypasses_invulnerability"`.
+   - Worldgen: `surface_rule` -> `material_rule` (inline, or a reference into the new `worldgen/material_rule` registry); density functions use `left`/`right`/`input` (was `argument1`/`argument2`/`argument`); `y_clamped_gradient` -> `gradient` with `axis`; `shifted_noise` -> `noise` with `shift_x`/`shift_z`; all cache types -> `cache`; `interpolated` takes `cell_size_xz`/`cell_size_y`; aquifer noises moved into an `aquifers` block and ore veins into material rules; `beardifier` must now be added to `final_density` explicitly.
 
 ### Item Tiers Worth Knowing for Generation
 

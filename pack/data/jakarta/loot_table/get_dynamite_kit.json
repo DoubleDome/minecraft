@@ -7,18 +7,17 @@
                 {
                     "type": "minecraft:item",
                     "name": "minecraft:bow",
-
-                    "functions": [
+                    "modifier": [
                         {
-                            "function": "set_name",
+                            "type": "set_name",
                             "name": "Flame Thrower"
                         },
                         {
-                            "function": "minecraft:set_count",
+                            "type": "minecraft:set_count",
                             "count": 1
                         },
                         {
-                            "function": "minecraft:set_enchantments",
+                            "type": "minecraft:set_enchantments",
                             "enchantments": {
                                 "minecraft:infinity": 1,
                                 "minecraft:flame": 1
@@ -37,13 +36,13 @@
                     "name": "minecraft:flint_and_steel"
                 }
             ],
-            "functions": [
+            "modifier": [
                 {
-                    "function": "minecraft:set_count",
+                    "type": "minecraft:set_count",
                     "count": 1
                 },
                 {
-                    "function": "minecraft:set_enchantments",
+                    "type": "minecraft:set_enchantments",
                     "enchantments": {
                         "minecraft:unbreaking": 3
                     },
@@ -59,9 +58,9 @@
                     "name": "minecraft:arrow"
                 }
             ],
-            "functions": [
+            "modifier": [
                 {
-                    "function": "minecraft:set_count",
+                    "type": "minecraft:set_count",
                     "count": 1
                 }
             ]

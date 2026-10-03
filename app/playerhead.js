@@ -1,8 +1,10 @@
 const fse = require('fs-extra');
 // minecraft.killed_by:minecraft.
 
+// 26.3 loot format: functions are keyed by `type` and live under `modifier`;
+// a single `condition` replaces the old `conditions` list.
 const killerTemplate = {
-    function: 'minecraft:set_lore',
+    type: 'minecraft:set_lore',
     entity: 'this',
     lore: [
         [
@@ -10,15 +12,13 @@ const killerTemplate = {
             { text: 'KILLER', color: 'gold', italic: false },
         ],
     ],
-    conditions: [
-        {
-            condition: 'minecraft:entity_scores',
-            entity: 'this',
-            scores: {
-                'jakarta.softcore.deaths': 0,
-            },
+    condition: {
+        type: 'minecraft:entity_scores',
+        entity: 'this',
+        scores: {
+            'jakarta.softcore.deaths': 0,
         },
-    ],
+    },
     replace: false,
 };
 
@@ -48,10 +48,10 @@ class Playerhead {
     }
     addKiller(killer) {
         const clone = JSON.parse(JSON.stringify(killerTemplate));
-        clone.conditions[0].scores = {};
-        clone.conditions[0].scores[`jakarta.softcore.killer.${killer.type}`] = 1;
+        clone.condition.scores = {};
+        clone.condition.scores[`jakarta.softcore.killer.${killer.type}`] = 1;
         clone.lore[0][1].text = killer.label;
-        source.pools[0].entries[0].functions.splice(8, 0, clone);
+        source.pools[0].entries[0].modifier.splice(8, 0, clone);
     }
     addObjectives(killers) {
         const result = {};

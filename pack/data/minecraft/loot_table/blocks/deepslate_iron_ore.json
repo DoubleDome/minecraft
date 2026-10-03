@@ -2,7 +2,7 @@
     "type": "minecraft:block",
     "pools": [
         {
-            "rolls": 1.0,
+            "rolls": 1,
             "entries": [
                 {
                     "type": "minecraft:alternatives",
@@ -10,46 +10,66 @@
                         {
                             "type": "minecraft:item",
                             "name": "minecraft:deepslate_iron_ore",
-                            "conditions": [
-                                {
-                                    "condition": "minecraft:match_tool",
-                                    "predicate": {
-                                        "predicates": {
-                                            "minecraft:enchantments": [
-                                                { "enchantments": "minecraft:silk_touch", "levels": { "min": 1 } }
-                                            ]
-                                        }
+                            "condition": {
+                                "type": "minecraft:match_tool",
+                                "predicate": {
+                                    "predicates": {
+                                        "minecraft:enchantments": [
+                                            {
+                                                "enchantments": "minecraft:silk_touch",
+                                                "levels": {
+                                                    "min": 1
+                                                }
+                                            }
+                                        ]
                                     }
+                                }
+                            }
+                        },
+                        {
+                            "type": "minecraft:item",
+                            "name": "minecraft:raw_iron",
+                            "condition": {
+                                "type": "minecraft:match_tool",
+                                "predicate": {
+                                    "predicates": {
+                                        "minecraft:enchantments": [
+                                            {
+                                                "enchantments": "jakarta:smelting",
+                                                "levels": {
+                                                    "min": 1
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            },
+                            "modifier": [
+                                {
+                                    "type": "minecraft:apply_bonus",
+                                    "enchantment": "minecraft:fortune",
+                                    "formula": "minecraft:ore_drops"
+                                },
+                                {
+                                    "type": "minecraft:furnace_smelt"
+                                },
+                                {
+                                    "type": "minecraft:explosion_decay"
                                 }
                             ]
                         },
                         {
                             "type": "minecraft:item",
                             "name": "minecraft:raw_iron",
-                            "conditions": [
+                            "modifier": [
                                 {
-                                    "condition": "minecraft:match_tool",
-                                    "predicate": {
-                                        "predicates": {
-                                            "minecraft:enchantments": [
-                                                { "enchantments": "jakarta:smelting", "levels": { "min": 1 } }
-                                            ]
-                                        }
-                                    }
+                                    "type": "minecraft:apply_bonus",
+                                    "enchantment": "minecraft:fortune",
+                                    "formula": "minecraft:ore_drops"
+                                },
+                                {
+                                    "type": "minecraft:explosion_decay"
                                 }
-                            ],
-                            "functions": [
-                                { "function": "minecraft:apply_bonus", "enchantment": "minecraft:fortune", "formula": "minecraft:ore_drops" },
-                                { "function": "minecraft:furnace_smelt" },
-                                { "function": "minecraft:explosion_decay" }
-                            ]
-                        },
-                        {
-                            "type": "minecraft:item",
-                            "name": "minecraft:raw_iron",
-                            "functions": [
-                                { "function": "minecraft:apply_bonus", "enchantment": "minecraft:fortune", "formula": "minecraft:ore_drops" },
-                                { "function": "minecraft:explosion_decay" }
                             ]
                         }
                     ]

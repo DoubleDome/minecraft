@@ -7,7 +7,7 @@ alwaysApply: true
 
 Editing files under `pack/`, `app/`, `data/`, `dimensions/`, `util/`, or `scripts/` changes
 **source only** — nothing reaches the live Minecraft server until the generator runs. The live
-world reads `D:\jakarta-vanilla-26.1.2\world\datapacks\jakarta_pack`, which is **regenerated**,
+world reads `D:\jakarta-vanilla-26.3\world\datapacks\jakarta_pack`, which is **regenerated**,
 not edited in place.
 
 **After any source change, rebuild and deploy without being asked:**
